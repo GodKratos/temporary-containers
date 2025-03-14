@@ -48,12 +48,12 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       'vue': '@vue/runtime-dom'
-    }
+    },
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true
+    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

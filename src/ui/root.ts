@@ -10,7 +10,7 @@ window.$ = window.jQuery = jQuery;
 import 'jquery-address';
 import 'sortablejs';
 import 'fomantic-ui';
-import { createApp, Component } from 'vue';
+import { createApp, Component, h } from 'vue';
 import { getPermissions } from '~/shared';
 import { Tab, Permissions, PreferencesSchema, StorageLocal } from '~/types';
 
@@ -75,11 +75,15 @@ export default (AppComponent: Component, { popup = false }): void => {
         expandedPreferences: false,
       };
     },
+    render() {
+      return h(AppComponent, { app: this.app })
+    },
+    emits: ['initialize', 'showInitializeError', 'showInitializeLoader', 'hideInitializeLoader', 'showMessage', 'showError', 'hideMessage'],
     watch: {
       app: {
         async handler(app: App, oldApp: App): Promise<void> {
           if (!app.initialized) return;
-          
+
           if (!oldApp.preferences) {
             this.maybeExpandPreferences(app);
             return;
@@ -96,12 +100,9 @@ export default (AppComponent: Component, { popup = false }): void => {
             });
           } catch (error) {
             console.error('error while saving preferences', error);
-            this.$root.$emit(
-              'showError',
-              `Error while saving preferences: ${(error as Error).toString()}`
-            );
+            this.$emit('showError', `Error while saving preferences: ${(error as Error).toString()}`);
             window.setTimeout(() => {
-              this.$root.$emit('initialize');
+              this.$emit('initialize');
             }, 5000);
           }
 
@@ -113,7 +114,7 @@ export default (AppComponent: Component, { popup = false }): void => {
     mounted() {
       this.initialize();
 
-      this.$root.$on('initialize', (options: InitializeOptions = {}) => {
+      this.$emit('initialize', (options: InitializeOptions = {}) => {
         this.app = {
           initialized: false,
           popup,
@@ -131,14 +132,14 @@ export default (AppComponent: Component, { popup = false }): void => {
         let initializeLoader = false;
 
         if (window.location.search.startsWith('?error')) {
-          this.$root.$emit('showInitializeError');
+          this.$emit('showInitializeError');
           return;
         }
 
         setTimeout(() => {
           if (!this.app.initialized && !pongError) {
             initializeLoader = true;
-            this.$root.$emit('showInitializeLoader');
+            this.$emit('showInitializeLoader');
           }
         }, 500);
 
@@ -154,9 +155,9 @@ export default (AppComponent: Component, { popup = false }): void => {
 
         if (pongError) {
           if (initializeLoader) {
-            this.$root.$emit('hideInitializeLoader');
+            this.$emit('hideInitializeLoader');
           }
-          this.$root.$emit('showInitializeError', pongErrorMessage);
+          this.$emit('showInitializeError', pongErrorMessage);
           return;
         }
 
@@ -189,17 +190,17 @@ export default (AppComponent: Component, { popup = false }): void => {
 
         if (options.showMessage) {
           this.$nextTick(() => {
-            this.$root.$emit('showMessage', options.showMessage);
+            this.$emit('showMessage', options.showMessage);
           });
         } else if (options.showError) {
           this.$nextTick(() => {
-            this.$root.$emit('showError', options.showError);
+            this.$emit('showError', options.showError);
           });
         } else {
-          this.$root.$emit('hideMessage');
+          this.$emit('hideMessage');
         }
         if (initializeLoader) {
-          this.$root.$emit('hideInitializeLoader');
+          this.$emit('hideInitializeLoader');
         }
       },
 
@@ -207,72 +208,45 @@ export default (AppComponent: Component, { popup = false }): void => {
         try {
           const storage = await browser.storage.local.get() as StorageLocal;
           if (!storage.preferences || !Object.keys(storage.preferences).length) {
-            this.$root.$emit(
-              'showError',
-              'Loading preferences failed, please try again'
-            );
+            this.$emit('showError', 'Loading preferences failed, please try again');
             return null;
           }
           return storage;
         } catch (error) {
-          this.$root.$emit(
-            'showError',
-            `Loading preferences failed, please try again. ${(error as Error).toString()}`
-          );
+          this.$emit('showError', `Loading preferences failed, please try again. ${(error as Error).toString()}`);
           return null;
         }
       },
 
       async checkPermissions(app: App): Promise<void> {
         if (app.preferences.notifications && !app.permissions.notifications) {
-          // eslint-disable-next-line require-atomic-updates
-          app.preferences.notifications = app.permissions.notifications = await browser.permissions.request(
-            {
-              permissions: ['notifications'],
-            }
-          );
+          app.preferences.notifications = app.permissions.notifications = await browser.permissions.request({
+            permissions: ['notifications'],
+          });
         }
 
-        if (
-          app.preferences.contextMenuBookmarks &&
-          !app.permissions.bookmarks
-        ) {
-          // eslint-disable-next-line require-atomic-updates
-          app.preferences.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request(
-            {
-              permissions: ['bookmarks'],
-            }
-          );
+        if (app.preferences.contextMenuBookmarks && !app.permissions.bookmarks) {
+          app.preferences.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request({
+            permissions: ['bookmarks'],
+          });
         }
 
-        if (
-          app.preferences.deletesHistory.contextMenuBookmarks &&
-          !app.permissions.bookmarks
-        ) {
-          // eslint-disable-next-line require-atomic-updates
-          app.preferences.deletesHistory.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request(
-            {
-              permissions: ['bookmarks'],
-            }
-          );
+        if (app.preferences.deletesHistory.contextMenuBookmarks && !app.permissions.bookmarks) {
+          app.preferences.deletesHistory.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request({
+            permissions: ['bookmarks'],
+          });
         }
 
         if (app.preferences.deletesHistory.active && !app.permissions.history) {
-          // eslint-disable-next-line require-atomic-updates
-          app.preferences.deletesHistory.active = app.permissions.history = await browser.permissions.request(
-            {
-              permissions: ['history'],
-            }
-          );
+          app.preferences.deletesHistory.active = app.permissions.history = await browser.permissions.request({
+            permissions: ['history'],
+          });
         }
 
         if (app.preferences.scripts.active && !app.permissions.webNavigation) {
-          // eslint-disable-next-line require-atomic-updates
-          app.preferences.scripts.active = app.permissions.webNavigation = await browser.permissions.request(
-            {
-              permissions: ['webNavigation'],
-            }
-          );
+          app.preferences.scripts.active = app.permissions.webNavigation = await browser.permissions.request({
+            permissions: ['webNavigation'],
+          });
         }
       },
 
@@ -285,12 +259,14 @@ export default (AppComponent: Component, { popup = false }): void => {
             this.expandedPreferences = true;
           } else if (!app.preferences.ui.expandPreferences && this.expandedPreferences) {
             this.expandedPreferences = false;
-            this.$root.$emit('initialize');
+            this.$emit('initialize');
           }
         });
       },
     },
+    template: '<AppComponent />',
   });
 
+  app.component('AppComponent', AppComponent);
   app.mount('#app');
 };
