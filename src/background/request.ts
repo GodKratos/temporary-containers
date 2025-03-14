@@ -249,12 +249,31 @@ export class Request {
       tab &&
       tab.cookieStoreId !== `${this.background.containerPrefix}-default`
     ) {
-      this.debug(
-        '[handleRequest] onBeforeRequest tab belongs to a non-default container',
-        tab,
-        request
-      );
-      return false;
+      try {
+        const container = await browser.contextualIdentities.get(tab.cookieStoreId);
+        if (container) {
+          this.debug(
+            '[handleRequest] onBeforeRequest tab belongs to a non-default container',
+            tab,
+            request
+          );
+          return false;
+        } else {
+          this.debug(
+            '[handleRequest] onBeforeRequest found a missing container without catching an exception',
+            tab,
+            request
+          );
+          return false;
+        }
+      } catch (error) {
+        this.debug(
+          '[handleRequest] onBeforeRequest tab belongs to a container that does not exist',
+          tab,
+          request,
+          error.toString()
+        );
+      }
     }
 
     if (macAssignment) {
