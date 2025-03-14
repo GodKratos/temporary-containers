@@ -1,8 +1,7 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
-import { mixin } from '~/ui/mixin';
+import { defineComponent, ref, watch } from 'vue';
 
-export default mixins(mixin).extend({
+export default defineComponent({
   props: {
     id: {
       type: String,
@@ -32,10 +31,16 @@ export default mixins(mixin).extend({
       default: false,
     },
   },
-  watch: {
-    domainPattern(newDomainPattern): void {
-      this.$emit('update:domainPattern', newDomainPattern);
-    },
+  setup(props, { emit }) {
+    const domainPattern = ref(props.domainPattern);
+
+    watch(domainPattern, (newDomainPattern) => {
+      emit('update:domainPattern', newDomainPattern);
+    });
+
+    return {
+      domainPattern,
+    };
   },
 });
 </script>

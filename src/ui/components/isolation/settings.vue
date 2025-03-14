@@ -1,8 +1,9 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
+import { defineComponent, watch } from 'vue';
 import { mixin } from '~/ui/mixin';
 
-export default mixins(mixin).extend({
+export default defineComponent({
+  mixins: [mixin],
   props: {
     action: {
       type: String,
@@ -25,10 +26,15 @@ export default mixins(mixin).extend({
       default: false,
     },
   },
-  watch: {
-    action(newAction): void {
-      this.$emit('update:action', newAction);
-    },
+  setup(props, { emit }) {
+    watch(
+      () => props.action,
+      (newAction) => {
+        emit('update:action', newAction);
+      }
+    );
+
+    return {};
   },
 });
 </script>

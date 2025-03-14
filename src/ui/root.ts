@@ -10,8 +10,7 @@ window.$ = window.jQuery = jQuery;
 import 'jquery-address';
 import 'sortablejs';
 import 'fomantic-ui';
-import Vue, { VNode } from 'vue';
-import { ExtendedVue } from 'vue/types/vue';
+import { createApp, Component } from 'vue';
 import { getPermissions } from '~/shared';
 import { Tab, Permissions, PreferencesSchema, StorageLocal } from '~/types';
 
@@ -61,16 +60,12 @@ String.prototype.capitalize = function (): string {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-Array.prototype.move = function (from, to): void {
+Array.prototype.move = function (from: number, to: number): void {
   this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
-export default (
-  App: ExtendedVue<Vue, unknown, unknown, unknown, unknown>,
-  { popup = false }
-): void => {
-  new Vue({
-    el: '#app',
+export default (AppComponent: Component, { popup = false }): void => {
+  const app = createApp({
     data(): Data {
       return {
         app: {
@@ -82,10 +77,10 @@ export default (
     },
     watch: {
       app: {
-        async handler(app, oldApp): Promise<void> {
-          if (!app.initialized) {
-            return;
-          } else if (!oldApp.preferences) {
+        async handler(app: App, oldApp: App): Promise<void> {
+          if (!app.initialized) return;
+          
+          if (!oldApp.preferences) {
             this.maybeExpandPreferences(app);
             return;
           }
@@ -97,15 +92,13 @@ export default (
           try {
             await browser.runtime.sendMessage({
               method: 'savePreferences',
-              payload: {
-                preferences: app.preferences,
-              },
+              payload: { preferences: app.preferences },
             });
           } catch (error) {
             console.error('error while saving preferences', error);
             this.$root.$emit(
               'showError',
-              `Error while saving preferences: ${error.toString()}`
+              `Error while saving preferences: ${(error as Error).toString()}`
             );
             window.setTimeout(() => {
               this.$root.$emit('initialize');
@@ -117,10 +110,10 @@ export default (
         deep: true,
       },
     },
-    mounted(): void {
+    mounted() {
       this.initialize();
 
-      this.$root.$on('initialize', (options: InitializeOptions) => {
+      this.$root.$on('initialize', (options: InitializeOptions = {}) => {
         this.app = {
           initialized: false,
           popup,
@@ -134,7 +127,7 @@ export default (
     methods: {
       async initialize(options: InitializeOptions = {}): Promise<void> {
         let pongError = false;
-        let pongErrorMessage = false;
+        let pongErrorMessage = "";
         let initializeLoader = false;
 
         if (window.location.search.startsWith('?error')) {
@@ -156,8 +149,9 @@ export default (
           }
         } catch (error) {
           pongError = true;
-          pongErrorMessage = error;
+          pongErrorMessage = (error as Error).toString();
         }
+
         if (pongError) {
           if (initializeLoader) {
             this.$root.$emit('hideInitializeLoader');
@@ -167,28 +161,10 @@ export default (
         }
 
         const permissions = await getPermissions();
+        const storage = await this.loadStorage();
+        if (!storage) return;
 
-        let storage;
-        try {
-          storage = (await browser.storage.local.get()) as StorageLocal;
-          if (
-            !storage.preferences ||
-            !Object.keys(storage.preferences).length
-          ) {
-            this.$root.$emit(
-              'showError',
-              'Loading preferences failed, please try again'
-            );
-            return;
-          }
-        } catch (error) {
-          this.$root.$emit(
-            'showError',
-            `Loading preferences failed, please try again. ${error.toString()}`
-          );
-          return;
-        }
-        const currentTab = (await browser.tabs.getCurrent()) as Tab;
+        const currentTab = await browser.tabs.getCurrent() as Tab;
         const app: App = {
           initialized: true,
           popup,
@@ -199,10 +175,10 @@ export default (
         };
 
         if (popup) {
-          const [tab] = (await browser.tabs.query({
+          const [tab] = await browser.tabs.query({
             currentWindow: true,
             active: true,
-          })) as Tab[];
+          }) as Tab[];
           app.activeTab = {
             ...tab,
             parsedUrl: new URL(tab.url),
@@ -226,6 +202,27 @@ export default (
           this.$root.$emit('hideInitializeLoader');
         }
       },
+
+      async loadStorage(): Promise<StorageLocal | null> {
+        try {
+          const storage = await browser.storage.local.get() as StorageLocal;
+          if (!storage.preferences || !Object.keys(storage.preferences).length) {
+            this.$root.$emit(
+              'showError',
+              'Loading preferences failed, please try again'
+            );
+            return null;
+          }
+          return storage;
+        } catch (error) {
+          this.$root.$emit(
+            'showError',
+            `Loading preferences failed, please try again. ${(error as Error).toString()}`
+          );
+          return null;
+        }
+      },
+
       async checkPermissions(app: App): Promise<void> {
         if (app.preferences.notifications && !app.permissions.notifications) {
           // eslint-disable-next-line require-atomic-updates
@@ -278,32 +275,22 @@ export default (
           );
         }
       },
+
       maybeExpandPreferences(app: App): void {
         this.$nextTick(() => {
-          if (
-            app.preferences.ui.expandPreferences &&
-            !this.expandedPreferences
-          ) {
-            Array.from(Array(15)).map((_, idx) => {
+          if (app.preferences.ui.expandPreferences && !this.expandedPreferences) {
+            Array.from(Array(15)).forEach((_, idx) => {
               $('.ui.accordion:not(#glossaryAccordion)').accordion('open', idx);
             });
             this.expandedPreferences = true;
-          } else if (
-            !app.preferences.ui.expandPreferences &&
-            this.expandedPreferences
-          ) {
+          } else if (!app.preferences.ui.expandPreferences && this.expandedPreferences) {
             this.expandedPreferences = false;
             this.$root.$emit('initialize');
           }
         });
       },
     },
-    render(h): VNode {
-      return h(App, {
-        props: {
-          app: this.app,
-        },
-      });
-    },
   });
+
+  app.mount('#app');
 };

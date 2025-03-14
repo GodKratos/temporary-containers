@@ -1,76 +1,89 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { Popup } from '../root';
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     app: {
       type: Object as () => Popup,
       required: true,
     },
   },
-  data() {
-    return {
-      preferences: this.app.preferences,
-      permissions: this.app.permissions,
-      activeTab: this.app.activeTab,
-      isHttpTab: this.app.activeTab.url.startsWith('http'),
-    };
-  },
-  methods: {
-    openInTmp(): void {
+  setup(props) {
+    const preferences = ref(props.app.preferences);
+    const permissions = ref(props.app.permissions);
+    const activeTab = ref(props.app.activeTab);
+    const isHttpTab = computed(() => activeTab.value.url.startsWith('http'));
+
+    const openInTmp = () => {
       browser.runtime.sendMessage({
         method: 'createTabInTempContainer',
         payload: {
-          url: this.activeTab.url,
+          url: activeTab.value.url,
         },
       });
       window.close();
-    },
-    openInDeletesHistoryTmp(): void {
+    };
+
+    const openInDeletesHistoryTmp = () => {
       browser.runtime.sendMessage({
         method: 'createTabInTempContainer',
         payload: {
-          url: this.activeTab.url,
+          url: activeTab.value.url,
           deletesHistory: true,
         },
       });
       window.close();
-    },
-    convertToRegular(): void {
+    };
+
+    const convertToRegular = () => {
       browser.runtime.sendMessage({
         method: 'convertTempContainerToRegular',
         payload: {
-          cookieStoreId: this.activeTab.cookieStoreId,
-          tabId: this.activeTab.id,
-          url: this.activeTab.url,
+          cookieStoreId: activeTab.value.cookieStoreId,
+          tabId: activeTab.value.id,
+          url: activeTab.value.url,
         },
       });
       window.close();
-    },
-    convertToPermanent(): void {
+    };
+
+    const convertToPermanent = () => {
       browser.runtime.sendMessage({
         method: 'convertTempContainerToPermanent',
         payload: {
-          cookieStoreId: this.activeTab.cookieStoreId,
-          tabId: this.activeTab.id,
-          name: this.activeTab.parsedUrl.hostname,
-          url: this.activeTab.url,
+          cookieStoreId: activeTab.value.cookieStoreId,
+          tabId: activeTab.value.id,
+          name: activeTab.value.parsedUrl.hostname,
+          url: activeTab.value.url,
         },
       });
       window.close();
-    },
-    convertToTemporary(): void {
+    };
+
+    const convertToTemporary = () => {
       browser.runtime.sendMessage({
         method: 'convertPermanentToTempContainer',
         payload: {
-          cookieStoreId: this.activeTab.cookieStoreId,
-          tabId: this.activeTab.id,
-          url: this.activeTab.url,
+          cookieStoreId: activeTab.value.cookieStoreId,
+          tabId: activeTab.value.id,
+          url: activeTab.value.url,
         },
       });
       window.close();
-    },
+    };
+
+    return {
+      preferences,
+      permissions,
+      activeTab,
+      isHttpTab,
+      openInTmp,
+      openInDeletesHistoryTmp,
+      convertToRegular,
+      convertToPermanent,
+      convertToTemporary,
+    };
   },
 });
 </script>

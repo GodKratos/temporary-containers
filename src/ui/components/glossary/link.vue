@@ -1,7 +1,7 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     to: {
       type: String,
@@ -12,11 +12,14 @@ export default Vue.extend({
       default: '',
     },
   },
+  methods: {
+    show() {
+      this.$root.$emit('show', this.to);
+    },
+  },
 });
 </script>
 
 <template>
-  <span class="glossary-link" @click="$root.$emit('show', to)">{{
-    text || to
-  }}</span>
+  <span class="glossary-link" @click="show">{{ text || to }}</span>
 </template>

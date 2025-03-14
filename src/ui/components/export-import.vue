@@ -1,27 +1,8 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
+import { defineComponent, ref, onMounted } from 'vue';
 import { App } from '../root';
 import { mixin } from '../mixin';
 import { Permissions, PreferencesSchema } from '~/types';
-
-interface Data {
-  preferences: PreferencesSchema;
-  permissions: Permissions;
-  lastSyncExport:
-    | false
-    | {
-        date: number;
-        version: string;
-      };
-  lastFileExport:
-    | false
-    | {
-        date: number;
-        version: string;
-      };
-  download: false | { id: number; date: number; version: string };
-  addonVersion: string;
-}
 
 interface ExportedPreferences {
   version: string;
@@ -34,81 +15,76 @@ interface ImportedPreferences {
   preferences: PreferencesSchema;
 }
 
-export default mixins(mixin).extend({
+export default defineComponent({
+  mixins: [mixin],
   props: {
     app: {
       type: Object as () => App,
       required: true,
     },
   },
-  data(): Data {
-    return {
-      preferences: this.app.preferences,
-      permissions: this.app.permissions,
-      lastSyncExport: false,
-      lastFileExport: false,
-      download: false,
-      addonVersion: browser.runtime.getManifest().version,
-    };
-  },
-  async mounted() {
-    const { export: importPreferences } = await browser.storage.sync.get(
-      'export'
-    );
-    if (importPreferences) {
-      this.lastSyncExport = {
-        date: importPreferences.date,
-        version: importPreferences.version,
-      };
-    }
-    const { lastFileExport } = await browser.storage.local.get(
-      'lastFileExport'
-    );
-    if (lastFileExport) {
-      this.lastFileExport = lastFileExport;
-    }
+  setup(props) {
+    const preferences = ref(props.app.preferences);
+    const permissions = ref(props.app.permissions);
+    const lastSyncExport = ref<false | { date: number; version: string }>(false);
+    const lastFileExport = ref<false | { date: number; version: string }>(false);
+    const download = ref<false | { id: number; date: number; version: string }>(false);
+    const addonVersion = ref(browser.runtime.getManifest().version);
 
-    browser.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName !== 'sync' || !changes.export || !changes.export.newValue) {
-        return;
+    onMounted(async () => {
+      const { export: importPreferences } = await browser.storage.sync.get('export');
+      if (importPreferences) {
+        lastSyncExport.value = {
+          date: importPreferences.date,
+          version: importPreferences.version,
+        };
       }
-      this.lastSyncExport = {
-        date: changes.export.newValue.date,
-        version: changes.export.newValue.version,
-      };
+      const { lastFileExport: fileExport } = await browser.storage.local.get('lastFileExport');
+      if (fileExport) {
+        lastFileExport.value = fileExport;
+      }
+
+      browser.storage.onChanged.addListener((changes, areaName) => {
+        if (areaName !== 'sync' || !changes.export || !changes.export.newValue) {
+          return;
+        }
+        lastSyncExport.value = {
+          date: changes.export.newValue.date,
+          version: changes.export.newValue.version,
+        };
+      });
+
+      if (permissions.value.downloads) {
+        addDownloadListener();
+      }
     });
 
-    if (this.permissions.downloads) {
-      this.addDownloadListener();
-    }
-  },
-  methods: {
-    getPreferences(): ExportedPreferences {
-      const preferences = this.clone(this.preferences);
-      preferences.isolation.global.excludedContainers = [];
+    const getPreferences = (): ExportedPreferences => {
+      const clonedPreferences = JSON.parse(JSON.stringify(preferences.value));
+      clonedPreferences.isolation.global.excludedContainers = [];
 
       return {
         version: browser.runtime.getManifest().version,
         date: Date.now(),
-        preferences,
+        preferences: clonedPreferences,
       };
-    },
+    };
 
-    async exportPreferences(): Promise<void> {
-      if (!this.permissions.downloads) {
-        this.permissions.downloads = await browser.permissions.request({
+    const exportPreferences = async (): Promise<void> => {
+      if (!permissions.value.downloads) {
+        permissions.value.downloads = await browser.permissions.request({
           permissions: ['downloads'],
         });
-        if (!this.permissions.downloads) {
+        if (!permissions.value.downloads) {
           return;
         }
-        this.addDownloadListener();
+        addDownloadListener();
       }
 
-      const preferences = this.getPreferences();
-      const exportedPreferences = JSON.stringify(preferences, null, 2);
+      const preferencesData = getPreferences();
+      const exportedPreferences = JSON.stringify(preferencesData, null, 2);
 
-      const date = new Date(preferences.date);
+      const date = new Date(preferencesData.date);
       const dateString = [
         date.getFullYear(),
         date.getMonth() + 1,
@@ -125,14 +101,14 @@ export default mixins(mixin).extend({
       const url = URL.createObjectURL(blob);
 
       try {
-        this.download = {
+        download.value = {
           id: await browser.downloads.download({
             url,
             filename: `temporary_containers_preferences_${dateString}_${timeString}.json`,
             saveAs: true,
           }),
-          date: preferences.date,
-          version: preferences.version,
+          date: preferencesData.date,
+          version: preferencesData.version,
         };
       } catch (error) {
         this.$root.$emit(
@@ -141,13 +117,11 @@ export default mixins(mixin).extend({
           { close: true }
         );
       }
-    },
+    };
 
-    async exportPreferencesSync(): Promise<void> {
+    const exportPreferencesSync = async (): Promise<void> => {
       try {
-        const { export: importPreferences } = await browser.storage.sync.get(
-          'export'
-        );
+        const { export: importPreferences } = await browser.storage.sync.get('export');
         if (
           importPreferences &&
           !window.confirm(`
@@ -160,7 +134,7 @@ export default mixins(mixin).extend({
           return;
         }
         await browser.storage.sync.set({
-          export: this.getPreferences(),
+          export: getPreferences(),
         });
         this.$root.$emit(
           'showMessage',
@@ -172,13 +146,11 @@ export default mixins(mixin).extend({
           `Exporting to Firefox Sync failed: ${error.toString()}`
         );
       }
-    },
+    };
 
-    async importPreferencesSync(): Promise<void> {
+    const importPreferencesSync = async (): Promise<void> => {
       try {
-        const { export: importPreferences } = await browser.storage.sync.get(
-          'export'
-        );
+        const { export: importPreferences } = await browser.storage.sync.get('export');
         if (!importPreferences || !Object.keys(importPreferences).length) {
           this.$root.$emit(
             'showError',
@@ -187,8 +159,8 @@ export default mixins(mixin).extend({
           );
           return;
         }
-        if (this.confirmedImportPreferences(importPreferences)) {
-          this.saveImportedPreferences(importPreferences);
+        if (confirmedImportPreferences(importPreferences)) {
+          saveImportedPreferences(importPreferences);
         }
       } catch (error) {
         this.$root.$emit(
@@ -196,13 +168,12 @@ export default mixins(mixin).extend({
           `Importing from Firefox Sync failed: ${error.toString()}`
         );
       }
-    },
+    };
 
-    confirmedImportPreferences(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const confirmedImportPreferences = (
       importPreferences: any,
       fileName?: string
-    ): boolean {
+    ): boolean => {
       return window.confirm(`
         ${
           fileName
@@ -213,13 +184,13 @@ export default mixins(mixin).extend({
         Version: ${importPreferences.version}\n\n
         All existing preferences are overwritten.
       `);
-    },
+    };
 
-    async importPreferences({
+    const importPreferences = async ({
       target,
     }: {
       target: HTMLInputElement;
-    }): Promise<void> {
+    }): Promise<void> => {
       const [file] = target.files as FileList;
       if (!file) {
         return;
@@ -246,27 +217,25 @@ export default mixins(mixin).extend({
         }
       );
 
-      if (this.confirmedImportPreferences(importPreferences, file.name)) {
-        this.saveImportedPreferences(importPreferences);
+      if (confirmedImportPreferences(importPreferences, file.name)) {
+        saveImportedPreferences(importPreferences);
       }
-    },
+    };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async saveImportedPreferences(
+    const saveImportedPreferences = async (
       importedPreferences: ImportedPreferences
-    ): Promise<void> {
-      // firefox can't request permissions after async calls in user input handlers
-      if (!this.permissions.notifications) {
+    ): Promise<void> => {
+      if (!permissions.value.notifications) {
         importedPreferences.preferences.notifications = false;
       }
-      if (!this.permissions.bookmarks) {
+      if (!permissions.value.bookmarks) {
         importedPreferences.preferences.contextMenuBookmarks = false;
         importedPreferences.preferences.deletesHistory.contextMenuBookmarks = false;
       }
-      if (!this.permissions.history) {
+      if (!permissions.value.history) {
         importedPreferences.preferences.deletesHistory.active = false;
       }
-      if (!this.permissions.webNavigation) {
+      if (!permissions.value.webNavigation) {
         importedPreferences.preferences.scripts.active = false;
       }
 
@@ -279,9 +248,9 @@ export default mixins(mixin).extend({
       });
 
       this.$root.$emit('initialize', { showMessage: 'Preferences imported.' });
-    },
+    };
 
-    async wipePreferencesSync(): Promise<void> {
+    const wipePreferencesSync = async (): Promise<void> => {
       if (
         !window.confirm(`
         Wipe Firefox sync export?\n
@@ -293,7 +262,7 @@ export default mixins(mixin).extend({
 
       try {
         await browser.storage.sync.clear();
-        this.lastSyncExport = false;
+        lastSyncExport.value = false;
         this.$root.$emit(
           'showMessage',
           'Successfully wiped Firefox Sync export'
@@ -304,32 +273,46 @@ export default mixins(mixin).extend({
           `Wiping Firefox Sync failed: ${error.toString()}`
         );
       }
-    },
+    };
 
-    addDownloadListener(): void {
+    const addDownloadListener = (): void => {
       browser.downloads.onChanged.addListener(async (downloadDelta) => {
         console.log('downloadDelta', downloadDelta);
         if (
-          !this.download ||
-          this.download.id !== downloadDelta.id ||
+          !download.value ||
+          download.value.id !== downloadDelta.id ||
           !downloadDelta.state ||
           downloadDelta.state.current !== 'complete'
         ) {
           return;
         }
-        const lastFileExport = {
-          date: this.download.date,
-          version: this.download.version,
+        const lastFileExportData = {
+          date: download.value.date,
+          version: download.value.version,
         };
-        this.lastFileExport = lastFileExport;
-        this.download = false;
+        lastFileExport.value = lastFileExportData;
+        download.value = false;
 
         browser.runtime.sendMessage({
           method: 'lastFileExport',
-          payload: { lastFileExport },
+          payload: { lastFileExport: lastFileExportData },
         });
       });
-    },
+    };
+
+    return {
+      preferences,
+      permissions,
+      lastSyncExport,
+      lastFileExport,
+      download,
+      addonVersion,
+      exportPreferences,
+      exportPreferencesSync,
+      importPreferencesSync,
+      importPreferences,
+      wipePreferencesSync,
+    };
   },
 });
 </script>

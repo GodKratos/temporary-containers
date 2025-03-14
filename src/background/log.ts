@@ -1,18 +1,15 @@
 import { Debug } from '~/types';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export class Log {
-  public DEBUG = false;
-  public stringify = true;
+  private DEBUG = false;
+  private stringify = true;
   private checkedLocalStorage = false;
-  private checkLocalStoragePromise = this.checkLocalStorage();
+  private checkLocalStoragePromise: Promise<void>;
 
   constructor() {
+    this.checkLocalStoragePromise = this.checkLocalStorage();
     this.debug = this.debug.bind(this);
-    browser.runtime.onInstalled.addListener(
-      this.onInstalledListener.bind(this)
-    );
+    browser.runtime.onInstalled.addListener(this.onInstalledListener.bind(this));
   }
 
   public debug: Debug = async (...args: any[]): Promise<void> => {
@@ -22,9 +19,7 @@ export class Log {
       await this.checkLocalStoragePromise;
     }
 
-    if (!this.DEBUG) {
-      return;
-    }
+    if (!this.DEBUG) return;
 
     if (!date) {
       date = new Date().toUTCString();
@@ -47,29 +42,39 @@ export class Log {
     }
   };
 
-  checkLocalStorage(): void | Promise<void> {
-    if (this.DEBUG) {
-      return;
+  private processArg(arg: unknown): unknown {
+    if (typeof arg === 'object' && arg && 'favIconUrl' in arg) {
+      const { favIconUrl, ...rest } = arg as { favIconUrl: string };
+      return rest;
     }
+    return arg;
+  }
 
-    // let's put this in the js event queue, just to make sure
-    // that localstorage doesn't block registering event-listeners at all
-    return new Promise((resolve) =>
+  private async checkLocalStorage(): Promise<void> {
+    if (this.DEBUG) return;
+
+    await new Promise<void>(resolve => 
       setTimeout(() => {
-        if (window.localStorage.getItem('debug-dev') === 'true') {
-          this.DEBUG = true;
-          this.stringify = false;
-          this.checkedLocalStorage = true;
-          this.debug('[log] enabled debug-dev because of localstorage item');
-        } else if (window.localStorage.getItem('debug') === 'true') {
-          this.DEBUG = true;
-          this.stringify = true;
-          this.checkedLocalStorage = true;
-          this.debug('[log] enabled debug because of localstorage item');
-        }
+        this.handleDebugSettings();
         resolve();
       })
     );
+  }
+
+  private handleDebugSettings(): void {
+    if (localStorage.getItem('debug-dev') === 'true') {
+      this.enableDebug(false);
+      this.debug('[log] enabled debug-dev because of localstorage item');
+    } else if (localStorage.getItem('debug') === 'true') {
+      this.enableDebug(true);
+      this.debug('[log] enabled debug because of localstorage item');
+    }
+  }
+
+  private enableDebug(stringify: boolean): void {
+    this.DEBUG = true;
+    this.stringify = stringify;
+    this.checkedLocalStorage = true;
   }
 
   onInstalledListener(details: any): void {

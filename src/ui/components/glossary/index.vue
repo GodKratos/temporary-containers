@@ -1,6 +1,5 @@
 <script lang="ts">
-import Vue from 'vue';
-
+import { defineComponent, ref, onMounted, watch, nextTick, getCurrentInstance } from 'vue';
 import GlossaryLink from './link.vue';
 
 interface GlossaryDefaults {
@@ -19,11 +18,7 @@ const glossaryDefaults = (): GlossaryDefaults => ({
   historyPosition: 0,
 });
 
-interface Data extends GlossaryDefaults {
-  createdElements: HTMLSpanElement[];
-}
-
-export default Vue.extend({
+export default defineComponent({
   components: {
     GlossaryLink,
   },
@@ -33,33 +28,15 @@ export default Vue.extend({
       required: true,
     },
   },
-  data(): Data {
-    return {
-      createdElements: [],
-      ...glossaryDefaults(),
-    };
-  },
-  watch: {
-    app(newApp): void {
-      if (!newApp.initialized) {
-        this.cleanup();
-        return;
-      }
+  setup(props) {
+    const createdElements = ref<HTMLSpanElement[]>([]);
+    const origin = ref('');
+    const active = ref('');
+    const section = ref('');
+    const history = ref<string[]>([]);
+    const historyPosition = ref(0);
 
-      this.$nextTick(() => {
-        window.setTimeout(() => {
-          this.initialize();
-        }, 100);
-      });
-    },
-  },
-  mounted() {
-    this.$root.$on('show', (target: string) => {
-      this.show(target);
-    });
-  },
-  methods: {
-    initialize(): void {
+    const initialize = () => {
       $('[data-glossary]').each((idx, element) => {
         if (element.dataset.glossaryLabel !== '' && element.dataset.glossary) {
           const infoText = document.createElement('span');
@@ -69,14 +46,14 @@ export default Vue.extend({
             infoText.id = 'glossaryText';
             element.appendChild(infoText);
           }
-          this.createdElements.push(infoText);
+          createdElements.value.push(infoText);
         }
 
         const infoIcon = document.createElement('i');
         infoIcon.className =
           'icon-info-circled opaque-info-circle glossary-help';
         element.appendChild(infoIcon);
-        this.createdElements.push(infoIcon);
+        createdElements.value.push(infoIcon);
 
         let iconHovered = false;
         $(infoIcon).hover(
@@ -110,13 +87,12 @@ export default Vue.extend({
             if (!glossary) {
               return;
             }
-            this.origin = this.active = glossary;
+            origin.value = active.value = glossary;
 
-            const glossaryRef = this.$refs.glossary as HTMLElement;
-            const glossaryContainer = this.$refs
-              .glossaryContainer as HTMLElement;
+            const glossaryRef = document.querySelector('.glossary') as HTMLElement;
+            const glossaryContainer = document.querySelector('.glossary-container') as HTMLElement;
 
-            if (['Automatic Mode', 'Toolbar Popup'].includes(this.origin)) {
+            if (['Automatic Mode', 'Toolbar Popup'].includes(origin.value)) {
               glossaryRef.style.minHeight = 'unset';
               glossaryRef.style.maxHeight = 'unset';
               glossaryContainer.style.minWidth = '450px';
@@ -130,54 +106,99 @@ export default Vue.extend({
           },
 
           onVisible: () => {
-            if (['Global', 'Per Domain'].includes(this.origin)) {
-              this.section = this.origin;
+            if (['Global', 'Per Domain'].includes(origin.value)) {
+              section.value = origin.value;
             } else if (element.dataset.glossarySection) {
-              this.section = element.dataset.glossarySection;
+              section.value = element.dataset.glossarySection;
             }
 
-            this.history.push(this.origin);
+            history.value.push(origin.value);
 
-            this.$nextTick(() => {
+            nextTick(() => {
               $(element).popup('reposition');
             });
           },
 
           onHidden: () => {
-            Object.assign(this.$data, glossaryDefaults());
+            Object.assign({ origin, active, section, history, historyPosition }, glossaryDefaults());
           },
         });
       });
-    },
-    show(target: string): void {
-      if (this.history.length - 1 > this.historyPosition) {
-        this.history.splice(this.historyPosition + 1);
-      }
-      this.history.push(target);
-      this.historyPosition = this.history.length - 1;
+    };
 
-      this.active = target;
-    },
-    historyBack(): void {
-      this.active = this.history[--this.historyPosition];
-    },
-    historyForward(): void {
-      this.active = this.history[++this.historyPosition];
-    },
-    external(url: string): void {
+    const show = (target: string) => {
+      if (history.value.length - 1 > historyPosition.value) {
+        history.value.splice(historyPosition.value + 1);
+      }
+      history.value.push(target);
+      historyPosition.value = history.value.length - 1;
+
+      active.value = target;
+    };
+
+    const historyBack = () => {
+      active.value = history.value[--historyPosition.value];
+    };
+
+    const historyForward = () => {
+      active.value = history.value[++historyPosition.value];
+    };
+
+    const external = (url: string) => {
       browser.tabs.create({
         url,
       });
-    },
-    stop(event: Event): void {
+    };
+
+    const stop = (event: Event) => {
       event.stopPropagation();
       event.preventDefault();
-    },
-    cleanup(): void {
-      this.createdElements.map((created) => {
+    };
+
+    const cleanup = () => {
+      createdElements.value.map((created) => {
         created.remove();
       });
-    },
+    };
+
+    watch(
+      () => props.app,
+      (newApp) => {
+        if (!newApp.initialized) {
+          cleanup();
+          return;
+        }
+
+        nextTick(() => {
+          window.setTimeout(() => {
+            initialize();
+          }, 100);
+        });
+      }
+    );
+
+    onMounted(() => {
+      const root = getCurrentInstance()?.proxy;
+      root?.$root.$on('show', (target: string) => {
+        show(target);
+      });
+    });
+
+    return {
+      createdElements,
+      origin,
+      active,
+      section,
+      history,
+      historyPosition,
+      initialize,
+      show,
+      historyBack,
+      historyForward,
+      external,
+      stop,
+      cleanup,
+    };
   },
 });
 </script>
@@ -261,36 +282,36 @@ ul {
       <div class="ui divider" style="margin: 0;" />
       <div class="glossary-content">
         <div v-show="active === 'Navigation'">
-          Opening <glossary-link to="Target Domain" text="Target Domains" /> in
+          Opening <GlossaryLink to="Target Domain" text="Target Domains" /> in
           tabs, or new tabs, through e.g. address bar or
-          <glossary-link to="Mouse Click" />
+          <GlossaryLink to="Mouse Click" />
           <ul>
             <li v-if="section === 'Per Domain'">
-              <glossary-link to="Use Global" />
+              <GlossaryLink to="Use Global" />
             </li>
-            <li><glossary-link to="Never" /></li>
+            <li><GlossaryLink to="Never" /></li>
             <li>
-              <glossary-link to="Different from Tab Domain & Subdomains" />
+              <GlossaryLink to="Different from Tab Domain & Subdomains" />
             </li>
-            <li><glossary-link to="Different from Tab Domain" /></li>
-            <li><glossary-link to="Always" /></li>
+            <li><GlossaryLink to="Different from Tab Domain" /></li>
+            <li><GlossaryLink to="Always" /></li>
           </ul>
         </div>
 
         <div v-show="active === 'Mouse Click'">
-          Clicking links on websites in <glossary-link to="Current Tab" /> which
-          result in <glossary-link to="Navigation" /> to
-          <glossary-link to="Target Domain" /><br />
+          Clicking links on websites in <GlossaryLink to="Current Tab" /> which
+          result in <GlossaryLink to="Navigation" /> to
+          <GlossaryLink to="Target Domain" /><br />
           <ul>
             <li v-if="section === 'Per Domain'">
-              <glossary-link to="Use Global" />
+              <GlossaryLink to="Use Global" />
             </li>
-            <li><glossary-link to="Never" /></li>
+            <li><GlossaryLink to="Never" /></li>
             <li>
-              <glossary-link to="Different from Tab Domain & Subdomains" />
+              <GlossaryLink to="Different from Tab Domain & Subdomains" />
             </li>
-            <li><glossary-link to="Different from Tab Domain" /></li>
-            <li><glossary-link to="Always" /></li>
+            <li><GlossaryLink to="Different from Tab Domain" /></li>
+            <li><GlossaryLink to="Always" /></li>
           </ul>
           <div style="font-size: 12px;">
             Note: With Navigation Isolation configured, you don't need to
@@ -305,22 +326,22 @@ ul {
         </div>
 
         <div v-show="active === 'Target Domain'">
-          <glossary-link to="Domain" /> which a tab
-          <glossary-link to="Navigation" text="navigates" /> to
+          <GlossaryLink to="Domain" /> which a tab
+          <GlossaryLink to="Navigation" text="navigates" /> to
         </div>
         <div v-show="active === 'Isolation'">
-          Cancel <glossary-link to="Navigation" /> and open
-          <glossary-link to="Target Domain" /> in new Temporary Container tab
+          Cancel <GlossaryLink to="Navigation" /> and open
+          <GlossaryLink to="Target Domain" /> in new Temporary Container tab
         </div>
 
         <div v-show="active === 'Global'">
           Configurations apply to all tabs and result in
-          <glossary-link to="Isolation" /> if they match
+          <GlossaryLink to="Isolation" /> if they match
           <ul>
-            <li><glossary-link to="Navigation" /></li>
-            <li><glossary-link to="Mouse Click" /></li>
-            <li><glossary-link to="Exclude Permanent Containers" /></li>
-            <li><glossary-link to="Exclude Target Domains" /></li>
+            <li><GlossaryLink to="Navigation" /></li>
+            <li><GlossaryLink to="Mouse Click" /></li>
+            <li><GlossaryLink to="Exclude Permanent Containers" /></li>
+            <li><GlossaryLink to="Exclude Target Domains" /></li>
           </ul>
           <br />
           <a
@@ -337,19 +358,19 @@ ul {
 
         <div v-show="active === 'Per Domain'">
           Configurations that apply if the
-          <glossary-link to="Target Domain" /> matches the
-          <glossary-link to="Domain Pattern" />
+          <GlossaryLink to="Target Domain" /> matches the
+          <GlossaryLink to="Domain Pattern" />
           <ul>
-            <li><glossary-link to="Always open in" /></li>
+            <li><GlossaryLink to="Always open in" /></li>
           </ul>
           <br />
           Configurations that apply if the
-          <glossary-link to="Tab Domain" /> matches the
-          <glossary-link to="Domain Pattern" />
+          <GlossaryLink to="Tab Domain" /> matches the
+          <GlossaryLink to="Domain Pattern" />
           <ul>
-            <li><glossary-link to="Navigation" /></li>
-            <li><glossary-link to="Mouse Click" /></li>
-            <li><glossary-link to="Exclude Target Domains" /></li>
+            <li><GlossaryLink to="Navigation" /></li>
+            <li><GlossaryLink to="Mouse Click" /></li>
+            <li><GlossaryLink to="Exclude Target Domains" /></li>
           </ul>
           <br />
           <a
@@ -369,32 +390,32 @@ ul {
         </div>
 
         <div v-show="active === 'Subdomain'">
-          "Deeper levels" of a <glossary-link to="Domain" />, e.g.
+          "Deeper levels" of a <GlossaryLink to="Domain" />, e.g.
           "sub.example.com" or "foo.bar.example.com"
         </div>
 
         <div v-show="active === 'Tab Domain'">
-          <glossary-link to="Domain" /> currently loaded in a tab
+          <GlossaryLink to="Domain" /> currently loaded in a tab
         </div>
 
         <div v-show="active === 'Never'">
           Never matches and hence never results in
-          <glossary-link to="Isolation" />
+          <GlossaryLink to="Isolation" />
         </div>
 
         <div v-show="active === 'Different from Tab Domain & Subdomains'">
-          <glossary-link to="Target Domain" /> is different from the
-          <glossary-link to="Tab Domain" /> and its
-          <glossary-link to="Subdomain" text="Subdomains" />
+          <GlossaryLink to="Target Domain" /> is different from the
+          <GlossaryLink to="Tab Domain" /> and its
+          <GlossaryLink to="Subdomain" text="Subdomains" />
         </div>
 
         <div v-show="active === 'Different from Tab Domain'">
-          <glossary-link to="Target Domain" /> is different from the
-          <glossary-link to="Tab Domain" />
+          <GlossaryLink to="Target Domain" /> is different from the
+          <GlossaryLink to="Tab Domain" />
         </div>
 
         <div v-show="active === 'Always'">
-          Matches every <glossary-link to="Navigation" /><br />
+          Matches every <GlossaryLink to="Navigation" /><br />
           <br />
           <div style="font-size: 12px;">
             Note: Not every on-website navigation is an actual navigation that
@@ -404,15 +425,15 @@ ul {
         </div>
 
         <div v-show="['Domain Pattern', 'Exclusion Pattern'].includes(active)">
-          Can be one of <glossary-link to="Domain" />,
-          <glossary-link to="Subdomain" />,
-          <glossary-link to="Glob/Wildcard" /> or (advanced)
-          <glossary-link to="RegExp" />
+          Can be one of <GlossaryLink to="Domain" />,
+          <GlossaryLink to="Subdomain" />,
+          <GlossaryLink to="Glob/Wildcard" /> or (advanced)
+          <GlossaryLink to="RegExp" />
         </div>
 
         <div v-show="active === 'Permanent Containers'">
           All containers that are neither Temporary nor the
-          <glossary-link to="Default Container" />
+          <GlossaryLink to="Default Container" />
         </div>
 
         <div v-show="active === 'Default Container'">
@@ -424,19 +445,19 @@ ul {
         </div>
 
         <div v-show="active === 'Exclude Permanent Containers'">
-          <glossary-link to="Navigation" text="Navigations" /> in
-          <glossary-link to="Permanent Containers" /> added here will
-          <glossary-link to="Never" /> result in
-          <glossary-link to="Isolation" />
+          <GlossaryLink to="Navigation" text="Navigations" /> in
+          <GlossaryLink to="Permanent Containers" /> added here will
+          <GlossaryLink to="Never" /> result in
+          <GlossaryLink to="Isolation" />
         </div>
 
         <div v-show="active === 'Exclude Target Domains'">
-          <glossary-link to="Navigation" text="Navigations" /> to
-          <glossary-link to="Target Domain" text="Target Domains" /> matching
+          <GlossaryLink to="Navigation" text="Navigations" /> to
+          <GlossaryLink to="Target Domain" text="Target Domains" /> matching
           the
-          <glossary-link to="Exclusion Pattern" text="Exclusion Patterns" />
-          added here will <glossary-link to="Never" /> result in
-          <glossary-link to="Isolation" />
+          <GlossaryLink to="Exclusion Pattern" text="Exclusion Patterns" />
+          added here will <GlossaryLink to="Never" /> result in
+          <GlossaryLink to="Isolation" />
         </div>
 
         <div v-show="active === 'Glob/Wildcard'">
@@ -444,30 +465,30 @@ ul {
           <br /><br />
           <strong>*.example.com</strong> would not match
           <strong>example.com</strong>, so you might need two
-          <glossary-link to="Domain Pattern" text="Domain Patterns" />.
+          <GlossaryLink to="Domain Pattern" text="Domain Patterns" />.
         </div>
 
         <div v-show="active === 'RegExp'">
           Parsed as RegExp when<br />
           <strong>/pattern/flags</strong><br />
           is given and matches the full URL instead of just
-          <glossary-link to="Domain" />.
+          <GlossaryLink to="Domain" />.
         </div>
 
         <div v-show="active === 'Always open in'">
           <strong>Enabled:</strong>
-          <glossary-link to="Navigation" text="Navigations" /> where any of the
+          <GlossaryLink to="Navigation" text="Navigations" /> where any of the
           following matches will get
-          <glossary-link to="Isolation" text="isolated" />
+          <GlossaryLink to="Isolation" text="isolated" />
           <ul>
             <li>Originates from a new tab</li>
             <li>
-              <glossary-link to="Target Domain" /> doesn't match Domain Pattern
+              <GlossaryLink to="Target Domain" /> doesn't match Domain Pattern
               and is different from the
-              <glossary-link to="Tab Domain" />
+              <GlossaryLink to="Tab Domain" />
             </li>
             <li>
-              Current container is <glossary-link to="Default Container" />
+              Current container is <GlossaryLink to="Default Container" />
             </li>
           </ul>
           <br />
@@ -490,11 +511,11 @@ ul {
           <br />
           <br />
           <strong>Enabled:</strong>
-          <glossary-link to="Navigation" text="Navigations" /> in
-          <glossary-link to="Permanent Containers" /> whose
-          <glossary-link to="Target Domain" /> isn't MAC-"Always open in"
+          <GlossaryLink to="Navigation" text="Navigations" /> in
+          <GlossaryLink to="Permanent Containers" /> whose
+          <GlossaryLink to="Target Domain" /> isn't MAC-"Always open in"
           assigned to that container get
-          <glossary-link to="Isolation" text="isolated" />
+          <GlossaryLink to="Isolation" text="isolated" />
           <br />
           <br />
           <strong>Disabled:</strong> No effect

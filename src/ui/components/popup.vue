@@ -1,6 +1,6 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
-import { mixin } from '~/ui/mixin';
+import { defineComponent, ref, watch, nextTick } from 'vue';
+import { useApp } from '../root';
 import IsolationGlobal from './isolation/global.vue';
 import IsolationPerDomain from './isolation/perdomain.vue';
 import Actions from './actions.vue';
@@ -8,9 +8,8 @@ import Statistics from './statistics.vue';
 import Message from './message.vue';
 import Breadcrumb from './breadcrumb.vue';
 import Glossary from './glossary/index.vue';
-import { App } from '../root';
 
-export default mixins(mixin).extend({
+export default defineComponent({
   components: {
     IsolationGlobal,
     IsolationPerDomain,
@@ -22,53 +21,56 @@ export default mixins(mixin).extend({
   },
   props: {
     app: {
-      type: Object as () => App,
+      type: Object as () => ReturnType<typeof useApp>,
       required: true,
     },
   },
-  data() {
-    return {
-      initialized: false,
-      show: false,
-    };
-  },
-  watch: {
-    app(app: App): void {
-      if (!app.initialized) {
-        return;
-      }
+  setup(props) {
+    const initialized = ref(false);
+    const show = ref(false);
 
-      this.initialized = true;
-      this.$nextTick(() => {
-        $('.ui.accordion').accordion({
-          animateChildren: false,
-          duration: 0,
+    watch(
+      () => props.app,
+      (app) => {
+        if (!app.initialized) {
+          return;
+        }
+
+        initialized.value = true;
+        nextTick(() => {
+          $('.ui.accordion').accordion({
+            animateChildren: false,
+            duration: 0,
+          });
+
+          $('.ui.sidebar').sidebar({
+            transition: 'overlay',
+          });
+
+          show.value = true;
+          $(document).tab('change tab', props.app.preferences.ui.popupDefaultTab);
         });
+      },
+      { immediate: true }
+    );
 
-        $('.ui.sidebar').sidebar({
-          transition: 'overlay',
-        });
-
-        this.show = true;
-        $(document).tab('change tab', this.app.preferences.ui.popupDefaultTab);
-      });
-    },
-  },
-  methods: {
-    changeTab(tab: string): void {
+    const changeTab = (tab: string) => {
       $('.ui.sidebar').sidebar('hide');
       $(document).tab('change tab', tab);
-    },
-    toggleSidebar(): void {
+    };
+
+    const toggleSidebar = () => {
       $('.ui.sidebar').sidebar('toggle');
-    },
-    createTmp(): void {
+    };
+
+    const createTmp = () => {
       browser.runtime.sendMessage({
         method: 'createTabInTempContainer',
       });
       window.close();
-    },
-    createDeletesHistoryTmp(): void {
+    };
+
+    const createDeletesHistoryTmp = () => {
       browser.runtime.sendMessage({
         method: 'createTabInTempContainer',
         payload: {
@@ -76,8 +78,9 @@ export default mixins(mixin).extend({
         },
       });
       window.close();
-    },
-    async openPreferences(): Promise<void> {
+    };
+
+    const openPreferences = async () => {
       const [tab] = await browser.tabs.query({
         url: browser.runtime.getURL('options.html'),
       });
@@ -93,16 +96,28 @@ export default mixins(mixin).extend({
         });
       }
       window.close();
-    },
-    toggleIsolation(): void {
-      this.app.storage.isolation.active = !this.app.storage.isolation.active;
+    };
+
+    const toggleIsolation = () => {
+      props.app.storage.isolation.active = !props.app.storage.isolation.active;
       browser.runtime.sendMessage({
         method: 'saveIsolation',
         payload: {
-          isolation: this.app.storage.isolation,
+          isolation: props.app.storage.isolation,
         },
       });
-    },
+    };
+
+    return {
+      initialized,
+      show,
+      changeTab,
+      toggleSidebar,
+      createTmp,
+      createDeletesHistoryTmp,
+      openPreferences,
+      toggleIsolation,
+    };
   },
 });
 </script>

@@ -1,81 +1,70 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 
-interface Data {
-  message: false | string;
-  error: boolean;
-  initializeLoader: boolean;
-  initializeError: boolean;
-  initializeErrorMessage: null | string;
-}
+export default defineComponent({
+  setup() {
+    const message = ref<false | string>(false);
+    const error = ref(false);
+    const initializeLoader = ref(false);
+    const initializeError = ref(false);
+    const initializeErrorMessage = ref<null | string>(null);
 
-export default Vue.extend({
-  data(): Data {
-    return {
-      message: false,
-      error: false,
-      initializeLoader: false,
-      initializeError: false,
-      initializeErrorMessage: null,
-    };
-  },
-  mounted() {
-    if (window.location.search.startsWith('?error')) {
-      const searchParams = new window.URLSearchParams(
-        document.location.search.substring(1)
+    onMounted(() => {
+      if (window.location.search.startsWith('?error')) {
+        const searchParams = new window.URLSearchParams(
+          document.location.search.substring(1)
+        );
+        initializeErrorMessage.value = searchParams.get('error');
+      }
+
+      const root = getCurrentInstance()?.proxy;
+
+      root?.$on(
+        'showMessage',
+        (msg: string, options: { close: boolean } = { close: true }) => {
+          error.value = false;
+          message.value = msg;
+
+          if (options.close) {
+            setTimeout(() => {
+              message.value = false;
+            }, 3000);
+          }
+        }
       );
-      this.initializeErrorMessage = searchParams.get('error');
-    }
+      root?.$on('hideMessage', () => {
+        message.value = false;
+      });
+      root?.$on(
+        'showError',
+        (msg: string, options: { close: boolean } = { close: false }) => {
+          error.value = true;
+          message.value = msg;
 
-    this.$root.$on(
-      'showMessage',
-      (message: string, options: { close: boolean } = { close: true }) => {
-        this.error = false;
-        this.message = message;
-
-        if (options.close) {
-          setTimeout(() => {
-            this.message = false;
-          }, 3000);
+          if (options.close) {
+            setTimeout(() => {
+              message.value = false;
+            }, 5000);
+          }
         }
-      }
-    );
-    this.$root.$on('hideMessage', () => {
-      this.message = false;
+      );
+      root?.$on('showInitializeLoader', () => {
+        initializeLoader.value = true;
+      });
+      root?.$on('hideInitializeLoader', () => {
+        initializeLoader.value = false;
+      });
+      root?.$on('showInitializeError', async () => {
+        initializeError.value = true;
+      });
     });
-    this.$root.$on(
-      'showError',
-      (message: string, options: { close: boolean } = { close: false }) => {
-        this.error = true;
-        this.message = message;
 
-        if (options.close) {
-          setTimeout(() => {
-            this.message = false;
-          }, 5000);
-        }
-      }
-    );
-    this.$root.$on('showInitializeLoader', () => {
-      this.initializeLoader = true;
-    });
-    this.$root.$on('hideInitializeLoader', () => {
-      this.initializeLoader = false;
-    });
-    this.$root.$on('showInitializeError', async () => {
-      this.initializeError = true;
-    });
-  },
-  methods: {
-    reload(): void {
+    const reload = () => {
       browser.runtime.reload();
-    },
-    async uninstall(): Promise<void> {
-      if (
-        !window.confirm(`
-        Uninstall?
-      `)
-      ) {
+    };
+
+    const uninstall = async () => {
+      if (!window.confirm(`Uninstall?`)) {
         return;
       }
 
@@ -83,15 +72,27 @@ export default Vue.extend({
         url: 'https://addons.mozilla.org/firefox/addon/temporary-containers',
       });
       browser.management.uninstallSelf();
-    },
-    debug(): void {
+    };
+
+    const debug = () => {
       browser.tabs.create({
         url: 'https://github.com/stoically/temporary-containers/issues',
       });
       browser.tabs.create({
         url: 'https://github.com/stoically/temporary-containers/wiki/Debug-Log',
       });
-    },
+    };
+
+    return {
+      message,
+      error,
+      initializeLoader,
+      initializeError,
+      initializeErrorMessage,
+      reload,
+      uninstall,
+      debug,
+    };
   },
 });
 </script>

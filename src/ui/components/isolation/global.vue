@@ -1,11 +1,11 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
-import { mixin } from '~/ui/mixin';
+import { defineComponent, ref, onMounted, nextTick } from 'vue';
+import { useMixin } from '~/ui/mixin';
 import DomainPattern from '../domainpattern.vue';
 import Settings from './settings.vue';
 import { App } from '~/ui/root';
 
-export default mixins(mixin).extend({
+export default defineComponent({
   components: {
     DomainPattern,
     Settings,
@@ -16,119 +16,113 @@ export default mixins(mixin).extend({
       required: true,
     },
   },
-  data() {
-    return {
-      preferences: this.app.preferences,
-      storage: this.app.storage,
-      popup: this.app.popup,
-      show: false,
-      excludeDomainPattern: '',
-    };
-  },
-  async mounted() {
-    this.$nextTick(() => {
-      $('#isolationGlobal .ui.accordion').accordion({
-        ...(this.popup
-          ? {
-              animateChildren: false,
-              duration: 0,
-            }
-          : {}),
-        exclusive: false,
-      });
-      $('#isolationGlobal .ui.dropdown').dropdown();
-      $('#isolationGlobal .ui.checkbox').checkbox();
+  setup(props) {
+    const preferences = ref(props.app.preferences);
+    const storage = ref(props.app.storage);
+    const popup = ref(props.app.popup);
+    const show = ref(false);
+    const excludeDomainPattern = ref('');
 
-      $('#isolationGlobalAccordion').accordion('open', 0);
+    onMounted(async () => {
+      nextTick(() => {
+        $('#isolationGlobal .ui.accordion').accordion({
+          ...(popup.value
+            ? {
+                animateChildren: false,
+                duration: 0,
+              }
+            : {}),
+          exclusive: false,
+        });
+        $('#isolationGlobal .ui.dropdown').dropdown();
+        $('#isolationGlobal .ui.checkbox').checkbox();
 
-      if (
-        this.preferences.isolation.global.mouseClick.middle.action !==
-          'never' ||
-        this.preferences.isolation.global.mouseClick.ctrlleft.action !==
-          'never' ||
-        this.preferences.isolation.global.mouseClick.left.action !== 'never'
-      ) {
-        $('#isolationGlobalAccordion').accordion('open', 1);
-      }
+        $('#isolationGlobalAccordion').accordion('open', 0);
 
-      if (
-        Object.keys(this.preferences.isolation.global.excludedContainers).length
-      ) {
-        $('#isolationGlobalAccordion').accordion('open', 2);
-      }
-
-      if (Object.keys(this.preferences.isolation.global.excluded).length) {
-        $('#isolationGlobalAccordion').accordion('open', 3);
-      }
-
-      this.show = true;
-    });
-
-    const excludeContainers: {
-      name: string;
-      value: string;
-      selected: boolean;
-    }[] = [];
-    const containers = await browser.contextualIdentities.query({});
-    containers.map((container) => {
-      if (this.storage.tempContainers[container.cookieStoreId]) {
-        return;
-      }
-      excludeContainers.push({
-        name: container.name,
-        value: container.cookieStoreId,
-        selected: !!this.preferences.isolation.global.excludedContainers[
-          container.cookieStoreId
-        ],
-      });
-    });
-    $('#isolationGlobalExcludeContainers').dropdown({
-      placeholder: !this.popup
-        ? this.t('optionsIsolationGlobalSelectExclusionContainers')
-        : this.t('optionsIsolationGlobalExclusionPermanentContainers'),
-      values: excludeContainers,
-      onAdd: (addedContainer) => {
         if (
-          this.preferences.isolation.global.excludedContainers[addedContainer]
+          preferences.value.isolation.global.mouseClick.middle.action !==
+            'never' ||
+          preferences.value.isolation.global.mouseClick.ctrlleft.action !==
+            'never' ||
+          preferences.value.isolation.global.mouseClick.left.action !== 'never'
         ) {
+          $('#isolationGlobalAccordion').accordion('open', 1);
+        }
+
+        if (
+          Object.keys(preferences.value.isolation.global.excludedContainers)
+            .length
+        ) {
+          $('#isolationGlobalAccordion').accordion('open', 2);
+        }
+
+        if (Object.keys(preferences.value.isolation.global.excluded).length) {
+          $('#isolationGlobalAccordion').accordion('open', 3);
+        }
+
+        show.value = true;
+      });
+
+      const excludeContainers: {
+        name: string;
+        value: string;
+        selected: boolean;
+      }[] = [];
+      const containers = await browser.contextualIdentities.query({});
+      containers.map((container) => {
+        if (storage.value.tempContainers[container.cookieStoreId]) {
           return;
         }
-        this.$set(
-          this.preferences.isolation.global.excludedContainers,
-          addedContainer,
-          {}
-        );
-      },
-      onRemove: (removedContainer) => {
-        this.$delete(
-          this.preferences.isolation.global.excludedContainers,
-          removedContainer
-        );
-      },
+        excludeContainers.push({
+          name: container.name,
+          value: container.cookieStoreId,
+          selected: !!preferences.value.isolation.global.excludedContainers[
+            container.cookieStoreId
+          ],
+        });
+      });
+      $('#isolationGlobalExcludeContainers').dropdown({
+        placeholder: !popup.value
+          ? t('optionsIsolationGlobalSelectExclusionContainers')
+          : t('optionsIsolationGlobalExclusionPermanentContainers'),
+        values: excludeContainers,
+        onAdd: (addedContainer) => {
+          if (
+            preferences.value.isolation.global.excludedContainers[addedContainer]
+          ) {
+            return;
+          }
+          preferences.value.isolation.global.excludedContainers[addedContainer] = {};
+        },
+        onRemove: (removedContainer) => {
+          delete preferences.value.isolation.global.excludedContainers[removedContainer];
+        },
+      });
+
+      $('#isolationGlobalExcludeDomainsForm').form({
+        fields: {
+          isolationGlobalExcludeDomainPattern: 'empty',
+        },
+        onSuccess: (event) => {
+          event.preventDefault();
+          preferences.value.isolation.global.excluded[excludeDomainPattern.value] = {};
+          excludeDomainPattern.value = '';
+        },
+      });
     });
 
-    $('#isolationGlobalExcludeDomainsForm').form({
-      fields: {
-        isolationGlobalExcludeDomainPattern: 'empty',
-      },
-      onSuccess: (event) => {
-        event.preventDefault();
-        this.$set(
-          this.preferences.isolation.global.excluded,
-          this.excludeDomainPattern,
-          {}
-        );
-        this.excludeDomainPattern = '';
-      },
-    });
-  },
-  methods: {
-    removeExcludedDomain(excludedDomainPattern: string): void {
-      this.$delete(
-        this.preferences.isolation.global.excluded,
-        excludedDomainPattern
-      );
-    },
+    const removeExcludedDomain = (excludedDomainPattern: string) => {
+      delete preferences.value.isolation.global.excluded[excludedDomainPattern];
+    };
+
+    return {
+      preferences,
+      storage,
+      popup,
+      show,
+      excludeDomainPattern,
+      removeExcludedDomain,
+    };
   },
 });
 </script>
@@ -224,7 +218,7 @@ export default mixins(mixin).extend({
                   :tooltip="
                     !popup ? { position: 'top left' } : { hidden: true }
                   "
-                  :domain-pattern.sync="excludeDomainPattern"
+                  v-model:domain-pattern="excludeDomainPattern"
                   :exclusion="true"
                 />
                 <div class="field">

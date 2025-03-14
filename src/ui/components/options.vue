@@ -1,5 +1,5 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
+import { defineComponent, onMounted, ref } from 'vue';
 import { mixin } from '../mixin';
 
 import General from './general.vue';
@@ -11,7 +11,8 @@ import Message from './message.vue';
 import Glossary from './glossary/index.vue';
 import { App } from '../root';
 
-export default mixins(mixin).extend({
+export default defineComponent({
+  name: 'Options',
   components: {
     General,
     Isolation,
@@ -27,33 +28,31 @@ export default mixins(mixin).extend({
       required: true,
     },
   },
-  data() {
-    return {
-      installed: false,
-    };
-  },
-  async mounted() {
-    if (window.location.search === '?installed') {
-      this.installed = true;
-    }
+  setup(props) {
+    const installed = ref(false);
 
-    this.initTabs();
+    onMounted(() => {
+      if (window.location.search === '?installed') {
+        installed.value = true;
+      }
 
-    browser.runtime.onMessage.addListener((message) => {
-      if (typeof message !== 'object') {
-        return;
-      }
-      if (
-        message.info &&
-        message.info === 'preferencesUpdated' &&
-        (!message.fromTabId || message.fromTabId !== this.app.currentTab.id)
-      ) {
-        this.$root.$emit('initialize');
-      }
+      initTabs();
+
+      browser.runtime.onMessage.addListener((message) => {
+        if (typeof message !== 'object') {
+          return;
+        }
+        if (
+          message.info &&
+          message.info === 'preferencesUpdated' &&
+          (!message.fromTabId || message.fromTabId !== props.app.currentTab.id)
+        ) {
+          props.app.$root.$emit('initialize');
+        }
+      });
     });
-  },
-  methods: {
-    initTabs(): void {
+
+    const initTabs = (): void => {
       $('.menu .item').tab({
         history: true,
         historyType: 'hash',
@@ -69,7 +68,12 @@ export default mixins(mixin).extend({
           $.address.value(hash.replace('#/', ''));
         }
       }, 100);
-    },
+    };
+
+    return {
+      installed,
+      initTabs,
+    };
   },
 });
 </script>

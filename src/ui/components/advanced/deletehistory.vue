@@ -1,22 +1,26 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { App } from '~/ui/root';
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     app: {
       type: Object as () => App,
       required: true,
     },
   },
-  data() {
+  setup(props) {
+    const preferences = ref(props.app.preferences);
+
+    onMounted(() => {
+      const $ = (window as any).$;
+      $('#advancedDeletesHistory .ui.checkbox').checkbox();
+      $('#advancedDeletesHistory .ui.dropdown').dropdown();
+    });
+
     return {
-      preferences: this.app.preferences,
+      preferences,
     };
-  },
-  mounted() {
-    $('#advancedDeletesHistory .ui.checkbox').checkbox();
-    $('#advancedDeletesHistory .ui.dropdown').dropdown();
   },
 });
 </script>
@@ -80,11 +84,10 @@ export default Vue.extend({
       </div>
     </div>
     <div
-      :style="
-        !preferences.deletesHistory.active
-          ? 'opacity: 0.3; pointer-events: none'
-          : ''
-      "
+      :style="{
+        opacity: !preferences.deletesHistory.active ? 0.3 : 1,
+        pointerEvents: !preferences.deletesHistory.active ? 'none' : 'auto'
+      }"
     >
       <div
         class="field"

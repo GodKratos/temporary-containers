@@ -1,47 +1,23 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { formatBytes } from '~/shared';
 import { App } from '../root';
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     app: {
       type: Object as () => App,
       required: true,
     },
   },
-  data() {
-    return {
-      preferences: this.app.preferences,
-      permissions: this.app.permissions,
-      statistics: this.app.storage.statistics,
-      popup: this.app.popup,
-      formatBytes,
-    };
-  },
-  async mounted() {
-    $('#statistics .ui.checkbox').checkbox();
+  setup(props) {
+    const preferences = ref(props.app.preferences);
+    const permissions = ref(props.app.permissions);
+    const statistics = ref(props.app.storage.statistics);
+    const popup = ref(props.app.popup);
 
-    if (!this.popup) {
-      $('#deletesHistoryStatisticsField').popup({
-        html: `
-          <div style="width:500px;">
-          The overall statistics include all Temporary Containers already<br>
-          This will show and collect separate statistics about how many "Deletes History<br>
-          Temporary Container" plus cookies and URLs with them got deleted.</div>
-        `,
-        inline: true,
-        position: 'bottom left',
-      });
-    }
-  },
-  methods: {
-    async resetStatistics(): Promise<void> {
-      if (
-        !window.confirm(`
-        Reset statistics?
-      `)
-      ) {
+    const resetStatistics = async () => {
+      if (!window.confirm('Reset statistics?')) {
         return;
       }
 
@@ -49,10 +25,40 @@ export default Vue.extend({
         method: 'resetStatistics',
       });
 
-      this.$root.$emit('initialize', {
+      // Assuming you have a global event bus or similar mechanism
+      // to emit events in Vue 3
+      const root = getCurrentInstance()?.proxy?.$root;
+      root?.$emit('initialize', {
         showMessage: 'Statistics have been reset.',
       });
-    },
+    };
+
+    onMounted(() => {
+      const $ = (window as any).$;
+      $('#statistics .ui.checkbox').checkbox();
+
+      if (!popup.value) {
+        $('#deletesHistoryStatisticsField').popup({
+          html: `
+            <div style="width:500px;">
+            The overall statistics include all Temporary Containers already<br>
+            This will show and collect separate statistics about how many "Deletes History<br>
+            Temporary Container" plus cookies and URLs with them got deleted.</div>
+          `,
+          inline: true,
+          position: 'bottom left',
+        });
+      }
+    });
+
+    return {
+      preferences,
+      permissions,
+      statistics,
+      popup,
+      formatBytes,
+      resetStatistics,
+    };
   },
 });
 </script>

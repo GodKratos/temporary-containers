@@ -1,25 +1,15 @@
 <script lang="ts">
+import { defineComponent, ref, reactive, onMounted, nextTick } from 'vue';
 import DomainPattern from '../domainpattern.vue';
 import { App } from '~/ui/root';
 import { Script, PreferencesSchema } from '~/types';
-import mixins from 'vue-typed-mixins';
-import { mixin } from '~/ui/mixin';
 
-interface Data {
-  preferences: PreferencesSchema;
-  domainPattern: string;
-  domainPatternDisabled: boolean;
-  script: Script;
-  editing: boolean;
-  editingIndex: number;
-}
-
-const scriptDefauls = {
+const scriptDefaults = {
   code: '',
   runAt: 'document_idle',
 };
 
-export default mixins(mixin).extend({
+export default defineComponent({
   components: {
     DomainPattern,
   },
@@ -31,99 +21,101 @@ export default mixins(mixin).extend({
     },
   },
 
-  data(): Data {
-    return {
-      preferences: this.app.preferences,
-      domainPattern: '',
-      domainPatternDisabled: false,
-      script: this.clone(scriptDefauls),
-      editing: false,
-      editingIndex: -1,
+  setup(props) {
+    const preferences = props.app.preferences;
+    const domainPattern = ref('');
+    const domainPatternDisabled = ref(false);
+    const script = reactive({ ...scriptDefaults });
+    const editing = ref(false);
+    const editingIndex = ref(-1);
+
+    const resetForm = () => {
+      editing.value = false;
+      domainPattern.value = '';
+      domainPatternDisabled.value = false;
+      Object.assign(script, scriptDefaults);
+      resetDropdowns();
     };
-  },
 
-  mounted() {
-    $('#scriptForm').form({
-      fields: {
-        scriptDomainPattern: 'empty',
-        scriptCode: 'empty',
-      },
-      onSuccess: (event) => {
-        event.preventDefault();
-        if (!this.editing) {
-          this.addScript();
-        } else {
-          this.saveScript();
-        }
-      },
-    });
-    $('#scriptForm .ui.dropdown').dropdown();
-    $('#scriptForm .ui.checkbox').checkbox();
-  },
+    const resetDropdowns = () => {
+      $('#scriptForm .ui.dropdown').dropdown('destroy');
+      nextTick(() => {
+        $('#scriptForm .ui.dropdown').dropdown();
+      });
+    };
 
-  methods: {
-    addScript(): void {
-      const domain = this.preferences.scripts.domain;
-      if (!domain[this.domainPattern]) {
-        this.$set(domain, this.domainPattern, []);
+    const addScript = () => {
+      const domain = preferences.scripts.domain;
+      if (!domain[domainPattern.value]) {
+        domain[domainPattern.value] = [];
       }
-      domain[this.domainPattern].unshift({ ...this.script });
-      this.resetForm();
-    },
+      domain[domainPattern.value].unshift({ ...script });
+      resetForm();
+    };
 
-    saveScript(): void {
-      if (!this.editing) {
+    const saveScript = () => {
+      if (!editing.value) {
         return;
       }
+      preferences.scripts.domain[domainPattern.value][editingIndex.value] = { ...script };
+      resetForm();
+    };
 
-      this.$set(
-        this.preferences.scripts.domain[this.domainPattern],
-        this.editingIndex,
-        {
-          ...this.script,
-        }
-      );
-
-      this.resetForm();
-    },
-
-    editScript(scriptDomainPattern: string, index: number): void {
-      if (!this.preferences.scripts.domain[scriptDomainPattern][index]) {
+    const editScript = (scriptDomainPattern: string, index: number) => {
+      if (!preferences.scripts.domain[scriptDomainPattern][index]) {
         return;
       }
-      this.domainPatternDisabled = true;
-      this.editing = true;
-      this.editingIndex = index;
-      this.domainPattern = scriptDomainPattern;
-      this.script = this.preferences.scripts.domain[scriptDomainPattern][index];
+      domainPatternDisabled.value = true;
+      editing.value = true;
+      editingIndex.value = index;
+      domainPattern.value = scriptDomainPattern;
+      Object.assign(script, preferences.scripts.domain[scriptDomainPattern][index]);
+      resetDropdowns();
+    };
 
-      this.resetDropdowns();
-    },
-
-    removeScript(scriptDomainPattern: string, index: number): void {
+    const removeScript = (scriptDomainPattern: string, index: number) => {
       if (!window.confirm('Remove script?')) {
         return;
       }
-      this.preferences.scripts.domain[scriptDomainPattern].splice(index, 1);
-      if (!this.preferences.scripts.domain[scriptDomainPattern].length) {
-        this.$delete(this.preferences.scripts.domain, scriptDomainPattern);
+      preferences.scripts.domain[scriptDomainPattern].splice(index, 1);
+      if (!preferences.scripts.domain[scriptDomainPattern].length) {
+        delete preferences.scripts.domain[scriptDomainPattern];
       }
-    },
+    };
 
-    resetForm(): void {
-      this.editing = false;
-      this.domainPattern = '';
-      this.domainPatternDisabled = false;
-      this.script = this.clone(scriptDefauls);
-      this.resetDropdowns();
-    },
-
-    resetDropdowns(): void {
-      $('#scriptForm .ui.dropdown').dropdown('destroy');
-      this.$nextTick(() => {
-        $('#scriptForm .ui.dropdown').dropdown();
+    onMounted(() => {
+      $('#scriptForm').form({
+        fields: {
+          scriptDomainPattern: 'empty',
+          scriptCode: 'empty',
+        },
+        onSuccess: (event) => {
+          event.preventDefault();
+          if (!editing.value) {
+            addScript();
+          } else {
+            saveScript();
+          }
+        },
       });
-    },
+      $('#scriptForm .ui.dropdown').dropdown();
+      $('#scriptForm .ui.checkbox').checkbox();
+    });
+
+    return {
+      preferences,
+      domainPattern,
+      domainPatternDisabled,
+      script,
+      editing,
+      editingIndex,
+      addScript,
+      saveScript,
+      editScript,
+      removeScript,
+      resetForm,
+      resetDropdowns,
+    };
   },
 });
 </script>
@@ -185,7 +177,7 @@ export default mixins(mixin).extend({
           id="scriptDomainPattern"
           :disabled="domainPatternDisabled"
           :glossary="true"
-          :domain-pattern.sync="domainPattern"
+          v-model:domain-pattern="domainPattern"
         />
         <div class="field">
           <label>code</label>

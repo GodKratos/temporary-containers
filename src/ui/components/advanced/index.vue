@@ -1,5 +1,5 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 
 import General from './general.vue';
 import Cookies from './cookies.vue';
@@ -7,7 +7,7 @@ import Scripts from './scripts.vue';
 import DeleteHistory from './deletehistory.vue';
 import { App } from '~/ui/root';
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     General,
     Cookies,
@@ -43,19 +43,19 @@ export default Vue.extend({
       class="ui bottom attached active tab segment"
       data-tab="advanced/general"
     >
-      <general v-if="app.initialized" :app="app" />
+      <General v-if="app.initialized" :app="app" />
     </div>
     <div class="ui bottom attached tab segment" data-tab="advanced/cookies">
-      <cookies v-if="app.initialized" :app="app" />
+      <Cookies v-if="app.initialized" :app="app" />
     </div>
     <div class="ui bottom attached tab segment" data-tab="advanced/scripts">
-      <scripts v-if="app.initialized" :app="app" />
+      <Scripts v-if="app.initialized" :app="app" />
     </div>
     <div
       class="ui bottom attached tab segment"
       data-tab="advanced/deletehistory"
     >
-      <delete-history v-if="app.initialized" :app="app" />
+      <DeleteHistory v-if="app.initialized" :app="app" />
     </div>
   </div>
 </template>

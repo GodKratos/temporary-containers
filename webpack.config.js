@@ -2,7 +2,7 @@
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -12,12 +12,9 @@ module.exports = {
     options: './src/ui/options.ts',
     popup: './src/ui/popup.ts',
   },
-  devtool: false,
+  devtool: 'source-map',
   mode: 'production',
-  performance: {
-    hints: false,
-  },
-  node: false,
+  performance: { hints: false },
   module: {
     rules: [
       {
@@ -26,6 +23,7 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           appendTsSuffixTo: [/\.vue$/],
+          transpileOnly: true,
         },
       },
       {
@@ -41,18 +39,21 @@ module.exports = {
   optimization: {
     minimize: false,
     splitChunks: {
-      chunks: (chunk) => {
-        return ['options', 'popup'].includes(chunk.name);
-      },
+      chunks: (chunk) => ['options', 'popup'].includes(chunk.name),
     },
   },
   resolve: {
-    extensions: ['.ts', '.js', '.vue'],
+    extensions: ['.ts', '.js', '.vue', '.json'],
     plugins: [new TsconfigPathsPlugin()],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      'vue': '@vue/runtime-dom'
+    }
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -78,8 +79,12 @@ module.exports = {
     }),
   ],
   devServer: {
-    hot: false,
-    inline: false,
-    writeToDisk: true,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    hot: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
 };

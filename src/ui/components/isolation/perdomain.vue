@@ -1,6 +1,6 @@
 <script lang="ts">
+import { defineComponent, ref, computed, watch, nextTick } from 'vue';
 import Draggable from 'vuedraggable';
-import mixins from 'vue-typed-mixins';
 import DomainPattern from '../domainpattern.vue';
 import Settings from './settings.vue';
 import { App } from '~/ui/root';
@@ -35,7 +35,7 @@ interface UIIsolationDomain extends IsolationDomain {
   _index: number;
 }
 
-export default mixins(mixin).extend({
+export default defineComponent({
   components: {
     DomainPattern,
     Settings,
@@ -49,76 +49,187 @@ export default mixins(mixin).extend({
     },
   },
 
-  data() {
+  setup(props) {
+    const preferences = props.app.preferences;
+    const popup = props.app.popup;
+    const domain = ref({ ...domainDefaults });
+    const excludeDomainPattern = ref('');
+    const isolationDomainFilter = ref('');
+    const editing = ref(false);
+    const show = ref(false);
+    const saved = ref(false);
+    const empty = ref(true);
+    const editClicked = ref(false);
+
+    const isolationDomains = computed(() => {
+      return preferences.isolation.domain.reduce(
+        (accumulator: UIIsolationDomain[], isolated, index) => {
+          if (!isolated.pattern.includes(isolationDomainFilter.value)) {
+            return accumulator;
+          }
+          accumulator.push({ ...isolated, _index: index });
+          return accumulator;
+        },
+        []
+      );
+    });
+
+    watch(domain, (newDomain) => {
+      if (editing.value && !newDomain.pattern.trim()) {
+        editing.value = false;
+        domain.value = { ...domainDefaults };
+        const domainIndex = preferences.isolation.domain.findIndex(
+          (isolatedDomain) => !isolatedDomain.pattern.trim()
+        );
+        preferences.isolation.domain.splice(domainIndex, 1);
+      } else if (
+        !editing.value &&
+        preferences.isolation.domain.find(
+          (_domain) => _domain.pattern === newDomain.pattern
+        )
+      ) {
+        $('#isolationDomainForm').form('validate form');
+      } else if (editing.value) {
+        if (editClicked.value) {
+          editClicked.value = false;
+        } else {
+          saved.value = true;
+          setTimeout(() => {
+            saved.value = false;
+          }, 1500);
+        }
+      }
+      empty.value = false;
+    }, { deep: true });
+
+    const reset = () => {
+      domain.value = { ...domainDefaults };
+      domain.value.pattern = '';
+      nextTick(() => {
+        empty.value = true;
+      });
+
+      if (!preferences.ui.expandPreferences) {
+        $('#isolationPerDomainAccordion').accordion('close', 0);
+        $('#isolationPerDomainAccordion').accordion('close', 1);
+        $('#isolationPerDomainAccordion').accordion('close', 2);
+        $('#isolationPerDomainAccordion').accordion('close', 3);
+      }
+      resetDropdowns();
+    };
+
+    const resetDropdowns = () => {
+      $('#isolationDomain .ui.dropdown').dropdown('destroy');
+      nextTick(() => {
+        $('#isolationDomain .ui.dropdown').dropdown();
+      });
+    };
+
+    const edit = (index: number) => {
+      editClicked.value = true;
+      editing.value = true;
+      domain.value = preferences.isolation.domain[index];
+      resetDropdowns();
+
+      if (!preferences.ui.expandPreferences) {
+        domain.value.always.action === domainDefaults.always.action
+          ? $('#isolationPerDomainAccordion').accordion('close', 0)
+          : $('#isolationPerDomainAccordion').accordion('open', 0);
+
+        domain.value.navigation.action === domainDefaults.navigation.action
+          ? $('#isolationPerDomainAccordion').accordion('close', 1)
+          : $('#isolationPerDomainAccordion').accordion('open', 1);
+
+        domain.value.mouseClick.middle.action ===
+          domainDefaults.mouseClick.middle.action &&
+        domain.value.mouseClick.ctrlleft.action ===
+          domainDefaults.mouseClick.ctrlleft.action &&
+        domain.value.mouseClick.left.action ===
+          domainDefaults.mouseClick.left.action
+          ? $('#isolationPerDomainAccordion').accordion('close', 2)
+          : $('#isolationPerDomainAccordion').accordion('open', 2);
+
+        !Object.keys(domain.value.excluded).length
+          ? $('#isolationPerDomainAccordion').accordion('close', 3)
+          : $('#isolationPerDomainAccordion').accordion('open', 3);
+      }
+    };
+
+    const remove = (index: number, pattern: string) => {
+      if (
+        window.confirm(
+          t('optionsIsolationPerDomainRemoveConfirmation', pattern)
+        )
+      ) {
+        preferences.isolation.domain.splice(index, 1);
+        if (editing.value && domain.value.pattern === pattern) {
+          reset();
+          editing.value = false;
+        }
+      }
+    };
+
+    const removeExcludedDomain = (excludedDomainPattern: string) => {
+      delete domain.value.excluded[excludedDomainPattern];
+    };
+
+    const expandIsolationDomainFilter = (event: Event) => {
+      if (!popup) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      if (
+        $('#isolationDomainsAccordion > div > div.title').hasClass('active')
+      ) {
+        return;
+      }
+      setTimeout(() => {
+        $('#isolationDomainsAccordion').accordion('open', 0);
+      }, 200);
+    };
+
+    const move = (event: { moved: { oldIndex: number; newIndex: number } }) => {
+      if (event.moved) {
+        preferences.isolation.domain.splice(
+          event.moved.newIndex,
+          0,
+          preferences.isolation.domain.splice(event.moved.oldIndex, 1)[0]
+        );
+      }
+    };
+
+    const focusIsolationDomainFilter = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      (refs.isolationDomainFilter as HTMLElement).focus();
+    };
+
     return {
-      preferences: this.app.preferences,
-      popup: this.app.popup,
-      domain: this.clone(domainDefaults),
-      excludeDomainPattern: '',
-      isolationDomainFilter: '',
-      editing: false,
-      show: false,
-      saved: false,
-      empty: true,
-      editClicked: false,
+      preferences,
+      popup,
+      domain,
+      excludeDomainPattern,
+      isolationDomainFilter,
+      editing,
+      show,
+      saved,
+      empty,
+      editClicked,
+      isolationDomains,
+      reset,
+      resetDropdowns,
+      edit,
+      remove,
+      removeExcludedDomain,
+      expandIsolationDomainFilter,
+      move,
+      focusIsolationDomainFilter,
     };
   },
 
-  computed: {
-    isolationDomains: {
-      get(): UIIsolationDomain[] {
-        return this.preferences.isolation.domain.reduce(
-          (accumulator: UIIsolationDomain[], isolated, index) => {
-            if (!isolated.pattern.includes(this.isolationDomainFilter)) {
-              return accumulator;
-            }
-            accumulator.push({ ...isolated, _index: index });
-            return accumulator;
-          },
-          []
-        );
-      },
-      set(): void {
-        // suppress warning about missing setter
-      },
-    },
-  },
-
-  watch: {
-    domain: {
-      handler(domain): void {
-        if (this.editing && !domain.pattern.trim()) {
-          this.editing = false;
-          this.domain = this.clone(domain);
-          const domainIndex = this.preferences.isolation.domain.findIndex(
-            (isolatedDomain) => !isolatedDomain.pattern.trim()
-          );
-          this.$delete(this.preferences.isolation.domain, domainIndex);
-        } else if (
-          !this.editing &&
-          this.preferences.isolation.domain.find(
-            (_domain) => _domain.pattern === domain.pattern
-          )
-        ) {
-          $('#isolationDomainForm').form('validate form');
-        } else if (this.editing) {
-          if (this.editClicked) {
-            this.editClicked = false;
-          } else {
-            this.saved = true;
-            setTimeout(() => {
-              this.saved = false;
-            }, 1500);
-          }
-        }
-        this.empty = false;
-      },
-      deep: true,
-    },
-  },
-
-  async mounted() {
-    this.$nextTick(() => {
+  mounted() {
+    nextTick(() => {
       $('#isolationDomain .ui.accordion').accordion({
         ...(this.popup
           ? {
@@ -206,109 +317,7 @@ export default mixins(mixin).extend({
       }
     }
   },
-  methods: {
-    reset(): void {
-      this.domain = this.clone(domainDefaults);
-      this.domain.pattern = '';
-      this.$nextTick(() => {
-        this.empty = true;
-      });
 
-      if (!this.preferences.ui.expandPreferences) {
-        $('#isolationPerDomainAccordion').accordion('close', 0);
-        $('#isolationPerDomainAccordion').accordion('close', 1);
-        $('#isolationPerDomainAccordion').accordion('close', 2);
-        $('#isolationPerDomainAccordion').accordion('close', 3);
-      }
-      this.resetDropdowns();
-    },
-
-    resetDropdowns(): void {
-      $('#isolationDomain .ui.dropdown').dropdown('destroy');
-      this.$nextTick(() => {
-        $('#isolationDomain .ui.dropdown').dropdown();
-      });
-    },
-
-    edit(index: number): void {
-      this.editClicked = true;
-      this.editing = true;
-      this.domain = this.preferences.isolation.domain[index];
-      this.resetDropdowns();
-
-      if (!this.preferences.ui.expandPreferences) {
-        this.domain.always.action === domainDefaults.always.action
-          ? $('#isolationPerDomainAccordion').accordion('close', 0)
-          : $('#isolationPerDomainAccordion').accordion('open', 0);
-
-        this.domain.navigation.action === domainDefaults.navigation.action
-          ? $('#isolationPerDomainAccordion').accordion('close', 1)
-          : $('#isolationPerDomainAccordion').accordion('open', 1);
-
-        this.domain.mouseClick.middle.action ===
-          domainDefaults.mouseClick.middle.action &&
-        this.domain.mouseClick.ctrlleft.action ===
-          domainDefaults.mouseClick.ctrlleft.action &&
-        this.domain.mouseClick.left.action ===
-          domainDefaults.mouseClick.left.action
-          ? $('#isolationPerDomainAccordion').accordion('close', 2)
-          : $('#isolationPerDomainAccordion').accordion('open', 2);
-
-        !Object.keys(this.domain.excluded).length
-          ? $('#isolationPerDomainAccordion').accordion('close', 3)
-          : $('#isolationPerDomainAccordion').accordion('open', 3);
-      }
-    },
-
-    remove(index: number, pattern: string): void {
-      if (
-        window.confirm(
-          this.t('optionsIsolationPerDomainRemoveConfirmation', pattern)
-        )
-      ) {
-        this.$delete(this.preferences.isolation.domain, index);
-        if (this.editing && this.domain.pattern === pattern) {
-          this.reset();
-          this.editing = false;
-        }
-      }
-    },
-
-    removeExcludedDomain(excludedDomainPattern: string): void {
-      this.$delete(this.domain.excluded, excludedDomainPattern);
-    },
-
-    expandIsolationDomainFilter(event: Event): void {
-      if (!this.popup) {
-        return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      if (
-        $('#isolationDomainsAccordion > div > div.title').hasClass('active')
-      ) {
-        return;
-      }
-      setTimeout(() => {
-        $('#isolationDomainsAccordion').accordion('open', 0);
-      }, 200);
-    },
-
-    move(event: { moved: { oldIndex: number; newIndex: number } }): void {
-      if (event.moved) {
-        this.preferences.isolation.domain.move(
-          this.isolationDomains[event.moved.oldIndex]._index,
-          this.isolationDomains[event.moved.newIndex]._index
-        );
-      }
-    },
-
-    focusIsolationDomainFilter(event: Event): void {
-      event.preventDefault();
-      event.stopPropagation();
-      (this.$refs.isolationDomainFilter as HTMLElement).focus();
-    },
-  },
 });
 </script>
 
@@ -330,7 +339,7 @@ export default mixins(mixin).extend({
         <domain-pattern
           id="isolationDomainPattern"
           :tooltip="!popup ? undefined : { hidden: true }"
-          :domain-pattern.sync="domain.pattern"
+          v-model:domain-pattern="domain.pattern"
         />
       </form>
       <div
@@ -406,7 +415,7 @@ export default mixins(mixin).extend({
           <settings
             :label="t('optionsIsolationTargetDomain')"
             :perdomain="true"
-            :action.sync="domain.navigation.action"
+            v-model:action="domain.navigation.action"
           />
         </div>
         <div class="title">
@@ -422,17 +431,17 @@ export default mixins(mixin).extend({
           <settings
             :label="t('optionsIsolationMouseClickMiddleMouse')"
             :perdomain="true"
-            :action.sync="domain.mouseClick.middle.action"
+            v-model:action="domain.mouseClick.middle.action"
           />
           <settings
             :label="t('optionsIsolationMouseClickCtrlLeftMouse')"
             :perdomain="true"
-            :action.sync="domain.mouseClick.ctrlleft.action"
+            v-model:action="domain.mouseClick.ctrlleft.action"
           />
           <settings
             :label="t('optionsIsolationMouseClickLeftMouse')"
             :perdomain="true"
-            :action.sync="domain.mouseClick.left.action"
+            v-model:action="domain.mouseClick.left.action"
           />
         </div>
         <div class="title">
@@ -453,7 +462,7 @@ export default mixins(mixin).extend({
                   :tooltip="
                     !popup ? { position: 'top left' } : { hidden: true }
                   "
-                  :domain-pattern.sync="excludeDomainPattern"
+                  v-model:domain-pattern="excludeDomainPattern"
                   :exclusion="true"
                 />
                 <div class="field">
@@ -502,12 +511,14 @@ export default mixins(mixin).extend({
       >
         <span v-if="editing">
           <transition name="fade">
-            <span v-if="saved">
-              <i class="check circle icon" />
-              Saved
-            </span>
-            <span v-if="!saved">
-              {{ t('optionsIsolationPerDomainDoneEditing', domain.pattern) }}
+            <span>
+              <span v-if="saved">
+                <i class="check circle icon" />
+                Saved
+              </span>
+              <span v-if="!saved">
+                {{ t('optionsIsolationPerDomainDoneEditing', domain.pattern) }}
+              </span>
             </span>
           </transition>
         </span>

@@ -8,8 +8,8 @@ export class MigrationLegacy {
     const debug = background.debug;
 
     const migrationReadyAbortController = new AbortController();
-    let migrationReady: () => void;
-    let migrationReadyTimeout: number;
+    let migrationReady: (value: unknown) => void;
+    let migrationReadyTimeout: number | undefined;
     const migrationReadyPromise = new Promise((resolve, reject) => {
       migrationReady = resolve;
 
@@ -24,7 +24,9 @@ export class MigrationLegacy {
       browser.runtime.onInstalled.removeListener(migrationOnInstalledListener);
       const { version } = await browser.storage.local.get('version');
       if (version) {
-        clearTimeout(migrationReadyTimeout);
+        if (migrationReadyTimeout !== undefined) {
+          clearTimeout(migrationReadyTimeout);
+        }
         debug('[migration-legacy] version found, skip', version);
         return;
       }
@@ -49,7 +51,7 @@ export class MigrationLegacy {
             reject();
           }, 10000);
           debug('[migration-legacy] ready');
-          migrationReady();
+          migrationReady(undefined);
         });
         migration.previousVersion = updateDetails.previousVersion;
       } catch (error) {

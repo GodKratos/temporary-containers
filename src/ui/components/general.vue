@@ -1,116 +1,113 @@
 <script lang="ts">
-import mixins from 'vue-typed-mixins';
-import { mixin } from '../mixin';
+import { defineComponent, ref, onMounted } from 'vue';
+import { useApp } from '~/ui/root';
 import {
   CONTAINER_COLORS,
   CONTAINER_ICONS,
   TOOLBAR_ICON_COLORS,
 } from '~/shared';
-import { App } from '~/ui/root';
 
-export default mixins(mixin).extend({
+export default defineComponent({
   props: {
     app: {
       type: Object as () => App,
       required: true,
     },
   },
-  data() {
-    return {
-      preferences: this.app.preferences,
-      permissions: this.app.permissions,
-      initialized: false,
-      show: false,
-      containerColors: CONTAINER_COLORS.map((containerColor) => ({
+  setup(props) {
+    const app = props.app;
+    const preferences = ref(app.preferences);
+    const permissions = ref(app.permissions);
+    const initialized = ref(false);
+    const show = ref(false);
+
+    const containerColors = ref(
+      CONTAINER_COLORS.map((containerColor) => ({
         id: containerColor,
-        text: this.t(
-          `optionsGeneralContainerColor${containerColor.capitalize()}`
-        ),
-      })),
-      containerIcons: CONTAINER_ICONS.map((containerIcon) => ({
+        text: app.t(`optionsGeneralContainerColor${containerColor.capitalize()}`),
+      }))
+    );
+
+    const containerIcons = ref(
+      CONTAINER_ICONS.map((containerIcon) => ({
         id: containerIcon,
-        text: this.t(
-          `optionsGeneralContainerIcon${containerIcon.capitalize()}`
-        ),
-      })),
-      toolbarIconColors: TOOLBAR_ICON_COLORS.map((toolbarIconColor) => ({
+        text: app.t(`optionsGeneralContainerIcon${containerIcon.capitalize()}`),
+      }))
+    );
+
+    const toolbarIconColors = ref(
+      TOOLBAR_ICON_COLORS.map((toolbarIconColor) => ({
         id: toolbarIconColor,
-        text: this.t(
+        text: app.t(
           `optionsGeneralToolbarIconColor${toolbarIconColor
             .capitalize()
             .replace('-s', 'S')}`
         ),
-      })),
-    };
-  },
-  async mounted() {
-    $('#general .ui.dropdown').dropdown();
-    $('#general .ui.checkbox').checkbox();
+      }))
+    );
 
-    $('#containerColorRandomExcluded').dropdown({
-      placeholder: 'Select colors to exclude from random selection',
-      values: this.containerColors.map((color) => ({
-        name: color.text,
-        value: color.id,
-        selected: !!this.preferences.container.colorRandomExcluded.includes(
-          color.id
-        ),
-      })),
-      maxSelections: this.containerColors.length - 2,
-      onAdd: (addedColor) => {
-        if (
-          this.preferences.container.colorRandomExcluded.includes(addedColor)
-        ) {
-          return;
-        }
-        this.preferences.container.colorRandomExcluded.push(addedColor);
-      },
-      onRemove: (removedColor) => {
-        this.$delete(
-          this.preferences.container.colorRandomExcluded,
-          this.preferences.container.colorRandomExcluded.findIndex(
-            (excludedColor) => excludedColor === removedColor
-          )
-        );
-      },
-    });
+    onMounted(() => {
+      $('#general .ui.dropdown').dropdown();
+      $('#general .ui.checkbox').checkbox();
 
-    $('#containerIconRandomExcluded').dropdown({
-      placeholder: 'Select icons to exclude from random selection',
-      values: this.containerIcons.map((icon) => {
-        return {
+      $('#containerColorRandomExcluded').dropdown({
+        placeholder: 'Select colors to exclude from random selection',
+        values: containerColors.value.map((color) => ({
+          name: color.text,
+          value: color.id,
+          selected: !!preferences.value.container.colorRandomExcluded.includes(
+            color.id
+          ),
+        })),
+        maxSelections: containerColors.value.length - 2,
+        onAdd: (addedColor) => {
+          if (
+            preferences.value.container.colorRandomExcluded.includes(addedColor)
+          ) {
+            return;
+          }
+          preferences.value.container.colorRandomExcluded.push(addedColor);
+        },
+        onRemove: (removedColor) => {
+          preferences.value.container.colorRandomExcluded = preferences.value.container.colorRandomExcluded.filter(
+            (excludedColor) => excludedColor !== removedColor
+          );
+        },
+      });
+
+      $('#containerIconRandomExcluded').dropdown({
+        placeholder: 'Select icons to exclude from random selection',
+        values: containerIcons.value.map((icon) => ({
           name: icon.text,
           value: icon.id,
-          selected: !!this.preferences.container.iconRandomExcluded.includes(
+          selected: !!preferences.value.container.iconRandomExcluded.includes(
             icon.id
           ),
-        };
-      }),
-      maxSelections: this.containerIcons.length - 2,
-      onAdd: (addedIcon) => {
-        if (this.preferences.container.iconRandomExcluded.includes(addedIcon)) {
-          return;
-        }
-        this.preferences.container.iconRandomExcluded.push(addedIcon);
-      },
-      onRemove: (removedIcon) => {
-        this.$delete(
-          this.preferences.container.iconRandomExcluded,
-          this.preferences.container.iconRandomExcluded.findIndex(
-            (excludedIcon) => excludedIcon === removedIcon
-          )
-        );
-      },
+        })),
+        maxSelections: containerIcons.value.length - 2,
+        onAdd: (addedIcon) => {
+          if (
+            preferences.value.container.iconRandomExcluded.includes(addedIcon)
+          ) {
+            return;
+          }
+          preferences.value.container.iconRandomExcluded.push(addedIcon);
+        },
+        onRemove: (removedIcon) => {
+          preferences.value.container.iconRandomExcluded = preferences.value.container.iconRandomExcluded.filter(
+            (excludedIcon) => excludedIcon !== removedIcon
+          );
+        },
+      });
+
+      show.value = true;
     });
 
-    this.show = true;
-  },
-  methods: {
-    resetContainerNumber(): void {
+    const resetContainerNumber = () => {
       if (
-        !window.confirm(`
-        Reset current number ${this.app.storage.tempContainerCounter} to 0?
-      `)
+        !window.confirm(
+          `Reset current number ${app.storage.tempContainerCounter} to 0?`
+        )
       ) {
         return;
       }
@@ -119,8 +116,19 @@ export default mixins(mixin).extend({
         method: 'resetContainerNumber',
       });
 
-      this.app.storage.tempContainerCounter = 0;
-    },
+      app.storage.tempContainerCounter = 0;
+    };
+
+    return {
+      preferences,
+      permissions,
+      initialized,
+      show,
+      containerColors,
+      containerIcons,
+      toolbarIconColors,
+      resetContainerNumber,
+    };
   },
 });
 </script>

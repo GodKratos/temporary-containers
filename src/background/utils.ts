@@ -13,7 +13,7 @@ export class Utils {
   sameDomain(origin: string, target: string): boolean {
     const parsedOrigin = psl.parse(origin);
     const parsedTarget = psl.parse(target);
-    if (parsedOrigin.error || parsedTarget.error) {
+    if ('error' in parsedOrigin || 'error' in parsedTarget) {
       return false;
     }
     return parsedOrigin.domain === parsedTarget.domain;

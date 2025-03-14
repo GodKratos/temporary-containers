@@ -1,11 +1,11 @@
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 
 import Global from './global.vue';
 import PerDomain from './perdomain.vue';
 import { App } from '~/ui/root';
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     Global,
     PerDomain,
@@ -33,10 +33,10 @@ export default Vue.extend({
       class="ui bottom attached active tab segment"
       data-tab="isolation/global"
     >
-      <global v-if="app.initialized" :app="app" />
+      <Global v-if="app.initialized" :app="app" />
     </div>
     <div class="ui bottom attached tab segment" data-tab="isolation/perdomain">
-      <per-domain v-if="app.initialized" :app="app" />
+      <PerDomain v-if="app.initialized" :app="app" />
     </div>
   </div>
 </template>

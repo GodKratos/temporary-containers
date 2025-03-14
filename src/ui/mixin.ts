@@ -1,9 +1,21 @@
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 
-export const mixin = Vue.extend({
-  methods: {
-    t: browser.i18n.getMessage,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    clone: (input: any): any => JSON.parse(JSON.stringify(input)),
-  },
+// Convert to composable
+export const useCommonMethods = () => {
+  const t = browser.i18n.getMessage;
+  
+  const clone = <T>(input: T): T => 
+    JSON.parse(JSON.stringify(input));
+
+  return {
+    t,
+    clone
+  };
+};
+
+// For backwards compatibility during migration
+export const mixin = defineComponent({
+  setup() {
+    return useCommonMethods();
+  }
 });

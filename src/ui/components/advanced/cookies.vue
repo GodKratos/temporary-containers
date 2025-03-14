@@ -1,18 +1,8 @@
 <script lang="ts">
+import { defineComponent, ref, reactive, onMounted, nextTick } from 'vue';
 import DomainPattern from '../domainpattern.vue';
 import { App } from '~/ui/root';
 import { PreferencesSchema, Cookie } from '~/types';
-import mixins from 'vue-typed-mixins';
-import { mixin } from '~/ui/mixin';
-
-interface Data {
-  preferences: PreferencesSchema;
-  domainPattern: string;
-  domainPatternDisabled: boolean;
-  cookie: Cookie;
-  editing: boolean;
-  editingIndex: number;
-}
 
 const cookieDefaults = {
   domain: '',
@@ -27,7 +17,7 @@ const cookieDefaults = {
   value: '',
 };
 
-export default mixins(mixin).extend({
+export default defineComponent({
   components: {
     DomainPattern,
   },
@@ -39,120 +29,128 @@ export default mixins(mixin).extend({
     },
   },
 
-  data(): Data {
-    return {
-      preferences: this.app.preferences,
-      domainPattern: '',
-      domainPatternDisabled: false,
-      cookie: this.clone(cookieDefaults),
-      editing: false,
-      editingIndex: -1,
+  setup(props) {
+    const preferences = props.app.preferences;
+    const domainPattern = ref('');
+    const domainPatternDisabled = ref(false);
+    const cookie = reactive({ ...cookieDefaults });
+    const editing = ref(false);
+    const editingIndex = ref(-1);
+
+    const resetForm = () => {
+      editing.value = false;
+      domainPattern.value = '';
+      domainPatternDisabled.value = false;
+      Object.assign(cookie, cookieDefaults);
+      resetDropdowns();
+      $('#cookieAccordion').accordion('close', 0);
     };
-  },
 
-  mounted() {
-    $('#cookieForm').form({
-      fields: {
-        cookieDomainPattern: 'empty',
-        cookieUrl: 'empty',
-      },
-      onSuccess: (event) => {
-        event.preventDefault();
-        if (!this.editing) {
-          this.addCookie();
-        } else {
-          this.saveCookie();
-        }
-      },
-    });
+    const resetDropdowns = () => {
+      $('#cookieForm .ui.dropdown').dropdown('destroy');
+      nextTick(() => {
+        $('#cookieForm .ui.dropdown').dropdown();
+      });
+    };
 
-    this.$nextTick(() => {
-      $('#cookieForm .ui.accordion').accordion();
-      $('#cookieForm .ui.dropdown').dropdown();
-      $('#cookieForm .ui.checkbox').checkbox();
-    });
-  },
-
-  methods: {
-    addCookie(): void {
-      const domain = this.preferences.cookies.domain;
-      if (!domain[this.domainPattern]) {
-        this.$set(domain, this.domainPattern, []);
+    const addCookie = () => {
+      const domain = preferences.cookies.domain;
+      if (!domain[domainPattern.value]) {
+        domain[domainPattern.value] = [];
       }
-      domain[this.domainPattern].unshift({ ...this.cookie });
+      domain[domainPattern.value].unshift({ ...cookie });
 
-      this.resetForm();
-    },
+      resetForm();
+    };
 
-    saveCookie(): void {
-      if (!this.editing) {
+    const saveCookie = () => {
+      if (!editing.value) {
         return;
       }
 
-      this.$set(
-        this.preferences.cookies.domain[this.domainPattern],
-        this.editingIndex,
-        {
-          ...this.cookie,
-        }
-      );
+      preferences.cookies.domain[domainPattern.value][editingIndex.value] = {
+        ...cookie,
+      };
 
-      this.resetForm();
-    },
+      resetForm();
+    };
 
-    editCookie(cookieDomainPattern: string, index: number): void {
-      if (!this.preferences.cookies.domain[cookieDomainPattern][index]) {
+    const editCookie = (cookieDomainPattern: string, index: number) => {
+      if (!preferences.cookies.domain[cookieDomainPattern][index]) {
         return;
       }
 
-      this.domainPatternDisabled = true;
-      this.editing = true;
-      this.editingIndex = index;
-      this.domainPattern = cookieDomainPattern;
-      this.cookie = this.preferences.cookies.domain[cookieDomainPattern][index];
+      domainPatternDisabled.value = true;
+      editing.value = true;
+      editingIndex.value = index;
+      domainPattern.value = cookieDomainPattern;
+      Object.assign(cookie, preferences.cookies.domain[cookieDomainPattern][index]);
 
-      this.resetDropdowns();
-    },
+      resetDropdowns();
+    };
 
-    removeCookie(cookiesDomainPattern: string, index: number): void {
+    const removeCookie = (cookiesDomainPattern: string, index: number) => {
       if (!window.confirm('Remove cookie?')) {
         return;
       }
-      this.preferences.cookies.domain[cookiesDomainPattern].splice(index, 1);
-      if (!this.preferences.cookies.domain[cookiesDomainPattern].length) {
-        this.$delete(this.preferences.cookies.domain, cookiesDomainPattern);
+      preferences.cookies.domain[cookiesDomainPattern].splice(index, 1);
+      if (!preferences.cookies.domain[cookiesDomainPattern].length) {
+        delete preferences.cookies.domain[cookiesDomainPattern];
       }
-    },
+    };
 
-    cookieKeys(domainCookie: Cookie): string[] {
-      return Object.keys(this.cookie).filter(
-        (key: string) => domainCookie[key]
-      );
-    },
+    const cookieKeys = (domainCookie: Cookie): string[] => {
+      return Object.keys(cookie).filter((key: string) => domainCookie[key]);
+    };
 
-    cookieMouseEnter(event: Event): void {
+    const cookieMouseEnter = (event: Event) => {
       (event.target as HTMLElement).classList.add('red');
-    },
+    };
 
-    cookieMouseLeave(event: Event): void {
+    const cookieMouseLeave = (event: Event) => {
       (event.target as HTMLElement).classList.remove('red');
-    },
+    };
 
-    resetForm(): void {
-      this.editing = false;
-      this.domainPattern = '';
-      this.domainPatternDisabled = false;
-      this.cookie = this.clone(cookieDefaults);
-      this.resetDropdowns();
-      $('#cookieAccordion').accordion('close', 0);
-    },
-
-    resetDropdowns(): void {
-      $('#cookieForm .ui.dropdown').dropdown('destroy');
-      this.$nextTick(() => {
-        $('#cookieForm .ui.dropdown').dropdown();
+    onMounted(() => {
+      $('#cookieForm').form({
+        fields: {
+          cookieDomainPattern: 'empty',
+          cookieUrl: 'empty',
+        },
+        onSuccess: (event) => {
+          event.preventDefault();
+          if (!editing.value) {
+            addCookie();
+          } else {
+            saveCookie();
+          }
+        },
       });
-    },
+
+      nextTick(() => {
+        $('#cookieForm .ui.accordion').accordion();
+        $('#cookieForm .ui.dropdown').dropdown();
+        $('#cookieForm .ui.checkbox').checkbox();
+      });
+    });
+
+    return {
+      preferences,
+      domainPattern,
+      domainPatternDisabled,
+      cookie,
+      editing,
+      editingIndex,
+      addCookie,
+      saveCookie,
+      editCookie,
+      removeCookie,
+      cookieKeys,
+      cookieMouseEnter,
+      cookieMouseLeave,
+      resetForm,
+      resetDropdowns,
+    };
   },
 });
 </script>
@@ -189,7 +187,7 @@ export default mixins(mixin).extend({
         id="cookieDomainPattern"
         :disabled="domainPatternDisabled"
         :glossary="true"
-        :domain-pattern.sync="domainPattern"
+        v-model:domain-pattern="domainPattern"
       />
       <div class="field">
         <label>name</label>

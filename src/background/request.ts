@@ -92,7 +92,7 @@ export class Request {
     } catch (error) {
       this.debug(
         '[webRequestOnBeforeRequest] handling request failed',
-        error.toString()
+        (error as Error).toString()
       );
     }
 
