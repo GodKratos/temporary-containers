@@ -473,7 +473,7 @@ export class Isolation {
     tab?: Tab;
     request: WebRequestOnBeforeRequestDetails;
     openerTab?: Tab;
-  }): Promise<boolean> {
+  }): Promise<boolean | Record<string, unknown>> {
     if (!tab || !tab.url) {
       this.debug(
         '[shouldIsolateAlways] we cant proceed without tab url information',
@@ -520,6 +520,9 @@ export class Isolation {
         this.debug(
           '[shouldIsolateAlways] isolating because not in a tmp container'
         );
+        if (this.pref.deletesHistory.containerAlwaysPerDomain === 'automatic') {
+          return { deletesHistory: true };
+        }
         return true;
       }
 
