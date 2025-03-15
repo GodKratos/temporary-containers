@@ -86,10 +86,10 @@ export default Vue.extend({
     },
     debug(): void {
       browser.tabs.create({
-        url: 'https://github.com/stoically/temporary-containers/issues',
+        url: 'https://github.com/GodKratos/temporary-containers/issues',
       });
       browser.tabs.create({
-        url: 'https://github.com/stoically/temporary-containers/wiki/Debug-Log',
+        url: 'https://github.com/GodKratos/temporary-containers/wiki/Debug-Log',
       });
     },
   },
@@ -158,7 +158,7 @@ export default Vue.extend({
           <div style="margin-top: 15px;">
             <a
               class="ui primary button"
-              :href="`https://github.com/stoically/temporary-containers/issues/new?title=Initializing+failed&body=${encodeURIComponent(
+              :href="`https://github.com/GodKratos/temporary-containers/issues/new?title=Initializing+failed&body=${encodeURIComponent(
                 initializeErrorMessage
               )}`"
               target="_blank"

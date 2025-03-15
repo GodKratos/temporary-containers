@@ -1,7 +1,7 @@
 {
   "name": "tmpcontainers",
   "version": "0.0.0",
-  "description": "Temporary Containers",
+  "description": "Temporary Containers Plus",
   "scripts": {
     "clean": "rimraf web-ext-artifacts .web-ext-artifacts dist",
     "build": "run-s clean build:webpack",
@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stoically/temporary-containers.git"
+    "url": "git+https://github.com/GodKratos/temporary-containers.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stoically/temporary-containers/issues"
+    "url": "https://github.com/GodKratos/temporary-containers/issues"
   },
-  "homepage": "https://github.com/stoically/temporary-containers#readme",
+  "homepage": "https://github.com/GodKratos/temporary-containers#readme",
   "dependencies": {
     "delay": "4.3.0",
     "fomantic-ui": "^2.8.5",

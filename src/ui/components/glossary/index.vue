@@ -327,7 +327,7 @@ ul {
             href="#"
             @click="
               external(
-                'https://github.com/stoically/temporary-containers/wiki/Global-Isolation'
+                'https://github.com/GodKratos/temporary-containers/wiki/Global-Isolation'
               )
             "
           >
@@ -356,7 +356,7 @@ ul {
             href="#"
             @click="
               external(
-                'https://github.com/stoically/temporary-containers/wiki/Per-Domain-Isolation'
+                'https://github.com/GodKratos/temporary-containers/wiki/Per-Domain-Isolation'
               )
             "
           >
@@ -504,7 +504,7 @@ ul {
             href="#"
             @click="
               external(
-                'https://github.com/stoically/temporary-containers/wiki/Multi-Account-Containers-Isolation'
+                'https://github.com/GodKratos/temporary-containers/wiki/Multi-Account-Containers-Isolation'
               )
             "
           >
@@ -548,7 +548,7 @@ ul {
             href="#"
             @click="
               external(
-                'https://github.com/stoically/temporary-containers/wiki/Automatic-Mode'
+                'https://github.com/GodKratos/temporary-containers/wiki/Automatic-Mode'
               )
             "
           >

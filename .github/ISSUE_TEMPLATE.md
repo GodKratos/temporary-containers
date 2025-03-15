@@ -6,12 +6,12 @@
 
 - If the issue only happens after you configured Temporary Containers preferences, then please attach preferences file export (be aware that the list of Per Domain configurations is included in the export)
 
-- Bonus points if you provide a debug log: https://github.com/stoically/temporary-containers/wiki/Debug-Log
+- Bonus points if you provide a debug log: https://github.com/GodKratos/temporary-containers/wiki/Debug-Log
 
 - Limitation: If you're in a Private Window or "Firefox will: Never remember history" in the Firefox Preferences/Options under "Privacy & Security > History" is selected (known as Permanent Private Mode), then Temporary Containers will not work since Containers aren't available in Private Windows
 -->
 
-- Temporary Containers Version:
+- Temporary Containers Plus Version:
 - Firefox Version:
 
 ### Actual behavior

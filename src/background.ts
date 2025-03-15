@@ -22,7 +22,7 @@ window.tmp
     browser.browserAction.setPopup({
       popup: null,
     });
-    browser.browserAction.setTitle({ title: 'Temporary Containers Error' });
+    browser.browserAction.setTitle({ title: 'Temporary Containers Plus Error' });
     browser.browserAction.setBadgeBackgroundColor({
       color: 'red',
     });
