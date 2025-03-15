@@ -105,7 +105,7 @@ export default (
             console.error('error while saving preferences', error);
             this.$root.$emit(
               'showError',
-              `Error while saving preferences: ${error.toString()}`
+              `Error while saving preferences: ${(error as Error).toString()}`
             );
             window.setTimeout(() => {
               this.$root.$emit('initialize');
@@ -184,7 +184,7 @@ export default (
         } catch (error) {
           this.$root.$emit(
             'showError',
-            `Loading preferences failed, please try again. ${error.toString()}`
+            `Loading preferences failed, please try again. ${(error as Error).toString()}`
           );
           return;
         }

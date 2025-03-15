@@ -257,7 +257,7 @@ export default mixins(mixin).extend({
                       "
                       data-position="right center"
                       style="color: red; cursor: pointer;"
-                      @click="removeExcludedDomain(excludedDomainPattern)"
+                      @click="removeExcludedDomain(String(excludedDomainPattern))"
                     >
                       <i class="icon-trash-empty" />
                     </span>

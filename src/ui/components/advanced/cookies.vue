@@ -325,7 +325,7 @@ export default mixins(mixin).extend({
                     <button
                       class="ui right primary small button"
                       style="margin-top: 10px;"
-                      @click="editCookie(cookiesDomainPattern, index)"
+                      @click="editCookie(String(cookiesDomainPattern), index)"
                     >
                       <i class="icon-pencil" />
                       Edit
@@ -333,7 +333,7 @@ export default mixins(mixin).extend({
                     <button
                       class="ui right negative small button"
                       style="margin-top: 10px;"
-                      @click="removeCookie(cookiesDomainPattern, index)"
+                      @click="removeCookie(String(cookiesDomainPattern), index)"
                     >
                       <i class="icon-trash-empty" />
                       Remove

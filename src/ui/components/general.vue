@@ -277,7 +277,7 @@ export default mixins(mixin).extend({
         </select>
       </div>
       <div class="field">
-        {{ app.tempContainerCounter }}
+        {{ app.storage.tempContainerCounter }}
         <div
           v-if="
             preferences.container.numberMode === 'keep' &&

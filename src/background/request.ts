@@ -92,7 +92,7 @@ export class Request {
     } catch (error) {
       this.debug(
         '[webRequestOnBeforeRequest] handling request failed',
-        error.toString()
+        (error as Error).toString()
       );
     }
 
@@ -271,7 +271,7 @@ export class Request {
           '[handleRequest] onBeforeRequest tab belongs to a container that does not exist',
           tab,
           request,
-          error.toString()
+          (error as Error).toString()
         );
       }
     }

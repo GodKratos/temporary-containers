@@ -239,7 +239,7 @@ export default mixins(mixin).extend({
                     <button
                       class="ui right small primary button"
                       style="margin-top: 10px; margin-left: 10px;"
-                      @click="editScript(scriptDomainPattern, index)"
+                      @click="editScript(String(scriptDomainPattern), index)"
                     >
                       <i class="icon-pencil" />
                       Edit
@@ -247,7 +247,7 @@ export default mixins(mixin).extend({
                     <button
                       class="ui right negative small button"
                       style="margin-top: 10px;"
-                      @click="removeScript(scriptDomainPattern, index)"
+                      @click="removeScript(String(scriptDomainPattern), index)"
                     >
                       <i class="icon-trash-empty" />
                       Remove

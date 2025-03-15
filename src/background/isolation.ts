@@ -249,7 +249,7 @@ export class Isolation {
           return false;
         }
       } catch (error) {
-        this.debug('[shouldIsolate] failed contacting TST', error.toString());
+        this.debug('[shouldIsolate] failed contacting TST', (error as Error).toString());
       }
     }
 
