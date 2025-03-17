@@ -1,5 +1,7 @@
 # Temporary Containers Plus Firefox Add-on
 
+https://addons.mozilla.org/en-GB/firefox/addon/temporary-containers-plus/
+
 This is a continuation of the amazing addon [originally created and maintained by stoically](https://github.com/stoically/temporary-containers) who has since passed away.
 
 Detailed information about the Add-on [can be found in the wiki](https://github.com/GodKratos/temporary-containers/wiki). There's also [this long-form article](https://medium.com/@stoically/enhance-your-privacy-in-firefox-with-temporary-containers-33925cd6cd21) from the orignal developer, explain its features and how it works.
