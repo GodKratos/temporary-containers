@@ -65,8 +65,8 @@ export default Vue.extend({
       </div>
       <div class="ui small notice message">
         You can open "Deletes History Temporary Containers" - also with the
-        keyboard shortcut Alt+P - after you read the Warning and ticked the
-        checkbox.<br />
+        keyboard shortcut (default: Alt+P) - after you read the Warning and
+        ticked the checkbox.<br />
         <br />
         The deletion applies to the full website URL, not only the domain. That
         means, if you e.g. open a news article on your favorite news site in a

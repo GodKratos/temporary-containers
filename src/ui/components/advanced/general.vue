@@ -224,7 +224,10 @@ export default mixins(mixin).extend({
               v-model="preferences.keyboardShortcuts.AltC"
               type="checkbox"
             />
-            <label>Open a new tab in a new Temporary Container (Default: Alt+C)</label>
+            <label
+              >Open a new tab in a new Temporary Container (Default:
+              Alt+N)</label
+            >
           </div>
         </div>
         <div class="field">
@@ -245,7 +248,7 @@ export default mixins(mixin).extend({
               v-model="preferences.keyboardShortcuts.AltN"
               type="checkbox"
             />
-            <label>Open a new 'No Container' tab (Default: Alt+N)</label>
+            <label>Open a new 'No Container' tab (Default: Alt+M)</label>
           </div>
         </div>
         <div class="field">
@@ -255,8 +258,8 @@ export default mixins(mixin).extend({
               type="checkbox"
             />
             <label
-              >Open a new 'No Container' tab in a new window
-              (Default: Alt+Shift+C)</label
+              >Open a new 'No Container' tab in a new window (Default:
+              Alt+Shift+N)</label
             >
           </div>
         </div>
@@ -267,8 +270,8 @@ export default mixins(mixin).extend({
               type="checkbox"
             />
             <label
-              >Open a new tab in the same container as the current tab
-              (Default: Alt+X)</label
+              >Open a new tab in the same container as the current tab (Default:
+              Alt+X)</label
             >
           </div>
         </div>
@@ -279,8 +282,8 @@ export default mixins(mixin).extend({
               type="checkbox"
             />
             <label
-              >Open current tab URL in a new Temporary Container tab
-              (Default: Alt+O)</label
+              >Open current tab URL in a new Temporary Container tab (Default:
+              Alt+O)</label
             >
           </div>
         </div>

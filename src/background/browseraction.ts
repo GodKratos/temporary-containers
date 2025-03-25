@@ -87,7 +87,7 @@ export class BrowserAction {
 
     browser.browserAction.setTitle({
       title: !this.pref.browserActionPopup
-        ? 'Open a new tab in a new Temporary Container (Alt+C)'
+        ? 'Open a new tab in a new Temporary Container (Alt+N)'
         : 'Temporary Containers',
       tabId,
     });
