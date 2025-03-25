@@ -40,10 +40,14 @@ export class PageAction {
       color = this.storage.local.tempContainers[activatedTab.cookieStoreId]
         .color;
     } else {
-      const container = await browser.contextualIdentities.get(
-        activatedTab.cookieStoreId
-      );
-      color = container.color;
+      try {
+        const container = await browser.contextualIdentities.get(
+          activatedTab.cookieStoreId
+        );
+        color = container.color;
+      } catch (error) {
+        color = 'gray';
+      }
     }
     if (activatedTab?.id) {
       browser.pageAction.setIcon({
