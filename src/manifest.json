@@ -40,7 +40,7 @@
   "commands": {
     "new_temporary_container_tab": {
       "suggested_key": {
-        "default": "Alt+N"
+        "default": "Alt+M"
       },
       "description": "Open a new tab in a new Temporary Container"
     },
@@ -52,7 +52,7 @@
     },
     "new_no_container_tab": {
       "suggested_key": {
-        "default": "Alt+M"
+        "default": "Alt+N"
       },
       "description": "Open a new 'No Container' tab. Enable in Advanced Preferences > Keyboard shortcuts"
     },

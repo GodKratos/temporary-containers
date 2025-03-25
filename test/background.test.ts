@@ -323,7 +323,7 @@ preferencesTestSet.map((preferences) => {
           const { tmp: background, browser } = await loadBackground({
             preferences,
           });
-          background.storage.local.preferences.keyboardShortcuts.AltShiftC = true;
+          background.storage.local.preferences.keyboardShortcuts.AltShiftN = true;
           browser.commands.onCommand.addListener.yield(
             'new_no_container_window_tab'
           );

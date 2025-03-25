@@ -221,12 +221,12 @@ export default mixins(mixin).extend({
         <div class="field">
           <div class="ui checkbox">
             <input
-              v-model="preferences.keyboardShortcuts.AltC"
+              v-model="preferences.keyboardShortcuts.AltM"
               type="checkbox"
             />
             <label
               >Open a new tab in a new Temporary Container (Default:
-              Alt+N)</label
+              Alt+M)</label
             >
           </div>
         </div>
@@ -248,13 +248,13 @@ export default mixins(mixin).extend({
               v-model="preferences.keyboardShortcuts.AltN"
               type="checkbox"
             />
-            <label>Open a new 'No Container' tab (Default: Alt+M)</label>
+            <label>Open a new 'No Container' tab (Default: Alt+N)</label>
           </div>
         </div>
         <div class="field">
           <div class="ui checkbox">
             <input
-              v-model="preferences.keyboardShortcuts.AltShiftC"
+              v-model="preferences.keyboardShortcuts.AltShiftN"
               type="checkbox"
             />
             <label

@@ -29,7 +29,7 @@ export class Commands {
   async onCommand(name: string): Promise<void> {
     switch (name) {
       case 'new_temporary_container_tab':
-        if (!this.pref.keyboardShortcuts.AltC) {
+        if (!this.pref.keyboardShortcuts.AltM) {
           return;
         }
         this.container.createTabInTempContainer({
@@ -57,7 +57,7 @@ export class Commands {
         break;
 
       case 'new_no_container_window_tab':
-        if (!this.pref.keyboardShortcuts.AltShiftC) {
+        if (!this.pref.keyboardShortcuts.AltShiftN) {
           return;
         }
         try {
