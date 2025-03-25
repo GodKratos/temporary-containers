@@ -221,6 +221,25 @@ export class Container {
         } else if (tab.openerTabId) {
           newTabOptions.openerTabId = tab.openerTabId;
         }
+        // remove openertab from newTabOptions if the opener tab is not loaded yet, or else temp container will not load
+        if (newTabOptions.openerTabId) {
+          try {
+            const openerTab = await browser.tabs.get(newTabOptions.openerTabId);
+            if (openerTab.discarded) {
+              this.debug(
+                '[createTabInTempContainer] opener tab is discarded, removing openerTabId',
+                openerTab
+              );
+              delete newTabOptions.openerTabId;
+            }
+          } catch (error) {
+            this.debug(
+              '[createTabInTempContainer] opener tab does not exist, removing openerTabId',
+              error
+            );
+            delete newTabOptions.openerTabId;
+          }
+        }
         if (tab.windowId) {
           newTabOptions.windowId = tab.windowId;
         }
