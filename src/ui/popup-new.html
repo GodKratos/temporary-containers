@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Temporary Containers Plus</title>
+  <link rel="stylesheet" href="css/photon.css" />
+  <link rel="stylesheet" href="css/popup.css" />
+  <link rel="stylesheet" href="vendor/fontello/fontello-embedded.css" />
+</head>
+<body>
+  <div id="container" class="container">
+    <div id="message-container" class="message-container hidden">
+      <div id="message" class="message"></div>
+    </div>
+    
+    <div id="initialize-loader" class="initialize-loader hidden">
+      <div class="loader-text">Initializing...</div>
+    </div>
+    
+    <div id="initialize-error" class="initialize-error hidden">
+      <div class="error-text">Failed to initialize. Please try reloading the page.</div>
+      <div id="initialize-error-details" class="error-details"></div>
+    </div>
+    
+    <div id="app" class="app">
+      <header class="popup-header">
+        <button id="toggle-sidebar" class="button-icon">
+          <i class="icon-menu"></i>
+        </button>
+        
+        <div class="header-actions">
+          <button id="toggle-isolation" class="button-icon" title="Toggle Isolation">
+            <i class="icon-isolation"></i>
+          </button>
+          
+          <button id="open-preferences" class="button-icon" title="Open Preferences/Options">
+            <i class="icon-cog-alt"></i>
+          </button>
+          
+          <button id="create-deletes-history-container" class="button-icon hidden" title="Open new 'Deletes History Temporary Container'">
+            <i class="icon-user-secret"></i>
+          </button>
+          
+          <button id="create-tmp-container" class="button-icon" title="Open new Temporary Container">
+            <svg width="16" height="16">
+              <image xlink:href="/icons/page-w-16.svg" x="0" y="0" width="100%" height="100%" />
+            </svg>
+          </button>
+        </div>
+      </header>
+      
+      <div class="popup-content">
+        <aside id="sidebar" class="sidebar hidden">
+          <nav class="sidebar-nav">
+            <button class="sidebar-item" data-tab="isolation-global">
+              <i class="icon-circle-empty"></i> Isolation Global
+            </button>
+            <button class="sidebar-item" data-tab="isolation-per-domain">
+              <i class="icon-circle-empty"></i> Isolation Per Domain
+            </button>
+            <button class="sidebar-item" data-tab="actions">
+              <i class="icon-exchange"></i> Actions
+            </button>
+            <button class="sidebar-item" data-tab="statistics">
+              <i class="icon-chart-bar"></i> Statistics
+            </button>
+          </nav>
+        </aside>
+        
+        <main class="tab-content">
+          <!-- Isolation Global Tab Content -->
+          <section id="isolation-global" class="tab-panel active">
+            <div class="breadcrumb">
+              <span>Isolation Global</span>
+            </div>
+            <!-- Isolation Global content will be loaded dynamically -->
+          </section>
+          
+          <!-- Isolation Per Domain Tab Content -->
+          <section id="isolation-per-domain" class="tab-panel hidden">
+            <div class="breadcrumb">
+              <span>Isolation Per Domain</span>
+            </div>
+            <!-- Isolation Per Domain content will be loaded dynamically -->
+          </section>
+          
+          <!-- Actions Tab Content -->
+          <section id="actions" class="tab-panel hidden">
+            <div class="breadcrumb">
+              <span>Actions</span>
+            </div>
+            <!-- Actions content will be loaded dynamically -->
+          </section>
+          
+          <!-- Statistics Tab Content -->
+          <section id="statistics" class="tab-panel hidden">
+            <div class="breadcrumb">
+              <span>Statistics</span>
+            </div>
+            <!-- Statistics content will be loaded dynamically -->
+          </section>
+        </main>
+      </div>
+    </div>
+    
+    <div id="glossary" class="glossary hidden">
+      <div class="glossary-content">
+        <div class="glossary-header">
+          <h2 id="glossary-title">Glossary</h2>
+          <button id="glossary-close" class="button-icon">×</button>
+        </div>
+        <div id="glossary-body" class="glossary-body"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module" src="js/popup.js"></script>
+</body>
+</html>

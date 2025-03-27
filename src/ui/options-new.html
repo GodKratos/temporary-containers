@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Temporary Containers Plus</title>
+  <link rel="stylesheet" href="css/photon.css" />
+  <link rel="stylesheet" href="css/options.css" />
+  <link rel="stylesheet" href="vendor/fontello/fontello-embedded.css" />
+</head>
+<body>
+  <div id="container" class="container">
+    <div id="message-container" class="message-container hidden">
+      <div id="message" class="message"></div>
+    </div>
+    
+    <div id="initialize-loader" class="initialize-loader hidden">
+      <div class="loader-text">Initializing...</div>
+    </div>
+    
+    <div id="initialize-error" class="initialize-error hidden">
+      <div class="error-text">Failed to initialize. Please try reloading the page.</div>
+      <div id="initialize-error-details" class="error-details"></div>
+    </div>
+    
+    <div id="app" class="app">
+      <header class="tabs-header">
+        <nav class="tabs">
+          <button id="tab-general" class="tab-button active" data-tab="general">
+            <i class="icon-cog-alt"></i>
+            <span>General</span>
+          </button>
+          <button id="tab-isolation" class="tab-button" data-tab="isolation">
+            <i class="icon-circle-empty"></i>
+            <span>Isolation</span>
+          </button>
+          <button id="tab-advanced" class="tab-button" data-tab="advanced">
+            <i class="graduation cap icon"></i>
+            <span>Advanced</span>
+          </button>
+          <button id="tab-statistics" class="tab-button" data-tab="statistics">
+            <i class="icon-chart-bar"></i>
+            <span>Statistics</span>
+          </button>
+          <button id="tab-export-import" class="tab-button" data-tab="export-import">
+            <i class="save icon"></i>
+            <span>Export/Import</span>
+          </button>
+        </nav>
+      </header>
+      
+      <main class="tab-content">
+        <!-- General Tab Content -->
+        <section id="general" class="tab-panel active">
+          <div class="form">
+            <div class="field checkbox-field">
+              <input type="checkbox" id="automaticMode" name="automaticMode" />
+              <label for="automaticMode" data-glossary="Automatic Mode">Automatic Mode</label>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="browserActionPopup" name="browserActionPopup" />
+              <label for="browserActionPopup" data-glossary="Toolbar Popup">Show popup when clicking the toolbar icon</label>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="notificationsCheckbox" name="notifications" />
+              <label for="notificationsCheckbox">Notifications</label>
+            </div>
+            
+            <div class="field">
+              <label for="containerNamePrefix">Container Name Prefix</label>
+              <input type="text" id="containerNamePrefix" name="containerNamePrefix" />
+            </div>
+            
+            <div class="field">
+              <div class="checkbox-field">
+                <input type="checkbox" id="containerColorRandom" name="containerColorRandom" />
+                <label for="containerColorRandom">Use random container colors</label>
+              </div>
+              
+              <div id="containerColorSection" class="sub-field">
+                <label for="containerColor">Container Color</label>
+                <select id="containerColor" name="containerColor"></select>
+              </div>
+              
+              <div id="containerColorRandomExcludedSection" class="sub-field hidden">
+                <label for="containerColorRandomExcluded">Container Colors excluded from random selection</label>
+                <div class="multi-select-container">
+                  <select id="containerColorRandomExcluded" name="containerColorRandomExcluded" multiple></select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="field">
+              <div class="checkbox-field">
+                <input type="checkbox" id="containerIconRandom" name="containerIconRandom" />
+                <label for="containerIconRandom">Use random container icons</label>
+              </div>
+              
+              <div id="containerIconSection" class="sub-field">
+                <label for="containerIcon">Container Icon</label>
+                <select id="containerIcon" name="containerIcon"></select>
+              </div>
+              
+              <div id="containerIconRandomExcludedSection" class="sub-field hidden">
+                <label for="containerIconRandomExcluded">Container Icons excluded from random selection</label>
+                <div class="multi-select-container">
+                  <select id="containerIconRandomExcluded" name="containerIconRandomExcluded" multiple></select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="field">
+              <label for="containerNumberMode">Container Number Mode</label>
+              <select id="containerNumberMode" name="containerNumberMode">
+                <option value="keep">Keep counting</option>
+                <option value="keepuntilrestart">Keep counting until restart</option>
+                <option value="reuse">Reuse numbers</option>
+                <option value="hide">Hide numbers</option>
+              </select>
+            </div>
+            
+            <div id="containerNumberResetSection" class="field">
+              <div class="container-counter">
+                <span id="containerCounter"></span>
+                <button id="resetContainerNumber" class="button-default">Reset container number</button>
+              </div>
+            </div>
+            
+            <div class="field">
+              <label for="containerRemoval">Container Removal (ms)</label>
+              <input type="number" id="containerRemoval" name="containerRemoval" min="0" />
+            </div>
+            
+            <div class="field">
+              <label for="iconColor">Toolbar Icon Color</label>
+              <select id="iconColor" name="iconColor"></select>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Isolation Tab Content -->
+        <section id="isolation" class="tab-panel hidden">
+          <!-- Isolation content will be loaded dynamically -->
+        </section>
+        
+        <!-- Advanced Tab Content -->
+        <section id="advanced" class="tab-panel hidden">
+          <!-- Advanced content will be loaded dynamically -->
+        </section>
+        
+        <!-- Statistics Tab Content -->
+        <section id="statistics" class="tab-panel hidden">
+          <!-- Statistics content will be loaded dynamically -->
+        </section>
+        
+        <!-- Export/Import Tab Content -->
+        <section id="export-import" class="tab-panel hidden">
+          <!-- Export/Import content will be loaded dynamically -->
+        </section>
+      </main>
+    </div>
+    
+    <div id="glossary" class="glossary hidden">
+      <div class="glossary-content">
+        <div class="glossary-header">
+          <h2 id="glossary-title">Glossary</h2>
+          <button id="glossary-close" class="button-icon">×</button>
+        </div>
+        <div id="glossary-body" class="glossary-body"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module" src="js/options.js"></script>
+</body>
+</html>
