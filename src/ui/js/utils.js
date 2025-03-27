@@ -289,16 +289,24 @@ export function capitalize(str) {
  * @param {Function} onAdd - Callback when an option is added
  * @param {Function} onRemove - Callback when an option is removed
  */
-export function createMultiSelect(selectElement, options, selectedValues, onAdd, onRemove) {
+export function createMultiSelect(selectElement, options, selectedValues = [], onAdd, onRemove) {
   // Clear existing options
   selectElement.innerHTML = '';
   
+  // Ensure options is an array of objects with id and text properties
+  const formattedOptions = Array.isArray(options) 
+    ? options.map(option => typeof option === 'object' ? option : { id: option, text: option })
+    : [];
+  
+  // Ensure selectedValues is an array
+  const selected = Array.isArray(selectedValues) ? selectedValues : [];
+  
   // Add options
-  options.forEach(option => {
+  formattedOptions.forEach(option => {
     const optionElement = document.createElement('option');
     optionElement.value = option.id;
     optionElement.textContent = option.text;
-    optionElement.selected = selectedValues.includes(option.id);
+    optionElement.selected = selected.includes(option.id);
     selectElement.appendChild(optionElement);
   });
   
@@ -308,13 +316,13 @@ export function createMultiSelect(selectElement, options, selectedValues, onAdd,
     
     // Find added options
     selectedOptions.forEach(value => {
-      if (!selectedValues.includes(value) && onAdd) {
+      if (!selected.includes(value) && onAdd) {
         onAdd(value);
       }
     });
     
     // Find removed options
-    selectedValues.forEach(value => {
+    selected.forEach(value => {
       if (!selectedOptions.includes(value) && onRemove) {
         onRemove(value);
       }
@@ -324,95 +332,74 @@ export function createMultiSelect(selectElement, options, selectedValues, onAdd,
 
 /**
  * Create a tag input system
- * @param {HTMLElement} container - The container element
+ * @param {HTMLInputElement} inputElement - The input element
+ * @param {HTMLElement} tagContainer - The container for tags
  * @param {Array} initialTags - The initial tags
- * @param {Function} onAdd - Callback when a tag is added
- * @param {Function} onRemove - Callback when a tag is removed
- * @returns {Object} - The tag input API
+ * @param {Function} onChange - Callback when tags change
  */
-export function createTagInput(container, initialTags = [], onAdd = null, onRemove = null) {
-  const tags = [...initialTags];
-  
-  // Create input element
-  const input = document.createElement('input');
-  input.className = 'tag-input';
-  input.placeholder = 'Add item...';
-  
-  // Render initial tags
-  function renderTags() {
-    // Clear container except for the input
-    Array.from(container.children).forEach(child => {
-      if (child !== input) {
-        container.removeChild(child);
-      }
-    });
-    
-    // Add tags
-    tags.forEach((tag, index) => {
-      const tagElement = document.createElement('div');
-      tagElement.className = 'tag';
-      tagElement.innerHTML = `
-        <span class="tag-text">${tag}</span>
-        <span class="tag-remove" data-index="${index}">×</span>
-      `;
-      container.insertBefore(tagElement, input);
-    });
-  }
-  
-  // Add a new tag
-  function addTag(tag) {
-    if (tag && !tags.includes(tag)) {
-      tags.push(tag);
-      renderTags();
-      
-      if (onAdd) {
-        onAdd(tag);
-      }
-    }
-  }
-  
-  // Remove a tag
-  function removeTag(index) {
-    const tag = tags[index];
-    tags.splice(index, 1);
-    renderTags();
-    
-    if (onRemove) {
-      onRemove(tag);
-    }
-  }
-  
-  // Add input to container
-  container.appendChild(input);
+export function createTagInput(inputElement, tagContainer, initialTags = [], onChange = null) {
+  // Ensure initialTags is an array
+  const tags = Array.isArray(initialTags) ? [...initialTags] : [];
   
   // Render initial tags
   renderTags();
   
-  // Add event listeners
-  input.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && input.value.trim()) {
-      addTag(input.value.trim());
-      input.value = '';
-      event.preventDefault();
+  // Add event listener for input
+  inputElement.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      
+      const value = inputElement.value.trim();
+      if (value && !tags.includes(value)) {
+        tags.push(value);
+        renderTags();
+        inputElement.value = '';
+        
+        if (onChange) {
+          onChange(tags);
+        }
+      }
     }
   });
   
-  container.addEventListener('click', event => {
-    if (event.target.classList.contains('tag-remove')) {
-      const index = parseInt(event.target.dataset.index, 10);
-      removeTag(index);
+  // Add event delegation for tag removal
+  tagContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('tag-remove')) {
+      const tag = e.target.parentElement.querySelector('.tag-text').textContent;
+      const index = tags.indexOf(tag);
+      
+      if (index !== -1) {
+        tags.splice(index, 1);
+        renderTags();
+        
+        if (onChange) {
+          onChange(tags);
+        }
+      }
     }
   });
   
-  // Return API
-  return {
-    addTag,
-    removeTag,
-    getTags: () => [...tags],
-    setTags: newTags => {
-      tags.length = 0;
-      tags.push(...newTags);
-      renderTags();
-    },
-  };
+  // Render tags
+  function renderTags() {
+    // Clear container
+    tagContainer.innerHTML = '';
+    
+    // Add tags
+    tags.forEach(tag => {
+      const tagElement = document.createElement('div');
+      tagElement.className = 'tag';
+      
+      const tagText = document.createElement('span');
+      tagText.className = 'tag-text';
+      tagText.textContent = tag;
+      
+      const tagRemove = document.createElement('span');
+      tagRemove.className = 'tag-remove';
+      tagRemove.textContent = '×';
+      
+      tagElement.appendChild(tagText);
+      tagElement.appendChild(tagRemove);
+      tagContainer.appendChild(tagElement);
+    });
+  }
 }

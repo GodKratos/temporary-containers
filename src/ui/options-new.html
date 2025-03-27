@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="css/photon.css" />
   <link rel="stylesheet" href="css/options.css" />
   <link rel="stylesheet" href="vendor/fontello/fontello-embedded.css" />
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
   <div id="container" class="container">
@@ -23,34 +24,70 @@
     </div>
     
     <div id="app" class="app">
-      <header class="tabs-header">
-        <nav class="tabs">
-          <button id="tab-general" class="tab-button active" data-tab="general">
-            <i class="icon-cog-alt"></i>
-            <span>General</span>
-          </button>
-          <button id="tab-isolation" class="tab-button" data-tab="isolation">
-            <i class="icon-circle-empty"></i>
-            <span>Isolation</span>
-          </button>
-          <button id="tab-advanced" class="tab-button" data-tab="advanced">
-            <i class="graduation cap icon"></i>
-            <span>Advanced</span>
-          </button>
-          <button id="tab-statistics" class="tab-button" data-tab="statistics">
-            <i class="icon-chart-bar"></i>
-            <span>Statistics</span>
-          </button>
-          <button id="tab-export-import" class="tab-button" data-tab="export-import">
-            <i class="save icon"></i>
-            <span>Export/Import</span>
-          </button>
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>Temporary Containers</h1>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <button id="nav-general" class="nav-button active" data-section="general">
+                <i class="icon-cog-alt"></i>
+                <span>General</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-isolation-global" class="nav-button" data-section="isolation-global">
+                <i class="icon-circle-empty"></i>
+                <span>Isolation: Global</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-isolation-domain" class="nav-button" data-section="isolation-domain">
+                <i class="icon-link"></i>
+                <span>Isolation: Per Domain</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-advanced-container" class="nav-button" data-section="advanced-container">
+                <i class="icon-wrench"></i>
+                <span>Advanced: Container</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-advanced-cookies" class="nav-button" data-section="advanced-cookies">
+                <i class="icon-cookie"></i>
+                <span>Advanced: Cookies</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-advanced-misc" class="nav-button" data-section="advanced-misc">
+                <i class="icon-tools"></i>
+                <span>Advanced: Misc</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-statistics" class="nav-button" data-section="statistics">
+                <i class="icon-chart-bar"></i>
+                <span>Statistics</span>
+              </button>
+            </li>
+            <li>
+              <button id="nav-export-import" class="nav-button" data-section="export-import">
+                <i class="icon-download"></i>
+                <span>Export/Import</span>
+              </button>
+            </li>
+          </ul>
         </nav>
-      </header>
+      </aside>
       
-      <main class="tab-content">
-        <!-- General Tab Content -->
-        <section id="general" class="tab-panel active">
+      <!-- Main Content Area -->
+      <main class="content">
+        <!-- General Section -->
+        <section id="general" class="content-section active">
+          <h2>General Settings</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="automaticMode" name="automaticMode" />
@@ -139,24 +176,217 @@
           </div>
         </section>
         
-        <!-- Isolation Tab Content -->
-        <section id="isolation" class="tab-panel hidden">
-          <!-- Isolation content will be loaded dynamically -->
+        <!-- Isolation: Global Section -->
+        <section id="isolation-global" class="content-section hidden">
+          <h2>Global Isolation Settings</h2>
+          <div class="form">
+            <div class="field checkbox-field">
+              <input type="checkbox" id="isolation" name="isolation" />
+              <label for="isolation" data-glossary="Isolation">Enable Isolation</label>
+            </div>
+            
+            <div class="field">
+              <label for="defaultIsolation">Default Isolation</label>
+              <select id="defaultIsolation" name="defaultIsolation">
+                <option value="default">Default</option>
+                <option value="never">Never</option>
+                <option value="always">Always</option>
+              </select>
+            </div>
+            
+            <div class="field">
+              <label for="ignoredDomains">Ignored Domains</label>
+              <div class="tag-input-container">
+                <input type="text" id="ignoredDomainsInput" placeholder="Add domain and press Enter" />
+                <div id="ignoredDomains" class="tag-list"></div>
+              </div>
+              <div class="field-description">
+                Domains that should never be isolated (e.g., login pages).
+              </div>
+            </div>
+            
+            <div class="field">
+              <label for="macConfirmPage">MAC Confirm Page</label>
+              <select id="macConfirmPage" name="macConfirmPage">
+                <option value="true">Show</option>
+                <option value="false">Don't show</option>
+              </select>
+              <div class="field-description">
+                Show a confirmation page when navigating to a Multi-Account Container.
+              </div>
+            </div>
+          </div>
         </section>
         
-        <!-- Advanced Tab Content -->
-        <section id="advanced" class="tab-panel hidden">
-          <!-- Advanced content will be loaded dynamically -->
+        <!-- Isolation: Per Domain Section -->
+        <section id="isolation-domain" class="content-section hidden">
+          <h2>Per-Domain Isolation Settings</h2>
+          <div class="form">
+            <div class="field">
+              <label for="domainIsolation">Domain-Specific Isolation Rules</label>
+              <div class="domain-rules-container">
+                <div class="domain-rule-add">
+                  <input type="text" id="domainRuleInput" placeholder="Domain pattern (e.g., example.com)" />
+                  <select id="domainRuleAction">
+                    <option value="always">Always isolate</option>
+                    <option value="never">Never isolate</option>
+                    <option value="global">Use global setting</option>
+                  </select>
+                  <button id="addDomainRule" class="button-default">Add Rule</button>
+                </div>
+                <div id="domainRulesList" class="domain-rules-list"></div>
+              </div>
+            </div>
+          </div>
         </section>
         
-        <!-- Statistics Tab Content -->
-        <section id="statistics" class="tab-panel hidden">
-          <!-- Statistics content will be loaded dynamically -->
+        <!-- Advanced: Container Section -->
+        <section id="advanced-container" class="content-section hidden">
+          <h2>Advanced Container Settings</h2>
+          <div class="form">
+            <div class="field checkbox-field">
+              <input type="checkbox" id="containerCleanup" name="containerCleanup" />
+              <label for="containerCleanup">Automatic Container Cleanup</label>
+              <div class="field-description">
+                Automatically remove containers when they are no longer in use.
+              </div>
+            </div>
+            
+            <div class="field">
+              <label for="containerTimeout">Container Timeout (minutes)</label>
+              <input type="number" id="containerTimeout" name="containerTimeout" min="0" />
+              <div class="field-description">
+                Time before an unused container is removed (0 = immediately).
+              </div>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="containerHistory" name="containerHistory" />
+              <label for="containerHistory">Container History</label>
+              <div class="field-description">
+                Keep a history of created containers.
+              </div>
+            </div>
+          </div>
         </section>
         
-        <!-- Export/Import Tab Content -->
-        <section id="export-import" class="tab-panel hidden">
-          <!-- Export/Import content will be loaded dynamically -->
+        <!-- Advanced: Cookies Section -->
+        <section id="advanced-cookies" class="content-section hidden">
+          <h2>Advanced Cookie Settings</h2>
+          <div class="form">
+            <div class="field checkbox-field">
+              <input type="checkbox" id="deleteCookies" name="deleteCookies" />
+              <label for="deleteCookies">Delete Cookies</label>
+              <div class="field-description">
+                Delete cookies when a container is removed.
+              </div>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="cookieStoreId" name="cookieStoreId" />
+              <label for="cookieStoreId">Cookie Store ID</label>
+              <div class="field-description">
+                Use the same cookie store ID for all temporary containers.
+              </div>
+            </div>
+            
+            <div class="field">
+              <label for="cookieBehavior">Cookie Behavior</label>
+              <select id="cookieBehavior" name="cookieBehavior">
+                <option value="default">Default</option>
+                <option value="block">Block all cookies</option>
+                <option value="allow">Allow all cookies</option>
+                <option value="reject_trackers">Reject trackers</option>
+              </select>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Advanced: Misc Section -->
+        <section id="advanced-misc" class="content-section hidden">
+          <h2>Advanced Miscellaneous Settings</h2>
+          <div class="form">
+            <div class="field checkbox-field">
+              <input type="checkbox" id="contextMenu" name="contextMenu" />
+              <label for="contextMenu">Context Menu</label>
+              <div class="field-description">
+                Show Temporary Containers options in the context menu.
+              </div>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="keyboardShortcuts" name="keyboardShortcuts" />
+              <label for="keyboardShortcuts">Keyboard Shortcuts</label>
+              <div class="field-description">
+                Enable keyboard shortcuts for Temporary Containers actions.
+              </div>
+            </div>
+            
+            <div class="field checkbox-field">
+              <input type="checkbox" id="debug" name="debug" />
+              <label for="debug">Debug Mode</label>
+              <div class="field-description">
+                Enable debug logging (check browser console for logs).
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Statistics Section -->
+        <section id="statistics" class="content-section hidden">
+          <h2>Statistics</h2>
+          <div class="statistics-container">
+            <div class="statistic-item">
+              <div class="statistic-label">Containers Created</div>
+              <div id="containersCreated" class="statistic-value">0</div>
+            </div>
+            
+            <div class="statistic-item">
+              <div class="statistic-label">Containers Active</div>
+              <div id="containersActive" class="statistic-value">0</div>
+            </div>
+            
+            <div class="statistic-item">
+              <div class="statistic-label">Containers Removed</div>
+              <div id="containersRemoved" class="statistic-value">0</div>
+            </div>
+            
+            <div class="statistic-item">
+              <div class="statistic-label">Isolation Prevented</div>
+              <div id="isolationPrevented" class="statistic-value">0</div>
+            </div>
+          </div>
+          
+          <div class="button-group">
+            <button id="resetStatistics" class="button-default">Reset Statistics</button>
+          </div>
+        </section>
+        
+        <!-- Export/Import Section -->
+        <section id="export-import" class="content-section hidden">
+          <h2>Export/Import Settings</h2>
+          <div class="form">
+            <div class="field">
+              <label>Export Settings</label>
+              <div class="button-group">
+                <button id="exportSettings" class="button-default">Export Settings</button>
+              </div>
+              <div class="field-description">
+                Export your Temporary Containers settings to a JSON file.
+              </div>
+            </div>
+            
+            <div class="field">
+              <label>Import Settings</label>
+              <div class="file-input-container">
+                <input type="file" id="importFile" accept=".json" />
+                <button id="importSettings" class="button-default">Import Settings</button>
+              </div>
+              <div class="field-description">
+                Import Temporary Containers settings from a JSON file.
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </div>
