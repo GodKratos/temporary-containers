@@ -176,10 +176,10 @@ export interface PreferencesSchema {
   contextMenu: boolean;
   contextMenuBookmarks: boolean;
   keyboardShortcuts: {
-    AltM: boolean;
+    AltC: boolean;
     AltP: boolean;
     AltN: boolean;
-    AltShiftN: boolean;
+    AltShiftC: boolean;
     AltX: boolean;
     AltO: boolean;
     AltI: boolean;
