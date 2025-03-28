@@ -698,9 +698,27 @@ function initEventListeners() {
  */
 function savePreference(key) {
   return async (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    app.preferences[key] = value;
-    await savePreferences(app.preferences);
+    try {
+      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+      
+      // Ensure preferences object exists
+      if (!app.preferences) {
+        app.preferences = {};
+      }
+      
+      // Update preference
+      app.preferences[key] = value;
+      
+      // Save preferences
+      const success = await savePreferences(app.preferences);
+      
+      if (success) {
+        console.log(`Saved preference: ${key} = ${value}`);
+      }
+    } catch (error) {
+      console.error(`Error saving preference ${key}:`, error);
+      showError(`Error saving preference: ${error.toString()}`);
+    }
   };
 }
 
