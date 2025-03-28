@@ -250,7 +250,7 @@ function initFormElements() {
   if (!app.preferences) app.preferences = {};
   
   // General settings
-  elements.automaticMode.checked = app.preferences.automaticMode || false;
+  elements.automaticMode.checked = app.preferences.automaticMode.active || false;
   elements.browserActionPopup.checked = app.preferences.browserActionPopup || false;
   elements.notificationsCheckbox.checked = app.preferences.notifications || false;
   elements.containerNamePrefix.value = app.preferences.containerNamePrefix || '';
@@ -616,7 +616,7 @@ async function importSettings() {
  */
 function initEventListeners() {
   // General settings
-  elements.automaticMode.addEventListener('change', savePreference('automaticMode'));
+  elements.automaticMode.addEventListener('change', savePreference('automaticMode.active'));
   elements.browserActionPopup.addEventListener('change', savePreference('browserActionPopup'));
   elements.notificationsCheckbox.addEventListener('change', savePreference('notifications'));
   elements.containerNamePrefix.addEventListener('change', savePreference('containerNamePrefix'));
@@ -706,8 +706,16 @@ function savePreference(key) {
         app.preferences = {};
       }
       
-      // Update preference
-      app.preferences[key] = value;
+      // handle sub keys
+      if (key.includes('.')) {
+        const [parentKey, subKey] = key.split('.');
+        if (!app.preferences[parentKey]) {
+          app.preferences[parentKey] = {};
+        }
+        app.preferences[parentKey][subKey] = value;
+      } else {
+        app.preferences[key] = value;
+      }
       
       // Save preferences
       const success = await savePreferences(app.preferences);
