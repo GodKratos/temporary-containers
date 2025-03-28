@@ -1,0 +1,154 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "52f8fefc3abcd51d6918ad77910eeaf1",
+      "css": "tmp-warning",
+      "code": 59411,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M754.2 24.5L693 95.1 909.6 278.7 970.8 208.1ZM245.8 29.2L29.2 208.1 90.4 278.7 307 99.9ZM500 128.1C264.6 128.1 76.3 316.4 76.3 551.8 76.3 787.2 264.6 975.5 500 975.5 735.4 975.5 923.7 787.2 923.7 551.8 923.7 316.4 735.4 128.1 500 128.1ZM500 222.2C683.6 222.2 829.5 368.2 829.5 551.8 829.5 735.4 683.6 881.3 500 881.3 316.4 881.3 170.5 735.4 170.5 551.8 170.5 368.2 316.4 222.2 500 222.2ZM452.9 310.9V634.8H547.1V310.9ZM452.9 706.5V792.7H547.1V706.5Z",
+        "width": 1000
+      },
+      "search": [
+        "pageaction-warning"
+      ]
+    },
+    {
+      "uid": "e7f1ae37e6033b49c53be0d2a895f406",
+      "css": "tmp-simple",
+      "code": 59415,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M500 45.4C247.4 45.4 45.4 247.4 45.4 500 45.4 752.6 247.4 954.6 500 954.6 752.6 954.6 954.6 752.6 954.6 500 954.6 247.4 752.6 45.4 500 45.4ZM500 853.6C303 853.6 146.4 697 146.4 500 146.4 303 303 146.4 500 146.4 697 146.4 853.6 303 853.6 500 853.6 697 697 853.6 500 853.6ZM550.5 297.9H449.5V449.5H297.9V550.5H449.5V702.1H550.5V550.5H702.1V449.5H550.5Z",
+        "width": 1000
+      },
+      "search": [
+        "page-simple"
+      ]
+    },
+    {
+      "uid": "e7a42fe32ca0a8d27e175bb084c03c5a",
+      "css": "tmp-default",
+      "code": 59423,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M311.2 108.6L251.3 39.5 39.5 214.5 99.4 283.6ZM960.5 214.5L748.7 34.9 688.8 104 900.6 283.6ZM500 136.2C269.7 136.2 85.5 320.4 85.5 550.7 85.5 780.9 269.7 965.1 500 965.1 730.3 965.1 914.5 780.9 914.5 550.7 914.5 320.4 730.3 136.2 500 136.2ZM500 873C320.4 873 177.6 730.3 177.6 550.7 177.6 371.1 320.4 228.3 500 228.3 679.6 228.3 822.4 371.1 822.4 550.7 822.4 730.3 679.6 873 500 873ZM546.1 366.5H453.9V504.6H315.8V596.7H453.9V734.9H546.1V596.7H684.2V504.6H546.1Z",
+        "width": 1000
+      },
+      "search": [
+        "temp-containers"
+      ]
+    },
+    {
+      "uid": "e82cedfa1d5f15b00c5a81c9bd731ea2",
+      "css": "info-circled",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f48ae54adfb27d8ada53d0fd9e34ee10",
+      "css": "trash-empty",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
+      "css": "pencil",
+      "code": 59394,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "98687378abd1faf8f6af97c254eb6cd6",
+      "css": "cog-alt",
+      "code": 59395,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "e99461abfef3923546da8d745372c995",
+      "css": "cog",
+      "code": 59396,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "266d5d9adf15a61800477a5acf9a4462",
+      "css": "chart-bar",
+      "code": 59397,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "17ebadd1e3f274ff0205601eef7b9cc4",
+      "css": "help-circled",
+      "code": 59398,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "559647a6f430b3aeadbecd67194451dd",
+      "css": "menu",
+      "code": 61641,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "6020aff067fc3c119cdd75daa5249220",
+      "css": "exchange",
+      "code": 61676,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "422e07e5afb80258a9c4ed1706498f8a",
+      "css": "circle-empty",
+      "code": 61708,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f9c8ea86275ca16128235c6452b67b8e",
+      "css": "user-secret",
+      "code": 61979,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "2a4e6c99b732a57da40e32fa2a7800a4",
+      "css": "toggle-off",
+      "code": 61956,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "3256ef03b16e7ab51235bc7378b53bb5",
+      "css": "toggle-on",
+      "code": 61957,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "81bb68665e8e595505272a746db07c7a",
+      "css": "dot-circled",
+      "code": 61842,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "26613a2e6bc41593c54bead46f8c8ee3",
+      "css": "file-code",
+      "code": 61897,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5408be43f7c42bccee419c6be53fdef5",
+      "css": "doc-text",
+      "code": 61686,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "1b5a5d7b7e3c71437f5a26befdd045ed",
+      "css": "doc",
+      "code": 59399,
+      "src": "fontawesome"
+    }
+  ]
+}

@@ -184,6 +184,32 @@ function initializeSidebar() {
   // Toggle sidebar
   elements.toggleSidebar.addEventListener('click', () => {
     elements.sidebar.classList.toggle('visible');
+    
+    // Add overlay when sidebar is visible
+    if (elements.sidebar.classList.contains('visible')) {
+      // Create overlay if it doesn't exist
+      let overlay = document.getElementById('sidebar-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'sidebar-overlay';
+        overlay.className = 'sidebar-overlay';
+        overlay.addEventListener('click', () => {
+          elements.sidebar.classList.remove('visible');
+          overlay.classList.remove('visible');
+        });
+        document.querySelector('.popup-content').appendChild(overlay);
+      }
+      // Show overlay
+      setTimeout(() => {
+        overlay.classList.add('visible');
+      }, 10);
+    } else {
+      // Hide overlay
+      const overlay = document.getElementById('sidebar-overlay');
+      if (overlay) {
+        overlay.classList.remove('visible');
+      }
+    }
   });
   
   // Set up tab navigation
@@ -209,9 +235,11 @@ function initializeSidebar() {
         }
       });
       
-      // Hide sidebar after selection on mobile
-      if (window.innerWidth < 600) {
-        elements.sidebar.classList.remove('visible');
+      // Hide sidebar after selection
+      elements.sidebar.classList.remove('visible');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (overlay) {
+        overlay.classList.remove('visible');
       }
     });
   });
@@ -221,6 +249,12 @@ function initializeSidebar() {
     const defaultTab = document.querySelector(`[data-tab="${app.preferences.ui.popupDefaultTab}"]`);
     if (defaultTab) {
       defaultTab.click();
+    }
+  } else {
+    // Set first tab as active by default
+    const firstTab = document.querySelector('.sidebar-item');
+    if (firstTab) {
+      firstTab.classList.add('active');
     }
   }
 }
@@ -289,10 +323,10 @@ function initializeActions() {
 function updateIsolationIcon() {
   if (app.storage.isolation.active) {
     elements.toggleIsolation.title = 'Disable Isolation';
-    elements.toggleIsolation.innerHTML = '<i class="dont icon"></i>';
+    elements.toggleIsolation.innerHTML = '<i class="icon-toggle-on"></i>';
   } else {
     elements.toggleIsolation.title = 'Enable Isolation';
-    elements.toggleIsolation.innerHTML = '<i class="exclamation red icon"></i>';
+    elements.toggleIsolation.innerHTML = '<i class="icon-toggle-off"></i>';
   }
 }
 
@@ -727,8 +761,8 @@ function initializeActionsTab() {
         <div class="action-card" id="action-toggle-isolation">
           <div class="action-icon">
             ${app.storage.isolation.active ? 
-              '<i class="dont icon"></i>' : 
-              '<i class="exclamation red icon"></i>'
+              '<i class="icon-toggle-on"></i>' : 
+              '<i class="icon-toggle-off"></i>'
             }
           </div>
           <div class="action-label">
@@ -793,10 +827,10 @@ function initializeActionsTab() {
       const label = toggleIsolationAction.querySelector('.action-label');
       
       if (app.storage.isolation.active) {
-        icon.innerHTML = '<i class="dont icon"></i>';
+        icon.innerHTML = '<i class="icon-toggle-on"></i>';
         label.textContent = 'Disable Isolation';
       } else {
-        icon.innerHTML = '<i class="exclamation red icon"></i>';
+        icon.innerHTML = '<i class="icon-toggle-off"></i>';
         label.textContent = 'Enable Isolation';
       }
       
