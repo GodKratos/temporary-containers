@@ -26,6 +26,7 @@ import {
 import {
   CONTAINER_COLORS,
   CONTAINER_ICONS,
+  CONTAINER_REMOVAL_DEFAULT,
   TOOLBAR_ICON_COLORS,
   IGNORED_DOMAINS_DEFAULT,
   REDIRECTOR_DOMAINS_DEFAULT,
@@ -268,12 +269,11 @@ function initFormElements() {
   elements.automaticMode.checked = app.preferences.automaticMode.active || false;
   elements.browserActionPopup.checked = app.preferences.browserActionPopup || false;
   elements.notificationsCheckbox.checked = app.preferences.notifications || false;
-  elements.containerNamePrefix.value = app.preferences.containerNamePrefix || '';
-  elements.containerColorRandom.checked = app.preferences.containerColorRandom || false;
-  elements.containerIconRandom.checked = app.preferences.containerIconRandom || false;
-  elements.containerNumberMode.value = app.preferences.containerNumberMode || 'keep';
-  elements.containerRemoval.value = app.preferences.containerRemoval || 0;
-  elements.containerCounter.textContent = `Current container number: ${app.preferences.containerNumber || 1}`;
+  elements.containerNamePrefix.value = app.preferences.container.namePrefix || 'tmp';
+  elements.containerColorRandom.checked = app.preferences.container.colorRandom || false;
+  elements.containerIconRandom.checked = app.preferences.container.iconRandom || false;
+  elements.containerNumberMode.value = app.preferences.container.numberMode || 'keep';
+  elements.containerCounter.textContent = `Current container number: ${app.preferences.container.number || 1}`;
   
   // Populate container colors
   CONTAINER_COLORS.forEach(color => {
@@ -282,7 +282,7 @@ function initFormElements() {
     option.textContent = capitalize(color);
     elements.containerColor.appendChild(option);
   });
-  elements.containerColor.value = app.preferences.containerColor || CONTAINER_COLORS[0];
+  elements.containerColor.value = app.preferences.container.color || CONTAINER_COLORS[8];
   
   // Populate container icons
   CONTAINER_ICONS.forEach(icon => {
@@ -291,7 +291,7 @@ function initFormElements() {
     option.textContent = capitalize(icon);
     elements.containerIcon.appendChild(option);
   });
-  elements.containerIcon.value = app.preferences.containerIcon || CONTAINER_ICONS[0];
+  elements.containerIcon.value = app.preferences.container.icon || CONTAINER_ICONS[4];
   
   // Populate toolbar icon colors
   TOOLBAR_ICON_COLORS.forEach(color => {
@@ -302,9 +302,19 @@ function initFormElements() {
   });
   elements.iconColor.value = app.preferences.iconColor || TOOLBAR_ICON_COLORS[0];
   
+  // Populate container removal options
+  Object.entries(CONTAINER_REMOVAL_DEFAULT).forEach(([value, text]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.setAttribute('data-i18n', text[0]);
+    option.textContent = text[1];
+    elements.containerRemoval.appendChild(option);
+  });
+  elements.containerRemoval.value = app.preferences.container.removal || 900000;
+  
   // Initialize multi-selects
-  createMultiSelect(elements.containerColorRandomExcluded, CONTAINER_COLORS, app.preferences.containerColorRandomExcluded || []);
-  createMultiSelect(elements.containerIconRandomExcluded, CONTAINER_ICONS, app.preferences.containerIconRandomExcluded || []);
+  createMultiSelect(elements.containerColorRandomExcluded, CONTAINER_COLORS, app.preferences.container.colorRandomExcluded || []);
+  createMultiSelect(elements.containerIconRandomExcluded, CONTAINER_ICONS, app.preferences.container.iconRandomExcluded || []);
   
   // Show/hide random excluded sections
   toggleRandomExcludedSections();
@@ -627,6 +637,112 @@ async function importSettings() {
 }
 
 /**
+ * Request permissions when needed for specific features
+ * @param {string} key - The preference key
+ * @param {any} value - The preference value
+ * @returns {Promise<boolean>} - Whether the permission was granted
+ */
+async function checkPermissions(key, value) {
+  if (key === 'notifications' && value && !app.permissions.notifications) {
+    const granted = await browser.permissions.request({
+      permissions: ['notifications']
+    });
+    app.permissions.notifications = granted;
+    return granted;
+  }
+  
+  if (key === 'contextMenuBookmarks' && value && !app.permissions.bookmarks) {
+    const granted = await browser.permissions.request({
+      permissions: ['bookmarks']
+    });
+    app.permissions.bookmarks = granted;
+    return granted;
+  }
+  
+  if (key === 'deletesHistory.contextMenuBookmarks' && value && !app.permissions.bookmarks) {
+    const granted = await browser.permissions.request({
+      permissions: ['bookmarks']
+    });
+    app.permissions.bookmarks = granted;
+    return granted;
+  }
+  
+  if (key === 'deletesHistory.active' && value && !app.permissions.history) {
+    const granted = await browser.permissions.request({
+      permissions: ['history']
+    });
+    app.permissions.history = granted;
+    return granted;
+  }
+  
+  if (key === 'scripts.active' && value && !app.permissions.webNavigation) {
+    const granted = await browser.permissions.request({
+      permissions: ['webNavigation']
+    });
+    app.permissions.webNavigation = granted;
+    return granted;
+  }
+  
+  return true;
+}
+
+/**
+ * Save a preference and update the UI
+ * @param {string} key - The preference key
+ * @returns {Function} - Event handler function
+ */
+function savePreference(key) {
+  return async (e) => {
+    try {
+      let value;
+      if (e.target.type === 'checkbox') {
+        value = e.target.checked;
+      } else if (e.target.type === 'select-multiple') {
+        value = Array.from(e.target.selectedOptions).map(option => option.value);
+      } else {
+        value = e.target.value;
+      }
+        
+      // Check permissions if needed
+      if (e.target.type === 'checkbox' && value) {
+        const permissionGranted = await checkPermissions(key, value);
+        if (!permissionGranted) {
+          // If permission was denied, revert the checkbox
+          e.target.checked = false;
+          return;
+        }
+      }
+    
+      // Ensure preferences object exists
+      if (!app.preferences) {
+        app.preferences = {};
+      }
+      
+      // handle sub keys
+      if (key.includes('.')) {
+        const [parentKey, subKey] = key.split('.');
+        if (!app.preferences[parentKey]) {
+          app.preferences[parentKey] = {};
+        }
+        app.preferences[parentKey][subKey] = value;
+      } else {
+        app.preferences[key] = value;
+      }
+      
+      // Save preferences
+      const success = await savePreferences(app.preferences);
+      
+      if (success) {
+        console.log(`Saved preference: ${key} = ${value}`);
+      }
+    } catch (error) {
+      console.error(`Error saving preference ${key}:`, error);
+      showError(`Error saving preference: ${error.toString()}`);
+    }
+  };
+}
+
+/**
  * Initialize event listeners
  */
 function initEventListeners() {
@@ -634,19 +750,19 @@ function initEventListeners() {
   elements.automaticMode.addEventListener('change', savePreference('automaticMode.active'));
   elements.browserActionPopup.addEventListener('change', savePreference('browserActionPopup'));
   elements.notificationsCheckbox.addEventListener('change', savePreference('notifications'));
-  elements.containerNamePrefix.addEventListener('change', savePreference('containerNamePrefix'));
+  elements.containerNamePrefix.addEventListener('change', savePreference('container.namePrefix'));
   elements.containerColorRandom.addEventListener('change', (e) => {
-    savePreference('containerColorRandom')(e);
+    savePreference('container.colorRandom')(e);
     toggleRandomExcludedSections();
   });
-  elements.containerColor.addEventListener('change', savePreference('containerColor'));
+  elements.containerColor.addEventListener('change', savePreference('container.color'));
   elements.containerIconRandom.addEventListener('change', (e) => {
-    savePreference('containerIconRandom')(e);
+    savePreference('container.iconRandom')(e);
     toggleRandomExcludedSections();
   });
-  elements.containerIcon.addEventListener('change', savePreference('containerIcon'));
-  elements.containerNumberMode.addEventListener('change', savePreference('containerNumberMode'));
-  elements.containerRemoval.addEventListener('change', savePreference('containerRemoval'));
+  elements.containerIcon.addEventListener('change', savePreference('container.icon'));
+  elements.containerNumberMode.addEventListener('change', savePreference('container.numberMode'));
+  elements.containerRemoval.addEventListener('change', savePreference('container.removal'));
   elements.iconColor.addEventListener('change', savePreference('iconColor'));
   
   // Reset container number
@@ -665,13 +781,13 @@ function initEventListeners() {
   // Multi-select changes
   elements.containerColorRandomExcluded.addEventListener('change', () => {
     const selected = Array.from(elements.containerColorRandomExcluded.selectedOptions).map(option => option.value);
-    app.preferences.containerColorRandomExcluded = selected;
+    app.preferences.container.colorRandomExcluded = selected;
     savePreferences(app.preferences);
   });
   
   elements.containerIconRandomExcluded.addEventListener('change', () => {
     const selected = Array.from(elements.containerIconRandomExcluded.selectedOptions).map(option => option.value);
-    app.preferences.containerIconRandomExcluded = selected;
+    app.preferences.container.iconRandomExcluded = selected;
     savePreferences(app.preferences);
   });
   
@@ -704,45 +820,6 @@ function initEventListeners() {
   // Export/Import
   elements.exportSettings.addEventListener('click', exportSettings);
   elements.importSettings.addEventListener('click', importSettings);
-}
-
-/**
- * Create a function to save a preference
- * @param {string} key - Preference key
- * @returns {Function} - Event handler
- */
-function savePreference(key) {
-  return async (e) => {
-    try {
-      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-      
-      // Ensure preferences object exists
-      if (!app.preferences) {
-        app.preferences = {};
-      }
-      
-      // handle sub keys
-      if (key.includes('.')) {
-        const [parentKey, subKey] = key.split('.');
-        if (!app.preferences[parentKey]) {
-          app.preferences[parentKey] = {};
-        }
-        app.preferences[parentKey][subKey] = value;
-      } else {
-        app.preferences[key] = value;
-      }
-      
-      // Save preferences
-      const success = await savePreferences(app.preferences);
-      
-      if (success) {
-        console.log(`Saved preference: ${key} = ${value}`);
-      }
-    } catch (error) {
-      console.error(`Error saving preference ${key}:`, error);
-      showError(`Error saving preference: ${error.toString()}`);
-    }
-  };
 }
 
 // Initialize the options page when the DOM is loaded

@@ -89,17 +89,17 @@
         <section id="general" class="content-section active">
           <h2 data-i18n="optionsNavGeneral">General</h2>
           <div class="form">
-            <div class="field checkbox-field">
+            <div class="checkbox-field">
               <input type="checkbox" id="automaticMode" name="automaticMode" />
-              <label for="automaticMode" data-i18n="automaticMode">Automatic Mode</label>
+              <label for="automaticMode" data-i18n="optionsGeneralAutomaticMode">Automatic Mode</label>
             </div>
             
-            <div class="field checkbox-field">
+            <div class="checkbox-field">
               <input type="checkbox" id="browserActionPopup" name="browserActionPopup" />
-              <label for="browserActionPopup" data-i18n="toolbarPopup">Toolbar Popup</label>
+              <label for="browserActionPopup" data-i18n="optionsGeneralToolbarPopup">Show popup when clicking the toolbar icon</label>
             </div>
             
-            <div class="field checkbox-field">
+            <div class="checkbox-field">
               <input type="checkbox" id="notificationsCheckbox" name="notifications" />
               <label for="notificationsCheckbox" data-i18n="optionsGeneralNotifications">Notifications when deleting Temporary Containers</label>
             </div>
@@ -121,7 +121,7 @@
               </div>
               
               <div id="containerColorRandomExcludedSection" class="sub-field hidden">
-                <label for="containerColorRandomExcluded" data-i18n="containerColorRandomExcluded">Excluded Colors for Random Container Color</label>
+                <label for="containerColorRandomExcluded" data-i18n="optionsGeneralContainerColorRandomExcluded">Excluded Colors for Random Container Color</label>
                 <div class="multi-select-container">
                   <select id="containerColorRandomExcluded" name="containerColorRandomExcluded" multiple></select>
                 </div>
@@ -140,7 +140,7 @@
               </div>
               
               <div id="containerIconRandomExcludedSection" class="sub-field hidden">
-                <label for="containerIconRandomExcluded" data-i18n="containerIconRandomExcluded">Excluded Icons for Random Container Icon</label>
+                <label for="containerIconRandomExcluded" data-i18n="optionsGeneralContainerIconRandomExcluded">Excluded Icons for Random Container Icon</label>
                 <div class="multi-select-container">
                   <select id="containerIconRandomExcluded" name="containerIconRandomExcluded" multiple></select>
                 </div>
@@ -166,7 +166,7 @@
             
             <div class="field">
               <label for="containerRemoval" data-i18n="optionsGeneralContainerRemoval">Delete no longer needed Temporary Containers</label>
-              <input type="number" id="containerRemoval" name="containerRemoval" min="0" />
+              <select id="containerRemoval" name="containerRemoval"></select>
             </div>
             
             <div class="field">

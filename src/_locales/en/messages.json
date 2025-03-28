@@ -5,12 +5,6 @@
   "extensionDescription": {
     "message": "Open tabs in temporary containers that are automatically removed when you're done browsing"
   },
-  "automaticMode": {
-    "message": "Automatic Mode"
-  },
-  "toolbarPopup": {
-    "message": "Toolbar Popup"
-  },
   "optionsNavGeneral": {
     "message": "General"
   },
@@ -26,11 +20,23 @@
   "optionsNavExportImport": {
     "message": "Export/Import"
   },
+  "optionsGeneralAutomaticMode": {
+    "message": "Automatic Mode"
+  },
+  "optionsGeneralToolbarPopup": {
+    "message": "Show popup when clicking the toolbar icon"
+  },
   "optionsGeneralNotifications": {
     "message": "Notifications when deleting Temporary Containers"
   },
   "optionsGeneralContainerNamePrefix": {
     "message": "Container Name Prefix"
+  },
+  "optionsGeneralContainerColorRandomExcluded": {
+    "message": "Excluded Colors for Random Container Color"
+  },
+  "optionsGeneralContainerIconRandomExcluded": {
+    "message": "Excluded Icons for Random Container Icon"
   },
   "optionsGeneralContainerColor": {
     "message": "Container Color"
@@ -508,11 +514,5 @@
   },
   "addDomainAndPressEnter": {
     "message": "Add domain and press Enter"
-  },
-  "containerColorRandomExcluded": {
-    "message": "Excluded Colors for Random Container Color"
-  },
-  "containerIconRandomExcluded": {
-    "message": "Excluded Icons for Random Container Icon"
   }
 }
