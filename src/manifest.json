@@ -2,7 +2,7 @@
   "description": "Open tabs, websites, and links in automatically managed disposable containers. Containers isolate the data websites store (cookies, cache, and more) from each other, further enhancing your privacy while you browse.",
   "manifest_version": 2,
   "name": "Temporary Containers Plus",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "homepage_url": "https://github.com/GodKratos/temporary-containers",
   "icons": {
     "48": "icons/tmpcontainer-48.png"
@@ -40,7 +40,7 @@
   "commands": {
     "new_temporary_container_tab": {
       "suggested_key": {
-        "default": "Alt+M"
+        "default": "Alt+C"
       },
       "description": "Open a new tab in a new Temporary Container"
     },
@@ -58,7 +58,7 @@
     },
     "new_no_container_window_tab": {
       "suggested_key": {
-        "default": "Alt+Shift+N"
+        "default": "Alt+Shift+C"
       },
       "description": "Open a new 'No Container' tab in a new Window. Enable in Advanced Preferences > Keyboard shortcuts"
     },

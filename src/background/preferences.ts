@@ -58,10 +58,10 @@ export class Preferences {
     contextMenu: true,
     contextMenuBookmarks: false,
     keyboardShortcuts: {
-      AltM: true,
+      AltC: true,
       AltP: true,
       AltN: false,
-      AltShiftN: false,
+      AltShiftC: false,
       AltX: false,
       AltO: false,
       AltI: false,
