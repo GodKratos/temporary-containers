@@ -119,59 +119,32 @@ async function initialize() {
   try {
     showInitializeLoader();
     
-    // Initialize app state with defaults
-    app = {
-      initialized: false,
-      preferences: {},
-      permissions: {},
-      statistics: { containersCreated: 0, cookiesDeleted: 0 },
-      domainRules: [],
-      activeSection: 'general',
-      themeMode: 'light'
-    };
+    // Apply localization to the page
+    applyLocalization();
     
     // Detect theme mode
     detectThemeMode();
     
-    // Get preferences
+    // Get preferences from storage
     app.preferences = await getPreferences();
     
     // Get permissions
     app.permissions = await getPermissions();
     
-    // Get statistics
-    try {
-      app.statistics = await sendMessage('getStatistics');
-      if (!app.statistics) {
-        app.statistics = { containersCreated: 0, cookiesDeleted: 0 };
-      }
-    } catch (error) {
-      console.error('Error getting statistics:', error);
-      app.statistics = { containersCreated: 0, cookiesDeleted: 0 };
-    }
-    
-    // Initialize UI
+    // Initialize navigation
     initNavigation();
+    
+    // Initialize form elements
     initFormElements();
-    toggleRandomExcludedSections();
+    
+    // Initialize tag inputs
     initTagInputs();
     
     // Initialize domain rules
-    try {
-      app.domainRules = await sendMessage('getDomainRules');
-      if (!app.domainRules || !Array.isArray(app.domainRules)) {
-        app.domainRules = [];
-      }
-    } catch (error) {
-      console.error('Error getting domain rules:', error);
-      app.domainRules = [];
-    }
+    initDomainRules();
     
-    // Render domain rules
-    renderDomainRules();
-    
-    // Add event listener for adding new domain rules
-    elements.addDomainRule.addEventListener('click', addDomainRule);
+    // Update statistics
+    updateStatistics();
     
     // Initialize event listeners
     initEventListeners();
@@ -187,6 +160,48 @@ async function initialize() {
   } catch (error) {
     console.error('Error initializing options page:', error);
     showInitializeError(error);
+  }
+}
+
+/**
+ * Apply localization to all elements with data-i18n attributes
+ */
+function applyLocalization() {
+  // Localize text content
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const translation = t(key);
+    if (translation) {
+      element.textContent = translation;
+    }
+  });
+  
+  // Localize titles/tooltips
+  document.querySelectorAll('[data-i18n-title]').forEach(element => {
+    const key = element.getAttribute('data-i18n-title');
+    const translation = t(key);
+    if (translation) {
+      element.setAttribute('title', translation);
+    }
+  });
+  
+  // Localize placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const translation = t(key);
+    if (translation) {
+      element.setAttribute('placeholder', translation);
+    }
+  });
+  
+  // Update document title
+  const titleElement = document.querySelector('title[data-i18n]');
+  if (titleElement) {
+    const key = titleElement.getAttribute('data-i18n');
+    const translation = t(key);
+    if (translation) {
+      document.title = translation;
+    }
   }
 }
 

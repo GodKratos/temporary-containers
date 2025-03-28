@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Temporary Containers Plus</title>
+  <title data-i18n="extensionName">Temporary Containers Plus</title>
   <link rel="stylesheet" href="css/photon.css" />
   <link rel="stylesheet" href="css/options.css" />
   <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
@@ -15,11 +15,11 @@
     </div>
     
     <div id="initialize-loader" class="initialize-loader hidden">
-      <div class="loader-text">Initializing...</div>
+      <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
     </div>
     
     <div id="initialize-error" class="initialize-error hidden">
-      <div class="error-text">Failed to initialize. Please try reloading the page.</div>
+      <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
       <div id="initialize-error-details" class="error-details"></div>
     </div>
     
@@ -27,56 +27,56 @@
       <!-- Sidebar Navigation -->
       <aside class="sidebar">
         <div class="sidebar-header">
-          <h1>Temporary Containers</h1>
+          <h1 data-i18n="extensionName">Temporary Containers Plus</h1>
         </div>
         <nav class="sidebar-nav">
           <ul>
             <li>
               <button id="nav-general" class="nav-button active" data-section="general">
                 <i class="icon-cog"></i>
-                <span>General</span>
+                <span data-i18n="optionsNavGeneral">General</span>
               </button>
             </li>
             <li>
               <button id="nav-isolation-global" class="nav-button" data-section="isolation-global">
                 <i class="icon-circle-empty"></i>
-                <span>Isolation: Global</span>
+                <span data-i18n="optionsIsolationTabGlobal">Isolation: Global</span>
               </button>
             </li>
             <li>
               <button id="nav-isolation-domain" class="nav-button" data-section="isolation-domain">
                 <i class="icon-dot-circled"></i>
-                <span>Isolation: Per Domain</span>
+                <span data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</span>
               </button>
             </li>
             <li>
               <button id="nav-advanced-container" class="nav-button" data-section="advanced-container">
                 <i class="icon-doc"></i>
-                <span>Advanced: Container</span>
+                <span data-i18n="optionsAdvancedContainer">Advanced: Container</span>
               </button>
             </li>
             <li>
               <button id="nav-advanced-cookies" class="nav-button" data-section="advanced-cookies">
                 <i class="icon-file-code"></i>
-                <span>Advanced: Cookies</span>
+                <span data-i18n="optionsAdvancedCookies">Advanced: Cookies</span>
               </button>
             </li>
             <li>
               <button id="nav-advanced-misc" class="nav-button" data-section="advanced-misc">
                 <i class="icon-doc-text"></i>
-                <span>Advanced: Misc</span>
+                <span data-i18n="optionsAdvancedMisc">Advanced: Misc</span>
               </button>
             </li>
             <li>
               <button id="nav-statistics" class="nav-button" data-section="statistics">
                 <i class="icon-chart-bar"></i>
-                <span>Statistics</span>
+                <span data-i18n="optionsNavStatistics">Statistics</span>
               </button>
             </li>
             <li>
               <button id="nav-export-import" class="nav-button" data-section="export-import">
                 <i class="icon-exchange"></i>
-                <span>Export/Import</span>
+                <span data-i18n="optionsNavExportImport">Export/Import</span>
               </button>
             </li>
           </ul>
@@ -87,41 +87,41 @@
       <main class="content">
         <!-- General Section -->
         <section id="general" class="content-section active">
-          <h2>General Settings</h2>
+          <h2 data-i18n="optionsNavGeneral">General</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="automaticMode" name="automaticMode" />
-              <label for="automaticMode" data-glossary="Automatic Mode">Automatic Mode</label>
+              <label for="automaticMode" data-i18n="automaticMode">Automatic Mode</label>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="browserActionPopup" name="browserActionPopup" />
-              <label for="browserActionPopup" data-glossary="Toolbar Popup">Show popup when clicking the toolbar icon</label>
+              <label for="browserActionPopup" data-i18n="toolbarPopup">Toolbar Popup</label>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="notificationsCheckbox" name="notifications" />
-              <label for="notificationsCheckbox">Notifications</label>
+              <label for="notificationsCheckbox" data-i18n="optionsGeneralNotifications">Notifications when deleting Temporary Containers</label>
             </div>
             
             <div class="field">
-              <label for="containerNamePrefix">Container Name Prefix</label>
+              <label for="containerNamePrefix" data-i18n="optionsGeneralContainerNamePrefix">Container Name Prefix</label>
               <input type="text" id="containerNamePrefix" name="containerNamePrefix" />
             </div>
             
             <div class="field">
               <div class="checkbox-field">
                 <input type="checkbox" id="containerColorRandom" name="containerColorRandom" />
-                <label for="containerColorRandom">Use random container colors</label>
+                <label for="containerColorRandom" data-i18n="optionsGeneralContainerRandomColor">Random Container Color</label>
               </div>
               
               <div id="containerColorSection" class="sub-field">
-                <label for="containerColor">Container Color</label>
+                <label for="containerColor" data-i18n="optionsGeneralContainerColor">Container Color</label>
                 <select id="containerColor" name="containerColor"></select>
               </div>
               
               <div id="containerColorRandomExcludedSection" class="sub-field hidden">
-                <label for="containerColorRandomExcluded">Container Colors excluded from random selection</label>
+                <label for="containerColorRandomExcluded" data-i18n="containerColorRandomExcluded">Excluded Colors for Random Container Color</label>
                 <div class="multi-select-container">
                   <select id="containerColorRandomExcluded" name="containerColorRandomExcluded" multiple></select>
                 </div>
@@ -131,16 +131,16 @@
             <div class="field">
               <div class="checkbox-field">
                 <input type="checkbox" id="containerIconRandom" name="containerIconRandom" />
-                <label for="containerIconRandom">Use random container icons</label>
+                <label for="containerIconRandom" data-i18n="optionsGeneralContainerIconRandom">Random Container Icon</label>
               </div>
               
               <div id="containerIconSection" class="sub-field">
-                <label for="containerIcon">Container Icon</label>
+                <label for="containerIcon" data-i18n="optionsGeneralContainerIcon">Container Icon</label>
                 <select id="containerIcon" name="containerIcon"></select>
               </div>
               
               <div id="containerIconRandomExcludedSection" class="sub-field hidden">
-                <label for="containerIconRandomExcluded">Container Icons excluded from random selection</label>
+                <label for="containerIconRandomExcluded" data-i18n="containerIconRandomExcluded">Excluded Icons for Random Container Icon</label>
                 <div class="multi-select-container">
                   <select id="containerIconRandomExcluded" name="containerIconRandomExcluded" multiple></select>
                 </div>
@@ -148,29 +148,29 @@
             </div>
             
             <div class="field">
-              <label for="containerNumberMode">Container Number Mode</label>
+              <label for="containerNumberMode" data-i18n="optionsGeneralContainerNumber">Container Number Mode</label>
               <select id="containerNumberMode" name="containerNumberMode">
-                <option value="keep">Keep counting</option>
-                <option value="keepuntilrestart">Keep counting until restart</option>
-                <option value="reuse">Reuse numbers</option>
-                <option value="hide">Hide numbers</option>
+                <option value="keep" data-i18n="optionsGeneralContainerNumberKeepCounting">Keep counting (default)</option>
+                <option value="keepuntilrestart" data-i18n="optionsGeneralContainerNumberKeepCountingUntilRestart">Keep counting until browser restart</option>
+                <option value="reuse" data-i18n="optionsGeneralContainerNumberReuseNumbers">Reuse available numbers</option>
+                <option value="hide" data-i18n="optionsGeneralContainerNumberHide">Hide number</option>
               </select>
             </div>
             
-            <div id="containerNumberResetSection" class="field">
+            <div class="field">
               <div class="container-counter">
                 <span id="containerCounter"></span>
-                <button id="resetContainerNumber" class="button-default">Reset container number</button>
+                <button id="resetContainerNumber" class="button-default" data-i18n="resetContainerNumber">Reset Container Number</button>
               </div>
             </div>
             
             <div class="field">
-              <label for="containerRemoval">Container Removal (ms)</label>
+              <label for="containerRemoval" data-i18n="optionsGeneralContainerRemoval">Delete no longer needed Temporary Containers</label>
               <input type="number" id="containerRemoval" name="containerRemoval" min="0" />
             </div>
             
             <div class="field">
-              <label for="iconColor">Toolbar Icon Color</label>
+              <label for="iconColor" data-i18n="optionsGeneralToolbarIconColor">Icon Color</label>
               <select id="iconColor" name="iconColor"></select>
             </div>
           </div>
@@ -178,61 +178,57 @@
         
         <!-- Isolation: Global Section -->
         <section id="isolation-global" class="content-section hidden">
-          <h2>Global Isolation Settings</h2>
+          <h2 data-i18n="optionsIsolationTabGlobal">Isolation: Global</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="isolation" name="isolation" />
-              <label for="isolation" data-glossary="Isolation">Enable Isolation</label>
+              <label for="isolation" data-i18n="isolation">Isolation</label>
             </div>
             
             <div class="field">
-              <label for="defaultIsolation">Default Isolation</label>
+              <label for="defaultIsolation" data-i18n="defaultIsolation">Default Isolation</label>
               <select id="defaultIsolation" name="defaultIsolation">
-                <option value="default">Default</option>
-                <option value="never">Never</option>
-                <option value="always">Always</option>
+                <option value="default" data-i18n="defaultIsolationDefault">Default</option>
+                <option value="never" data-i18n="defaultIsolationNever">Never</option>
+                <option value="always" data-i18n="defaultIsolationAlways">Always</option>
               </select>
             </div>
             
             <div class="field">
-              <label for="ignoredDomains">Ignored Domains</label>
+              <label for="ignoredDomains" data-i18n="ignoredDomains">Ignored Domains</label>
               <div class="tag-input-container">
-                <input type="text" id="ignoredDomainsInput" placeholder="Add domain and press Enter" />
+                <input type="text" id="ignoredDomainsInput" placeholder="Add domain and press Enter" data-i18n-placeholder="addDomainAndPressEnter" />
                 <div id="ignoredDomains" class="tag-list"></div>
               </div>
-              <div class="field-description">
-                Domains that should never be isolated (e.g., login pages).
-              </div>
+              <div class="field-description" data-i18n="ignoredDomainsDescription">Ignored domains will not be isolated.</div>
             </div>
             
             <div class="field">
-              <label for="macConfirmPage">MAC Confirm Page</label>
+              <label for="macConfirmPage" data-i18n="macConfirmPage">Mac Confirm Page</label>
               <select id="macConfirmPage" name="macConfirmPage">
-                <option value="true">Show</option>
-                <option value="false">Don't show</option>
+                <option value="true" data-i18n="show">Show</option>
+                <option value="false" data-i18n="dontShow">Don't Show</option>
               </select>
-              <div class="field-description">
-                Show a confirmation page when navigating to a Multi-Account Container.
-              </div>
+              <div class="field-description" data-i18n="macConfirmPageDescription">Show the confirm page on Mac.</div>
             </div>
           </div>
         </section>
         
         <!-- Isolation: Per Domain Section -->
         <section id="isolation-domain" class="content-section hidden">
-          <h2>Per-Domain Isolation Settings</h2>
+          <h2 data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</h2>
           <div class="form">
             <div class="field">
-              <label for="domainIsolation">Domain-Specific Isolation Rules</label>
+              <label for="domainIsolation" data-i18n="domainIsolation">Domain Isolation</label>
               <div class="domain-rules-container">
                 <div class="domain-rule-add">
-                  <input type="text" id="domainRuleInput" placeholder="Domain pattern (e.g., example.com)" />
+                  <input type="text" id="domainRuleInput" placeholder="Domain pattern (e.g. *.example.com)" data-i18n-placeholder="domainPatternExampleCom" />
                   <select id="domainRuleAction">
-                    <option value="always">Always isolate</option>
-                    <option value="never">Never isolate</option>
-                    <option value="global">Use global setting</option>
+                    <option value="always" data-i18n="alwaysIsolate">Always Isolate</option>
+                    <option value="never" data-i18n="neverIsolate">Never Isolate</option>
+                    <option value="global" data-i18n="useGlobalSetting">Use Global Setting</option>
                   </select>
-                  <button id="addDomainRule" class="button-default">Add Rule</button>
+                  <button id="addDomainRule" class="button-default" data-i18n="addRule">Add Rule</button>
                 </div>
                 <div id="domainRulesList" class="domain-rules-list"></div>
               </div>
@@ -242,61 +238,51 @@
         
         <!-- Advanced: Container Section -->
         <section id="advanced-container" class="content-section hidden">
-          <h2>Advanced Container Settings</h2>
+          <h2 data-i18n="optionsAdvancedContainer">Advanced: Container</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="containerCleanup" name="containerCleanup" />
-              <label for="containerCleanup">Automatic Container Cleanup</label>
-              <div class="field-description">
-                Automatically remove containers when they are no longer in use.
-              </div>
+              <label for="containerCleanup" data-i18n="containerCleanup">Container Cleanup</label>
+              <div class="field-description" data-i18n="containerCleanupDescription">Cleanup containers on exit.</div>
             </div>
             
             <div class="field">
-              <label for="containerTimeout">Container Timeout (minutes)</label>
+              <label for="containerTimeout" data-i18n="containerTimeout">Container Timeout</label>
               <input type="number" id="containerTimeout" name="containerTimeout" min="0" />
-              <div class="field-description">
-                Time before an unused container is removed (0 = immediately).
-              </div>
+              <div class="field-description" data-i18n="containerTimeoutDescription">Timeout for containers in seconds.</div>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="containerHistory" name="containerHistory" />
-              <label for="containerHistory">Container History</label>
-              <div class="field-description">
-                Keep a history of created containers.
-              </div>
+              <label for="containerHistory" data-i18n="containerHistory">Container History</label>
+              <div class="field-description" data-i18n="containerHistoryDescription">Keep container history.</div>
             </div>
           </div>
         </section>
         
         <!-- Advanced: Cookies Section -->
         <section id="advanced-cookies" class="content-section hidden">
-          <h2>Advanced Cookie Settings</h2>
+          <h2 data-i18n="optionsAdvancedCookies">Advanced: Cookies</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="deleteCookies" name="deleteCookies" />
-              <label for="deleteCookies">Delete Cookies</label>
-              <div class="field-description">
-                Delete cookies when a container is removed.
-              </div>
+              <label for="deleteCookies" data-i18n="deleteCookies">Delete Cookies</label>
+              <div class="field-description" data-i18n="deleteCookiesDescription">Delete cookies on exit.</div>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="cookieStoreId" name="cookieStoreId" />
-              <label for="cookieStoreId">Cookie Store ID</label>
-              <div class="field-description">
-                Use the same cookie store ID for all temporary containers.
-              </div>
+              <label for="cookieStoreId" data-i18n="cookieStoreId">Cookie Store ID</label>
+              <div class="field-description" data-i18n="cookieStoreIdDescription">Use cookie store ID.</div>
             </div>
             
             <div class="field">
-              <label for="cookieBehavior">Cookie Behavior</label>
+              <label for="cookieBehavior" data-i18n="cookieBehavior">Cookie Behavior</label>
               <select id="cookieBehavior" name="cookieBehavior">
-                <option value="default">Default</option>
-                <option value="block">Block all cookies</option>
-                <option value="allow">Allow all cookies</option>
-                <option value="reject_trackers">Reject trackers</option>
+                <option value="default" data-i18n="default">Default</option>
+                <option value="block" data-i18n="blockAllCookies">Block All Cookies</option>
+                <option value="allow" data-i18n="allowAllCookies">Allow All Cookies</option>
+                <option value="reject_trackers" data-i18n="rejectTrackers">Reject Trackers</option>
               </select>
             </div>
           </div>
@@ -304,87 +290,76 @@
         
         <!-- Advanced: Misc Section -->
         <section id="advanced-misc" class="content-section hidden">
-          <h2>Advanced Miscellaneous Settings</h2>
+          <h2 data-i18n="optionsAdvancedMisc">Advanced: Misc</h2>
           <div class="form">
             <div class="field checkbox-field">
               <input type="checkbox" id="contextMenu" name="contextMenu" />
-              <label for="contextMenu">Context Menu</label>
-              <div class="field-description">
-                Show Temporary Containers options in the context menu.
-              </div>
+              <label for="contextMenu" data-i18n="contextMenu">Context Menu</label>
+              <div class="field-description" data-i18n="contextMenuDescription">Show context menu.</div>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="keyboardShortcuts" name="keyboardShortcuts" />
-              <label for="keyboardShortcuts">Keyboard Shortcuts</label>
-              <div class="field-description">
-                Enable keyboard shortcuts for Temporary Containers actions.
-              </div>
+              <label for="keyboardShortcuts" data-i18n="keyboardShortcuts">Keyboard Shortcuts</label>
+              <div class="field-description" data-i18n="keyboardShortcutsDescription">Use keyboard shortcuts.</div>
             </div>
             
             <div class="field checkbox-field">
               <input type="checkbox" id="debug" name="debug" />
-              <label for="debug">Debug Mode</label>
-              <div class="field-description">
-                Enable debug logging (check browser console for logs).
-              </div>
+              <label for="debug" data-i18n="debugMode">Debug Mode</label>
+              <div class="field-description" data-i18n="debugModeDescription">Enable debug mode.</div>
             </div>
           </div>
         </section>
         
         <!-- Statistics Section -->
         <section id="statistics" class="content-section hidden">
-          <h2>Statistics</h2>
+          <h2 data-i18n="optionsNavStatistics">Statistics</h2>
           <div class="statistics-container">
             <div class="statistic-item">
-              <div class="statistic-label">Containers Created</div>
+              <div class="statistic-label" data-i18n="containersCreated">Containers Created</div>
               <div id="containersCreated" class="statistic-value">0</div>
             </div>
             
             <div class="statistic-item">
-              <div class="statistic-label">Containers Active</div>
+              <div class="statistic-label" data-i18n="containersActive">Containers Active</div>
               <div id="containersActive" class="statistic-value">0</div>
             </div>
             
             <div class="statistic-item">
-              <div class="statistic-label">Containers Removed</div>
+              <div class="statistic-label" data-i18n="containersRemoved">Containers Removed</div>
               <div id="containersRemoved" class="statistic-value">0</div>
             </div>
             
             <div class="statistic-item">
-              <div class="statistic-label">Isolation Prevented</div>
+              <div class="statistic-label" data-i18n="isolationPrevented">Isolation Prevented</div>
               <div id="isolationPrevented" class="statistic-value">0</div>
             </div>
           </div>
-          
           <div class="button-group">
-            <button id="resetStatistics" class="button-default">Reset Statistics</button>
+            <button id="resetStatistics" class="button-default" data-i18n="resetStatistics">Reset Statistics</button>
           </div>
         </section>
         
         <!-- Export/Import Section -->
         <section id="export-import" class="content-section hidden">
-          <h2>Export/Import Settings</h2>
+          <h2 data-i18n="optionsNavExportImport">Export/Import</h2>
           <div class="form">
             <div class="field">
-              <label>Export Settings</label>
+              <label data-i18n="exportSettings">Export Settings</label>
               <div class="button-group">
-                <button id="exportSettings" class="button-default">Export Settings</button>
+                <button id="exportSettings" class="button-default" data-i18n="exportSettings">Export Settings</button>
               </div>
-              <div class="field-description">
-                Export your Temporary Containers settings to a JSON file.
-              </div>
+              <div class="field-description" data-i18n="exportSettingsDescription">Export settings to a file.</div>
             </div>
             
             <div class="field">
-              <label>Import Settings</label>
+              <label data-i18n="importSettings">Import Settings</label>
               <div class="file-input-container">
                 <input type="file" id="importFile" accept=".json" />
-                <button id="importSettings" class="button-default">Import Settings</button>
+                <button id="importSettings" class="button-default" data-i18n="importSettings">Import Settings</button>
               </div>
-              <div class="field-description">
-                Import Temporary Containers settings from a JSON file.
-              </div>
+              <div class="field-description" data-i18n="importSettingsDescription">Import settings from a file.</div>
             </div>
           </div>
         </section>
@@ -394,7 +369,7 @@
     <div id="glossary" class="glossary hidden">
       <div class="glossary-content">
         <div class="glossary-header">
-          <h2 id="glossary-title">Glossary</h2>
+          <h2 id="glossary-title" data-i18n="glossary">Glossary</h2>
           <button id="glossary-close" class="button-icon">×</button>
         </div>
         <div id="glossary-body" class="glossary-body"></div>

@@ -130,6 +130,9 @@ async function initialize() {
       },
     };
     
+    // Apply localization to the page
+    applyLocalization();
+    
     // Initialize UI
     initializeUI();
     
@@ -142,6 +145,48 @@ async function initialize() {
     clearTimeout(loaderTimeout);
     console.error('Initialization error:', error);
     showInitializeError(error);
+  }
+}
+
+/**
+ * Apply localization to all elements with data-i18n attributes
+ */
+function applyLocalization() {
+  // Localize text content
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const translation = t(key);
+    if (translation) {
+      element.textContent = translation;
+    }
+  });
+  
+  // Localize titles/tooltips
+  document.querySelectorAll('[data-i18n-title]').forEach(element => {
+    const key = element.getAttribute('data-i18n-title');
+    const translation = t(key);
+    if (translation) {
+      element.setAttribute('title', translation);
+    }
+  });
+  
+  // Localize placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const translation = t(key);
+    if (translation) {
+      element.setAttribute('placeholder', translation);
+    }
+  });
+  
+  // Update document title
+  const titleElement = document.querySelector('title[data-i18n]');
+  if (titleElement) {
+    const key = titleElement.getAttribute('data-i18n');
+    const translation = t(key);
+    if (translation) {
+      document.title = translation;
+    }
   }
 }
 

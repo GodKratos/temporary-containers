@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Temporary Containers Plus</title>
+  <title data-i18n="extensionName">Temporary Containers Plus</title>
   <link rel="stylesheet" href="css/photon.css" />
   <link rel="stylesheet" href="css/popup.css" />
   <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
@@ -14,11 +14,11 @@
     </div>
     
     <div id="initialize-loader" class="initialize-loader hidden">
-      <div class="loader-text">Initializing...</div>
+      <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
     </div>
     
     <div id="initialize-error" class="initialize-error hidden">
-      <div class="error-text">Failed to initialize. Please try reloading the page.</div>
+      <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
       <div id="initialize-error-details" class="error-details"></div>
     </div>
     
@@ -29,19 +29,19 @@
         </button>
         
         <div class="header-actions">
-          <button id="toggle-isolation" class="button-icon" title="Toggle Isolation">
+          <button id="toggle-isolation" class="button-icon" data-i18n-title="toggleIsolation" title="Toggle Isolation">
             <i class="icon-toggle-on"></i>
           </button>
           
-          <button id="open-preferences" class="button-icon" title="Open Preferences/Options">
+          <button id="open-preferences" class="button-icon" data-i18n-title="openPreferences" title="Open Preferences/Options">
             <i class="icon-cog-alt"></i>
           </button>
           
-          <button id="create-deletes-history-container" class="button-icon hidden" title="Open new 'Deletes History Temporary Container'">
+          <button id="create-deletes-history-container" class="button-icon hidden" data-i18n-title="openNewDeletesHistoryContainer" title="Open new 'Deletes History Temporary Container'">
             <i class="icon-user-secret"></i>
           </button>
           
-          <button id="create-tmp-container" class="button-icon" title="Open new Temporary Container">
+          <button id="create-tmp-container" class="button-icon" data-i18n-title="openNewTemporaryContainer" title="Open new Temporary Container">
             <i class="icon-tmp-default"></i>
           </button>
         </div>
@@ -51,16 +51,16 @@
         <aside id="sidebar" class="sidebar hidden">
           <nav class="sidebar-nav">
             <button class="sidebar-item" data-tab="isolation-global">
-              <i class="icon-circle-empty"></i> Isolation Global
+              <i class="icon-circle-empty"></i> <span data-i18n="optionsIsolationTabGlobal">Isolation Global</span>
             </button>
             <button class="sidebar-item" data-tab="isolation-per-domain">
-              <i class="icon-dot-circled"></i> Isolation Per Domain
+              <i class="icon-dot-circled"></i> <span data-i18n="optionsIsolationTabPerDomain">Isolation Per Domain</span>
             </button>
             <button class="sidebar-item" data-tab="actions">
-              <i class="icon-exchange"></i> Actions
+              <i class="icon-exchange"></i> <span data-i18n="actions">Actions</span>
             </button>
             <button class="sidebar-item" data-tab="statistics">
-              <i class="icon-chart-bar"></i> Statistics
+              <i class="icon-chart-bar"></i> <span data-i18n="optionsNavStatistics">Statistics</span>
             </button>
           </nav>
         </aside>
@@ -69,7 +69,7 @@
           <!-- Isolation Global Tab Content -->
           <section id="isolation-global" class="tab-panel active">
             <div class="breadcrumb">
-              <span>Isolation Global</span>
+              <span data-i18n="optionsIsolationTabGlobal">Isolation Global</span>
             </div>
             <!-- Isolation Global content will be loaded dynamically -->
           </section>
@@ -77,7 +77,7 @@
           <!-- Isolation Per Domain Tab Content -->
           <section id="isolation-per-domain" class="tab-panel hidden">
             <div class="breadcrumb">
-              <span>Isolation Per Domain</span>
+              <span data-i18n="optionsIsolationTabPerDomain">Isolation Per Domain</span>
             </div>
             <!-- Isolation Per Domain content will be loaded dynamically -->
           </section>
@@ -85,7 +85,7 @@
           <!-- Actions Tab Content -->
           <section id="actions" class="tab-panel hidden">
             <div class="breadcrumb">
-              <span>Actions</span>
+              <span data-i18n="actions">Actions</span>
             </div>
             <!-- Actions content will be loaded dynamically -->
           </section>
@@ -93,7 +93,7 @@
           <!-- Statistics Tab Content -->
           <section id="statistics" class="tab-panel hidden">
             <div class="breadcrumb">
-              <span>Statistics</span>
+              <span data-i18n="optionsNavStatistics">Statistics</span>
             </div>
             <!-- Statistics content will be loaded dynamically -->
           </section>
@@ -104,7 +104,7 @@
     <div id="glossary" class="glossary hidden">
       <div class="glossary-content">
         <div class="glossary-header">
-          <h2 id="glossary-title">Glossary</h2>
+          <h2 id="glossary-title" data-i18n="glossaryTitle">Glossary</h2>
           <button id="glossary-close" class="button-icon">×</button>
         </div>
         <div id="glossary-body" class="glossary-body"></div>

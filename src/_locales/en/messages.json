@@ -1,6 +1,15 @@
 {
+  "extensionName": {
+    "message": "Temporary Containers Plus"
+  },
+  "extensionDescription": {
+    "message": "Open tabs in temporary containers that are automatically removed when you're done browsing"
+  },
   "automaticMode": {
     "message": "Automatic Mode"
+  },
+  "toolbarPopup": {
+    "message": "Toolbar Popup"
   },
   "optionsNavGeneral": {
     "message": "General"
@@ -102,7 +111,7 @@
     "message": "Random Container Icon"
   },
   "optionsGeneralContainerNumber": {
-    "message": "Container Number"
+    "message": "Container Number Mode"
   },
   "optionsGeneralContainerNumberKeepCounting": {
     "message": "Keep counting (default)"
@@ -135,7 +144,7 @@
     "message": "After the last tab in it closes"
   },
   "optionsGeneralToolbarIconColor": {
-    "message": "Toolbar Icon Color"
+    "message": "Icon Color"
   },
   "optionsGeneralToolbarIconColorTooltip": {
     "message": "When switching back to default you might need to restart the browser depending on your theme"
@@ -162,10 +171,10 @@
     "message": "Exclusion Pattern"
   },
   "optionsIsolationTabGlobal": {
-    "message": "Global"
+    "message": "Isolation: Global"
   },
   "optionsIsolationTabPerDomain": {
-    "message": "Per Domain"
+    "message": "Isolation: Per Domain"
   },
   "optionsIsolationTabMac": {
     "message": "Multi-Account Containers"
@@ -316,5 +325,194 @@
   },
   "optionsIsolationSettingsNever": {
     "message": "Never"
+  },
+  "optionsAdvancedContainer": {
+    "message": "Advanced: Container"
+  },
+  "optionsAdvancedCookies": {
+    "message": "Advanced: Cookies"
+  },
+  "optionsAdvancedMisc": {
+    "message": "Advanced: Misc"
+  },
+  "containerCleanup": {
+    "message": "Container Cleanup"
+  },
+  "containerCleanupDescription": {
+    "message": "Cleanup containers on exit."
+  },
+  "containerTimeout": {
+    "message": "Container Timeout"
+  },
+  "containerTimeoutDescription": {
+    "message": "Timeout for containers in seconds."
+  },
+  "containerHistory": {
+    "message": "Container History"
+  },
+  "containerHistoryDescription": {
+    "message": "Keep container history."
+  },
+  "deleteCookies": {
+    "message": "Delete Cookies"
+  },
+  "deleteCookiesDescription": {
+    "message": "Delete cookies on exit."
+  },
+  "cookieStoreId": {
+    "message": "Cookie Store ID"
+  },
+  "cookieStoreIdDescription": {
+    "message": "Use cookie store ID."
+  },
+  "cookieBehavior": {
+    "message": "Cookie Behavior"
+  },
+  "default": {
+    "message": "Default"
+  },
+  "blockAllCookies": {
+    "message": "Block All Cookies"
+  },
+  "allowAllCookies": {
+    "message": "Allow All Cookies"
+  },
+  "rejectTrackers": {
+    "message": "Reject Trackers"
+  },
+  "contextMenu": {
+    "message": "Context Menu"
+  },
+  "contextMenuDescription": {
+    "message": "Show context menu."
+  },
+  "keyboardShortcuts": {
+    "message": "Keyboard Shortcuts"
+  },
+  "keyboardShortcutsDescription": {
+    "message": "Use keyboard shortcuts."
+  },
+  "debugMode": {
+    "message": "Debug Mode"
+  },
+  "debugModeDescription": {
+    "message": "Enable debug mode."
+  },
+  "containersCreated": {
+    "message": "Containers Created"
+  },
+  "containersActive": {
+    "message": "Containers Active"
+  },
+  "containersRemoved": {
+    "message": "Containers Removed"
+  },
+  "isolationPrevented": {
+    "message": "Isolation Prevented"
+  },
+  "resetStatistics": {
+    "message": "Reset Statistics"
+  },
+  "exportSettings": {
+    "message": "Export Settings"
+  },
+  "exportSettingsDescription": {
+    "message": "Export settings to a file."
+  },
+  "importSettings": {
+    "message": "Import Settings"
+  },
+  "importSettingsDescription": {
+    "message": "Import settings from a file."
+  },
+  "glossary": {
+    "message": "Glossary"
+  },
+  "glossaryTitle": {
+    "message": "Glossary"
+  },
+  "isolation": {
+    "message": "Isolation"
+  },
+  "defaultIsolation": {
+    "message": "Default Isolation"
+  },
+  "defaultIsolationDefault": {
+    "message": "Default"
+  },
+  "defaultIsolationNever": {
+    "message": "Never"
+  },
+  "defaultIsolationAlways": {
+    "message": "Always"
+  },
+  "ignoredDomains": {
+    "message": "Ignored Domains"
+  },
+  "ignoredDomainsDescription": {
+    "message": "Ignored domains will not be isolated."
+  },
+  "macConfirmPage": {
+    "message": "Mac Confirm Page"
+  },
+  "macConfirmPageDescription": {
+    "message": "Show the confirm page on Mac."
+  },
+  "show": {
+    "message": "Show"
+  },
+  "dontShow": {
+    "message": "Don't Show"
+  },
+  "domainIsolation": {
+    "message": "Domain Isolation"
+  },
+  "domainPatternExampleCom": {
+    "message": "Domain pattern (e.g. *.example.com)"
+  },
+  "alwaysIsolate": {
+    "message": "Always Isolate"
+  },
+  "neverIsolate": {
+    "message": "Never Isolate"
+  },
+  "useGlobalSetting": {
+    "message": "Use Global Setting"
+  },
+  "addRule": {
+    "message": "Add Rule"
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "resetContainerNumber": {
+    "message": "Reset Container Number"
+  },
+  "initializingLabel": {
+    "message": "Initializing..."
+  },
+  "initializeErrorText": {
+    "message": "Failed to initialize. Please try reloading the page."
+  },
+  "toggleIsolation": {
+    "message": "Toggle Isolation"
+  },
+  "openPreferences": {
+    "message": "Open Preferences/Options"
+  },
+  "openNewDeletesHistoryContainer": {
+    "message": "Open new 'Deletes History Temporary Container'"
+  },
+  "openNewTemporaryContainer": {
+    "message": "Open new Temporary Container"
+  },
+  "addDomainAndPressEnter": {
+    "message": "Add domain and press Enter"
+  },
+  "containerColorRandomExcluded": {
+    "message": "Excluded Colors for Random Container Color"
+  },
+  "containerIconRandomExcluded": {
+    "message": "Excluded Icons for Random Container Icon"
   }
 }
