@@ -97,7 +97,6 @@ const elements = {
   
   // Advanced: Misc
   contextMenu: document.getElementById('contextMenu'),
-  keyboardShortcuts: document.getElementById('keyboardShortcuts'),
   debug: document.getElementById('debug'),
   
   // Statistics
@@ -336,7 +335,6 @@ function initFormElements() {
   
   // Advanced: Misc
   elements.contextMenu.checked = app.preferences.contextMenu || false;
-  elements.keyboardShortcuts.checked = app.preferences.keyboardShortcuts || false;
   elements.debug.checked = app.preferences.debug || false;
   
   // Statistics
@@ -811,7 +809,6 @@ function initEventListeners() {
   
   // Advanced: Misc
   elements.contextMenu.addEventListener('change', savePreference('contextMenu'));
-  elements.keyboardShortcuts.addEventListener('change', savePreference('keyboardShortcuts'));
   elements.debug.addEventListener('change', savePreference('debug'));
   
   // Statistics

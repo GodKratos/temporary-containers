@@ -29,9 +29,6 @@ export class Commands {
   async onCommand(name: string): Promise<void> {
     switch (name) {
       case 'new_temporary_container_tab':
-        if (!this.pref.keyboardShortcuts.AltC) {
-          return;
-        }
         this.container.createTabInTempContainer({
           deletesHistory:
             this.pref.deletesHistory.automaticMode === 'automatic',
@@ -39,9 +36,6 @@ export class Commands {
         break;
 
       case 'new_no_container_tab':
-        if (!this.pref.keyboardShortcuts.AltN) {
-          return;
-        }
         try {
           const tab = (await browser.tabs.create({
             url: 'about:blank',
@@ -57,9 +51,6 @@ export class Commands {
         break;
 
       case 'new_no_container_window_tab':
-        if (!this.pref.keyboardShortcuts.AltShiftC) {
-          return;
-        }
         try {
           const browserWindow = await browser.windows.create({
             url: 'about:blank',
@@ -80,25 +71,16 @@ export class Commands {
         break;
 
       case 'new_no_history_tab':
-        if (!this.pref.keyboardShortcuts.AltP) {
-          return;
-        }
         if (this.permissions.history) {
           this.container.createTabInTempContainer({ deletesHistory: true });
         }
         break;
 
       case 'new_same_container_tab':
-        if (!this.pref.keyboardShortcuts.AltX) {
-          return;
-        }
         this.tabs.createInSameContainer();
         break;
 
       case 'new_temporary_container_tab_current_url': {
-        if (!this.pref.keyboardShortcuts.AltO) {
-          return;
-        }
         const [activeTab] = (await browser.tabs.query({
           currentWindow: true,
           active: true,
@@ -115,9 +97,6 @@ export class Commands {
       }
 
       case 'toggle_isolation':
-        if (!this.pref.keyboardShortcuts.AltI) {
-          return;
-        }
         this.background.isolation.toggleActiveState();
         break;
     }

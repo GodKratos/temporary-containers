@@ -175,15 +175,6 @@ export interface PreferencesSchema {
   pageAction: boolean;
   contextMenu: boolean;
   contextMenuBookmarks: boolean;
-  keyboardShortcuts: {
-    AltC: boolean;
-    AltP: boolean;
-    AltN: boolean;
-    AltShiftC: boolean;
-    AltX: boolean;
-    AltO: boolean;
-    AltI: boolean;
-  };
   replaceTabs: boolean;
   closeRedirectorTabs: {
     active: boolean;

@@ -1,7 +1,7 @@
 {
-  "description": "Open tabs, websites, and links in automatically managed disposable containers. Containers isolate the data websites store (cookies, cache, and more) from each other, further enhancing your privacy while you browse.",
+  "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
-  "name": "Temporary Containers Plus",
+  "name": "__MSG_extensionName__",
   "version": "1.0.3",
   "homepage_url": "https://github.com/GodKratos/temporary-containers",
   "icons": {
@@ -11,7 +11,7 @@
   "browser_action": {
     "browser_style": false,
     "default_area": "tabstrip",
-    "default_title": "Open a new tab in a new Temporary Container",
+    "default_title": "__MSG_actionNewTemporaryContainerTab__",
     "default_icon": {
       "16": "icons/page-w-16.svg",
       "32": "icons/page-w-32.svg"
@@ -42,43 +42,43 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Open a new tab in a new Temporary Container"
+      "description": "__MSG_actionNewTemporaryContainerTab__"
     },
     "new_same_container_tab": {
       "suggested_key": {
         "default": "Alt+X"
       },
-      "description": "Open a new tab in the same Container as the current tab. Enable in Advanced Preferences > Keyboard shortcuts"
+      "description": "__MSG_actionNewSameContainerTab__"
     },
     "new_no_container_tab": {
       "suggested_key": {
         "default": "Alt+N"
       },
-      "description": "Open a new 'No Container' tab. Enable in Advanced Preferences > Keyboard shortcuts"
+      "description": "__MSG_actionNewNoContainerTab__"
     },
     "new_no_container_window_tab": {
       "suggested_key": {
-        "default": "Alt+Shift+C"
+        "default": "Alt+Shift+N"
       },
-      "description": "Open a new 'No Container' tab in a new Window. Enable in Advanced Preferences > Keyboard shortcuts"
+      "description": "__MSG_actionNewNoContainerWindowTab__"
     },
     "new_temporary_container_tab_current_url": {
       "suggested_key": {
         "default": "Alt+O"
       },
-      "description": "Open current tab URL in a new Temporary Container tab. Enable in Advanced Preferences > Keyboard shortcuts"
+      "description": "__MSG_actionNewTemporaryContainerTabCurrentUrl__"
     },
     "new_no_history_tab": {
       "suggested_key": {
         "default": "Alt+P"
       },
-      "description": "Open a new tab in a new 'Deletes History Temporary Container'. History permissions under Advanced Preferences > Delete History must be given"
+      "description": "__MSG_actionNewNoHistoryTab__"
     },
     "toggle_isolation": {
       "suggested_key": {
         "default": "Alt+I"
       },
-      "description": "Toggle Isolation ON and OFF. Enable in Advanced Preferences > Keyboard shortcuts"
+      "description": "__MSG_actionToggleIsolation__"
     }
   },
   "options_ui": {

@@ -269,7 +269,7 @@ export function formatDate(date) {
  * @returns {string} - The translated string
  */
 export function t(key) {
-  return browser.i18n.getMessage(key) || key;
+  return browser.i18n.getMessage(key) || null;
 }
 
 /**
