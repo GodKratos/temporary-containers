@@ -18,6 +18,7 @@
     "test": "nyc --reporter=html --reporter=text ts-mocha --paths -p tsconfig.json test/*.test.ts",
     "test:functional": "ts-mocha ./test/functional/*.test.ts --timeout 10000",
     "dev": "webpack-dev-server --mode development",
+    "dev:test": "npm run build && npx web-ext run -s dist",
     "watch:test": "ts-mocha --paths -p tsconfig.json test/*.test.ts --watch",
     "watch:test:verbose": "ts-mocha --paths -p tsconfig.json test/*.test.ts --tmp-debug --watch",
     "check:dependencies": "ncu",
