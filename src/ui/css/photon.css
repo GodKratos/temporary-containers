@@ -256,7 +256,6 @@ button {
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
 
 .field {
@@ -293,6 +292,7 @@ button {
 .checkbox-field {
   display: flex;
   align-items: center;
+  flex-direction: row;
   gap: var(--space-sm);
 }
 

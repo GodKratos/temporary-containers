@@ -103,7 +103,7 @@ body {
 
 .content-section h2 {
   margin-top: 0;
-  margin-bottom: 24px;
+  margin-bottom: 0;
   font-size: 20px;
   font-weight: 500;
   padding-bottom: 8px;
@@ -116,7 +116,8 @@ body {
 }
 
 .field {
-  margin-bottom: 24px;
+  padding: 10px;
+  border-bottom: 1px solid var(--section-divider);
 }
 
 .field-description {
@@ -128,7 +129,6 @@ body {
 .checkbox-field {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 12px;
 }
 
 .checkbox-field input[type="checkbox"] {
