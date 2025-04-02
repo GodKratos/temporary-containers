@@ -73,8 +73,10 @@ const elements = {
   iconColor: document.getElementById('iconColor'),
   
   // Isolation: Global
-  isolation: document.getElementById('isolation'),
-  defaultIsolation: document.getElementById('defaultIsolation'),
+  isolationGlobalUrlNavigation: document.getElementById('isolationGlobalUrlNavigation'),
+  isolationGlobalLeftClick: document.getElementById('isolationGlobalLeftClick'),
+  isolationGlobalMiddleClick: document.getElementById('isolationGlobalMiddleClick'),
+  isolationGlobalCtrlLeftClick: document.getElementById('isolationGlobalCtrlLeftClick'),
   ignoredDomainsInput: document.getElementById('ignoredDomainsInput'),
   ignoredDomains: document.getElementById('ignoredDomains'),
   macConfirmPage: document.getElementById('macConfirmPage'),
@@ -319,8 +321,10 @@ function initFormElements() {
   toggleRandomExcludedSections();
   
   // Isolation: Global
-  elements.isolation.checked = app.preferences.isolation || false;
-  elements.defaultIsolation.value = app.preferences.defaultIsolation || 'default';
+  elements.isolationGlobalUrlNavigation.value = app.preferences.isolation.global.navigation.action || 'never';
+  elements.isolationGlobalLeftClick.value = app.preferences.isolation.global.mouseClick.left.action || 'always';
+  elements.isolationGlobalMiddleClick.value = app.preferences.isolation.global.mouseClick.middle.action || 'never';
+  elements.isolationGlobalCtrlLeftClick.value = app.preferences.isolation.global.mouseClick.ctrlleft.action || 'never';
   elements.macConfirmPage.value = (app.preferences.macConfirmPage !== undefined ? app.preferences.macConfirmPage : true).toString();
   
   // Advanced: Container
@@ -716,13 +720,19 @@ function savePreference(key) {
         app.preferences = {};
       }
       
-      // handle sub keys
+      // handle sub keys with multiple levels
       if (key.includes('.')) {
-        const [parentKey, subKey] = key.split('.');
-        if (!app.preferences[parentKey]) {
-          app.preferences[parentKey] = {};
+        const keys = key.split('.');
+        let current = app.preferences;
+        for (let i = 0; i < keys.length - 1; i++) {
+          const key = keys[i];
+          if (!current[key]) {
+            current[key] = {};
+          }
+          current = current[key];
         }
-        app.preferences[parentKey][subKey] = value;
+        const lastKey = keys[keys.length - 1];
+        current[lastKey] = value;
       } else {
         app.preferences[key] = value;
       }
@@ -790,8 +800,10 @@ function initEventListeners() {
   });
   
   // Isolation: Global
-  elements.isolation.addEventListener('change', savePreference('isolation'));
-  elements.defaultIsolation.addEventListener('change', savePreference('defaultIsolation'));
+  elements.isolationGlobalUrlNavigation.addEventListener('change', savePreference('isolation.global.navigation.action'));
+  elements.isolationGlobalLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.left.action'));
+  elements.isolationGlobalMiddleClick.addEventListener('change', savePreference('isolation.global.mouseClick.middle.action'));
+  elements.isolationGlobalCtrlLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.ctrlleft.action'));
   elements.macConfirmPage.addEventListener('change', (e) => {
     app.preferences.macConfirmPage = e.target.value === 'true';
     savePreferences(app.preferences);

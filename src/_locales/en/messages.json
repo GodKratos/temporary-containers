@@ -44,6 +44,9 @@
   "optionsGeneralAutomaticMode": {
     "message": "Automatic Mode"
   },
+  "optionsGeneralAutomaticModeDescription": {
+    "message": "Automatically reopens tabs in new Temporary Containers when no container exists."
+  },
   "optionsGeneralToolbarPopup": {
     "message": "Show popup when clicking the toolbar icon"
   },
@@ -236,6 +239,36 @@
   },
   "optionsIsolationEnabled": {
     "message": "Enabled"
+  },
+  "optionsIsolationSubdomain": {
+    "message": "Isolate if target domain does not match current domain or subdomains"
+  },
+  "optionsIsolationDomain": {
+    "message": "Isolate if target domain does not match exactly with current domain"
+  },
+  "optionsIsolationNever": {
+    "message": "Never Isolate"
+  },
+  "optionsIsolationAlways": {
+    "message": "Always Isolate"
+  },
+  "optionsIsolationGlobalUrlNavigation": {
+    "message": "URL Navigation"
+  },
+  "optionsIsolationGlobalUrlNavigationDescription": {
+    "message": "Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks."
+  },
+  "optionsIsolationGlobalLeftClick": {
+    "message": "Left Click"
+  },
+  "optionsIsolationGlobalMiddleClick": {
+    "message": "Middle Click"
+  },
+  "optionsIsolationGlobalCtrlLeftClick": {
+    "message": "Ctrl/Cmd + Left Click"
+  },
+  "optionsIsolationGlobalMouseDescription": {
+    "message": "Global isolation rule for mouse click activities. Not required when URL Navigation rule above is used."
   },
   "optionsIsolationGlobalExcludePermanentContainers": {
     "message": "Exclude Permanent Containers"
@@ -517,6 +550,12 @@
   },
   "toggleIsolation": {
     "message": "Toggle Isolation"
+  },
+  "disableIsolation": {
+    "message": "Disable Isolation"
+  },
+  "enableIsolation": {
+    "message": "Enable Isolation"
   },
   "openPreferences": {
     "message": "Open Preferences/Options"

@@ -368,11 +368,15 @@ function initializeActions() {
 function updateIsolationIcon() {
   if (app.storage.isolation.active) {
     elements.toggleIsolation.title = 'Disable Isolation';
+    elements.toggleIsolation.setAttribute('data-i18n-title', 'disableIsolation');
     elements.toggleIsolation.innerHTML = '<i class="icon-toggle-on"></i>';
   } else {
     elements.toggleIsolation.title = 'Enable Isolation';
+    elements.toggleIsolation.setAttribute('data-i18n-title', 'enableIsolation');
     elements.toggleIsolation.innerHTML = '<i class="icon-toggle-off"></i>';
   }
+  
+  applyLocalization();
 }
 
 /**

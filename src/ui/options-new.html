@@ -89,9 +89,12 @@
         <section id="general" class="content-section active">
           <h2 data-i18n="optionsNavGeneral">General</h2>
           <div class="form">
-            <div class="field checkbox-field">
-              <input type="checkbox" id="automaticMode" name="automaticMode" />
-              <label for="automaticMode" data-i18n="optionsGeneralAutomaticMode">Automatic Mode</label>
+            <div class="field">
+              <div class="checkbox-field">
+                <input type="checkbox" id="automaticMode" name="automaticMode" />
+                <label for="automaticMode" data-i18n="optionsGeneralAutomaticMode">Automatic Mode</label>
+              </div>
+              <div class="field-description" data-i18n="optionsGeneralAutomaticModeDescription">Automatically reopens tabs in new Temporary Containers when no container exists.</div>
             </div>
             
             <div class="field checkbox-field">
@@ -180,17 +183,40 @@
         <section id="isolation-global" class="content-section hidden">
           <h2 data-i18n="optionsIsolationTabGlobal">Isolation: Global</h2>
           <div class="form">
-            <div class="field checkbox-field">
-              <input type="checkbox" id="isolation" name="isolation" />
-              <label for="isolation" data-i18n="isolation">Isolation</label>
-            </div>
-            
             <div class="field">
-              <label for="defaultIsolation" data-i18n="defaultIsolation">Default Isolation</label>
-              <select id="defaultIsolation" name="defaultIsolation">
-                <option value="default" data-i18n="defaultIsolationDefault">Default</option>
-                <option value="never" data-i18n="defaultIsolationNever">Never</option>
-                <option value="always" data-i18n="defaultIsolationAlways">Always</option>
+              <label for="isolationGlobalUrlNavigation" data-i18n="optionsIsolationGlobalUrlNavigation">URL Navigation</label>
+              <select id="isolationGlobalUrlNavigation" name="isolationGlobalUrlNavigation">
+                <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+                <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
+              <div class="field-description" data-i18n="optionsIsolationGlobalUrlNavigationDescription">Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks.</div>
+            </div>
+
+            <div class="field">
+              <h3 data-i18n="optionsIsolationGlobalMouseNavigation">Mouse Navigation</h3>
+              <div class="field-description" data-i18n="optionsIsolationGlobalMouseDescription">Global isolation rule for mouse click activities. Not required when URL Navigation rule above is used.</div>
+              <label for="isolationGlobalLeftClick" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
+              <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick">
+                <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+                <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
+              <label for="isolationGlobalMiddleClick" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
+              <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick">
+                <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+                <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
+              <label for="isolationGlobalCtrlLeftClick" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
+              <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick">
+                <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+                <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
               </select>
             </div>
             
