@@ -28,7 +28,6 @@ import {
   CONTAINER_ICONS,
   CONTAINER_REMOVAL_DEFAULT,
   TOOLBAR_ICON_COLORS,
-  IGNORED_DOMAINS_DEFAULT,
   REDIRECTOR_DOMAINS_DEFAULT,
 } from './shared.js';
 
@@ -374,9 +373,9 @@ function initTagInputs() {
   createTagInput(
     elements.ignoredDomainsInput,
     elements.ignoredDomains,
-    app.preferences.ignoredDomains || IGNORED_DOMAINS_DEFAULT,
+    app.preferences.isolation.global.excluded,
     (domains) => {
-      app.preferences.ignoredDomains = domains;
+      app.preferences.isolation.global.excluded = domains;
       savePreferences(app.preferences);
     }
   );

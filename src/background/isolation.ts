@@ -113,9 +113,7 @@ export class Isolation {
     }
     this.debug('[maybeIsolate] decided to isolate', tab, request);
 
-    const excludedDomainPatterns = Object.keys(
-      this.pref.isolation.global.excluded
-    );
+    const excludedDomainPatterns = this.pref.isolation.global.excluded;
     if (excludedDomainPatterns.length) {
       const excluded = excludedDomainPatterns.find((excludedDomainPattern) => {
         return this.utils.matchDomainPattern(
@@ -136,7 +134,7 @@ export class Isolation {
     if (
       tab &&
       this.container.isPermanent(tab.cookieStoreId) &&
-      this.pref.isolation.global.excludedContainers[tab.cookieStoreId]
+      this.pref.isolation.global.excludedContainers.includes(tab.cookieStoreId)
     ) {
       this.debug(
         '[maybeIsolate] container on global excluded containers list',

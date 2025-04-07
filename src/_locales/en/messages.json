@@ -279,11 +279,17 @@
   "optionsIsolationGlobalSelectExclusionContainers": {
     "message": "Select Permanent Containers to Exclude from Isolation"
   },
-  "optionsIsolationExcludeTargetDomains": {
-    "message": "Exclude Target Domains"
+  "optionsIsolationExcludeContainers": {
+    "message": "Exclude Permanent Containers"
   },
-  "optionsIsolationNoDomainsExcluded": {
-    "message": "No domains excluded"
+  "optionsIsolationExcludeContainersDescription": {
+    "message": "Exclude permanent containers from isolation."
+  },
+  "optionsIsolationIgnoredDomains": {
+    "message": "Ignored Domains"
+  },
+  "optionsIsolationIgnoredDomainsDescription": {
+    "message": "Ignored domains will not be isolated."
   },
   "optionsIsolationMacIsolateNonMac": {
     "message": "Isolate Navigations in Permanent Containers whose Target Domain isn't MAC-\"Always open in\" assigned to that container"
@@ -499,18 +505,6 @@
   },
   "defaultIsolationAlways": {
     "message": "Always"
-  },
-  "ignoredDomains": {
-    "message": "Ignored Domains"
-  },
-  "ignoredDomainsDescription": {
-    "message": "Ignored domains will not be isolated."
-  },
-  "macConfirmPage": {
-    "message": "Mac Confirm Page"
-  },
-  "macConfirmPageDescription": {
-    "message": "Show the confirm page on Mac."
   },
   "show": {
     "message": "Show"

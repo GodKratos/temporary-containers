@@ -45,8 +45,8 @@ export class Preferences {
             container: 'default',
           },
         },
-        excluded: {},
-        excludedContainers: {},
+        excluded: [],
+        excludedContainers: [],
       },
       domain: [],
       mac: {

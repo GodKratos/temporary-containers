@@ -39,27 +39,6 @@ export const TOOLBAR_ICON_COLORS = [
   'white-simple',
 ];
 
-export const IGNORED_DOMAINS_DEFAULT = [
-  'accounts.google.com',
-  'addons.mozilla.org',
-  'amazon.com',
-  'amazon.de',
-  'amazon.co.uk',
-  'ebay.com',
-  'ebay.de',
-  'ebay.co.uk',
-  'pay.amazon.com',
-  'pay.amazon.de',
-  'pay.amazon.co.uk',
-  'smile.amazon.com',
-  'smile.amazon.de',
-  'smile.amazon.co.uk',
-  'signin.aws.amazon.com',
-  'signin.ebay.com',
-  'signin.ebay.de',
-  'signin.ebay.co.uk',
-];
-
 export const REDIRECTOR_DOMAINS_DEFAULT = [
   'accounts.google.com',
   'login.microsoftonline.com',

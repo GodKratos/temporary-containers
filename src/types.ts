@@ -75,12 +75,8 @@ export interface IsolationGlobal {
       container: 'default' | 'deleteshistory';
     };
   };
-  excluded: {
-    [key: string]: Record<string, unknown>;
-  };
-  excludedContainers: {
-    [key: string]: Record<string, unknown>;
-  };
+  excluded: string[];
+  excludedContainers: string[];
 }
 
 export interface IsolationDomain extends IsolationGlobal {

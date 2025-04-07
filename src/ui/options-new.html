@@ -221,21 +221,21 @@
             </div>
             
             <div class="field">
-              <label for="ignoredDomains" data-i18n="ignoredDomains">Ignored Domains</label>
+              <label for="excludedContainers" data-i18n="optionsIsolationExcludeContainers">Exclude Permanent Containers</label>
+              <div class="tag-input-container">
+                <select id="excludedContainersInput" placeholder="Add domain and press Enter" data-i18n-placeholder="addDomainAndPressEnter" />
+                <div id="excludedContainers" class="tag-list"></div>
+              </div>
+              <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Exclude permanent containers from isolation.</div>
+            </div>
+            
+            <div class="field">
+              <label for="ignoredDomains" data-i18n="optionsIsolationIgnoredDomains">Ignored Domains</label>
               <div class="tag-input-container">
                 <input type="text" id="ignoredDomainsInput" placeholder="Add domain and press Enter" data-i18n-placeholder="addDomainAndPressEnter" />
                 <div id="ignoredDomains" class="tag-list"></div>
               </div>
-              <div class="field-description" data-i18n="ignoredDomainsDescription">Ignored domains will not be isolated.</div>
-            </div>
-            
-            <div class="field">
-              <label for="macConfirmPage" data-i18n="macConfirmPage">Mac Confirm Page</label>
-              <select id="macConfirmPage" name="macConfirmPage">
-                <option value="true" data-i18n="show">Show</option>
-                <option value="false" data-i18n="dontShow">Don't Show</option>
-              </select>
-              <div class="field-description" data-i18n="macConfirmPageDescription">Show the confirm page on Mac.</div>
+              <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
             </div>
           </div>
         </section>
