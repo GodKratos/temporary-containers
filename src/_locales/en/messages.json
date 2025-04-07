@@ -268,7 +268,7 @@
     "message": "Ctrl/Cmd + Left Click"
   },
   "optionsIsolationGlobalMouseDescription": {
-    "message": "Global isolation rule for mouse click activities. Not required when URL Navigation rule above is used."
+    "message": "Global isolation rule for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced."
   },
   "optionsIsolationGlobalExcludePermanentContainers": {
     "message": "Exclude Permanent Containers"
