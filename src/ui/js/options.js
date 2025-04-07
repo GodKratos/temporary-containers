@@ -67,8 +67,8 @@ const elements = {
   containerIconRandomExcludedSection: document.getElementById('containerIconRandomExcludedSection'),
   containerNumberMode: document.getElementById('containerNumberMode'),
   containerRemoval: document.getElementById('containerRemoval'),
-  resetContainerNumber: document.getElementById('resetContainerNumber'),
-  containerCounter: document.getElementById('containerCounter'),
+  //resetContainerNumber: document.getElementById('resetContainerNumber'),
+  //containerCounter: document.getElementById('containerCounter'),
   iconColor: document.getElementById('iconColor'),
   
   // Isolation: Global
@@ -78,7 +78,9 @@ const elements = {
   isolationGlobalCtrlLeftClick: document.getElementById('isolationGlobalCtrlLeftClick'),
   ignoredDomainsInput: document.getElementById('ignoredDomainsInput'),
   ignoredDomains: document.getElementById('ignoredDomains'),
-  macConfirmPage: document.getElementById('macConfirmPage'),
+  excludedContainersSelect: document.getElementById('excludedContainersSelect'),
+  addExcludedContainer: document.getElementById('addExcludedContainer'),
+  excludedContainers: document.getElementById('excludedContainers'),
   
   // Isolation: Per Domain
   domainRuleInput: document.getElementById('domainRuleInput'),
@@ -261,7 +263,7 @@ function setActiveSection(section) {
 /**
  * Initialize form elements
  */
-function initFormElements() {
+async function initFormElements() {
   // Ensure preferences object exists with defaults
   if (!app.preferences) app.preferences = {};
   
@@ -273,7 +275,7 @@ function initFormElements() {
   elements.containerColorRandom.checked = app.preferences.container.colorRandom || false;
   elements.containerIconRandom.checked = app.preferences.container.iconRandom || false;
   elements.containerNumberMode.value = app.preferences.container.numberMode || 'keep';
-  elements.containerCounter.textContent = `Current container number: ${app.preferences.container.number || 1}`;
+  //elements.containerCounter.textContent = `Current container number: ${app.preferences.container.number || 1}`;
   
   // Populate container colors
   CONTAINER_COLORS.forEach(color => {
@@ -319,12 +321,55 @@ function initFormElements() {
   // Show/hide random excluded sections
   toggleRandomExcludedSections();
   
+  // Get all permanent containers from Firefox
+  const containers = await browser.contextualIdentities.query({});
+  const select = elements.excludedContainersSelect;
+  
+  // Populate the select with permanent containers
+  containers.forEach(container => {
+    const option = document.createElement('option');
+    option.value = container.cookieStoreId;
+    option.textContent = container.name;
+    select.appendChild(option);
+  });
+
+  // Initialize existing excluded containers
+  if (app.preferences && app.preferences.isolation.global.excludedContainers) {
+    app.preferences.isolation.global.excludedContainers.forEach(containerId => {
+      const container = containers.find(c => c.cookieStoreId === containerId);
+      if (container) {
+        addExcludedContainer(container);
+      }
+    });
+  }
+
+  // Add event listeners for container selection
+  elements.addExcludedContainer.addEventListener('click', async () => {
+    const selectedValue = select.value;
+    if (selectedValue) {
+      const container = containers.find(c => c.cookieStoreId === selectedValue);
+      if (container) {
+        addExcludedContainer(container);
+        select.value = '';
+      }
+    }
+  });
+
+  // Initialize tag removal functionality
+  const excludedContainersDiv = elements.excludedContainers;
+  excludedContainersDiv.addEventListener('click', (e) => {
+    if (e.target.classList.contains('tag-remove')) {
+      const tag = e.target.closest('.tag');
+      const containerId = tag.dataset.containerId;
+      removeExcludedContainer(containerId);
+    }
+  });
+  
   // Isolation: Global
   elements.isolationGlobalUrlNavigation.value = app.preferences.isolation.global.navigation.action || 'never';
   elements.isolationGlobalLeftClick.value = app.preferences.isolation.global.mouseClick.left.action || 'always';
   elements.isolationGlobalMiddleClick.value = app.preferences.isolation.global.mouseClick.middle.action || 'never';
   elements.isolationGlobalCtrlLeftClick.value = app.preferences.isolation.global.mouseClick.ctrlleft.action || 'never';
-  elements.macConfirmPage.value = (app.preferences.macConfirmPage !== undefined ? app.preferences.macConfirmPage : true).toString();
   
   // Advanced: Container
   elements.containerCleanup.checked = app.preferences.containerCleanup || false;
@@ -379,6 +424,53 @@ function initTagInputs() {
       savePreferences(app.preferences);
     }
   );
+}
+
+/**
+ * Add a container to the excluded list
+ */
+function addExcludedContainer(container) {
+  const excludedContainersDiv = elements.excludedContainers;
+  const existingTag = document.querySelector(`[data-container-id="${container.cookieStoreId}"]`);
+  
+  if (!existingTag) {
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.dataset.containerId = container.cookieStoreId;
+    tag.innerHTML = `
+      ${container.name}
+      <button class="tag-remove">×</button>
+    `;
+    excludedContainersDiv.appendChild(tag);
+    
+    // Update preferences
+    if (app.preferences) {
+      if (!app.preferences.isolation.global.excludedContainers) {
+        app.preferences.isolation.global.excludedContainers = [];
+      }
+      if (!app.preferences.isolation.global.excludedContainers.includes(container.cookieStoreId)) {
+        app.preferences.isolation.global.excludedContainers.push(container.cookieStoreId);
+        savePreferences(app.preferences);
+      }
+    }
+  }
+}
+
+/**
+ * Remove a container from the excluded list
+ */
+function removeExcludedContainer(containerId) {
+  const tag = document.querySelector(`[data-container-id="${containerId}"]`);
+  if (tag) {
+    tag.remove();
+    
+    // Update preferences
+    if (app.preferences && app.preferences.isolation.global.excludedContainers) {
+      app.preferences.isolation.global.excludedContainers = 
+        app.preferences.isolation.global.excludedContainers.filter(id => id !== containerId);
+      savePreferences(app.preferences);
+    }
+  }
 }
 
 /**
@@ -772,7 +864,7 @@ function initEventListeners() {
   elements.containerRemoval.addEventListener('change', savePreference('container.removal'));
   elements.iconColor.addEventListener('change', savePreference('iconColor'));
   
-  // Reset container number
+  /*// Reset container number - Blocked out for now
   elements.resetContainerNumber.addEventListener('click', async () => {
     try {
       app.preferences.containerNumber = 1;
@@ -784,6 +876,7 @@ function initEventListeners() {
       showError(`Error resetting container number: ${error.toString()}`);
     }
   });
+  */
   
   // Multi-select changes
   elements.containerColorRandomExcluded.addEventListener('change', () => {
@@ -803,10 +896,6 @@ function initEventListeners() {
   elements.isolationGlobalLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.left.action'));
   elements.isolationGlobalMiddleClick.addEventListener('change', savePreference('isolation.global.mouseClick.middle.action'));
   elements.isolationGlobalCtrlLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.ctrlleft.action'));
-  elements.macConfirmPage.addEventListener('change', (e) => {
-    app.preferences.macConfirmPage = e.target.value === 'true';
-    savePreferences(app.preferences);
-  });
   
   // Advanced: Container
   elements.containerCleanup.addEventListener('change', savePreference('containerCleanup'));

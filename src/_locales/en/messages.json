@@ -283,7 +283,7 @@
     "message": "Exclude Permanent Containers"
   },
   "optionsIsolationExcludeContainersDescription": {
-    "message": "Exclude permanent containers from isolation."
+    "message": "Disables isolation events for the selected containers."
   },
   "optionsIsolationIgnoredDomains": {
     "message": "Ignored Domains"

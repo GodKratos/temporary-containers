@@ -160,12 +160,14 @@
               </select>
             </div>
             
+            <!-- Container Counter - Blocked out for now
             <div class="field">
               <div class="container-counter">
                 <span id="containerCounter"></span>
-                <button id="resetContainerNumber" class="button-default" data-i18n="resetContainerNumber">Reset Container Number</button>
+                <button id="resetContainerNumber" class="small" data-i18n="resetContainerNumber">Reset Container Number</button>
               </div>
             </div>
+            -->
             
             <div class="field">
               <label for="containerRemoval" data-i18n="optionsGeneralContainerRemoval">Delete no longer needed Temporary Containers</label>
@@ -223,10 +225,13 @@
             <div class="field">
               <label for="excludedContainers" data-i18n="optionsIsolationExcludeContainers">Exclude Permanent Containers</label>
               <div class="tag-input-container">
-                <select id="excludedContainersInput" placeholder="Add domain and press Enter" data-i18n-placeholder="addDomainAndPressEnter" />
+                <select id="excludedContainersSelect" class="permanent-container-select">
+                  <option value="">Select a container...</option>
+                </select>
+                <button id="addExcludedContainer" class="small">Add Container</button>
                 <div id="excludedContainers" class="tag-list"></div>
               </div>
-              <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Exclude permanent containers from isolation.</div>
+              <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Disables isolation events for the selected containers.</div>
             </div>
             
             <div class="field">

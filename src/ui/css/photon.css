@@ -269,6 +269,7 @@ button {
   color: var(--text-color);
 }
 
+.field input:not([type]),
 .field input[type="text"],
 .field input[type="number"],
 .field select {
@@ -281,6 +282,7 @@ button {
   background-color: var(--input-background);
 }
 
+.field input:not([type]):focus,
 .field input[type="text"]:focus,
 .field input[type="number"]:focus,
 .field select:focus {

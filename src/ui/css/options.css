@@ -220,6 +220,10 @@ button.danger:hover {
   margin-bottom: 8px;
 }
 
+.tag-input-container input {
+  width: 100%;
+}
+
 .tag-list {
   display: flex;
   flex-wrap: wrap;
