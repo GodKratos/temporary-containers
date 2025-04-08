@@ -39,7 +39,10 @@ let app = {
   statistics: null,
   domainRules: [],
   activeSection: 'general',
-  themeMode: 'light'
+  themeMode: 'light',
+  storage: {
+    tempContainers: {}  // Initialize as an empty object
+  }
 };
 
 // DOM Elements
@@ -133,6 +136,10 @@ async function initialize() {
     
     // Get permissions
     app.permissions = await getPermissions();
+    
+    // Initialize storage with current temporary containers
+    app.storage.tempContainers = await browser.storage.local.get('tempContainers');
+    app.storage.tempContainers = app.storage.tempContainers.tempContainers || {};
     
     // Initialize navigation
     initNavigation();
@@ -325,8 +332,24 @@ async function initFormElements() {
   const containers = await browser.contextualIdentities.query({});
   const select = elements.excludedContainersSelect;
   
-  // Populate the select with permanent containers
+  // Clear existing options
+  select.innerHTML = '';
+  
+  // Add a blank option
+  const blankOption = document.createElement('option');
+  blankOption.value = '';
+  blankOption.textContent = 'Select a container...';
+  select.appendChild(blankOption);
+  
+  // Get existing excluded containers
+  const excludedContainers = app.preferences?.isolation?.global?.excludedContainers || [];
+  
+  // Populate the select with permanent containers (excluding temporary ones)
   containers.forEach(container => {
+    // Skip if it's a temporary container or already selected
+    if (app.storage?.tempContainers?.[container.cookieStoreId] || excludedContainers.includes(container.cookieStoreId)) {
+      return;
+    }
     const option = document.createElement('option');
     option.value = container.cookieStoreId;
     option.textContent = container.name;
@@ -437,22 +460,28 @@ function addExcludedContainer(container) {
     const tag = document.createElement('div');
     tag.className = 'tag';
     tag.dataset.containerId = container.cookieStoreId;
-    tag.innerHTML = `
-      ${container.name}
-      <button class="tag-remove">×</button>
-    `;
+    tag.textContent = container.name;
+    
+    // Create remove button
+    const removeButton = document.createElement('button');
+    removeButton.className = 'small tag-remove';
+    removeButton.type = 'button';
+    removeButton.textContent = '×';
+    removeButton.addEventListener('click', () => removeExcludedContainer(container.cookieStoreId));
+    tag.appendChild(removeButton);
+    
+    // Add tag to container
     excludedContainersDiv.appendChild(tag);
     
     // Update preferences
-    if (app.preferences) {
-      if (!app.preferences.isolation.global.excludedContainers) {
-        app.preferences.isolation.global.excludedContainers = [];
-      }
-      if (!app.preferences.isolation.global.excludedContainers.includes(container.cookieStoreId)) {
-        app.preferences.isolation.global.excludedContainers.push(container.cookieStoreId);
-        savePreferences(app.preferences);
-      }
+    if (!app.preferences.isolation.global.excludedContainers) {
+      app.preferences.isolation.global.excludedContainers = [];
     }
+    app.preferences.isolation.global.excludedContainers.push(container.cookieStoreId);
+    savePreferences(app.preferences);
+    
+    // Refresh the container dropdown
+    refreshContainerDropdown();
   }
 }
 
@@ -465,10 +494,13 @@ function removeExcludedContainer(containerId) {
     tag.remove();
     
     // Update preferences
-    if (app.preferences && app.preferences.isolation.global.excludedContainers) {
-      app.preferences.isolation.global.excludedContainers = 
-        app.preferences.isolation.global.excludedContainers.filter(id => id !== containerId);
+    const index = app.preferences.isolation.global.excludedContainers.indexOf(containerId);
+    if (index > -1) {
+      app.preferences.isolation.global.excludedContainers.splice(index, 1);
       savePreferences(app.preferences);
+      
+      // Refresh the container dropdown
+      refreshContainerDropdown();
     }
   }
 }
@@ -727,6 +759,40 @@ async function importSettings() {
     console.error('Error importing settings:', error);
     showError(`Error importing settings: ${error.toString()}`);
   }
+}
+
+/**
+ * Function to refresh container dropdown
+ */
+async function refreshContainerDropdown() {
+  const select = elements.excludedContainersSelect;
+  
+  // Clear existing options
+  select.innerHTML = '';
+  
+  // Add a blank option
+  const blankOption = document.createElement('option');
+  blankOption.value = '';
+  blankOption.textContent = 'Select a container...';
+  select.appendChild(blankOption);
+  
+  // Get existing excluded containers
+  const excludedContainers = app.preferences?.isolation?.global?.excludedContainers || [];
+  
+  // Get all permanent containers from Firefox
+  const containers = await browser.contextualIdentities.query({});
+  
+  // Populate the select with permanent containers (excluding temporary ones)
+  containers.forEach(container => {
+    // Skip if it's a temporary container or already selected
+    if (app.storage?.tempContainers?.[container.cookieStoreId] || excludedContainers.includes(container.cookieStoreId)) {
+      return;
+    }
+    const option = document.createElement('option');
+    option.value = container.cookieStoreId;
+    option.textContent = container.name;
+    select.appendChild(option);
+  });
 }
 
 /**

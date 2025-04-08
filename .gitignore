@@ -10,3 +10,6 @@
 /dist
 /*.todo
 /.idea
+
+# windsurf rules
+.windsurfrules
