@@ -16,8 +16,36 @@ export async function sendMessage(method, payload = {}) {
 }
 
 /**
+ * Initialize storage with current temporary containers
+ * @returns {Promise<StorageLocal>} - The initialized storage
+ */
+export async function initializeStorage() {
+  const storage = await browser.storage.local.get();
+  return {
+    tempContainers: storage.tempContainers || {},
+    tempContainersNumbers: storage.tempContainersNumbers || [],
+    preferences: storage.preferences || {},
+    statistics: storage.statistics || {
+      startTime: new Date(),
+      containersDeleted: 0,
+      cookiesDeleted: 0,
+      cacheDeleted: 0,
+      deletesHistory: {
+        containersDeleted: 0,
+        cookiesDeleted: 0,
+        urlsDeleted: 0
+      }
+    },
+    isolation: {
+      active: false,
+      reactivateTargetTime: 0
+    }
+  };
+}
+
+/**
  * Get the current preferences from storage
- * @returns {Promise<Object>} - The current preferences
+ * @returns {Promise<PreferencesSchema>} - The current preferences
  */
 export async function getPreferences() {
   const storage = await browser.storage.local.get();

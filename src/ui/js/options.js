@@ -20,7 +20,8 @@ import {
   t,
   capitalize,
   createMultiSelect,
-  createTagInput
+  createTagInput,
+  initializeStorage
 } from './utils.js';
 
 import {
@@ -32,6 +33,16 @@ import {
 } from './shared.js';
 
 // State
+/** @type {{
+ *   initialized: boolean;
+ *   preferences: PreferencesSchema | null;
+ *   permissions: Permissions | null;
+ *   statistics: any | null;
+ *   domainRules: any[];
+ *   activeSection: string;
+ *   themeMode: 'light' | 'dark';
+ *   storage: StorageLocal | null;
+ * }} */
 let app = {
   initialized: false,
   preferences: null,
@@ -40,9 +51,7 @@ let app = {
   domainRules: [],
   activeSection: 'general',
   themeMode: 'light',
-  storage: {
-    tempContainers: {}  // Initialize as an empty object
-  }
+  storage: null
 };
 
 // DOM Elements
@@ -131,15 +140,19 @@ async function initialize() {
     // Detect theme mode
     detectThemeMode();
     
+    // Initialize storage
+    app.storage = await initializeStorage();
+    
     // Get preferences from storage
     app.preferences = await getPreferences();
     
     // Get permissions
     app.permissions = await getPermissions();
     
-    // Initialize storage with current temporary containers
-    app.storage.tempContainers = await browser.storage.local.get('tempContainers');
-    app.storage.tempContainers = app.storage.tempContainers.tempContainers || {};
+    // Validate required data
+    if (!app.storage || !app.preferences) {
+      throw new Error('Failed to initialize storage or preferences');
+    }
     
     // Initialize navigation
     initNavigation();
