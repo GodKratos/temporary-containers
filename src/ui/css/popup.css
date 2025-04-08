@@ -200,7 +200,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: var(--space-md);
-  background-color: white;
+  background-color: var(--input-background);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-1);
   text-align: center;
@@ -208,7 +208,7 @@ body {
 }
 
 .action-card:hover {
-  background-color: var(--grey-20);
+  background-color: var(--sidebar-hover);
 }
 
 .action-icon {
@@ -234,13 +234,14 @@ body {
   display: flex;
   justify-content: space-between;
   padding: var(--space-sm);
-  background-color: white;
+  background-color: var(--input-background);
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-1);
 }
 
 .statistic-name {
   font-weight: 500;
+  color: var(--text-color);
 }
 
 .statistic-count {
