@@ -377,6 +377,8 @@ async function initFormElements() {
         addExcludedContainer(container);
       }
     });
+    // Refresh the dropdown once after all containers are added
+    refreshContainerDropdown();
   }
 
   // Add event listeners for container selection
@@ -387,17 +389,21 @@ async function initFormElements() {
       if (container) {
         addExcludedContainer(container);
         select.value = '';
+        // Refresh the dropdown after adding a container through the UI
+        refreshContainerDropdown();
       }
     }
   });
 
   // Initialize tag removal functionality
   const excludedContainersDiv = elements.excludedContainers;
-  excludedContainersDiv.addEventListener('click', (e) => {
+  excludedContainersDiv.addEventListener('click', async (e) => {
     if (e.target.classList.contains('tag-remove')) {
       const tag = e.target.closest('.tag');
       const containerId = tag.dataset.containerId;
       removeExcludedContainer(containerId);
+      // Refresh the dropdown after removing a container
+      refreshContainerDropdown();
     }
   });
   
@@ -490,11 +496,11 @@ function addExcludedContainer(container) {
     if (!app.preferences.isolation.global.excludedContainers) {
       app.preferences.isolation.global.excludedContainers = [];
     }
-    app.preferences.isolation.global.excludedContainers.push(container.cookieStoreId);
-    savePreferences(app.preferences);
-    
-    // Refresh the container dropdown
-    refreshContainerDropdown();
+    // Only add if not already present
+    if (!app.preferences.isolation.global.excludedContainers.includes(container.cookieStoreId)) {
+      app.preferences.isolation.global.excludedContainers.push(container.cookieStoreId);
+      savePreferences(app.preferences);
+    }
   }
 }
 
@@ -511,9 +517,6 @@ function removeExcludedContainer(containerId) {
     if (index > -1) {
       app.preferences.isolation.global.excludedContainers.splice(index, 1);
       savePreferences(app.preferences);
-      
-      // Refresh the container dropdown
-      refreshContainerDropdown();
     }
   }
 }
