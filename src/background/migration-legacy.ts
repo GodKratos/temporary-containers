@@ -9,8 +9,7 @@ export class MigrationLegacy {
 
     const migrationReadyAbortController = new AbortController();
     let migrationReady: () => void;
-    let migrationReadyTimeout: number;
-    const migrationReadyPromise = new Promise((resolve, reject) => {
+    const migrationReadyPromise = new Promise<void>((resolve, reject) => {
       migrationReady = resolve;
 
       migrationReadyAbortController.signal.addEventListener('abort', () => {
@@ -24,7 +23,6 @@ export class MigrationLegacy {
       browser.runtime.onInstalled.removeListener(migrationOnInstalledListener);
       const { version } = await browser.storage.local.get('version');
       if (version) {
-        clearTimeout(migrationReadyTimeout);
         debug('[migration-legacy] version found, skip', version);
         return;
       }

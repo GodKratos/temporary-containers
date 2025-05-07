@@ -45,6 +45,10 @@ export class ContextMenu {
         break;
 
       case 'open-bookmark-in-new-temporary-container-tab': {
+        if (info.bookmarkId === undefined) {
+          break;
+        }
+
         const bookmarks = await browser.bookmarks.get(info.bookmarkId);
         if (bookmarks[0].url) {
           this.container.createTabInTempContainer({
@@ -59,6 +63,10 @@ export class ContextMenu {
       }
 
       case 'open-bookmark-in-new-deletes-history-temporary-container-tab': {
+        if (info.bookmarkId === undefined) {
+          break;
+        }
+
         const bookmarks = await browser.bookmarks.get(info.bookmarkId);
         if (bookmarks[0].url) {
           this.container.createTabInTempContainer({

@@ -87,16 +87,25 @@ const fakeBrowser = (): {
 
   global.window._mochaTest = true;
 
+  // FIXME
+  // @ts-ignore
   global.browser.runtime.getManifest.returns({
     version: '0.1',
   });
+
+  // FIXME
+  // @ts-ignore
   global.browser.runtime.getBrowserInfo.resolves({
     name: 'Firefox',
     version: 67,
   });
+  // FIXME
+  // @ts-ignore
   global.browser.permissions.getAll.resolves({
     permissions: [],
   });
+  // FIXME
+  // @ts-ignore
   global.browser.management.getAll.resolves([
     {
       id: '@testpilot-containers',

@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "module": "commonjs",
     "noEmit": false,
+    "useUnknownInCatchVariables": false,
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
