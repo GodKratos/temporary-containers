@@ -55,10 +55,6 @@ Check `about:debugging` and click `Inspect` to the right of Temporary Containers
 - git log \$(git tag --sort=-version:refname | sed -n 2p)..HEAD --pretty=format:%s
 - Add release notes and publish
 
-## Libraries
-
-[Vue.js](https://vuejs.org) and [SemanticUI](https://semantic-ui.com/) are used for the preferences & popup UI.
-
 ## License
 
 MIT
