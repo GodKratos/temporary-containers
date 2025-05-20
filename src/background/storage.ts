@@ -15,7 +15,7 @@ export class Storage {
     this.installed = false;
 
     this.defaults = {
-      containerPrefix: false,
+      containerPrefix: 'firefox',
       tempContainerCounter: 0,
       tempContainers: {},
       tempContainersNumbers: [],

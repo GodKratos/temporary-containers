@@ -90,11 +90,6 @@ export class TemporaryContainers {
       },
     }) as unknown) as PreferencesSchema;
 
-    if (!this.storage.local.containerPrefix) {
-      const browserInfo = await browser.runtime.getBrowserInfo();
-      this.storage.local.containerPrefix = browserInfo.name.toLowerCase();
-      await this.storage.persist();
-    }
     this.containerPrefix = this.storage.local.containerPrefix;
 
     this.request.initialize();
