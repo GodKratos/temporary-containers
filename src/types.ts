@@ -115,7 +115,7 @@ export type ToolbarIconColor =
   | 'white-simple';
 
 export interface StorageLocal {
-  containerPrefix: 'firefox';
+  containerPrefix: string | false;
   tempContainerCounter: number;
   tempContainers: {
     [key: string]: ContainerOptions;

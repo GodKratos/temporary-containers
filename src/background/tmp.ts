@@ -25,6 +25,8 @@ import { Tabs } from './tabs';
 import { Utils } from './utils';
 import { PreferencesSchema, Permissions } from '~/types';
 
+const SPECIAL_PREFIXES = ['icecat'];
+
 export class TemporaryContainers {
   public initialized = false;
   public log = new Log();
@@ -90,6 +92,15 @@ export class TemporaryContainers {
       },
     }) as unknown) as PreferencesSchema;
 
+    if (!this.storage.local.containerPrefix) {
+      const browserName = (await browser.runtime.getBrowserInfo()).name.toLowerCase();
+      if (SPECIAL_PREFIXES.includes(browserName)) {
+        this.storage.local.containerPrefix = browserName;
+      } else {
+        this.storage.local.containerPrefix = 'firefox';
+      }
+      await this.storage.persist();
+    }
     this.containerPrefix = this.storage.local.containerPrefix;
 
     this.request.initialize();
