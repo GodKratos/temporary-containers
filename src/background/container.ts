@@ -226,19 +226,15 @@ export class Container {
           try {
             const openerTab = await browser.tabs.get(newTabOptions.openerTabId);
             if (openerTab.discarded) {
-              this.debug(
-                '[createTabInTempContainer] opener tab is discarded, removing openerTabId',
-                openerTab
-              );
-              delete newTabOptions.openerTabId;
+              newTabOptions.openerTabId = tab.id;
             }
           } catch (error) {
-            this.debug(
-              '[createTabInTempContainer] opener tab does not exist, removing openerTabId',
-              error
-            );
-            delete newTabOptions.openerTabId;
+            // opener tab does not exist
+            newTabOptions.openerTabId = tab.id;
           }
+        } else {
+          // Fallback to original tab if no opener tab
+          newTabOptions.openerTabId = tab.id;
         }
         if (tab.windowId) {
           newTabOptions.windowId = tab.windowId;
