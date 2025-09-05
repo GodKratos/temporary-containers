@@ -26,6 +26,11 @@ import {
   TOOLBAR_ICON_COLORS
 } from './shared.js';
 
+// Import shared modules
+import { initializeIsolationGlobalTab } from './modules/isolation-global.js';
+import { initializeIsolationPerDomainTab } from './modules/isolation-per-domain.js';
+import { initializeStatisticsTab, updateStatisticsDisplay } from './modules/statistics.js';
+
 // State
 let app = {
   initialized: false,
@@ -384,400 +389,51 @@ function updateIsolationIcon() {
  */
 function initializeTabContent() {
   // Initialize isolation global tab
-  initializeIsolationGlobal();
+  const isolationGlobalTab = document.getElementById('isolation-global');
+  if (isolationGlobalTab) {
+    initializeIsolationGlobalTab(isolationGlobalTab, app.preferences, async (preferences) => {
+      await savePreferences(preferences);
+    });
+  }
   
   // Initialize isolation per domain tab
-  initializeIsolationPerDomain();
+  const isolationPerDomainTab = document.getElementById('isolation-per-domain');
+  if (isolationPerDomainTab) {
+    initializeIsolationPerDomainTab(isolationPerDomainTab, app.preferences, async (preferences) => {
+      await savePreferences(preferences);
+    }, {
+      currentDomain: app.activeTab?.parsedUrl?.hostname,
+      isPopup: true,
+      onReload: () => {
+        // Reload the popup
+        initialize();
+      }
+    });
+  }
   
   // Initialize actions tab
   initializeActionsTab();
   
   // Initialize statistics tab
-  initializeStatisticsTab();
-}
-
-/**
- * Initialize the isolation global tab
- */
-function initializeIsolationGlobal() {
-  const isolationGlobalTab = document.getElementById('isolation-global');
-  
-  if (isolationGlobalTab) {
-    const isolationGlobal = app.preferences.isolation.global;
-    
-    // Create content
-    const content = document.createElement('div');
-    content.className = 'isolation-section';
-    
-    // Navigation section
-    const navigationSection = document.createElement('div');
-    navigationSection.className = 'isolation-section';
-    navigationSection.innerHTML = `
-      <h3 data-i18n="optionsIsolationGlobalUrlNavigation">Navigation</h3>
-      <div class="isolation-options">
-        <div class="isolation-option">
-          <label>
-            <input type="radio" name="navigation-action" value="never" ${isolationGlobal.navigation.action === 'never' ? 'checked' : ''}>
-            <span data-i18n="optionsIsolationSettingsNever">Never</span>
-          </label>
-        </div>
-        <div class="isolation-option">
-          <label>
-            <input type="radio" name="navigation-action" value="notsamedomain" ${isolationGlobal.navigation.action === 'notsamedomain' ? 'checked' : ''}>
-            <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
-          </label>
-        </div>
-        <div class="isolation-option">
-          <label>
-            <input type="radio" name="navigation-action" value="notsamedomainexact" ${isolationGlobal.navigation.action === 'notsamedomainexact' ? 'checked' : ''}>
-            <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
-          </label>
-        </div>
-        <div class="isolation-option">
-          <label>
-            <input type="radio" name="navigation-action" value="always" ${isolationGlobal.navigation.action === 'always' ? 'checked' : ''}>
-            <span data-i18n="optionsIsolationSettingsAlways">Always</span>
-          </label>
-        </div>
-      </div>
-    `;
-    
-    // Mouse click section
-    const mouseClickSection = document.createElement('div');
-    mouseClickSection.className = 'isolation-section';
-    mouseClickSection.innerHTML = `
-      <h3 data-i18n="optionsIsolationMouseClick">Mouse Click</h3>
-      
-      <div class="isolation-subsection">
-        <h4 data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</h4>
-        <div class="isolation-options">
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-action" value="never" ${isolationGlobal.mouseClick.middle.action === 'never' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNever">Never</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-action" value="notsamedomain" ${isolationGlobal.mouseClick.middle.action === 'notsamedomain' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-action" value="notsamedomainexact" ${isolationGlobal.mouseClick.middle.action === 'notsamedomainexact' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-action" value="always" ${isolationGlobal.mouseClick.middle.action === 'always' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsAlways">Always</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-action" value="global" ${isolationGlobal.mouseClick.middle.action === 'global' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsGlobal">Use Global</span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="isolation-container-type">
-          <h5 data-i18n="containerType">Container Type</h5>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-container" value="default" ${isolationGlobal.mouseClick.middle.container === 'default' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsDefault">Default</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="middle-container" value="deleteshistory" ${isolationGlobal.mouseClick.middle.container === 'deleteshistory' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsDeletesHistory">Deletes History</span>
-            </label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="isolation-subsection">
-        <h4 data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</h4>
-        <div class="isolation-options">
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-action" value="never" ${isolationGlobal.mouseClick.ctrlleft.action === 'never' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNever">Never</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-action" value="notsamedomain" ${isolationGlobal.mouseClick.ctrlleft.action === 'notsamedomain' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-action" value="notsamedomainexact" ${isolationGlobal.mouseClick.ctrlleft.action === 'notsamedomainexact' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-action" value="always" ${isolationGlobal.mouseClick.ctrlleft.action === 'always' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsAlways">Always</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-action" value="global" ${isolationGlobal.mouseClick.ctrlleft.action === 'global' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsGlobal">Use Global</span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="isolation-container-type">
-          <h5 data-i18n="containerType">Container Type</h5>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-container" value="default" ${isolationGlobal.mouseClick.ctrlleft.container === 'default' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsDefault">Default</span>
-            </label>
-          </div>
-          <div class="isolation-option">
-            <label>
-              <input type="radio" name="ctrlleft-container" value="deleteshistory" ${isolationGlobal.mouseClick.ctrlleft.container === 'deleteshistory' ? 'checked' : ''}>
-              <span data-i18n="optionsIsolationSettingsDeletesHistory">Deletes History</span>
-            </label>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    // Add event listeners for navigation options
-    content.appendChild(navigationSection);
-    content.appendChild(mouseClickSection);
-    isolationGlobalTab.appendChild(content);
-    
-    // Apply localization to the new content
-    applyLocalization();
-    
-    // Add event listeners
-    const navigationRadios = content.querySelectorAll('input[name="navigation-action"]');
-    navigationRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          app.preferences.isolation.global.navigation.action = radio.value;
-          savePreferences(app.preferences);
-        }
-      });
-    });
-    
-    const middleActionRadios = content.querySelectorAll('input[name="middle-action"]');
-    middleActionRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          app.preferences.isolation.global.mouseClick.middle.action = radio.value;
-          savePreferences(app.preferences);
-        }
-      });
-    });
-    
-    const middleContainerRadios = content.querySelectorAll('input[name="middle-container"]');
-    middleContainerRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          app.preferences.isolation.global.mouseClick.middle.container = radio.value;
-          savePreferences(app.preferences);
-        }
-      });
-    });
-    
-    const ctrlLeftActionRadios = content.querySelectorAll('input[name="ctrlleft-action"]');
-    ctrlLeftActionRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          app.preferences.isolation.global.mouseClick.ctrlleft.action = radio.value;
-          savePreferences(app.preferences);
-        }
-      });
-    });
-    
-    const ctrlLeftContainerRadios = content.querySelectorAll('input[name="ctrlleft-container"]');
-    ctrlLeftContainerRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          app.preferences.isolation.global.mouseClick.ctrlleft.container = radio.value;
-          savePreferences(app.preferences);
-        }
-      });
-    });
-  }
-}
-
-/**
- * Initialize the isolation per domain tab
- */
-function initializeIsolationPerDomain() {
-  const isolationPerDomainTab = document.getElementById('isolation-per-domain');
-  
-  if (isolationPerDomainTab) {
-    // Create content
-    const content = document.createElement('div');
-    
-    // Current domain section
-    const currentDomain = app.activeTab.parsedUrl.hostname;
-    const domainIsolation = app.preferences.isolation.domain.find(d => d.pattern === currentDomain);
-    
-    if (currentDomain) {
-      const currentDomainSection = document.createElement('div');
-      currentDomainSection.className = 'isolation-section';
-      currentDomainSection.innerHTML = `
-        <h3><span data-i18n="currentDomain">Current Domain</span>: ${currentDomain}</h3>
-        <div class="isolation-actions">
-          ${domainIsolation ? `
-            <button id="edit-domain-isolation" class="button-default" data-i18n="editDomainIsolation">Edit Domain Isolation</button>
-            <button id="remove-domain-isolation" class="button-default button-ghost" data-i18n="remove">Remove</button>
-          ` : `
-            <button id="add-domain-isolation" class="button-default button-primary" data-i18n="addDomainIsolation">Add Domain Isolation</button>
-          `}
-        </div>
-      `;
-      
-      content.appendChild(currentDomainSection);
-    }
-    
-    // Domain list
-    const domainListSection = document.createElement('div');
-    domainListSection.className = 'isolation-section';
-    domainListSection.innerHTML = `
-      <h3 data-i18n="domainIsolationRules">Domain Isolation Rules</h3>
-      <div id="domain-list" class="domain-list">
-        ${app.preferences.isolation.domain.length === 0 ? `
-          <p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>
-        ` : ''}
-      </div>
-    `;
-    
-    content.appendChild(domainListSection);
-    
-    // Add domain list items
-    const domainList = domainListSection.querySelector('#domain-list');
-    
-    app.preferences.isolation.domain.forEach(domain => {
-      const domainItem = document.createElement('div');
-      domainItem.className = 'domain-item';
-      domainItem.innerHTML = `
-        <div class="domain-pattern">${domain.pattern}</div>
-        <div class="domain-actions">
-          <button class="button-icon edit-domain" data-domain="${domain.pattern}">
-            <i class="icon-pencil"></i>
-          </button>
-          <button class="button-icon remove-domain" data-domain="${domain.pattern}">
-            <i class="icon-trash"></i>
-          </button>
-        </div>
-      `;
-      
-      domainList.appendChild(domainItem);
-    });
-    
-    isolationPerDomainTab.appendChild(content);
-    
-    // Apply localization to the new content
-    applyLocalization();
-    
-    // Add event listeners
-    if (currentDomain) {
-      if (domainIsolation) {
-        const editButton = content.querySelector('#edit-domain-isolation');
-        const removeButton = content.querySelector('#remove-domain-isolation');
-        
-        if (editButton) {
-          editButton.addEventListener('click', () => {
-            // Open edit dialog (to be implemented)
-            alert(t('editDomainIsolationFor', currentDomain));
-          });
-        }
-        
-        if (removeButton) {
-          removeButton.addEventListener('click', () => {
-            if (confirm(t('removeIsolationRuleFor', currentDomain))) {
-              const index = app.preferences.isolation.domain.findIndex(d => d.pattern === currentDomain);
-              
-              if (index !== -1) {
-                app.preferences.isolation.domain.splice(index, 1);
-                savePreferences(app.preferences);
-                
-                // Reload the tab
-                initialize();
-              }
-            }
-          });
-        }
-      } else {
-        const addButton = content.querySelector('#add-domain-isolation');
-        
-        if (addButton) {
-          addButton.addEventListener('click', () => {
-            // Create new domain isolation rule based on global settings
-            const newDomainRule = {
-              pattern: currentDomain,
-              navigation: { ...app.preferences.isolation.global.navigation },
-              mouseClick: {
-                middle: { ...app.preferences.isolation.global.mouseClick.middle },
-                ctrlleft: { ...app.preferences.isolation.global.mouseClick.ctrlleft },
-                left: { ...app.preferences.isolation.global.mouseClick.left },
-              },
-              excluded: {},
-              excludedContainers: {},
-              always: {
-                action: 'disabled',
-                allowedInPermanent: false,
-                allowedInTemporary: false,
-              },
-            };
-            
-            app.preferences.isolation.domain.push(newDomainRule);
-            savePreferences(app.preferences);
-            
-            // Reload the tab
-            initialize();
-          });
-        }
+  const statisticsTab = document.getElementById('statistics');
+  if (statisticsTab) {
+    initializeStatisticsTab(statisticsTab, app.storage.statistics, async () => {
+      try {
+        await sendMessage('resetStatistics');
+        app.storage.statistics = await sendMessage('getStatistics');
+        // Reload the popup to refresh statistics
+        initialize();
+      } catch (error) {
+        console.error('Error resetting statistics:', error);
+        showError(`Error resetting statistics: ${error.toString()}`);
       }
-    }
-    
-    // Add event listeners for domain list items
-    const editButtons = content.querySelectorAll('.edit-domain');
-    const removeButtons = content.querySelectorAll('.remove-domain');
-    
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const domainPattern = button.dataset.domain;
-        // Open edit dialog (to be implemented)
-        alert(t('editDomainIsolationFor', domainPattern));
-      });
-    });
-    
-    removeButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const domainPattern = button.dataset.domain;
-        
-        if (confirm(t('removeIsolationRuleFor', domainPattern))) {
-          const index = app.preferences.isolation.domain.findIndex(d => d.pattern === domainPattern);
-          
-          if (index !== -1) {
-            app.preferences.isolation.domain.splice(index, 1);
-            savePreferences(app.preferences);
-            
-            // Reload the tab
-            initialize();
-          }
-        }
-      });
+    }, {
+      showResetButton: false
     });
   }
 }
+
+
 
 /**
  * Initialize the actions tab
@@ -900,52 +556,6 @@ function initializeActionsTab() {
   }
 }
 
-/**
- * Initialize the statistics tab
- */
-function initializeStatisticsTab() {
-  const statisticsTab = document.getElementById('statistics');
-  
-  if (statisticsTab && app.storage.statistics) {
-    const stats = app.storage.statistics;
-    
-    // Create content
-    const content = document.createElement('div');
-    content.innerHTML = `
-      <div class="statistics-list">
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="containersDeleted">Containers Deleted</div>
-          <div class="statistic-count">${stats.containersDeleted || 0}</div>
-        </div>
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="cookiesDeleted">Cookies Deleted</div>
-          <div class="statistic-count">${stats.cookiesDeleted || 0}</div>
-        </div>
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="cacheDeleted">Cache Deleted</div>
-          <div class="statistic-count">${stats.cacheDeleted || 0}</div>
-        </div>
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="historyContainersDeleted">History Containers Deleted</div>
-          <div class="statistic-count">${stats.deletesHistory?.containersDeleted || 0}</div>
-        </div>
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="historyCookiesDeleted">History Cookies Deleted</div>
-          <div class="statistic-count">${stats.deletesHistory?.cookiesDeleted || 0}</div>
-        </div>
-        <div class="statistic-item">
-          <div class="statistic-name" data-i18n="urlsDeleted">URLs Deleted</div>
-          <div class="statistic-count">${stats.deletesHistory?.urlsDeleted || 0}</div>
-        </div>
-      </div>
-    `;
-    
-    statisticsTab.appendChild(content);
-    
-    // Apply localization to the new content
-    applyLocalization();
-  }
-}
 
 // Initialize the popup page when the DOM is loaded
 document.addEventListener('DOMContentLoaded', initialize);
