@@ -52,12 +52,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/ui/options-new.html',
+      template: 'src/ui/options.html',
       filename: 'options.html',
       chunks: ['options'],
     }),
     new HtmlWebpackPlugin({
-      template: 'src/ui/popup-new.html',
+      template: 'src/ui/popup.html',
       filename: 'popup.html',
       chunks: ['popup'],
     }),
