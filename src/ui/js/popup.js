@@ -413,30 +413,30 @@ function initializeIsolationGlobal() {
     const navigationSection = document.createElement('div');
     navigationSection.className = 'isolation-section';
     navigationSection.innerHTML = `
-      <h3>Navigation</h3>
+      <h3 data-i18n="optionsIsolationGlobalUrlNavigation">Navigation</h3>
       <div class="isolation-options">
         <div class="isolation-option">
           <label>
             <input type="radio" name="navigation-action" value="never" ${isolationGlobal.navigation.action === 'never' ? 'checked' : ''}>
-            Never
+            <span data-i18n="optionsIsolationSettingsNever">Never</span>
           </label>
         </div>
         <div class="isolation-option">
           <label>
             <input type="radio" name="navigation-action" value="notsamedomain" ${isolationGlobal.navigation.action === 'notsamedomain' ? 'checked' : ''}>
-            Not Same Domain
+            <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
           </label>
         </div>
         <div class="isolation-option">
           <label>
             <input type="radio" name="navigation-action" value="notsamedomainexact" ${isolationGlobal.navigation.action === 'notsamedomainexact' ? 'checked' : ''}>
-            Not Same Domain Exact
+            <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
           </label>
         </div>
         <div class="isolation-option">
           <label>
             <input type="radio" name="navigation-action" value="always" ${isolationGlobal.navigation.action === 'always' ? 'checked' : ''}>
-            Always
+            <span data-i18n="optionsIsolationSettingsAlways">Always</span>
           </label>
         </div>
       </div>
@@ -446,107 +446,107 @@ function initializeIsolationGlobal() {
     const mouseClickSection = document.createElement('div');
     mouseClickSection.className = 'isolation-section';
     mouseClickSection.innerHTML = `
-      <h3>Mouse Click</h3>
+      <h3 data-i18n="optionsIsolationMouseClick">Mouse Click</h3>
       
       <div class="isolation-subsection">
-        <h4>Middle Click</h4>
+        <h4 data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</h4>
         <div class="isolation-options">
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-action" value="never" ${isolationGlobal.mouseClick.middle.action === 'never' ? 'checked' : ''}>
-              Never
+              <span data-i18n="optionsIsolationSettingsNever">Never</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-action" value="notsamedomain" ${isolationGlobal.mouseClick.middle.action === 'notsamedomain' ? 'checked' : ''}>
-              Not Same Domain
+              <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-action" value="notsamedomainexact" ${isolationGlobal.mouseClick.middle.action === 'notsamedomainexact' ? 'checked' : ''}>
-              Not Same Domain Exact
+              <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-action" value="always" ${isolationGlobal.mouseClick.middle.action === 'always' ? 'checked' : ''}>
-              Always
+              <span data-i18n="optionsIsolationSettingsAlways">Always</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-action" value="global" ${isolationGlobal.mouseClick.middle.action === 'global' ? 'checked' : ''}>
-              Global
+              <span data-i18n="optionsIsolationSettingsGlobal">Use Global</span>
             </label>
           </div>
         </div>
         
         <div class="isolation-container-type">
-          <h5>Container Type</h5>
+          <h5 data-i18n="containerType">Container Type</h5>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-container" value="default" ${isolationGlobal.mouseClick.middle.container === 'default' ? 'checked' : ''}>
-              Default
+              <span data-i18n="optionsIsolationSettingsDefault">Default</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="middle-container" value="deleteshistory" ${isolationGlobal.mouseClick.middle.container === 'deleteshistory' ? 'checked' : ''}>
-              Deletes History
+              <span data-i18n="optionsIsolationSettingsDeletesHistory">Deletes History</span>
             </label>
           </div>
         </div>
       </div>
       
       <div class="isolation-subsection">
-        <h4>Ctrl+Left Click</h4>
+        <h4 data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</h4>
         <div class="isolation-options">
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-action" value="never" ${isolationGlobal.mouseClick.ctrlleft.action === 'never' ? 'checked' : ''}>
-              Never
+              <span data-i18n="optionsIsolationSettingsNever">Never</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-action" value="notsamedomain" ${isolationGlobal.mouseClick.ctrlleft.action === 'notsamedomain' ? 'checked' : ''}>
-              Not Same Domain
+              <span data-i18n="optionsIsolationSettingsNotSameDomain">Different from Tab Domain & Subdomains</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-action" value="notsamedomainexact" ${isolationGlobal.mouseClick.ctrlleft.action === 'notsamedomainexact' ? 'checked' : ''}>
-              Not Same Domain Exact
+              <span data-i18n="optionsIsolationSettingsNotSameDomainExact">Different from Tab Domain</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-action" value="always" ${isolationGlobal.mouseClick.ctrlleft.action === 'always' ? 'checked' : ''}>
-              Always
+              <span data-i18n="optionsIsolationSettingsAlways">Always</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-action" value="global" ${isolationGlobal.mouseClick.ctrlleft.action === 'global' ? 'checked' : ''}>
-              Global
+              <span data-i18n="optionsIsolationSettingsGlobal">Use Global</span>
             </label>
           </div>
         </div>
         
         <div class="isolation-container-type">
-          <h5>Container Type</h5>
+          <h5 data-i18n="containerType">Container Type</h5>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-container" value="default" ${isolationGlobal.mouseClick.ctrlleft.container === 'default' ? 'checked' : ''}>
-              Default
+              <span data-i18n="optionsIsolationSettingsDefault">Default</span>
             </label>
           </div>
           <div class="isolation-option">
             <label>
               <input type="radio" name="ctrlleft-container" value="deleteshistory" ${isolationGlobal.mouseClick.ctrlleft.container === 'deleteshistory' ? 'checked' : ''}>
-              Deletes History
+              <span data-i18n="optionsIsolationSettingsDeletesHistory">Deletes History</span>
             </label>
           </div>
         </div>
@@ -557,6 +557,9 @@ function initializeIsolationGlobal() {
     content.appendChild(navigationSection);
     content.appendChild(mouseClickSection);
     isolationGlobalTab.appendChild(content);
+    
+    // Apply localization to the new content
+    applyLocalization();
     
     // Add event listeners
     const navigationRadios = content.querySelectorAll('input[name="navigation-action"]');
@@ -629,13 +632,13 @@ function initializeIsolationPerDomain() {
       const currentDomainSection = document.createElement('div');
       currentDomainSection.className = 'isolation-section';
       currentDomainSection.innerHTML = `
-        <h3>Current Domain: ${currentDomain}</h3>
+        <h3><span data-i18n="currentDomain">Current Domain</span>: ${currentDomain}</h3>
         <div class="isolation-actions">
           ${domainIsolation ? `
-            <button id="edit-domain-isolation" class="button-default">Edit Domain Isolation</button>
-            <button id="remove-domain-isolation" class="button-default button-ghost">Remove</button>
+            <button id="edit-domain-isolation" class="button-default" data-i18n="editDomainIsolation">Edit Domain Isolation</button>
+            <button id="remove-domain-isolation" class="button-default button-ghost" data-i18n="remove">Remove</button>
           ` : `
-            <button id="add-domain-isolation" class="button-default button-primary">Add Domain Isolation</button>
+            <button id="add-domain-isolation" class="button-default button-primary" data-i18n="addDomainIsolation">Add Domain Isolation</button>
           `}
         </div>
       `;
@@ -647,10 +650,10 @@ function initializeIsolationPerDomain() {
     const domainListSection = document.createElement('div');
     domainListSection.className = 'isolation-section';
     domainListSection.innerHTML = `
-      <h3>Domain Isolation Rules</h3>
+      <h3 data-i18n="domainIsolationRules">Domain Isolation Rules</h3>
       <div id="domain-list" class="domain-list">
         ${app.preferences.isolation.domain.length === 0 ? `
-          <p>No domain isolation rules configured.</p>
+          <p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>
         ` : ''}
       </div>
     `;
@@ -680,6 +683,9 @@ function initializeIsolationPerDomain() {
     
     isolationPerDomainTab.appendChild(content);
     
+    // Apply localization to the new content
+    applyLocalization();
+    
     // Add event listeners
     if (currentDomain) {
       if (domainIsolation) {
@@ -689,13 +695,13 @@ function initializeIsolationPerDomain() {
         if (editButton) {
           editButton.addEventListener('click', () => {
             // Open edit dialog (to be implemented)
-            alert('Edit domain isolation for ' + currentDomain);
+            alert(t('editDomainIsolationFor', currentDomain));
           });
         }
         
         if (removeButton) {
           removeButton.addEventListener('click', () => {
-            if (confirm(`Remove isolation rule for ${currentDomain}?`)) {
+            if (confirm(t('removeIsolationRuleFor', currentDomain))) {
               const index = app.preferences.isolation.domain.findIndex(d => d.pattern === currentDomain);
               
               if (index !== -1) {
@@ -749,7 +755,7 @@ function initializeIsolationPerDomain() {
       button.addEventListener('click', () => {
         const domainPattern = button.dataset.domain;
         // Open edit dialog (to be implemented)
-        alert('Edit domain isolation for ' + domainPattern);
+        alert(t('editDomainIsolationFor', domainPattern));
       });
     });
     
@@ -757,7 +763,7 @@ function initializeIsolationPerDomain() {
       button.addEventListener('click', () => {
         const domainPattern = button.dataset.domain;
         
-        if (confirm(`Remove isolation rule for ${domainPattern}?`)) {
+        if (confirm(t('removeIsolationRuleFor', domainPattern))) {
           const index = app.preferences.isolation.domain.findIndex(d => d.pattern === domainPattern);
           
           if (index !== -1) {
@@ -788,7 +794,7 @@ function initializeActionsTab() {
           <div class="action-icon">
             <i class="icon-plus"></i>
           </div>
-          <div class="action-label">New Temporary Container</div>
+          <div class="action-label" data-i18n="newTemporaryContainer">New Temporary Container</div>
         </div>
         
         ${app.permissions.history ? `
@@ -796,7 +802,7 @@ function initializeActionsTab() {
             <div class="action-icon">
               <i class="icon-user-secret"></i>
             </div>
-            <div class="action-label">New Deletes History Container</div>
+            <div class="action-label" data-i18n="newDeletesHistoryContainer">New Deletes History Container</div>
           </div>
         ` : ''}
         
@@ -804,7 +810,7 @@ function initializeActionsTab() {
           <div class="action-icon">
             <i class="icon-cog-alt"></i>
           </div>
-          <div class="action-label">Open Preferences</div>
+          <div class="action-label" data-i18n="openPreferences">Open Preferences</div>
         </div>
         
         <div class="action-card" id="action-toggle-isolation">
@@ -814,7 +820,7 @@ function initializeActionsTab() {
               '<i class="icon-toggle-off"></i>'
             }
           </div>
-          <div class="action-label">
+          <div class="action-label" data-i18n="${app.storage.isolation.active ? 'disableIsolation' : 'enableIsolation'}">
             ${app.storage.isolation.active ? 'Disable Isolation' : 'Enable Isolation'}
           </div>
         </div>
@@ -822,6 +828,9 @@ function initializeActionsTab() {
     `;
     
     actionsTab.appendChild(content);
+    
+    // Apply localization to the new content
+    applyLocalization();
     
     // Add event listeners
     const newTmpAction = content.querySelector('#action-new-tmp');
@@ -877,9 +886,11 @@ function initializeActionsTab() {
       
       if (app.storage.isolation.active) {
         icon.innerHTML = '<i class="icon-toggle-on"></i>';
+        label.setAttribute('data-i18n', 'disableIsolation');
         label.textContent = 'Disable Isolation';
       } else {
         icon.innerHTML = '<i class="icon-toggle-off"></i>';
+        label.setAttribute('data-i18n', 'enableIsolation');
         label.textContent = 'Enable Isolation';
       }
       
@@ -903,33 +914,36 @@ function initializeStatisticsTab() {
     content.innerHTML = `
       <div class="statistics-list">
         <div class="statistic-item">
-          <div class="statistic-name">Containers Deleted</div>
+          <div class="statistic-name" data-i18n="containersDeleted">Containers Deleted</div>
           <div class="statistic-count">${stats.containersDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-name">Cookies Deleted</div>
+          <div class="statistic-name" data-i18n="cookiesDeleted">Cookies Deleted</div>
           <div class="statistic-count">${stats.cookiesDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-name">Cache Deleted</div>
+          <div class="statistic-name" data-i18n="cacheDeleted">Cache Deleted</div>
           <div class="statistic-count">${stats.cacheDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-name">History Containers Deleted</div>
+          <div class="statistic-name" data-i18n="historyContainersDeleted">History Containers Deleted</div>
           <div class="statistic-count">${stats.deletesHistory?.containersDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-name">History Cookies Deleted</div>
+          <div class="statistic-name" data-i18n="historyCookiesDeleted">History Cookies Deleted</div>
           <div class="statistic-count">${stats.deletesHistory?.cookiesDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-name">URLs Deleted</div>
+          <div class="statistic-name" data-i18n="urlsDeleted">URLs Deleted</div>
           <div class="statistic-count">${stats.deletesHistory?.urlsDeleted || 0}</div>
         </div>
       </div>
     `;
     
     statisticsTab.appendChild(content);
+    
+    // Apply localization to the new content
+    applyLocalization();
   }
 }
 

@@ -38,6 +38,9 @@
   "optionsNavStatistics": {
     "message": "Statistics"
   },
+  "optionsNavActions": {
+    "message": "Actions"
+  },
   "optionsNavExportImport": {
     "message": "Export/Import"
   },
@@ -392,6 +395,12 @@
   "optionsIsolationSettingsNever": {
     "message": "Never"
   },
+  "optionsIsolationSettingsDefault": {
+    "message": "Default"
+  },
+  "optionsIsolationSettingsDeletesHistory": {
+    "message": "Deletes History"
+  },
   "optionsAdvancedContainer": {
     "message": "Advanced: Container"
   },
@@ -530,9 +539,6 @@
   "addRule": {
     "message": "Add Rule"
   },
-  "actions": {
-    "message": "Actions"
-  },
   "resetContainerNumber": {
     "message": "Reset Container Number"
   },
@@ -562,5 +568,66 @@
   },
   "addDomainAndPressEnter": {
     "message": "Add domain and press Enter"
+  },
+  "containerType": {
+    "message": "Container Type"
+  },
+  "currentDomain": {
+    "message": "Current Domain"
+  },
+  "editDomainIsolation": {
+    "message": "Edit Domain Isolation"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "addDomainIsolation": {
+    "message": "Add Domain Isolation"
+  },
+  "domainIsolationRules": {
+    "message": "Domain Isolation Rules"
+  },
+  "noDomainIsolationRulesConfigured": {
+    "message": "No domain isolation rules configured."
+  },
+  "newTemporaryContainer": {
+    "message": "New Temporary Container"
+  },
+  "newDeletesHistoryContainer": {
+    "message": "New Deletes History Container"
+  },
+  "containersDeleted": {
+    "message": "Containers Deleted"
+  },
+  "cookiesDeleted": {
+    "message": "Cookies Deleted"
+  },
+  "cacheDeleted": {
+    "message": "Cache Deleted"
+  },
+  "historyContainersDeleted": {
+    "message": "History Containers Deleted"
+  },
+  "historyCookiesDeleted": {
+    "message": "History Cookies Deleted"
+  },
+  "urlsDeleted": {
+    "message": "URLs Deleted"
+  },
+  "removeIsolationRuleFor": {
+    "message": "Remove isolation rule for $DOMAIN$?",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "editDomainIsolationFor": {
+    "message": "Edit domain isolation for $DOMAIN$",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
   }
 }
