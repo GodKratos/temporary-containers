@@ -8,8 +8,8 @@ module.exports = {
   entry: {
     background: './src/background.ts',
     contentscript: './src/contentscript.ts',
-    options: './src/ui/js/options.js',
-    popup: './src/ui/js/popup.js',
+    options: './src/ui/options.ts',
+    popup: './src/ui/popup.ts',
   },
   devtool: false,
   mode: 'production',

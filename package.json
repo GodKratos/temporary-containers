@@ -43,6 +43,7 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.5",
+    "@types/firefox-webext-browser": "^120.0.4",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.3.3",
     "@types/psl": "^1.1.0",

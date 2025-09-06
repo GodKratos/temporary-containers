@@ -62,14 +62,15 @@ export class Runtime {
       case 'linkClicked':
         this.debug('[onMessage] link clicked');
         this.mouseclick.linkClicked(message.payload, sender);
-        break;
+        return true;
 
       case 'saveIsolation':
         this.debug('[onMessage] saveIsolation');
         this.isolation.setActiveState(message.payload.isolation.active);
-        break;
+        return true;
 
       case 'savePreferences':
+      case 'updatePreferences':
         this.debug('[onMessage] savePreferences');
         await this.preferences.handleChanges({
           oldPreferences: this.pref,
@@ -90,7 +91,7 @@ export class Runtime {
             fromTabId: sender && sender.tab && sender.tab.id,
           });
         }
-        break;
+        return true;
 
       case 'importPreferences': {
         const oldPreferences = this.utils.clone(this.storage.local.preferences);
@@ -110,7 +111,7 @@ export class Runtime {
           oldPreferences,
           newPreferences: this.pref,
         });
-        break;
+        return true;
       }
 
       case 'resetStatistics':
@@ -120,7 +121,7 @@ export class Runtime {
         );
         this.storage.local.statistics.startTime = new Date();
         await this.storage.persist();
-        break;
+        return true;
 
       case 'resetStorage':
         this.debug('[onMessage] resetting storage', message, sender);
@@ -134,7 +135,7 @@ export class Runtime {
         this.debug('[onMessage] resetting container number', message, sender);
         this.storage.local.tempContainerCounter = 0;
         await this.storage.persist();
-        break;
+        return true;
 
       case 'createTabInTempContainer':
         return this.container.createTabInTempContainer({
@@ -169,6 +170,27 @@ export class Runtime {
 
       case 'ping':
         return 'pong';
+
+      case 'getPreferences':
+        return this.pref as any;
+
+      case 'getStorage':
+        // Return as any to satisfy the return type
+        return this.storage.local as any;
+
+      case 'getPermissions': {
+        // Return as any to satisfy the return type
+        const permissions = {
+          bookmarks: await browser.permissions.contains({ permissions: ['bookmarks'] }),
+          downloads: await browser.permissions.contains({ permissions: ['downloads'] }),
+          history: await browser.permissions.contains({ permissions: ['history'] }),
+          notifications: await browser.permissions.contains({ permissions: ['notifications'] }),
+          webNavigation: await browser.permissions.contains({ permissions: ['webNavigation'] }),
+        };
+        return permissions as any;
+      }
+      default:
+        return false;
     }
   }
 

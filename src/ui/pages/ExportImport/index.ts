@@ -1,0 +1,35 @@
+// Export/Import page logic for options menu
+import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { PreferencesSchema } from '../../../types';
+
+export async function initExportImportPage(): Promise<void> {
+  try {
+    const preferences = await getPreferences();
+    const app = document.getElementById('export-import-panel') || document.getElementById('app');
+    if (!app) return;
+    app.innerHTML = '';
+    const content = document.createElement('div');
+    content.className = 'form';
+    content.innerHTML = `
+      <div class="field">
+        <label data-i18n="exportSettings">Export Settings</label>
+        <div class="button-group">
+          <button id="exportSettings" class="button-default" data-i18n="exportSettings">Export Settings</button>
+        </div>
+        <div class="field-description" data-i18n="exportSettingsDescription">Export settings to a file.</div>
+      </div>
+      <div class="field">
+        <label data-i18n="importSettings">Import Settings</label>
+        <div class="file-input-container">
+          <input type="file" id="importFile" accept=".json" />
+          <button id="importSettings" class="button-default" data-i18n="importSettings">Import Settings</button>
+        </div>
+        <div class="field-description" data-i18n="importSettingsDescription">Import settings from a file.</div>
+      </div>
+    `;
+    // ...bind export/import events...
+    app.appendChild(content);
+  } catch (error) {
+    showError('Failed to load Export/Import settings');
+  }
+}
