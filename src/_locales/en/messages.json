@@ -410,6 +410,18 @@
   "optionsAdvancedMisc": {
     "message": "Advanced: Misc"
   },
+  "optionsActionsNotAvailable": {
+    "message": "Actions are not available in this tab"
+  },
+  "optionsActionsNewTemporaryContainer": {
+    "message": "Reopen Tab in a new Temporary Container"
+  },
+  "optionsActionsConvertPermanent": {
+    "message": "Convert Temporary Container to Permanent"
+  },
+  "optionsActionsConvertTemporary": {
+    "message": "Convert Permanent Container to Temporary"
+  },
   "containerCleanup": {
     "message": "Container Cleanup"
   },

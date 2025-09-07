@@ -25,20 +25,18 @@ export async function initActionsPage(): Promise<void> {
     const isTemp = isHttpTab && !!tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
     const isPermanent = isHttpTab && activeTab && activeTab.cookieStoreId !== 'firefox-default' && !tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
 
-    //console.log("Loading Actions page - isHttpTab:", isHttpTab, "isTemp:", isTemp, "isPermanent:", isPermanent, "activeTab:", activeTab, "parsedUrl:", parsedUrl);
-
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
       <div class="actions-grid">
-        ${!isHttpTab ? '<div class="action-label message error" style="margin-bottom:12px;">Actions aren\'t available in this tab</div>' : ''}
-        <button id="action-reopen-tmp" class="action-card" data-i18n="newTemporaryContainer" style="width:100%;margin-bottom:12px;"${!isHttpTab ? ' disabled' : ''}>
-          Reopen Tab in new Temporary Container
+        ${!isHttpTab ? '<div class="action-label message error" data-i18n="optionsActionsNotAvailable" style="margin-bottom:12px;">Actions are not available in this tab</div>' : ''}
+        <button id="action-reopen-tmp" class="action-card" data-i18n="optionsActionsNewTemporaryContainer" style="width:100%;margin-bottom:12px;"${!isHttpTab ? ' disabled' : ''}>
+          Reopen Tab in a new Temporary Container
         </button>
-        <button id="action-convert-permanent" class="action-card" style="width:100%;margin-bottom:12px;"${!isTemp ? ' disabled' : ''}>
+        <button id="action-convert-permanent" class="action-card" data-i18n="optionsActionsConvertPermanent" style="width:100%;margin-bottom:12px;"${!isTemp ? ' disabled' : ''}>
           Convert Temporary Container to Permanent
         </button>
-        <button id="action-convert-temporary" class="action-card" style="width:100%;"${!isPermanent ? ' disabled' : ''}>
+        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;"${!isPermanent ? ' disabled' : ''}>
           Convert Permanent Container to Temporary
         </button>
       </div>
