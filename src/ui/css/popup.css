@@ -1,7 +1,8 @@
 /* Popup page specific styles */
 body {
-  min-width: 370px;
-  max-width: 600px;
+  /*min-width: 370px;
+  max-width: 600px;*/
+  width: 400px;
   min-height: 470px;
   overflow: hidden;
 }

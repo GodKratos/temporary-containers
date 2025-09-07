@@ -46,8 +46,8 @@ const pageInitializers: Record<string, () => Promise<void>> = {
     const tab = document.getElementById('isolation-global');
     if (tab) await initIsolationGlobalPage();
   },
-  'isolation-per-domain': async () => {
-    const tab = document.getElementById('isolation-per-domain');
+  'isolation-domain': async () => {
+    const tab = document.getElementById('isolation-domain');
     if (tab) await initIsolationPerDomainPage();
   },
   'statistics': async () => {
@@ -111,6 +111,11 @@ function updateIsolationIcon() {
 
 function setupSidebarToggle() {
   if (!elements.sidebar || !elements.toggleSidebar) return;
+  // Remove any previous event listeners by replacing with a clone ONCE
+  const orig = elements.toggleSidebar;
+  const clone = orig.cloneNode(true) as HTMLElement;
+  orig.parentNode?.replaceChild(clone, orig);
+  elements.toggleSidebar = clone;
   elements.toggleSidebar.addEventListener('click', () => {
     elements.sidebar!.classList.toggle('visible');
     let overlay = document.getElementById('sidebar-overlay');
