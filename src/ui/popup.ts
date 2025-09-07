@@ -3,6 +3,7 @@ import {
   getPreferences,
   savePreferences,
   getPermissions,
+  getStorage,
   showMessage,
   showError,
   showSuccess,
@@ -14,6 +15,7 @@ import {
   t,
   capitalize
 } from './shared/utils';
+import { StorageLocal } from '../types';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
 import { initStatisticsPage } from './pages/Statistics';
@@ -242,20 +244,9 @@ async function initialize() {
     }
     // Get permissions
     const permissions = await getPermissions();
-    // Get storage data
-    let storage;
-    try {
-      storage = await browser.storage.local.get();
-      if (!storage.preferences || !Object.keys(storage.preferences).length) {
-        clearTimeout(loaderTimeout);
-        showError('Loading preferences failed, please try again');
-        return;
-      }
-    } catch (error) {
-      clearTimeout(loaderTimeout);
-      showError(`Loading preferences failed, please try again. ${error}`);
-      return;
-    }
+    // Get storage data and preferences
+    const storage = await getStorage();
+    const preferences = await getPreferences();
     // Get current tab
     const currentTab = await browser.tabs.getCurrent();
     // Get active tab
@@ -270,7 +261,7 @@ async function initialize() {
       initialized: true,
       popup: true,
       storage,
-      preferences: storage.preferences,
+      preferences,
       permissions,
       currentTab,
       activeTab: { ...activeTab, parsedUrl },

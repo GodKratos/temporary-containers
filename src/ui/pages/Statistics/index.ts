@@ -1,10 +1,10 @@
 // Shared Statistics page logic for both options and popup menus
-import { initializeStorage, showError } from '../../shared/utils';
+import { getStorage, showError } from '../../shared/utils';
 import { StorageLocal } from '../../../types';
 
 export async function initStatisticsPage(): Promise<void> {
   try {
-  const storage = await initializeStorage();
+  const storage = await getStorage();
   const section = document.getElementById('statistics');
   if (!section) return;
   section.innerHTML = '';

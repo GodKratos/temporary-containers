@@ -1,5 +1,5 @@
 // Shared IsolationGlobal page logic for both options and popup menus
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, getStorage, savePreferences, showError, showSuccess } from '../../shared/utils';
 import { PreferencesSchema } from '../../../types';
 
 export async function initIsolationGlobalPage(): Promise<void> {
@@ -118,7 +118,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
       // @ts-ignore
       const allContainers = await browser.contextualIdentities.query({});
       // Get temp containers from storage
-      const storage = await (await import('../../shared/utils')).initializeStorage();
+      const storage = await getStorage();
       const tempContainers = storage.tempContainers || {};
       permanentContainers = allContainers
         .filter((container: any) => !tempContainers[container.cookieStoreId])

@@ -17,7 +17,7 @@ export async function sendMessage(method: string, payload: Record<string, unknow
 /**
  * Initialize storage with current temporary containers
  */
-export async function initializeStorage(): Promise<StorageLocal> {
+export async function getStorage(): Promise<StorageLocal> {
   try {
     const storage = await sendMessage('getStorage') as StorageLocal;
     if (!storage) {
