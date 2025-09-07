@@ -4,13 +4,13 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initActionsPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
-    const app = document.getElementById('actions-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
-    const content = document.createElement('div');
-    content.className = 'form';
-    content.innerHTML = `
+  const preferences = await getPreferences();
+  const section = document.getElementById('actions');
+  if (!section) return;
+  section.innerHTML = '';
+  const content = document.createElement('div');
+  content.className = 'form';
+  content.innerHTML = `
       <div class="field">
         <button id="openNewTempContainer" class="button-default">Open New Temporary Container</button>
       </div>
@@ -18,8 +18,8 @@ export async function initActionsPage(): Promise<void> {
         <button id="toggleIsolation" class="button-default">Toggle Isolation</button>
       </div>
     `;
-    // ...bind action events...
-    app.appendChild(content);
+  // ...bind action events...
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Actions');
   }

@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedMiscPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
-    const app = document.getElementById('advanced-misc-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+  const preferences = await getPreferences();
+  const section = document.getElementById('advanced-misc');
+  if (!section) return;
+  section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -23,7 +23,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
       </div>
     `;
     // ...bind fields to preferences and handle save events...
-    app.appendChild(content);
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Advanced: Misc settings');
   }

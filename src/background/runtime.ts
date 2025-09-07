@@ -70,7 +70,6 @@ export class Runtime {
         return true;
 
       case 'savePreferences':
-      case 'updatePreferences':
         this.debug('[onMessage] savePreferences');
         await this.preferences.handleChanges({
           oldPreferences: this.pref,
@@ -171,8 +170,12 @@ export class Runtime {
       case 'ping':
         return 'pong';
 
-      case 'getPreferences':
-        return this.pref as any;
+      case 'getPreferences': {
+        const rawPrefs = this.storage.local.preferences && Object.keys(this.storage.local.preferences).length > 0
+          ? this.storage.local.preferences
+          : this.preferences.defaults;
+        return rawPrefs as any;
+      }
 
       case 'getStorage':
         // Return as any to satisfy the return type

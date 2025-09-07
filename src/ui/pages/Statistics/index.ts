@@ -4,10 +4,10 @@ import { StorageLocal } from '../../../types';
 
 export async function initStatisticsPage(): Promise<void> {
   try {
-    const storage = await initializeStorage();
-    const app = document.getElementById('statistics-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+  const storage = await initializeStorage();
+  const section = document.getElementById('statistics');
+  if (!section) return;
+  section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'statistics-container';
     const stats = storage.statistics;
@@ -33,7 +33,7 @@ export async function initStatisticsPage(): Promise<void> {
       </div>
     `;
     // ...bind reset event...
-    app.appendChild(content);
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load statistics');
   }

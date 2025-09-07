@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initExportImportPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
-    const app = document.getElementById('export-import-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+  const preferences = await getPreferences();
+  const section = document.getElementById('export-import');
+  if (!section) return;
+  section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -28,7 +28,7 @@ export async function initExportImportPage(): Promise<void> {
       </div>
     `;
     // ...bind export/import events...
-    app.appendChild(content);
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Export/Import settings');
   }

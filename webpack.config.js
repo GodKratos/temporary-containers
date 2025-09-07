@@ -36,11 +36,7 @@ module.exports = {
   },
   optimization: {
     minimize: false,
-    splitChunks: {
-      chunks: (chunk) => {
-        return ['options', 'popup'].includes(chunk.name);
-      },
-    },
+    splitChunks: false,
   },
   resolve: {
     extensions: ['.ts', '.js'],

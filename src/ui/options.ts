@@ -7,7 +7,7 @@ import { initAdvancedCookiesPage } from './pages/AdvancedCookies';
 import { initAdvancedMiscPage } from './pages/AdvancedMisc';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
-import { createTabSystem, showInitializeLoader, showInitializeError } from './shared/utils';
+import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader } from './shared/utils';
 
 // Map tab IDs to page initializers
 const pageInitializers: Record<string, () => Promise<void>> = {
@@ -25,14 +25,14 @@ async function initializeOptionsUI() {
   try {
     showInitializeLoader();
     // Setup tab system
-    createTabSystem('.tab-button', '.tab-panel', async (tabId) => {
+    createTabSystem('.nav-button', '.content-section', async (tabId) => {
       if (pageInitializers[tabId]) {
         await pageInitializers[tabId]();
       }
     });
     // Initialize the default tab (General)
     await initGeneralPage();
-    // Remove call to hideInitializeLoader (not needed, loader is hidden on success by showInitializeLoader)
+    hideInitializeLoader();
   } catch (error) {
     showInitializeError(error instanceof Error ? error.message : String(error));
   }

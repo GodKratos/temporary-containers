@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initIsolationPerDomainPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
-    const app = document.getElementById('isolation-domain-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+  const preferences = await getPreferences();
+  const section = document.getElementById('isolation-domain');
+  if (!section) return;
+  section.innerHTML = '';
     // Create form content
     const content = document.createElement('div');
     content.className = 'form';
@@ -106,7 +106,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         }
       });
     });
-    app.appendChild(content);
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Isolation: Per Domain settings');
   }

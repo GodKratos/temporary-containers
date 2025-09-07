@@ -5,9 +5,9 @@ import { PreferencesSchema } from '../../../types';
 export async function initIsolationGlobalPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
-    const app = document.getElementById('isolation-global-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+    const section = document.getElementById('isolation-global');
+    if (!section) return;
+    section.innerHTML = '';
     // Create form content
     const content = document.createElement('div');
     content.className = 'form';
@@ -202,7 +202,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
       }
     });
 
-    app.appendChild(content);
+  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Isolation: Global settings');
   }

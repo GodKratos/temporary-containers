@@ -5,9 +5,9 @@ import { PreferencesSchema } from '../../../types';
 export async function initGeneralPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
-    const app = document.getElementById('general-panel') || document.getElementById('app');
-    if (!app) return;
-    app.innerHTML = '';
+    const section = document.getElementById('general');
+    if (!section) return;
+    section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -77,8 +77,8 @@ export async function initGeneralPage(): Promise<void> {
         <select id="iconColor" name="iconColor"></select>
       </div>
     `;
-    // ...bind fields to preferences and handle save events...
-    app.appendChild(content);
+      // ...bind fields to preferences and handle save events...
+      section.appendChild(content);
   } catch (error) {
     showError('Failed to load General settings');
   }

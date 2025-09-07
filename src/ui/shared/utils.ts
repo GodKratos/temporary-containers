@@ -176,7 +176,7 @@ export function createTabSystem(
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const tabId = tab.dataset.tab;
+      const tabId = tab.dataset.section;
       if (!tabId) return;
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
@@ -201,7 +201,7 @@ export function createTabSystem(
   });
   const hash = window.location.hash.substring(1);
   if (hash) {
-    const tab = document.querySelector<HTMLElement>(`[data-tab="${hash}"]`);
+    const tab = document.querySelector<HTMLElement>(`[data-section="${hash}"]`);
     if (tab) {
       tab.click();
     }
