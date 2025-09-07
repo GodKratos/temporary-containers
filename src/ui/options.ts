@@ -13,7 +13,7 @@ import { createTabSystem, showInitializeLoader, showInitializeError, hideInitial
 const pageInitializers: Record<string, () => Promise<void>> = {
   'general': initGeneralPage,
   'isolation-global': initIsolationGlobalPage,
-  'isolation-per-domain': initIsolationPerDomainPage,
+  'isolation-domain': initIsolationPerDomainPage,
   'advanced-container': initAdvancedContainerPage,
   'advanced-cookies': initAdvancedCookiesPage,
   'advanced-misc': initAdvancedMiscPage,

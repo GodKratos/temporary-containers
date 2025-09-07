@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initIsolationPerDomainPage(): Promise<void> {
   try {
-  const preferences = await getPreferences();
-  const section = document.getElementById('isolation-domain');
-  if (!section) return;
-  section.innerHTML = '';
+    const preferences = await getPreferences();
+    const section = document.getElementById('isolation-domain');
+    if (!section) return;
+    section.innerHTML = '';
     // Create form content
     const content = document.createElement('div');
     content.className = 'form';
