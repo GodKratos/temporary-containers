@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedCookiesPage(): Promise<void> {
   try {
-  const preferences = await getPreferences();
-  const section = document.getElementById('advanced-cookies');
-  if (!section) return;
-  section.innerHTML = '';
+    const preferences = await getPreferences();
+    const section = document.getElementById('advanced-cookies');
+    if (!section) return;
+    section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -31,8 +31,9 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         </select>
       </div>
     `;
+    section.appendChild(content);
+    
     // ...bind fields to preferences and handle save events...
-  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Advanced: Cookies settings');
   }

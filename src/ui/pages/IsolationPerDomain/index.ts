@@ -30,6 +30,8 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         </div>
       </div>
     `;
+    section.appendChild(content);
+    
     // Add domain list items
     const domainList = content.querySelector('#domainRulesList') as HTMLElement;
     preferences.isolation.domain.forEach(domain => {
@@ -106,7 +108,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         }
       });
     });
-  section.appendChild(content);
+
   } catch (error) {
     showError('Failed to load Isolation: Per Domain settings');
   }

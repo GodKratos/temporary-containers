@@ -68,6 +68,8 @@ export async function initIsolationGlobalPage(): Promise<void> {
         <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
       </div>
     `;
+    section.appendChild(content);
+    
     // Set initial values
     const urlNavigationSelect = content.querySelector('#isolationGlobalUrlNavigation') as HTMLSelectElement;
     const leftClickSelect = content.querySelector('#isolationGlobalLeftClick') as HTMLSelectElement;
@@ -202,7 +204,6 @@ export async function initIsolationGlobalPage(): Promise<void> {
       }
     });
 
-  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Isolation: Global settings');
   }

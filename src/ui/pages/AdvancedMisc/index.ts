@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedMiscPage(): Promise<void> {
   try {
-  const preferences = await getPreferences();
-  const section = document.getElementById('advanced-misc');
-  if (!section) return;
-  section.innerHTML = '';
+    const preferences = await getPreferences();
+    const section = document.getElementById('advanced-misc');
+    if (!section) return;
+    section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -22,8 +22,9 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field-description" data-i18n="debugModeDescription">Enable debug mode.</div>
       </div>
     `;
+    section.appendChild(content);
+    
     // ...bind fields to preferences and handle save events...
-  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Advanced: Misc settings');
   }

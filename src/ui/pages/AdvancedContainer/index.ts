@@ -4,10 +4,10 @@ import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedContainerPage(): Promise<void> {
   try {
-  const preferences = await getPreferences();
-  const section = document.getElementById('advanced-container');
-  if (!section) return;
-  section.innerHTML = '';
+    const preferences = await getPreferences();
+    const section = document.getElementById('advanced-container');
+    if (!section) return;
+    section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -22,8 +22,9 @@ export async function initAdvancedContainerPage(): Promise<void> {
         <div class="field-description" data-i18n="containerTimeoutDescription">Timeout for containers in seconds.</div>
       </div>
     `;
+    section.appendChild(content);
+    
     // ...bind fields to preferences and handle save events...
-  section.appendChild(content);
   } catch (error) {
     showError('Failed to load Advanced: Container settings');
   }
