@@ -37,6 +37,8 @@
   /* Theme variables - Light Mode */
   --background-color: var(--grey-10);
   --text-color: var(--grey-90);
+  --disabled-background: var(--grey-30);
+  --disabled-color: var(--grey-40);
   --sidebar-background: var(--grey-20);
   --sidebar-hover: var(--grey-30);
   --sidebar-active: var(--blue-60);
@@ -92,6 +94,8 @@
     /* Theme variables - Dark Mode */
     --background-color: var(--grey-80);
     --text-color: var(--grey-10);
+    --disabled-background: var(--grey-50);
+    --disabled-color: var(--grey-60);
     --sidebar-background: var(--grey-70);
     --sidebar-hover: var(--grey-60);
     --sidebar-active: var(--blue-50);

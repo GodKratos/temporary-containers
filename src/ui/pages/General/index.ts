@@ -78,7 +78,7 @@ export async function initGeneralPage(): Promise<void> {
         <select id="iconColor" name="iconColor"></select>
       </div>
     `;
-    section.appendChild(content);
+    if (!section.firstChild) section.appendChild(content);
 
     // Helper to capitalize
     function capitalize(str: string) {

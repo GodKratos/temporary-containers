@@ -1,26 +1,97 @@
 // Actions page logic for popup menu
-import { getPreferences, showError } from '../../shared/utils';
+import { getPreferences, getPermissions, getStorage, showError } from '../../shared/utils';
 import { PreferencesSchema } from '../../../types';
 
 export async function initActionsPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
+    const permissions = await getPermissions();
+    const storage = await getStorage();
     const section = document.getElementById('actions');
     if (!section) return;
     section.innerHTML = '';
+
+    const [activeTab] = await browser.tabs.query({ currentWindow: true, active: true });
+    let parsedUrl = undefined;
+    if (activeTab && activeTab.url) {
+      try {
+        parsedUrl = new URL(activeTab.url);
+      } catch {}
+    }
+
+    // Compute disables
+    const isHttpTab = !!(activeTab && typeof activeTab.url === 'string' && activeTab.url.startsWith('http'));
+    const tempContainers = storage.tempContainers || {};
+    const isTemp = isHttpTab && !!tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
+    const isPermanent = isHttpTab && activeTab && activeTab.cookieStoreId !== 'firefox-default' && !tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
+
+    //console.log("Loading Actions page - isHttpTab:", isHttpTab, "isTemp:", isTemp, "isPermanent:", isPermanent, "activeTab:", activeTab, "parsedUrl:", parsedUrl);
+
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
-      <div class="field">
-        <button id="openNewTempContainer" class="button-default">Open New Temporary Container</button>
-      </div>
-      <div class="field">
-        <button id="toggleIsolation" class="button-default">Toggle Isolation</button>
+      <div class="actions-grid">
+        ${!isHttpTab ? '<div class="action-label message error" style="margin-bottom:12px;">Actions aren\'t available in this tab</div>' : ''}
+        <button id="action-reopen-tmp" class="action-card" data-i18n="newTemporaryContainer" style="width:100%;margin-bottom:12px;"${!isHttpTab ? ' disabled' : ''}>
+          Reopen Tab in new Temporary Container
+        </button>
+        <button id="action-convert-permanent" class="action-card" style="width:100%;margin-bottom:12px;"${!isTemp ? ' disabled' : ''}>
+          Convert Temporary Container to Permanent
+        </button>
+        <button id="action-convert-temporary" class="action-card" style="width:100%;"${!isPermanent ? ' disabled' : ''}>
+          Convert Permanent Container to Temporary
+        </button>
       </div>
     `;
-    section.appendChild(content);
-    
-    // ...bind action events...
+    if (!section.firstChild) section.appendChild(content);
+
+    // Button 1: Reopen Tab in new Temporary Container
+    const btnReopenTmp = document.getElementById('action-reopen-tmp');
+    if (btnReopenTmp && !btnReopenTmp.hasAttribute('data-listener')) {
+      btnReopenTmp.addEventListener('click', () => {
+        browser.runtime.sendMessage({
+          method: 'createTabInTempContainer',
+          payload: {
+            url: activeTab.url,
+          },
+        });
+        window.close();
+      });
+      btnReopenTmp.setAttribute('data-listener', 'true');
+    }
+    // Button 2: Convert Temporary Container to Permanent
+    const btnConvertPermanent = document.getElementById('action-convert-permanent');
+    if (btnConvertPermanent && !btnConvertPermanent.hasAttribute('data-listener')) {
+      btnConvertPermanent.addEventListener('click', () => {
+        browser.runtime.sendMessage({
+          method: 'convertTempContainerToPermanent',
+          payload: {
+            cookieStoreId: activeTab.cookieStoreId,
+            tabId: activeTab.id,
+            name: parsedUrl && parsedUrl.hostname,
+            url: activeTab.url,
+          },
+        });
+        window.close();
+      });
+      btnConvertPermanent.setAttribute('data-listener', 'true');
+    }
+    // Button 3: Convert Permanent Container to Temporary
+    const btnConvertTemporary = document.getElementById('action-convert-temporary');
+    if (btnConvertTemporary && !btnConvertTemporary.hasAttribute('data-listener')) {
+      btnConvertTemporary.addEventListener('click', () => {
+        browser.runtime.sendMessage({
+          method: 'convertPermanentToTempContainer',
+          payload: {
+            cookieStoreId: activeTab.cookieStoreId,
+            tabId: activeTab.id,
+            url: activeTab.url,
+          },
+        });
+        window.close();
+      });
+      btnConvertTemporary.setAttribute('data-listener', 'true');
+    }
   } catch (error) {
     showError('Failed to load Actions');
   }

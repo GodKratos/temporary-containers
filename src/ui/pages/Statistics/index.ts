@@ -32,7 +32,7 @@ export async function initStatisticsPage(): Promise<void> {
         <button id="resetStatistics" class="button-default" data-i18n="resetStatistics">Reset Statistics</button>
       </div>
     `;
-    section.appendChild(content);
+    if (!section.firstChild) section.appendChild(content);
 
     // ...bind reset event...
   } catch (error) {

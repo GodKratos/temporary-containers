@@ -22,8 +22,8 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field-description" data-i18n="debugModeDescription">Enable debug mode.</div>
       </div>
     `;
-    section.appendChild(content);
-    
+    if (!section.firstChild) section.appendChild(content);
+
     // ...bind fields to preferences and handle save events...
   } catch (error) {
     showError('Failed to load Advanced: Misc settings');

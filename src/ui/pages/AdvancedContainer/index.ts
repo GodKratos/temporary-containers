@@ -22,8 +22,8 @@ export async function initAdvancedContainerPage(): Promise<void> {
         <div class="field-description" data-i18n="containerTimeoutDescription">Timeout for containers in seconds.</div>
       </div>
     `;
-    section.appendChild(content);
-    
+    if (!section.firstChild) section.appendChild(content);
+
     // ...bind fields to preferences and handle save events...
   } catch (error) {
     showError('Failed to load Advanced: Container settings');

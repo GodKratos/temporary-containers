@@ -27,7 +27,7 @@ export async function initExportImportPage(): Promise<void> {
         <div class="field-description" data-i18n="importSettingsDescription">Import settings from a file.</div>
       </div>
     `;
-    section.appendChild(content);
+    if (!section.firstChild) section.appendChild(content);
 
     // ...bind export/import events...
   } catch (error) {

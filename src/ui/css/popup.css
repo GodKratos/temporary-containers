@@ -140,6 +140,12 @@ body {
   background-color: var(--sidebar-hover);
 }
 
+.action-card:disabled {
+  background-color: var(--disabled-background);
+  color: var(--disabled-color);
+  cursor: not-allowed;
+}
+
 .action-icon {
   font-size: 24px;
   margin-bottom: var(--space-xs);
