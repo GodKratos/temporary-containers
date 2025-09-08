@@ -16,9 +16,10 @@ Detailed information about the Add-on [can be found in the wiki](https://github.
 
 ### Run in Firefox
 
-- `npx web-ext run -s dist`
-  - starts the default system Firefox with a temporary profile, loads the Add-on and watches for changes
-  - append `-p profilename` to start Firefox with a specific profile
+- `npm run dev:test`
+  - builds the dist directory by running `npm run build`
+  - then runs `npx web-ext run -s dist` which starts the default system Firefox with a temporary profile, loads the Add-on and watches for changes
+  - run `npx web-ext run -s dist` with `-p profilename` appended to start Firefox with a specific profile
 
 or
 
@@ -50,8 +51,9 @@ Check `about:debugging` and click `Inspect` to the right of Temporary Containers
 
 - Bump manifest version
 - Commit and push
-- git tag v1.0beta1
-- git push origin v1.0beta1
+- git tag beta-1.0.0
+- git push origin beta-1.0.0
+  - This will trigger the release-beta.yml workflow to build and sign a beta version to add to the release
 - git log \$(git tag --sort=-version:refname | sed -n 2p)..HEAD --pretty=format:%s
 - Add release notes and publish
 
