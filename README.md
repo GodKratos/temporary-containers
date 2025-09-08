@@ -35,7 +35,7 @@ Check `about:debugging` and click `Inspect` to the right of Temporary Containers
 
 ### Release
 
-- Bump manifest version
+- Bump manifest version (manifest version must be numbers only e.g. `1.0.0`)
 - Commit, tag and push
 - Build and package the extension
 - `npm run build`
@@ -49,7 +49,7 @@ Check `about:debugging` and click `Inspect` to the right of Temporary Containers
 
 #### Pre-Release on GitHub
 
-- Bump manifest version
+- Bump manifest version (manifest version must be numbers only e.g. `1.0.0`)
 - Commit and push
 - git tag beta-1.0.0
 - git push origin beta-1.0.0

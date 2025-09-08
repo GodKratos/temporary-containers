@@ -60,6 +60,6 @@ jobs:
           draft: false
           prerelease: true
           tag_name: ${{ github.ref_name }}
-          name: Temporary Containers ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
