@@ -37,10 +37,9 @@ jobs:
           BUILD_FOR_AMO: 'true'
 
       - name: Sign extension
-        env:
-          NODE_OPTIONS: "--require=formdata-node/auto"
         run: |
-          web-ext sign \
+          node --require formdata-node/lib/cjs/index.js \
+            $(which web-ext) sign \
             --channel=unlisted \
             --api-key=${{ secrets.AMO_API_KEY }} \
             --api-secret=${{ secrets.AMO_SECRET }} \
