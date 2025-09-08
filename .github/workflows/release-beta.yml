@@ -29,7 +29,7 @@ jobs:
         run: npm install -g web-ext
 
       - name: Package extension
-        run: web-ext build
+        run: web-ext build -s dist
         env:
           VERSION: ${{ github.ref_name }}
           BUILD_FOR_AMO: 'true'
@@ -37,6 +37,7 @@ jobs:
       - name: Sign extension
         run: |
           web-ext sign \
+            --channel=unlisted \
             --api-key=${{ secrets.AMO_API_KEY }} \
             --api-secret=${{ secrets.AMO_SECRET }} \
             --source-dir=./dist --artifacts-dir=./artifacts
