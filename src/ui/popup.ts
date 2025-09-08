@@ -13,7 +13,8 @@ import {
   createTabSystem,
   createGlossarySystem,
   t,
-  capitalize
+  capitalize,
+  applyLocalization
 } from './shared/utils';
 import { StorageLocal } from '../types';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
@@ -72,30 +73,6 @@ const glossaryData = {
     </ul>
   `,
 };
-
-function applyLocalization() {
-  document.querySelectorAll('[data-i18n]').forEach(element => {
-    const key = element.getAttribute('data-i18n');
-    const translation = t(key!);
-    if (translation) element.textContent = translation;
-  });
-  document.querySelectorAll('[data-i18n-title]').forEach(element => {
-    const key = element.getAttribute('data-i18n-title');
-    const translation = t(key!);
-    if (translation) element.setAttribute('title', translation);
-  });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-    const key = element.getAttribute('data-i18n-placeholder');
-    const translation = t(key!);
-    if (translation) element.setAttribute('placeholder', translation);
-  });
-  const titleElement = document.querySelector('title[data-i18n]');
-  if (titleElement) {
-    const key = titleElement.getAttribute('data-i18n');
-    const translation = t(key!);
-    if (translation) document.title = translation;
-  }
-}
 
 function updateIsolationIcon() {
   if (!elements.toggleIsolation || !app.storage?.isolation) return;
@@ -216,6 +193,8 @@ function setupSidebarTabs() {
       if (pageInitializers[tabId]) {
         await pageInitializers[tabId]();
       }
+      // Apply localization after tab/page change
+      applyLocalization();
       // Hide sidebar after selection
       if (elements.sidebar) elements.sidebar.classList.remove('visible');
       const overlay = document.getElementById('sidebar-overlay');

@@ -7,7 +7,7 @@ import { initAdvancedCookiesPage } from './pages/AdvancedCookies';
 import { initAdvancedMiscPage } from './pages/AdvancedMisc';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
-import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader } from './shared/utils';
+import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader, applyLocalization } from './shared/utils';
 
 // Map tab IDs to page initializers
 const pageInitializers: Record<string, () => Promise<void>> = {
@@ -29,9 +29,12 @@ async function initializeOptionsUI() {
       if (pageInitializers[tabId]) {
         await pageInitializers[tabId]();
       }
+      // Apply localization after tab/page change
+      applyLocalization();
     });
     // Initialize the default tab (General)
     await initGeneralPage();
+    applyLocalization();
     hideInitializeLoader();
   } catch (error) {
     showInitializeError(error instanceof Error ? error.message : String(error));

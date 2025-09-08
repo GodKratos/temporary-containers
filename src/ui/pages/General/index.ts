@@ -1,5 +1,5 @@
 // General page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, capitalize } from '../../shared/utils';
 import { CONTAINER_COLORS, CONTAINER_ICONS, TOOLBAR_ICON_COLORS, CONTAINER_REMOVAL_DEFAULT } from '~/shared';
 import { PreferencesSchema } from '../../../types';
 
@@ -79,11 +79,6 @@ export async function initGeneralPage(): Promise<void> {
       </div>
     `;
     if (!section.firstChild) section.appendChild(content);
-
-    // Helper to capitalize
-    function capitalize(str: string) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
 
     // Set initial values from preferences
     (document.getElementById('automaticMode') as HTMLInputElement).checked = preferences.automaticMode?.active || false;

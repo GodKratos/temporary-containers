@@ -286,6 +286,37 @@ export function capitalize(str: string): string {
 }
 
 /**
+ * Apply localization to elements with data-i18n, data-i18n-title, data-i18n-placeholder attributes.
+ * @param root - Optional root element to localize within (defaults to document.body)
+ */
+export function applyLocalization(root: HTMLElement = document.body): void {
+  root.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const translation = t(key!);
+    if (translation) element.textContent = translation;
+  });
+  root.querySelectorAll('[data-i18n-title]').forEach(element => {
+    const key = element.getAttribute('data-i18n-title');
+    const translation = t(key!);
+    if (translation) element.setAttribute('title', translation);
+  });
+  root.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const translation = t(key!);
+    if (translation) element.setAttribute('placeholder', translation);
+  });
+  // Localize <title> if present in root
+  if (root instanceof Document || root === document.body) {
+    const titleElement = document.querySelector('title[data-i18n]');
+    if (titleElement) {
+      const key = titleElement.getAttribute('data-i18n');
+      const translation = t(key!);
+      if (translation) document.title = translation;
+    }
+  }
+}
+
+/**
  * Create a multi-select dropdown
  */
 export function createMultiSelect(
