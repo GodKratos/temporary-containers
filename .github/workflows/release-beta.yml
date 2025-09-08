@@ -26,9 +26,7 @@ jobs:
         run: npm run build
 
       - name: Install web-ext
-        run: |
-          npm install -g web-ext
-          npm install formdata-node --legacy-peer-deps
+        run: npm install -g web-ext@7
 
       - name: Package extension
         run: web-ext build -s dist
@@ -38,8 +36,7 @@ jobs:
 
       - name: Sign extension
         run: |
-          node --require formdata-node/lib/cjs/index.js \
-            $(which web-ext) sign \
+          web-ext sign \
             --channel=unlisted \
             --api-key=${{ secrets.AMO_API_KEY }} \
             --api-secret=${{ secrets.AMO_SECRET }} \
