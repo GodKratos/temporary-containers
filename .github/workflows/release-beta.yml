@@ -28,7 +28,7 @@ jobs:
       - name: Install web-ext
         run: |
           npm install -g web-ext
-          npm install formdata-node
+          npm install formdata-node --legacy-peer-deps
 
       - name: Package extension
         run: web-ext build -s dist
