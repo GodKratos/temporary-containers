@@ -26,7 +26,9 @@ jobs:
         run: npm run build
 
       - name: Install web-ext
-        run: npm install -g web-ext@7
+        run: |
+          npm install -g web-ext
+          npm install formdata-node
 
       - name: Package extension
         run: web-ext build -s dist
@@ -35,6 +37,8 @@ jobs:
           BUILD_FOR_AMO: 'true'
 
       - name: Sign extension
+        env:
+          NODE_OPTIONS: "--require=formdata-node/auto"
         run: |
           web-ext sign \
             --channel=unlisted \
