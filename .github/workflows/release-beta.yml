@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Install web-ext
-        run: npm install -g web-ext
+        run: npm install -g web-ext@7
 
       - name: Package extension
         run: web-ext build -s dist
