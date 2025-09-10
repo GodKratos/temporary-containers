@@ -129,6 +129,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: var(--space-md);
+  color: var(--text-color);
   background-color: var(--input-background);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-1);
