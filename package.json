@@ -38,6 +38,7 @@
   "homepage": "https://github.com/GodKratos/temporary-containers#readme",
   "dependencies": {
     "ajv": "^8.12.0",
+    "caniuse-lite": "^1.0.30001741",
     "delay": "4.3.0",
     "p-queue": "6.4.0",
     "psl": "1.8.0"
