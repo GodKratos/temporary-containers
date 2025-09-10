@@ -1,14 +1,7 @@
-import {
-  sinon,
-  preferencesTestSet,
-  expect,
-  nextTick,
-  loadBackground,
-  Background,
-} from './setup';
+import { sinon, preferencesTestSet, expect, nextTick, loadBackground, Background } from './setup';
 import { Tab } from '~/types';
 
-preferencesTestSet.map((preferences) => {
+preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {
     it('should register event listeners', async () => {
       const { browser, tmp: background } = await loadBackground({
@@ -80,8 +73,7 @@ preferencesTestSet.map((preferences) => {
 
         browser.tabs._create({ url: 'https://example.com' });
         await nextTick();
-        background.request.webRequestOnBeforeRequest.should.not.have.been
-          .called;
+        background.request.webRequestOnBeforeRequest.should.not.have.been.called;
 
         await background.initialize();
         background.request.webRequestOnBeforeRequest.should.have.been.called;
@@ -93,10 +85,7 @@ preferencesTestSet.map((preferences) => {
           preferences,
         });
 
-        const webRequestOnBeforeRequestStub = sinon.stub(
-          background.request,
-          'webRequestOnBeforeRequest'
-        );
+        const webRequestOnBeforeRequestStub = sinon.stub(background.request, 'webRequestOnBeforeRequest');
         browser.tabs._create({ url: 'https://example.com' });
         await nextTick();
         webRequestOnBeforeRequestStub.should.not.have.been.called;
@@ -112,10 +101,7 @@ preferencesTestSet.map((preferences) => {
     });
 
     describe('initialize should sometimes reload already open Tab in Temporary Container', () => {
-      if (
-        !preferences.automaticMode.active ||
-        preferences.automaticMode.newTab === 'navigation'
-      ) {
+      if (!preferences.automaticMode.active || preferences.automaticMode.newTab === 'navigation') {
         return;
       }
 
@@ -147,10 +133,7 @@ preferencesTestSet.map((preferences) => {
     });
 
     describe('tabs loading about:home or about:newtab in the default container', () => {
-      if (
-        !preferences.automaticMode.active ||
-        preferences.automaticMode.newTab === 'navigation'
-      ) {
+      if (!preferences.automaticMode.active || preferences.automaticMode.newTab === 'navigation') {
         return;
       }
       it('should reopen about:home in temporary container', async () => {
@@ -205,8 +188,7 @@ preferencesTestSet.map((preferences) => {
       let webExtension: Background;
       beforeEach(async () => {
         webExtension = await loadBackground({ preferences });
-        webExtension.tmp.storage.local.preferences.isolation.global.mouseClick.middle.action =
-          'always';
+        webExtension.tmp.storage.local.preferences.isolation.global.mouseClick.middle.action = 'always';
 
         tab = (await webExtension.helper.createTmpTab({
           url: 'https://notexample.com',
@@ -223,8 +205,7 @@ preferencesTestSet.map((preferences) => {
       });
 
       it('should open in a new temporary container', async () => {
-        webExtension.browser.contextualIdentities.create.should.have.been
-          .calledOnce;
+        webExtension.browser.contextualIdentities.create.should.have.been.calledOnce;
         webExtension.browser.tabs.create.should.have.been.calledOnce;
         webExtension.browser.tabs.remove.should.have.been.calledOnce;
       });
@@ -240,8 +221,7 @@ preferencesTestSet.map((preferences) => {
         });
 
         it('should not trigger reopening in temporary container', () => {
-          webExtension.browser.contextualIdentities.create.should.not.have.been
-            .called;
+          webExtension.browser.contextualIdentities.create.should.not.have.been.called;
           webExtension.browser.tabs.create.should.not.have.been.called;
         });
       });
@@ -252,8 +232,7 @@ preferencesTestSet.map((preferences) => {
         const bg = await loadBackground({
           preferences,
         });
-        bg.tmp.storage.local.preferences.isolation.global.mouseClick.middle.action =
-          'always';
+        bg.tmp.storage.local.preferences.isolation.global.mouseClick.middle.action = 'always';
 
         const tab = (await bg.browser.tabs._create({
           url: 'https://notexample.com',
@@ -296,9 +275,7 @@ preferencesTestSet.map((preferences) => {
       describe('New Temporary Container Tab', () => {
         it('should open a new temporary container tab', async () => {
           const { browser } = await loadBackground({ preferences });
-          browser.commands.onCommand.addListener.yield(
-            'new_temporary_container_tab'
-          );
+          browser.commands.onCommand.addListener.yield('new_temporary_container_tab');
           await nextTick();
           browser.tabs.create.should.have.been.called;
         });
@@ -309,7 +286,6 @@ preferencesTestSet.map((preferences) => {
           const { tmp: background, browser } = await loadBackground({
             preferences,
           });
-          background.storage.local.preferences.keyboardShortcuts.AltN = true;
           browser.commands.onCommand.addListener.yield('new_no_container_tab');
           await nextTick();
           browser.tabs.create.should.have.been.calledWith({
@@ -323,10 +299,7 @@ preferencesTestSet.map((preferences) => {
           const { tmp: background, browser } = await loadBackground({
             preferences,
           });
-          background.storage.local.preferences.keyboardShortcuts.AltShiftC = true;
-          browser.commands.onCommand.addListener.yield(
-            'new_no_container_window_tab'
-          );
+          browser.commands.onCommand.addListener.yield('new_no_container_window_tab');
           await nextTick();
           browser.windows.create.should.have.been.calledWith({
             url: 'about:blank',
@@ -354,14 +327,11 @@ preferencesTestSet.map((preferences) => {
           const { tmp: background, browser } = await loadBackground({
             preferences,
           });
-          background.storage.local.preferences.keyboardShortcuts.AltX = true;
           const container = await browser.contextualIdentities.create({});
           await browser.tabs._create({
             cookieStoreId: container.cookieStoreId,
           });
-          browser.commands.onCommand.addListener.yield(
-            'new_same_container_tab'
-          );
+          browser.commands.onCommand.addListener.yield('new_same_container_tab');
           await nextTick();
           browser.tabs.create.should.have.been.calledWithMatch({
             cookieStoreId: container.cookieStoreId,
@@ -370,32 +340,31 @@ preferencesTestSet.map((preferences) => {
       });
 
       describe('Toggle Isolation', () => {
-        it('should not toggle active isolation when AltI preference is disabled', async () => {
+        it('should toggle active isolation to false', async () => {
           const { tmp: background, browser } = await loadBackground({
             preferences,
           });
-          background.storage.local.preferences.keyboardShortcuts.AltI = false;
-          browser.commands.onCommand.addListener.yield('toggle_isolation');
-          await nextTick();
-          background.storage.local.isolation.active.should.equal(true);
-        });
-        it('should toggle active isolation when AltI preference is enabled', async () => {
-          const { tmp: background, browser } = await loadBackground({
-            preferences,
-          });
-          background.storage.local.preferences.keyboardShortcuts.AltI = true;
           browser.commands.onCommand.addListener.yield('toggle_isolation');
           await nextTick();
           background.storage.local.isolation.active.should.equal(false);
+        });
+        it('should toggle active isolation back to true', async () => {
+          const { tmp: background, browser } = await loadBackground({
+            preferences,
+          });
+          // First toggle to false
+          browser.commands.onCommand.addListener.yield('toggle_isolation');
+          await nextTick();
+          // Then toggle back to true
+          browser.commands.onCommand.addListener.yield('toggle_isolation');
+          await nextTick();
+          background.storage.local.isolation.active.should.equal(true);
         });
       });
     });
 
     describe('Reuse container number', () => {
-      if (
-        !preferences.automaticMode.active ||
-        preferences.automaticMode.newTab === 'navigation'
-      ) {
+      if (!preferences.automaticMode.active || preferences.automaticMode.newTab === 'navigation') {
         return;
       }
 
@@ -411,30 +380,18 @@ preferencesTestSet.map((preferences) => {
         }
         await Promise.all(tabPromises);
         const tabs = await browser.tabs.query({});
-        const containerPromises = tabs.map((tab: Tab) =>
-          browser.contextualIdentities.get(tab.cookieStoreId)
-        );
+        const containerPromises = tabs.map((tab: Tab) => browser.contextualIdentities.get(tab.cookieStoreId));
         const containers = await Promise.all(containerPromises);
         for (let i = 0; i < 5; i++) {
-          const container = containers[
-            i
-          ] as browser.contextualIdentities.ContextualIdentity;
+          const container = containers[i];
           container.name.should.equal(`tmp${i + 1}`);
         }
 
         await browser.tabs.remove(tabs[0].id);
         await browser.tabs._create({ url: 'about:newtab' });
-        (
-          await browser.contextualIdentities.get(
-            (await browser.tabs.create.lastCall.returnValue).cookieStoreId
-          )
-        ).name.should.equal('tmp1');
+        (await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId)).name.should.equal('tmp1');
         await browser.tabs._create({ url: 'about:newtab' });
-        (
-          await browser.contextualIdentities.get(
-            (await browser.tabs.create.lastCall.returnValue).cookieStoreId
-          )
-        ).name.should.equal('tmp6');
+        (await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId)).name.should.equal('tmp6');
       });
     });
   });

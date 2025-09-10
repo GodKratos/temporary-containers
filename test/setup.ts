@@ -26,7 +26,7 @@ const preferencesTestSet = [
 ];
 
 if (!process.listenerCount('unhandledRejection')) {
-  process.on('unhandledRejection', (r) => {
+  process.on('unhandledRejection', r => {
     console.log('unhandledRejection', r);
   });
 }
@@ -42,7 +42,7 @@ import { Helper } from './helper';
 
 const virtualConsole = new jsdom.VirtualConsole();
 virtualConsole.sendTo(console);
-virtualConsole.on('jsdomError', (error) => {
+virtualConsole.on('jsdomError', error => {
   // eslint-disable-next-line no-console
   console.error(error);
 });
@@ -53,14 +53,13 @@ const fakeBrowser = (): {
   browser: BrowserFake;
   clock: sinon.SinonFakeTimers;
 } => {
+  // Restore any existing fake timers before creating new ones
+  if (sinon.clock && typeof sinon.clock.restore === 'function') {
+    sinon.clock.restore();
+  }
+
   const clock = sinon.useFakeTimers({
-    toFake: [
-      'setTimeout',
-      'clearTimeout',
-      'setInterval',
-      'clearInterval',
-      'Date',
-    ],
+    toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'Date'],
     now: new Date(),
   });
   const html = '<!DOCTYPE html><html><head></head><body></body></html>';
@@ -114,7 +113,7 @@ chai.use(sinonChai);
 
 const { expect } = chai;
 const nextTick = (): Promise<void> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     process.nextTick(resolve);
   });
 };
@@ -133,12 +132,7 @@ const loadBackground = async ({
 }: {
   initialize?: boolean;
   preferences?: false | Record<string, unknown>;
-  beforeCtor?:
-    | false
-    | ((
-        browser: BrowserFake,
-        clock: sinon.SinonFakeTimers
-      ) => Promise<void> | void);
+  beforeCtor?: false | ((browser: BrowserFake, clock: sinon.SinonFakeTimers) => Promise<void> | void);
 } = {}): Promise<Background> => {
   const { browser, clock } = fakeBrowser();
 
@@ -169,11 +163,4 @@ const loadBackground = async ({
   };
 };
 
-export {
-  preferencesTestSet,
-  sinon,
-  expect,
-  nextTick,
-  loadBackground,
-  BrowserFake,
-};
+export { preferencesTestSet, sinon, expect, nextTick, loadBackground, BrowserFake };

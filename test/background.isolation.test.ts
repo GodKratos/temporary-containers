@@ -1,7 +1,7 @@
 import { preferencesTestSet, loadBackground, Background } from './setup';
 import { Tab, IsolationDomain } from '~/types';
 
-preferencesTestSet.map((preferences) => {
+preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {
     let bg: Background, tab: Tab;
 
@@ -29,18 +29,13 @@ preferencesTestSet.map((preferences) => {
           container: 'default',
         },
       },
-      excluded: {},
-      excludedContainers: {},
+      excluded: [],
+      excludedContainers: [],
     };
 
-    ['tmp', 'permanent'].map((originContainerType) => {
+    ['tmp', 'permanent'].map(originContainerType => {
       describe(`originContainerType: ${originContainerType}`, () => {
-        [
-          'sametab.global',
-          'sametab.perdomain',
-          'newtab.global',
-          'newtab.perdomain',
-        ].map((navigatingIn) => {
+        ['sametab.global', 'sametab.perdomain', 'newtab.global', 'newtab.perdomain'].map(navigatingIn => {
           describe(`navigatingIn: ${navigatingIn}`, () => {
             const navigateTo = async (url: string): Promise<void> => {
               bg.tmp.container.markUnclean(tab.id);
@@ -85,8 +80,7 @@ preferencesTestSet.map((preferences) => {
                   switch (navigatingIn) {
                     case 'sametab.global':
                     case 'newtab.global':
-                      bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                        'never';
+                      bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'never';
                       break;
 
                     case 'sametab.perdomain':
@@ -140,8 +134,7 @@ preferencesTestSet.map((preferences) => {
                   switch (navigatingIn) {
                     case 'sametab.global':
                     case 'newtab.global':
-                      bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                        'always';
+                      bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'always';
                       break;
 
                     case 'sametab.perdomain':
@@ -194,9 +187,7 @@ preferencesTestSet.map((preferences) => {
                     switch (navigatingIn) {
                       case 'sametab.global':
                       case 'newtab.global':
-                        bg.tmp.storage.local.preferences.isolation.global.excluded[
-                          'excluded.com'
-                        ] = {};
+                        bg.tmp.storage.local.preferences.isolation.global.excluded.push('excluded.com');
                         break;
 
                       case 'sametab.perdomain':
@@ -205,9 +196,7 @@ preferencesTestSet.map((preferences) => {
                           {
                             ...defaultIsolationDomainPreferences,
                             pattern: 'example.com',
-                            excluded: {
-                              'excluded.com': {},
-                            },
+                            excluded: ['excluded.com'],
                           },
                         ];
                         break;
@@ -227,8 +216,7 @@ preferencesTestSet.map((preferences) => {
                   switch (navigatingIn) {
                     case 'sametab.global':
                     case 'newtab.global':
-                      bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                        'notsamedomain';
+                      bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'notsamedomain';
                       break;
 
                     case 'sametab.perdomain':
@@ -278,10 +266,7 @@ preferencesTestSet.map((preferences) => {
 
                 describe('if its not the same domain after a redirect', () => {
                   beforeEach(async () => {
-                    bg.browser.tabs._registerRedirects(
-                      'https://out.example.com',
-                      ['https://notexample.com']
-                    );
+                    bg.browser.tabs._registerRedirects('https://out.example.com', ['https://notexample.com']);
                     await navigateTo('https://out.example.com');
                   });
 
@@ -296,8 +281,7 @@ preferencesTestSet.map((preferences) => {
                   switch (navigatingIn) {
                     case 'sametab.global':
                     case 'newtab.global':
-                      bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                        'notsamedomainexact';
+                      bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'notsamedomainexact';
                       break;
 
                     case 'sametab.perdomain':
@@ -347,10 +331,7 @@ preferencesTestSet.map((preferences) => {
 
                 describe('follow-up redirects to the exact same domain after isolating', () => {
                   beforeEach(async () => {
-                    bg.browser.tabs._registerRedirects(
-                      'http://notexample.com',
-                      ['https://notexample.com']
-                    );
+                    bg.browser.tabs._registerRedirects('http://notexample.com', ['https://notexample.com']);
                     await navigateTo('http://notexample.com');
                   });
 
@@ -362,13 +343,9 @@ preferencesTestSet.map((preferences) => {
 
               describe('toggle isolation off', () => {
                 beforeEach(async () => {
-                  bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                    'always';
+                  bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'always';
                   bg.tmp.storage.local.isolation.active = true;
-                  bg.tmp.storage.local.preferences.keyboardShortcuts.AltI = true;
-                  bg.browser.commands.onCommand.addListener.yield(
-                    'toggle_isolation'
-                  );
+                  bg.browser.commands.onCommand.addListener.yield('toggle_isolation');
                 });
 
                 describe('if its the exact same domain', () => {
@@ -404,18 +381,14 @@ preferencesTestSet.map((preferences) => {
 
               describe('when auto-enable isolation is turned on with action = always', () => {
                 beforeEach(async () => {
-                  bg.tmp.storage.local.preferences.isolation.global.navigation.action =
-                    'always';
+                  bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'always';
                   bg.tmp.storage.local.preferences.isolation.reactivateDelay = 3;
                   bg.tmp.storage.local.isolation.active = true;
                 });
 
                 describe('when isolation is deactivated', () => {
                   beforeEach(async () => {
-                    bg.tmp.storage.local.preferences.keyboardShortcuts.AltI = true;
-                    bg.browser.commands.onCommand.addListener.yield(
-                      'toggle_isolation'
-                    );
+                    bg.browser.commands.onCommand.addListener.yield('toggle_isolation');
                   });
 
                   it('should not open a Temporary Container when navigating before auto-isolate triggers', async () => {
@@ -448,8 +421,7 @@ preferencesTestSet.map((preferences) => {
 
                 describe('with "enabled"', () => {
                   beforeEach(async () => {
-                    bg.tmp.storage.local.preferences.isolation.mac.action =
-                      'enabled';
+                    bg.tmp.storage.local.preferences.isolation.mac.action = 'enabled';
                   });
                   describe('if the navigation target isnt assigned to the current container', () => {
                     beforeEach(async () => {
@@ -481,16 +453,13 @@ preferencesTestSet.map((preferences) => {
               describe('navigating in a temporary container', () => {
                 beforeEach(async () => {
                   bg = await loadBackground({ preferences });
-                  tab = (await bg.tmp.container.createTabInTempContainer(
-                    {}
-                  )) as Tab;
+                  tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
                   bg.browser.tabs.create.resetHistory();
                 });
 
                 describe('with "enabled" and target domain not assigned with MAC', () => {
                   beforeEach(async () => {
-                    bg.tmp.storage.local.preferences.isolation.mac.action =
-                      'enabled';
+                    bg.tmp.storage.local.preferences.isolation.mac.action = 'enabled';
                     bg.browser.runtime.sendMessage.resolves(null);
                     await navigateTo('http://example.com');
                   });
