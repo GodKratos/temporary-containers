@@ -13,6 +13,7 @@
     "lint": "run-p lint:*",
     "lint:eslint": "eslint *.js src/**/*.'{ts,js}'",
     "lint:tsc": "tsc -p tsconfig.lint.json",
+    "lint:localization": "node scripts/validate-localization.js",
     "webext:build": "web-ext build -s dist",
     "webext:lint": "web-ext lint -s dist",
     "format": "prettier --write '{*,src/**/*,test/**/*}.{html,css,json,yml,md}'",
@@ -95,6 +96,12 @@
     ],
     "*.{html,css,json,yml,md}": [
       "prettier --write"
+    ],
+    "src/ui/**/*.{html,ts}": [
+      "npm run lint:localization"
+    ],
+    "src/_locales/**/*.json": [
+      "npm run lint:localization"
     ]
   },
   "private": true,
