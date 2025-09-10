@@ -90,7 +90,8 @@
   ],
   "lint-staged": {
     "*.{ts,js}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ],
     "*.{html,css,json,yml,md}": [
       "prettier --write"
@@ -104,9 +105,17 @@
     ]
   },
   "prettier": {
-    "trailingComma": "es5",
+    "printWidth": 140,
     "tabWidth": 2,
-    "singleQuote": true
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "quoteProps": "as-needed",
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
   },
   "mocha": {
     "bail": true,

@@ -132,7 +132,7 @@ export async function initGeneralPage(): Promise<void> {
       option.textContent = text[1];
       removalSelect.appendChild(option);
     });
-    removalSelect.value = (preferences.container?.removal !== undefined ? preferences.container.removal.toString() : '900000');
+    removalSelect.value = preferences.container?.removal !== undefined ? preferences.container.removal.toString() : '900000';
 
     // Populate multi-selects for random excluded
     const colorRandomExcluded = document.getElementById('containerColorRandomExcluded') as HTMLSelectElement;
@@ -202,7 +202,9 @@ export async function initGeneralPage(): Promise<void> {
         obj = obj[keys[i]];
       }
       obj[keys[keys.length - 1]] = value;
-      savePreferences(preferences).then(() => showSuccess(browser.i18n.getMessage('savedMessage'))).catch(() => showError(browser.i18n.getMessage('errorFailedToSave')));
+      savePreferences(preferences)
+        .then(() => showSuccess(browser.i18n.getMessage('savedMessage')))
+        .catch(() => showError(browser.i18n.getMessage('errorFailedToSave')));
     }
 
     // Event listeners for all fields
@@ -249,7 +251,6 @@ export async function initGeneralPage(): Promise<void> {
     (document.getElementById('iconColor') as HTMLSelectElement).addEventListener('change', e => {
       savePref('iconColor', (e.target as HTMLSelectElement).value);
     });
-
   } catch (error) {
     showError(browser.i18n.getMessage('errorFailedToLoadGeneral'));
   }

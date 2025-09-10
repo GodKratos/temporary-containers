@@ -1,19 +1,20 @@
 {
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "parser": "@typescript-eslint/parser",
-    "ecmaVersion": 2018
+    "ecmaVersion": 2020,
+    "sourceType": "module"
   },
   "env": {
     "browser": true,
     "webextensions": true,
     "node": true,
-    "es6": true
+    "es2020": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "plugin:vue/recommended",
-    "plugin:prettier/recommended",
-    "prettier/vue",
-    "prettier/@typescript-eslint"
-  ]
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-inner-declarations": "warn"
+  }
 }
