@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.5",
     "@types/firefox-webext-browser": "^120.0.4",
@@ -89,12 +90,10 @@
   ],
   "lint-staged": {
     "*.{ts,js}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.{html,css,json,yml,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "private": true,
