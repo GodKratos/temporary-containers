@@ -52,9 +52,9 @@ export async function initIsolationGlobalPage(): Promise<void> {
         <label for="excludedContainers" data-i18n="optionsIsolationExcludeContainers">Exclude Permanent Containers</label>
         <div class="tag-input-container">
           <select id="excludedContainersSelect" class="permanent-container-select">
-            <option value="">Select a container...</option>
+            <option value="" data-i18n="optionsIsolationSelectContainer">Select a container...</option>
           </select>
-          <button id="addExcludedContainer" class="small">Add Container</button>
+          <button id="addExcludedContainer" class="small" data-i18n="optionsIsolationAddContainer">Add Container</button>
           <div id="excludedContainers" class="tag-list"></div>
         </div>
         <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Disables isolation events for the selected containers.</div>
@@ -146,7 +146,9 @@ export async function initIsolationGlobalPage(): Promise<void> {
         remove.className = 'tag-remove';
         remove.textContent = '×';
         remove.addEventListener('click', async () => {
-          preferences.isolation.global.excludedContainers = preferences.isolation.global.excludedContainers.filter((cid: string) => cid !== id);
+          preferences.isolation.global.excludedContainers = preferences.isolation.global.excludedContainers.filter(
+            (cid: string) => cid !== id
+          );
           await savePreferences(preferences);
           renderExcludedContainers();
           showSuccess(browser.i18n.getMessage('savedMessage'));
@@ -156,7 +158,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
       });
     }
     renderExcludedContainers();
-    addExcludedContainerBtn?.addEventListener('click', async (e) => {
+    addExcludedContainerBtn?.addEventListener('click', async e => {
       e.preventDefault();
       const id = excludedContainersSelect.value;
       if (id && !preferences.isolation.global.excludedContainers.includes(id)) {
@@ -203,7 +205,6 @@ export async function initIsolationGlobalPage(): Promise<void> {
         }
       }
     });
-
   } catch (error) {
     showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
   }

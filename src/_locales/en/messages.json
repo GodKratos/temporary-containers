@@ -215,6 +215,12 @@
   "optionsIsolationDomain": {
     "message": "Isolate if target domain does not match exactly with current domain"
   },
+  "optionsIsolationSelectContainer": {
+    "message": "Select a container..."
+  },
+  "optionsIsolationAddContainer": {
+    "message": "Add Container"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Exclude Permanent Containers"
   },

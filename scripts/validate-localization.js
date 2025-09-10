@@ -36,6 +36,7 @@ class LocalizationValidator {
       this.validateLocaleCompleteness(messages);
       this.validateKeyUsage(messages, uiKeys);
       this.validateHardcodedStrings();
+      this.validateMissingLocalization();
 
       // Report results
       this.reportResults();
@@ -76,7 +77,7 @@ class LocalizationValidator {
    * Extract all localization keys used in UI code
    */
   extractUIKeys() {
-    const uiKeys = new Set();
+    const uiKeys = new Map(); // Change to Map to track file locations
 
     // Process UI directory
     this.processDirectory(this.uiDir, uiKeys);
@@ -84,15 +85,22 @@ class LocalizationValidator {
     // Process shared.ts for constants
     if (fs.existsSync(this.sharedFile)) {
       const content = fs.readFileSync(this.sharedFile, 'utf8');
+      const relativePath = path.relative(process.cwd(), this.sharedFile);
+      const lines = content.split('\n');
+
       // Extract keys from CONTAINER_REMOVAL_DEFAULT and similar constants
-      const matches = content.match(/['"`]([a-zA-Z][a-zA-Z0-9_]*(?:15Minutes|2Minutes|5Minutes|Instant)?)['"`]/g);
-      if (matches) {
-        matches.forEach(match => {
-          const key = match.slice(1, -1);
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const lineNum = i + 1;
+        const location = `${relativePath}:${lineNum}`;
+
+        const matches = line.matchAll(/['"`]([a-zA-Z][a-zA-Z0-9_]*(?:15Minutes|2Minutes|5Minutes|Instant)?)['"`]/g);
+        for (const match of matches) {
+          const key = match[1];
           if (key.startsWith('options') || key.startsWith('action') || key.startsWith('error')) {
-            uiKeys.add(key);
+            uiKeys.set(key, location);
           }
-        });
+        }
       }
     }
 
@@ -127,34 +135,37 @@ class LocalizationValidator {
    */
   processFile(filePath, uiKeys) {
     const content = fs.readFileSync(filePath, 'utf8');
+    const relativePath = path.relative(process.cwd(), filePath);
+    const lines = content.split('\n');
 
-    // Extract data-i18n keys
-    const dataI18nMatches = content.match(/data-i18n(?:-title|-placeholder)?="([^"]+)"/g);
-    if (dataI18nMatches) {
-      dataI18nMatches.forEach(match => {
-        const key = match.match(/"([^"]+)"/)[1];
-        uiKeys.add(key);
-      });
-    }
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const lineNum = i + 1;
+      const location = `${relativePath}:${lineNum}`;
 
-    // Extract browser.i18n.getMessage keys
-    const i18nMessageMatches = content.match(/browser\.i18n\.getMessage\(['"`]([^'"`]+)['"`]\)/g);
-    if (i18nMessageMatches) {
-      i18nMessageMatches.forEach(match => {
-        const key = match.match(/['"`]([^'"`]+)['"`]/)[1];
-        uiKeys.add(key);
-      });
-    }
+      // Extract data-i18n keys
+      const dataI18nMatches = line.matchAll(/data-i18n(?:-title|-placeholder)?="([^"]+)"/g);
+      for (const match of dataI18nMatches) {
+        const key = match[1];
+        uiKeys.set(key, location);
+      }
 
-    // Extract dynamic setAttribute keys
-    const setAttributeMatches = content.match(/setAttribute\(['"`]data-i18n(?:-title|-placeholder)?['"`]\s*,\s*['"`]([^'"`]+)['"`]\)/g);
-    if (setAttributeMatches) {
-      setAttributeMatches.forEach(match => {
-        const keyMatch = match.match(/,\s*['"`]([^'"`]+)['"`]/);
+      // Extract browser.i18n.getMessage keys
+      const i18nMessageMatches = line.matchAll(/browser\.i18n\.getMessage\(['"`]([^'"`]+)['"`]\)/g);
+      for (const match of i18nMessageMatches) {
+        const key = match[1];
+        uiKeys.set(key, location);
+      }
+
+      // Extract dynamic setAttribute keys
+      const setAttributeMatches = line.matchAll(/setAttribute\(['"`]data-i18n(?:-title|-placeholder)?['"`]\s*,\s*['"`]([^'"`]+)['"`]\)/g);
+      for (const match of setAttributeMatches) {
+        const keyMatch = match[0].match(/,\s*['"`]([^'"`]+)['"`]/);
         if (keyMatch) {
-          uiKeys.add(keyMatch[1]);
+          const key = keyMatch[1];
+          uiKeys.set(key, location);
         }
-      });
+      }
     }
   }
 
@@ -176,9 +187,17 @@ class LocalizationValidator {
     }
 
     // Check for missing keys in English
-    const missingInEn = [...uiKeys].filter(key => !enKeys.has(key));
+    const missingInEn = [...uiKeys.keys()].filter(key => !enKeys.has(key));
     if (missingInEn.length > 0) {
-      this.errors.push(`Keys used in UI but missing in English: ${missingInEn.join(', ')}`);
+      // Report with file locations
+      const missingKeysWithFiles = missingInEn.map(key => {
+        const filePath = uiKeys.get(key);
+        return `${filePath}: ${key}`;
+      });
+      this.errors.push(`Keys used in UI but missing in English:`);
+      missingKeysWithFiles.forEach(keyWithFile => {
+        this.errors.push(`  • ${keyWithFile}`);
+      });
     }
   }
 
@@ -270,6 +289,7 @@ class LocalizationValidator {
   scanFileForHardcodedStrings(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
     const relativePath = path.relative(process.cwd(), filePath);
+    const lines = content.split('\n');
 
     // Look for common hardcoded string patterns
     const patterns = [
@@ -281,13 +301,237 @@ class LocalizationValidator {
       /\.innerHTML\s*=\s*['"`]([A-Z][^'"`<>]{10,})['"`]/g,
     ];
 
-    for (const pattern of patterns) {
-      let match;
-      while ((match = pattern.exec(content)) !== null) {
-        const text = match[1];
-        // Skip if it looks like code, HTML, or is very short
-        if (!text.includes('<') && !text.includes('(') && text.length > 5) {
-          this.warnings.push(`${relativePath}: Potential hardcoded string: "${text}"`);
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const lineNum = i + 1;
+
+      for (const pattern of patterns) {
+        const matches = line.matchAll(pattern);
+        for (const match of matches) {
+          const text = match[1];
+          // Skip if it looks like code, HTML, or is very short
+          if (!text.includes('<') && !text.includes('(') && text.length > 5) {
+            this.warnings.push(`${relativePath}:${lineNum}: Potential hardcoded string: "${text}"`);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Validate that all user-facing text has localization attributes
+   */
+  validateMissingLocalization() {
+    console.log('🔍 Scanning for missing localization attributes...');
+    this.scanDirectoryForMissingLocalization(this.uiDir);
+  }
+
+  /**
+   * Scan directory for missing localization
+   */
+  scanDirectoryForMissingLocalization(dir) {
+    if (!fs.existsSync(dir)) return;
+
+    const items = fs.readdirSync(dir);
+
+    for (const item of items) {
+      const itemPath = path.join(dir, item);
+      const stat = fs.statSync(itemPath);
+
+      if (stat.isDirectory()) {
+        if (item !== 'old-backup' && item !== 'vendor') {
+          this.scanDirectoryForMissingLocalization(itemPath);
+        }
+      } else if (item.endsWith('.html')) {
+        this.scanHTMLForMissingLocalization(itemPath);
+      } else if (item.endsWith('.ts')) {
+        this.scanTypeScriptForMissingLocalization(itemPath);
+      }
+    }
+  }
+
+  /**
+   * Scan HTML file for text content without localization attributes
+   */
+  scanHTMLForMissingLocalization(filePath) {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const relativePath = path.relative(process.cwd(), filePath);
+
+    // Split content into lines for better error reporting
+    const lines = content.split('\n');
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const lineNum = i + 1;
+
+      // Find HTML elements with text content - improved regex to handle more cases
+      const elementMatches = line.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>([^<]+)<\/\1>/g);
+
+      for (const match of elementMatches) {
+        const [fullMatch, tagName, textContent] = match;
+        const trimmedText = textContent.trim();
+
+        // Skip if:
+        // - Text is too short (< 2 chars)
+        // - Text is all whitespace, numbers, or symbols
+        // - Text looks like a variable placeholder (contains {, $, etc.)
+        // - Element already has data-i18n attribute (check more thoroughly)
+        if (trimmedText.length < 2 || /^[\s\d\-_.,!?:;()[\]{}$%#@]+$/.test(trimmedText) || /[{$]/.test(trimmedText)) {
+          continue;
+        }
+
+        // More thorough check for data-i18n attributes
+        const hasDataI18n =
+          fullMatch.includes('data-i18n="') ||
+          fullMatch.includes("data-i18n='") ||
+          fullMatch.includes('data-i18n-') ||
+          // Handle case where there's a space before the closing >
+          /data-i18n\s*=/.test(fullMatch);
+
+        if (hasDataI18n) {
+          continue;
+        }
+
+        // Check if text contains actual words (letters)
+        if (/[a-zA-Z]{2,}/.test(trimmedText)) {
+          // Special cases to skip
+          const skipPatterns = [
+            /^(ok|yes|no|on|off)$/i,
+            /^[a-f0-9]{6,}$/i, // hex colors
+            /^\d+(\.\d+)?(px|em|rem|%)?$/i, // CSS values
+            /^#[a-zA-Z0-9_-]+$/i, // IDs
+          ];
+
+          const shouldSkip = skipPatterns.some(pattern => pattern.test(trimmedText));
+          if (!shouldSkip) {
+            this.errors.push(`${relativePath}:${lineNum}: Text content needs localization: "${trimmedText}"`);
+          }
+        }
+      }
+
+      // Check for input placeholders without data-i18n-placeholder
+      const inputMatches = line.matchAll(/<input[^>]*placeholder\s*=\s*["']([^"']+)["'][^>]*>/g);
+      for (const match of inputMatches) {
+        const [fullMatch, placeholder] = match;
+        if (placeholder.length > 1 && /[a-zA-Z]/.test(placeholder) && !fullMatch.includes('data-i18n-placeholder')) {
+          this.errors.push(`${relativePath}:${lineNum}: Input placeholder needs localization: "${placeholder}"`);
+        }
+      }
+
+      // Check for title attributes without data-i18n-title
+      const titleMatches = line.matchAll(/<[^>]*title\s*=\s*["']([^"']+)["'][^>]*>/g);
+      for (const match of titleMatches) {
+        const [fullMatch, titleText] = match;
+        if (titleText.length > 2 && /[a-zA-Z]{2,}/.test(titleText) && !fullMatch.includes('data-i18n-title')) {
+          this.errors.push(`${relativePath}:${lineNum}: Title attribute needs localization: "${titleText}"`);
+        }
+      }
+    }
+  }
+
+  /**
+   * Scan TypeScript file for dynamic text assignment without localization
+   */
+  scanTypeScriptForMissingLocalization(filePath) {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const relativePath = path.relative(process.cwd(), filePath);
+
+    // Split content into lines for better error reporting
+    const lines = content.split('\n');
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const lineNum = i + 1;
+
+      // Check for HTML content within template literals (common in TypeScript UI files)
+      const htmlElementMatches = line.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>([^<]+)<\/\1>/g);
+
+      for (const match of htmlElementMatches) {
+        const [fullMatch, tagName, textContent] = match;
+        const trimmedText = textContent.trim();
+
+        // Skip if text is too short or doesn't contain meaningful content
+        if (trimmedText.length < 2 || /^[\s\d\-_.,!?:;()[\]{}$%#@]+$/.test(trimmedText) || /[{$]/.test(trimmedText)) {
+          continue;
+        }
+
+        // Check for data-i18n attributes
+        const hasDataI18n =
+          fullMatch.includes('data-i18n="') ||
+          fullMatch.includes("data-i18n='") ||
+          fullMatch.includes('data-i18n-') ||
+          /data-i18n\s*=/.test(fullMatch);
+
+        if (hasDataI18n) {
+          continue;
+        }
+
+        // Check if text contains actual words (letters)
+        if (/[a-zA-Z]{2,}/.test(trimmedText)) {
+          // Special cases to skip
+          const skipPatterns = [
+            /^(ok|yes|no|on|off)$/i,
+            /^[a-f0-9]{6,}$/i, // hex colors
+            /^\d+(\.\d+)?(px|em|rem|%)?$/i, // CSS values
+            /^#[a-zA-Z0-9_-]+$/i, // IDs
+          ];
+
+          const shouldSkip = skipPatterns.some(pattern => pattern.test(trimmedText));
+          if (!shouldSkip) {
+            this.errors.push(`${relativePath}:${lineNum}: HTML text content in template literal needs localization: "${trimmedText}"`);
+          }
+        }
+      }
+
+      // Check for text assignments that should use i18n
+      const patterns = [
+        // textContent = "text"
+        { pattern: /\.textContent\s*=\s*["']([^"']{3,})["']/, property: 'textContent' },
+        // innerHTML = "text" (not HTML)
+        { pattern: /\.innerHTML\s*=\s*["']([^"'<>]{5,})["']/, property: 'innerHTML' },
+        // placeholder = "text"
+        { pattern: /\.placeholder\s*=\s*["']([^"']{3,})["']/, property: 'placeholder' },
+        // title = "text"
+        { pattern: /\.title\s*=\s*["']([^"']{3,})["']/, property: 'title' },
+        // setAttribute('placeholder', 'text')
+        { pattern: /setAttribute\s*\(\s*["'](?:placeholder|title)["']\s*,\s*["']([^"']{3,})["']\s*\)/, property: 'setAttribute' },
+      ];
+
+      for (const { pattern, property } of patterns) {
+        const match = line.match(pattern);
+        if (match) {
+          const text = match[1];
+
+          // Skip if text looks like a variable, URL, or code
+          const skipPatterns = [
+            /^[a-z][a-zA-Z0-9_]*$/, // variable names
+            /https?:\/\//, // URLs
+            /[{}$]/, // template literals or variables
+            /^\d+$/, // pure numbers
+            /^[^a-zA-Z]*$/, // no letters
+          ];
+
+          const shouldSkip = skipPatterns.some(pattern => pattern.test(text));
+          if (!shouldSkip && /[a-zA-Z]{2,}/.test(text)) {
+            // Check if the line already uses browser.i18n.getMessage OR if there's a corresponding data-i18n-* setAttribute nearby
+            const hasI18nMessage = line.includes('browser.i18n.getMessage');
+
+            // Look for data-i18n-* setAttribute in the same function/block (next few lines)
+            let hasDataI18nAttribute = false;
+            if (property === 'title') {
+              // For title assignments, check if there's a data-i18n-title setAttribute within a few lines
+              for (let j = i; j < Math.min(i + 3, lines.length); j++) {
+                if (lines[j].includes('setAttribute') && lines[j].includes('data-i18n-title')) {
+                  hasDataI18nAttribute = true;
+                  break;
+                }
+              }
+            }
+
+            if (!hasI18nMessage && !hasDataI18nAttribute) {
+              this.errors.push(`${relativePath}:${lineNum}: ${property} assignment should use browser.i18n.getMessage: "${text}"`);
+            }
+          }
         }
       }
     }

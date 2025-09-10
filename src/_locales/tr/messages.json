@@ -254,6 +254,12 @@
   "optionsIsolationDomain": {
     "message": "Hedef alan adı mevcut alan adıyla tam olarak eşleşmiyorsa izole et"
   },
+  "optionsIsolationSelectContainer": {
+    "message": "Bir konteyner seçin..."
+  },
+  "optionsIsolationAddContainer": {
+    "message": "Konteyner Ekle"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Kalıcı Konteynerleri Hariç Tut"
   },

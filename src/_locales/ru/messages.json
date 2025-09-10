@@ -254,6 +254,12 @@
   "optionsIsolationDomain": {
     "message": "Изолировать если целевой домен не совпадает точно с текущим доменом"
   },
+  "optionsIsolationSelectContainer": {
+    "message": "Выберите контейнер..."
+  },
+  "optionsIsolationAddContainer": {
+    "message": "Добавить контейнер"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Исключить постоянные контейнеры"
   },
