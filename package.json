@@ -41,6 +41,7 @@
     "psl": "1.8.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.5",
     "@types/firefox-webext-browser": "^120.0.4",
@@ -87,7 +88,7 @@
   ],
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "commit-msg": "commitlint --edit $1",
       "pre-commit": "lint-staged",
       "pre-push": "npm test"
     }
