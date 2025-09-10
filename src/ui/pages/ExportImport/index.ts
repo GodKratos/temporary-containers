@@ -88,7 +88,7 @@ async function handleImport(fileInput: HTMLInputElement): Promise<void> {
   const file = fileInput.files?.[0];
   
   if (!file) {
-    showError(`Import error: File not found`);
+    showError(browser.i18n.getMessage('errorImportFileNotFound'));
     return;
   }
   

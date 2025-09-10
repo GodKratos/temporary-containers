@@ -80,7 +80,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         await savePreferences(preferences);
         domainRuleInput.value = '';
         await initIsolationPerDomainPage(); // reload
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       } catch (error) {
         showError('Error adding domain rule: ' + error);
       }
@@ -103,13 +103,13 @@ export async function initIsolationPerDomainPage(): Promise<void> {
             preferences.isolation.domain.splice(index, 1);
             await savePreferences(preferences);
             await initIsolationPerDomainPage(); // reload
-            showSuccess('Saved!');
+            showSuccess(browser.i18n.getMessage('savedMessage'));
           }
         }
       });
     });
 
   } catch (error) {
-    showError('Failed to load Isolation: Per Domain settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadIsolationPerDomain'));
   }
 }

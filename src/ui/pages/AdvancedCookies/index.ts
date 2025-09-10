@@ -35,6 +35,6 @@ export async function initAdvancedCookiesPage(): Promise<void> {
 
     // ...bind fields to preferences and handle save events...
   } catch (error) {
-    showError('Failed to load Advanced: Cookies settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'));
   }
 }

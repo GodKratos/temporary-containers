@@ -36,6 +36,6 @@ export async function initStatisticsPage(): Promise<void> {
 
     // ...bind reset event...
   } catch (error) {
-    showError('Failed to load statistics');
+    showError(browser.i18n.getMessage('errorFailedToLoadStatistics'));
   }
 }

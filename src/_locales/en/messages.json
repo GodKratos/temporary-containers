@@ -2,558 +2,6 @@
   "extensionName": {
     "message": "Temporary Containers Plus"
   },
-  "extensionDescription": {
-    "message": "Open tabs, websites, and links in automatically managed disposable containers. Containers isolate the data websites store (cookies, cache, and more) from each other, further enhancing your privacy while you browse."
-  },
-  "actionNewTemporaryContainerTab": {
-    "message": "Open a new tab in a new Temporary Container"
-  },
-  "actionNewSameContainerTab": {
-    "message": "Open a new tab in the same container as the current tab"
-  },
-  "actionNewNoContainerTab": {
-    "message": "Open a new tab without a container"
-  },
-  "actionNewNoContainerWindowTab": {
-    "message": "Open a new tab without a container in a new window"
-  },
-  "actionNewTemporaryContainerTabCurrentUrl": {
-    "message": "Open current tab URL in a new Temporary Container tab"
-  },
-  "actionNewNoHistoryTab": {
-    "message": "Open a new tab in a new 'Deletes History Temporary Container'"
-  },
-  "actionToggleIsolation": {
-    "message": "Toggle Isolation ON/OFF"
-  },
-  "optionsNavGeneral": {
-    "message": "General"
-  },
-  "optionsNavIsolation": {
-    "message": "Isolation"
-  },
-  "optionsNavAdvanced": {
-    "message": "Advanced"
-  },
-  "optionsNavStatistics": {
-    "message": "Statistics"
-  },
-  "optionsNavActions": {
-    "message": "Actions"
-  },
-  "optionsNavExportImport": {
-    "message": "Export/Import"
-  },
-  "optionsGeneralAutomaticMode": {
-    "message": "Automatic Mode"
-  },
-  "optionsGeneralAutomaticModeDescription": {
-    "message": "Automatically reopens tabs in new Temporary Containers when no container exists."
-  },
-  "optionsGeneralToolbarPopup": {
-    "message": "Show popup when clicking the toolbar icon"
-  },
-  "optionsGeneralNotifications": {
-    "message": "Notifications when deleting Temporary Containers"
-  },
-  "optionsGeneralContainerNamePrefix": {
-    "message": "Container Name Prefix"
-  },
-  "optionsGeneralContainerColorRandomExcluded": {
-    "message": "Excluded Colors for Random Container Color"
-  },
-  "optionsGeneralContainerIconRandomExcluded": {
-    "message": "Excluded Icons for Random Container Icon"
-  },
-  "optionsGeneralContainerColor": {
-    "message": "Container Color"
-  },
-  "optionsGeneralContainerColorBlue": {
-    "message": "blue"
-  },
-  "optionsGeneralContainerColorTurquoise": {
-    "message": "turquoise"
-  },
-  "optionsGeneralContainerColorGreen": {
-    "message": "green"
-  },
-  "optionsGeneralContainerColorYellow": {
-    "message": "yellow"
-  },
-  "optionsGeneralContainerColorOrange": {
-    "message": "orange"
-  },
-  "optionsGeneralContainerColorRed": {
-    "message": "red"
-  },
-  "optionsGeneralContainerColorPink": {
-    "message": "pink"
-  },
-  "optionsGeneralContainerColorPurple": {
-    "message": "purple"
-  },
-  "optionsGeneralContainerColorToolbar": {
-    "message": "toolbar (black/gray)"
-  },
-  "optionsGeneralContainerRandomColor": {
-    "message": "Random Container Color"
-  },
-  "optionsGeneralContainerIcon": {
-    "message": "Container Icon"
-  },
-  "optionsGeneralContainerIconFingerprint": {
-    "message": "fingerprint"
-  },
-  "optionsGeneralContainerIconBriefcase": {
-    "message": "briefcase"
-  },
-  "optionsGeneralContainerIconDollar": {
-    "message": "dollar"
-  },
-  "optionsGeneralContainerIconCart": {
-    "message": "cart"
-  },
-  "optionsGeneralContainerIconCircle": {
-    "message": "circle"
-  },
-  "optionsGeneralContainerIconGift": {
-    "message": "gift"
-  },
-  "optionsGeneralContainerIconVacation": {
-    "message": "vacation"
-  },
-  "optionsGeneralContainerIconFood": {
-    "message": "food"
-  },
-  "optionsGeneralContainerIconFruit": {
-    "message": "fruit"
-  },
-  "optionsGeneralContainerIconPet": {
-    "message": "pet"
-  },
-  "optionsGeneralContainerIconTree": {
-    "message": "tree"
-  },
-  "optionsGeneralContainerIconChill": {
-    "message": "chill"
-  },
-  "optionsGeneralContainerIconFence": {
-    "message": "fence"
-  },
-  "optionsGeneralContainerIconRandom": {
-    "message": "Random Container Icon"
-  },
-  "optionsGeneralContainerNumber": {
-    "message": "Container Number Mode"
-  },
-  "optionsGeneralContainerNumberKeepCounting": {
-    "message": "Keep counting (default)"
-  },
-  "optionsGeneralContainerNumberKeepCountingUntilRestart": {
-    "message": "Keep counting until browser restart"
-  },
-  "optionsGeneralContainerNumberReuseNumbers": {
-    "message": "Reuse available numbers"
-  },
-  "optionsGeneralContainerNumberHide": {
-    "message": "Hide number"
-  },
-  "optionsGeneralContainerRemoval": {
-    "message": "Delete no longer needed Temporary Containers"
-  },
-  "optionsGeneralContainerRemovalTooltip": {
-    "message": "\"X minutes\" lets you \"Undo Close Tab\" in that timeframe"
-  },
-  "optionsGeneralContainerRemoval15Minutes": {
-    "message": "15 minutes after the last tab in it closes (default)"
-  },
-  "optionsGeneralContainerRemoval5Minutes": {
-    "message": "5 minutes after the last tab in it closes"
-  },
-  "optionsGeneralContainerRemoval2Minutes": {
-    "message": "2 minutes after the last tab in it closes"
-  },
-  "optionsGeneralContainerRemovalInstant": {
-    "message": "After the last tab in it closes"
-  },
-  "optionsGeneralToolbarIconColor": {
-    "message": "Icon Color"
-  },
-  "optionsGeneralToolbarIconColorTooltip": {
-    "message": "When switching back to default you might need to restart the browser depending on your theme"
-  },
-  "optionsGeneralToolbarIconColorDefault": {
-    "message": "default"
-  },
-  "optionsGeneralToolbarIconColorBlackSimple": {
-    "message": "black (simple)"
-  },
-  "optionsGeneralToolbarIconColorBlueSimple": {
-    "message": "blue (simple)"
-  },
-  "optionsGeneralToolbarIconColorRedSimple": {
-    "message": "red (simple)"
-  },
-  "optionsGeneralToolbarIconColorWhiteSimple": {
-    "message": "white (simple)"
-  },
-  "optionsDomainPattern": {
-    "message": "Domain Pattern"
-  },
-  "optionsExclusionPattern": {
-    "message": "Exclusion Pattern"
-  },
-  "optionsIsolationTabGlobal": {
-    "message": "Isolation: Global"
-  },
-  "optionsIsolationTabPerDomain": {
-    "message": "Isolation: Per Domain"
-  },
-  "optionsIsolationTabMac": {
-    "message": "Multi-Account Containers"
-  },
-  "optionsIsolationNavigation": {
-    "message": "Navigation"
-  },
-  "optionsIsolationTargetDomain": {
-    "message": "Target Domain"
-  },
-  "optionsIsolationMouseClick": {
-    "message": "Mouse Click"
-  },
-  "optionsIsolationMouseClickLeftMouse": {
-    "message": "Left Mouse",
-    "description": "Left mouse click"
-  },
-  "optionsIsolationMouseClickCtrlLeftMouse": {
-    "message": "Ctrl/Cmd+Left Mouse",
-    "description": "Ctrl or Cmd key + left mouse click"
-  },
-  "optionsIsolationMouseClickMiddleMouse": {
-    "message": "Middle Mouse",
-    "description": "Middle mouse click"
-  },
-  "optionsIsolationExclude": {
-    "message": "Exclude",
-    "description": "verb"
-  },
-  "optionsIsolationDisabled": {
-    "message": "Disabled"
-  },
-  "optionsIsolationEnabled": {
-    "message": "Enabled"
-  },
-  "optionsIsolationSubdomain": {
-    "message": "Isolate if target domain does not match current domain or subdomains"
-  },
-  "optionsIsolationDomain": {
-    "message": "Isolate if target domain does not match exactly with current domain"
-  },
-  "optionsIsolationNever": {
-    "message": "Never Isolate"
-  },
-  "optionsIsolationAlways": {
-    "message": "Always Isolate"
-  },
-  "optionsIsolationGlobalUrlNavigation": {
-    "message": "URL Navigation"
-  },
-  "optionsIsolationGlobalUrlNavigationDescription": {
-    "message": "Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks."
-  },
-  "optionsIsolationGlobalLeftClick": {
-    "message": "Left Click"
-  },
-  "optionsIsolationGlobalMiddleClick": {
-    "message": "Middle Click"
-  },
-  "optionsIsolationGlobalCtrlLeftClick": {
-    "message": "Ctrl/Cmd + Left Click"
-  },
-  "optionsIsolationGlobalMouseDescription": {
-    "message": "Global isolation rule for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced."
-  },
-  "optionsIsolationGlobalExcludePermanentContainers": {
-    "message": "Exclude Permanent Containers"
-  },
-  "optionsIsolationGlobalExclusionPermanentContainers": {
-    "message": "Permanent Containers to Exclude"
-  },
-  "optionsIsolationGlobalSelectExclusionContainers": {
-    "message": "Select Permanent Containers to Exclude from Isolation"
-  },
-  "optionsIsolationExcludeContainers": {
-    "message": "Exclude Permanent Containers"
-  },
-  "optionsIsolationExcludeContainersDescription": {
-    "message": "Disables isolation events for the selected containers."
-  },
-  "optionsIsolationIgnoredDomains": {
-    "message": "Ignored Domains"
-  },
-  "optionsIsolationIgnoredDomainsDescription": {
-    "message": "Ignored domains will not be isolated."
-  },
-  "optionsIsolationMacIsolateNonMac": {
-    "message": "Isolate Navigations in Permanent Containers whose Target Domain isn't MAC-\"Always open in\" assigned to that container"
-  },
-  "optionsIsolationPerDomainPatternNoEmpty": {
-    "message": "Domain Pattern can't be empty"
-  },
-  "optionsIsolationPerDomainPatternExists": {
-    "message": "Domain Pattern already exists"
-  },
-  "optionsIsolationPerDomainAlwaysOpenIn": {
-    "message": "Always open in"
-  },
-  "optionsIsolationPerDomainDisableIfNavPermContainer": {
-    "message": "Disable if Navigation in Permanent Containers"
-  },
-  "optionsIsolationPerDomainDisableIfPermContainer": {
-    "message": "Disable in Permanent Containers"
-  },
-  "optionsIsolationPerDomainDisableIfNavTempContainer": {
-    "message": "Disable if Navigation in Temporary Containers"
-  },
-  "optionsIsolationPerDomainDisableIfTempContainer": {
-    "message": "Disable in Temporary Containers"
-  },
-  "optionsIsolationPerDomainSaved": {
-    "message": "Saved"
-  },
-  "optionsIsolationPerDomainAdd": {
-    "message": "Add $PATTERN$",
-    "description": "To finish adding a new domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "Pattern42"
-      }
-    }
-  },
-  "optionsIsolationPerDomainEdit": {
-    "message": "Edit $PATTERN$",
-    "description": "To start editing a domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheReallyBeautifulPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainDoneEditing": {
-    "message": "Done editing $PATTERN$",
-    "description": "To finish editing a domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheWaitWhyArentMyContainersWorkingPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainRemove": {
-    "message": "Remove $PATTERN$",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheBestPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainRemoveConfirmation": {
-    "message": "Remove $PATTERN$?",
-    "placeholders": {
-      "pattern": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsIsolationPerDomainNoIsolatedDomainsAdded": {
-    "message": "No Isolated Domains added yet"
-  },
-  "optionsIsolationPerDomainFilterIsolatedDomains": {
-    "message": "Filter Isolated Domains"
-  },
-  "optionsIsolationPerDomainIsolatedDomains": {
-    "message": "Isolated Domains"
-  },
-  "optionsIsolationPerDomainDragTooltip": {
-    "message": "Drag up/down - First in the list matches first"
-  },
-  "optionsIsolationSettingsGlobal": {
-    "message": "Use Global"
-  },
-  "optionsIsolationSettingsNotSameDomain": {
-    "message": "Different from Tab Domain & Subdomains"
-  },
-  "optionsIsolationSettingsNotSameDomainExact": {
-    "message": "Different from Tab Domain"
-  },
-  "optionsIsolationSettingsAlways": {
-    "message": "Always"
-  },
-  "optionsIsolationSettingsNever": {
-    "message": "Never"
-  },
-  "optionsIsolationSettingsDefault": {
-    "message": "Default"
-  },
-  "optionsIsolationSettingsDeletesHistory": {
-    "message": "Deletes History"
-  },
-  "optionsAdvancedContainer": {
-    "message": "Advanced: Container"
-  },
-  "optionsAdvancedCookies": {
-    "message": "Advanced: Cookies"
-  },
-  "optionsAdvancedMisc": {
-    "message": "Advanced: Misc"
-  },
-  "optionsActionsNotAvailable": {
-    "message": "Actions are not available in this tab"
-  },
-  "optionsActionsNewTemporaryContainer": {
-    "message": "Reopen Tab in a new Temporary Container"
-  },
-  "optionsActionsConvertPermanent": {
-    "message": "Convert Temporary Container to Permanent"
-  },
-  "optionsActionsConvertTemporary": {
-    "message": "Convert Permanent Container to Temporary"
-  },
-  "containerCleanup": {
-    "message": "Container Cleanup"
-  },
-  "containerCleanupDescription": {
-    "message": "Cleanup containers on exit."
-  },
-  "containerTimeout": {
-    "message": "Container Timeout"
-  },
-  "containerTimeoutDescription": {
-    "message": "Timeout for containers in seconds."
-  },
-  "containerHistory": {
-    "message": "Container History"
-  },
-  "containerHistoryDescription": {
-    "message": "Keep container history."
-  },
-  "deleteCookies": {
-    "message": "Delete Cookies"
-  },
-  "deleteCookiesDescription": {
-    "message": "Delete cookies on exit."
-  },
-  "cookieStoreId": {
-    "message": "Cookie Store ID"
-  },
-  "cookieStoreIdDescription": {
-    "message": "Use cookie store ID."
-  },
-  "cookieBehavior": {
-    "message": "Cookie Behavior"
-  },
-  "default": {
-    "message": "Default"
-  },
-  "blockAllCookies": {
-    "message": "Block All Cookies"
-  },
-  "allowAllCookies": {
-    "message": "Allow All Cookies"
-  },
-  "rejectTrackers": {
-    "message": "Reject Trackers"
-  },
-  "contextMenu": {
-    "message": "Context Menu"
-  },
-  "contextMenuDescription": {
-    "message": "Show context menu."
-  },
-  "debugMode": {
-    "message": "Debug Mode"
-  },
-  "debugModeDescription": {
-    "message": "Enable debug mode."
-  },
-  "containersCreated": {
-    "message": "Containers Created"
-  },
-  "containersActive": {
-    "message": "Containers Active"
-  },
-  "containersRemoved": {
-    "message": "Containers Removed"
-  },
-  "isolationPrevented": {
-    "message": "Isolation Prevented"
-  },
-  "resetStatistics": {
-    "message": "Reset Statistics"
-  },
-  "exportSettings": {
-    "message": "Export Settings"
-  },
-  "exportSettingsDescription": {
-    "message": "Export settings to a file."
-  },
-  "importSettings": {
-    "message": "Import Settings"
-  },
-  "importSettingsDescription": {
-    "message": "Import settings from a file."
-  },
-  "glossary": {
-    "message": "Glossary"
-  },
-  "glossaryTitle": {
-    "message": "Glossary"
-  },
-  "isolation": {
-    "message": "Isolation"
-  },
-  "defaultIsolation": {
-    "message": "Default Isolation"
-  },
-  "defaultIsolationDefault": {
-    "message": "Default"
-  },
-  "defaultIsolationNever": {
-    "message": "Never"
-  },
-  "defaultIsolationAlways": {
-    "message": "Always"
-  },
-  "show": {
-    "message": "Show"
-  },
-  "dontShow": {
-    "message": "Don't Show"
-  },
-  "domainIsolation": {
-    "message": "Domain Isolation"
-  },
-  "domainPatternExampleCom": {
-    "message": "Domain pattern (e.g. *.example.com)"
-  },
-  "alwaysIsolate": {
-    "message": "Always Isolate"
-  },
-  "neverIsolate": {
-    "message": "Never Isolate"
-  },
-  "useGlobalSetting": {
-    "message": "Use Global Setting"
-  },
-  "addRule": {
-    "message": "Add Rule"
-  },
-  "resetContainerNumber": {
-    "message": "Reset Container Number"
-  },
   "initializingLabel": {
     "message": "Initializing..."
   },
@@ -569,77 +17,313 @@
   "enableIsolation": {
     "message": "Enable Isolation"
   },
-  "openPreferences": {
-    "message": "Open Preferences/Options"
+  "openNewTemporaryContainer": {
+    "message": "Open new Temporary Container"
   },
   "openNewDeletesHistoryContainer": {
     "message": "Open new 'Deletes History Temporary Container'"
   },
-  "openNewTemporaryContainer": {
-    "message": "Open new Temporary Container"
+  "openPreferences": {
+    "message": "Open Preferences/Options"
   },
   "addDomainAndPressEnter": {
     "message": "Add domain and press Enter"
   },
-  "containerType": {
-    "message": "Container Type"
+  "addRule": {
+    "message": "Add Rule"
   },
-  "currentDomain": {
-    "message": "Current Domain"
+  "allowAllCookies": {
+    "message": "Allow All Cookies"
   },
-  "editDomainIsolation": {
-    "message": "Edit Domain Isolation"
+  "alwaysIsolate": {
+    "message": "Always Isolate"
   },
-  "remove": {
-    "message": "Remove"
+  "blockAllCookies": {
+    "message": "Block All Cookies"
   },
-  "addDomainIsolation": {
-    "message": "Add Domain Isolation"
+  "containerCleanup": {
+    "message": "Container Cleanup"
   },
-  "domainIsolationRules": {
-    "message": "Domain Isolation Rules"
+  "containerCleanupDescription": {
+    "message": "Cleanup containers on exit."
+  },
+  "containerTimeout": {
+    "message": "Container Timeout"
+  },
+  "containerTimeoutDescription": {
+    "message": "Timeout for containers in seconds."
+  },
+  "containersActive": {
+    "message": "Containers Active"
+  },
+  "containersCreated": {
+    "message": "Containers Created"
+  },
+  "containersRemoved": {
+    "message": "Containers Removed"
+  },
+  "contextMenu": {
+    "message": "Context Menu"
+  },
+  "contextMenuDescription": {
+    "message": "Show context menu."
+  },
+  "cookieBehavior": {
+    "message": "Cookie Behavior"
+  },
+  "cookieStoreId": {
+    "message": "Cookie Store ID"
+  },
+  "cookieStoreIdDescription": {
+    "message": "Use cookie store ID."
+  },
+  "debugMode": {
+    "message": "Debug Mode"
+  },
+  "debugModeDescription": {
+    "message": "Enable debug mode."
+  },
+  "default": {
+    "message": "Default"
+  },
+  "deleteCookies": {
+    "message": "Delete Cookies"
+  },
+  "deleteCookiesDescription": {
+    "message": "Delete cookies on exit."
+  },
+  "domainIsolation": {
+    "message": "Domain Isolation"
+  },
+  "domainPatternExampleCom": {
+    "message": "Domain pattern (e.g. *.example.com)"
+  },
+  "exportSettings": {
+    "message": "Export Settings"
+  },
+  "exportSettingsDescription": {
+    "message": "Export settings to a file."
+  },
+  "glossary": {
+    "message": "Glossary"
+  },
+  "glossaryTitle": {
+    "message": "Glossary"
+  },
+  "importSettings": {
+    "message": "Import Settings"
+  },
+  "importSettingsDescription": {
+    "message": "Import settings from a file."
+  },
+  "isolationPrevented": {
+    "message": "Isolation Prevented"
+  },
+  "neverIsolate": {
+    "message": "Never Isolate"
   },
   "noDomainIsolationRulesConfigured": {
     "message": "No domain isolation rules configured."
   },
-  "newTemporaryContainer": {
-    "message": "New Temporary Container"
+  "optionsActionsConvertPermanent": {
+    "message": "Convert Temporary Container to Permanent"
   },
-  "newDeletesHistoryContainer": {
-    "message": "New Deletes History Container"
+  "optionsActionsConvertTemporary": {
+    "message": "Convert Permanent Container to Temporary"
   },
-  "containersDeleted": {
-    "message": "Containers Deleted"
+  "optionsActionsNewTemporaryContainer": {
+    "message": "Reopen Tab in a new Temporary Container"
   },
-  "cookiesDeleted": {
-    "message": "Cookies Deleted"
+  "optionsActionsNotAvailable": {
+    "message": "Actions are not available in this tab"
   },
-  "cacheDeleted": {
-    "message": "Cache Deleted"
+  "optionsAdvancedContainer": {
+    "message": "Advanced: Container"
   },
-  "historyContainersDeleted": {
-    "message": "History Containers Deleted"
+  "optionsAdvancedCookies": {
+    "message": "Advanced: Cookies"
   },
-  "historyCookiesDeleted": {
-    "message": "History Cookies Deleted"
+  "optionsAdvancedMisc": {
+    "message": "Advanced: Misc"
   },
-  "urlsDeleted": {
-    "message": "URLs Deleted"
+  "optionsGeneralAutomaticMode": {
+    "message": "Automatic Mode"
   },
-  "removeIsolationRuleFor": {
-    "message": "Remove isolation rule for $DOMAIN$?",
-    "placeholders": {
-      "domain": {
-        "content": "$1"
-      }
-    }
+  "optionsGeneralContainerColor": {
+    "message": "Container Color"
   },
-  "editDomainIsolationFor": {
-    "message": "Edit domain isolation for $DOMAIN$",
-    "placeholders": {
-      "domain": {
-        "content": "$1"
-      }
-    }
+  "optionsGeneralContainerColorRandomExcluded": {
+    "message": "Excluded Colors for Random Container Color"
+  },
+  "optionsGeneralContainerIcon": {
+    "message": "Container Icon"
+  },
+  "optionsGeneralContainerIconRandom": {
+    "message": "Random Container Icon"
+  },
+  "optionsGeneralContainerIconRandomExcluded": {
+    "message": "Excluded Icons for Random Container Icon"
+  },
+  "optionsGeneralContainerNamePrefix": {
+    "message": "Container Name Prefix"
+  },
+  "optionsGeneralContainerNumber": {
+    "message": "Container Number Mode"
+  },
+  "optionsGeneralContainerNumberHide": {
+    "message": "Hide number"
+  },
+  "optionsGeneralContainerNumberKeepCounting": {
+    "message": "Keep counting (default)"
+  },
+  "optionsGeneralContainerNumberKeepCountingUntilRestart": {
+    "message": "Keep counting until browser restart"
+  },
+  "optionsGeneralContainerNumberReuseNumbers": {
+    "message": "Reuse available numbers"
+  },
+  "optionsGeneralContainerRandomColor": {
+    "message": "Random Container Color"
+  },
+  "optionsGeneralContainerRemoval": {
+    "message": "Delete no longer needed Temporary Containers"
+  },
+  "optionsGeneralContainerRemoval15Minutes": {
+    "message": "15 minutes after the last tab in it closes (default)"
+  },
+  "optionsGeneralContainerRemoval2Minutes": {
+    "message": "2 minutes after the last tab in it closes"
+  },
+  "optionsGeneralContainerRemoval5Minutes": {
+    "message": "5 minutes after the last tab in it closes"
+  },
+  "optionsGeneralContainerRemovalInstant": {
+    "message": "After the last tab in it closes"
+  },
+  "optionsGeneralNotifications": {
+    "message": "Notifications when deleting Temporary Containers"
+  },
+  "optionsGeneralToolbarIconColor": {
+    "message": "Icon Color"
+  },
+  "optionsGeneralToolbarPopup": {
+    "message": "Show popup when clicking the toolbar icon"
+  },
+  "optionsIsolationAlways": {
+    "message": "Always Isolate"
+  },
+  "optionsIsolationDomain": {
+    "message": "Isolate if target domain does not match exactly with current domain"
+  },
+  "optionsIsolationExcludeContainers": {
+    "message": "Exclude Permanent Containers"
+  },
+  "optionsIsolationExcludeContainersDescription": {
+    "message": "Disables isolation events for the selected containers."
+  },
+  "optionsIsolationGlobalCtrlLeftClick": {
+    "message": "Ctrl/Cmd + Left Click"
+  },
+  "optionsIsolationGlobalLeftClick": {
+    "message": "Left Click"
+  },
+  "optionsIsolationGlobalMiddleClick": {
+    "message": "Middle Click"
+  },
+  "optionsIsolationGlobalMouseDescription": {
+    "message": "Global isolation rule for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced."
+  },
+  "optionsIsolationGlobalMouseNavigation": {
+    "message": "Mouse Navigation"
+  },
+  "optionsIsolationGlobalUrlNavigation": {
+    "message": "URL Navigation"
+  },
+  "optionsIsolationGlobalUrlNavigationDescription": {
+    "message": "Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks."
+  },
+  "optionsIsolationIgnoredDomains": {
+    "message": "Ignored Domains"
+  },
+  "optionsIsolationIgnoredDomainsDescription": {
+    "message": "Ignored domains will not be isolated."
+  },
+  "optionsIsolationNever": {
+    "message": "Never Isolate"
+  },
+  "optionsIsolationSubdomain": {
+    "message": "Isolate if target domain does not match current domain or subdomains"
+  },
+  "optionsIsolationTabGlobal": {
+    "message": "Isolation: Global"
+  },
+  "optionsIsolationTabPerDomain": {
+    "message": "Isolation: Per Domain"
+  },
+  "optionsNavActions": {
+    "message": "Actions"
+  },
+  "optionsNavExportImport": {
+    "message": "Export/Import"
+  },
+  "optionsNavGeneral": {
+    "message": "General"
+  },
+  "optionsNavStatistics": {
+    "message": "Statistics"
+  },
+  "rejectTrackers": {
+    "message": "Reject Trackers"
+  },
+  "resetStatistics": {
+    "message": "Reset Statistics"
+  },
+  "useGlobalSetting": {
+    "message": "Use Global Setting"
+  },
+  "glossaryIsolationDescription": {
+    "message": "Isolation prevents websites from tracking you across different containers."
+  },
+  "glossaryIsolationWhenEnabled": {
+    "message": "When enabled, Temporary Containers will:"
+  },
+  "glossaryIsolationFeature1": {
+    "message": "Open websites in new temporary containers based on your isolation settings"
+  },
+  "glossaryIsolationFeature2": {
+    "message": "Prevent websites from sharing data between containers"
+  },
+  "errorFailedToLoadStatistics": {
+    "message": "Failed to load statistics"
+  },
+  "errorFailedToLoadIsolationPerDomain": {
+    "message": "Failed to load Isolation: Per Domain settings"
+  },
+  "errorFailedToLoadIsolationGlobal": {
+    "message": "Failed to load Isolation: Global settings"
+  },
+  "errorFailedToSave": {
+    "message": "Failed to save"
+  },
+  "errorFailedToLoadGeneral": {
+    "message": "Failed to load General settings"
+  },
+  "errorImportFileNotFound": {
+    "message": "Import error: File not found"
+  },
+  "errorFailedToLoadAdvancedMisc": {
+    "message": "Failed to load Advanced: Misc settings"
+  },
+  "errorFailedToLoadAdvancedCookies": {
+    "message": "Failed to load Advanced: Cookies settings"
+  },
+  "errorFailedToLoadAdvancedContainer": {
+    "message": "Failed to load Advanced: Container settings"
+  },
+  "errorFailedToLoadActions": {
+    "message": "Failed to load Actions"
+  },
+  "savedMessage": {
+    "message": "Saved"
   }
 }

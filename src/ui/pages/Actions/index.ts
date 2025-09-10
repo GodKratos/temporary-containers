@@ -91,6 +91,6 @@ export async function initActionsPage(): Promise<void> {
       btnConvertTemporary.setAttribute('data-listener', 'true');
     }
   } catch (error) {
-    showError('Failed to load Actions');
+    showError(browser.i18n.getMessage('errorFailedToLoadActions'));
   }
 }

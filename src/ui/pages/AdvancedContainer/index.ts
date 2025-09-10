@@ -26,6 +26,6 @@ export async function initAdvancedContainerPage(): Promise<void> {
 
     // ...bind fields to preferences and handle save events...
   } catch (error) {
-    showError('Failed to load Advanced: Container settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedContainer'));
   }
 }

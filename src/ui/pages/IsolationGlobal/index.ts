@@ -84,28 +84,28 @@ export async function initIsolationGlobalPage(): Promise<void> {
       urlNavigationSelect.addEventListener('change', async () => {
         preferences.isolation.global.navigation.action = urlNavigationSelect.value as any;
         await savePreferences(preferences);
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       });
     }
     if (leftClickSelect) {
       leftClickSelect.addEventListener('change', async () => {
         preferences.isolation.global.mouseClick.left.action = leftClickSelect.value as any;
         await savePreferences(preferences);
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       });
     }
     if (middleClickSelect) {
       middleClickSelect.addEventListener('change', async () => {
         preferences.isolation.global.mouseClick.middle.action = middleClickSelect.value as any;
         await savePreferences(preferences);
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       });
     }
     if (ctrlLeftClickSelect) {
       ctrlLeftClickSelect.addEventListener('change', async () => {
         preferences.isolation.global.mouseClick.ctrlleft.action = ctrlLeftClickSelect.value as any;
         await savePreferences(preferences);
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       });
     }
 
@@ -149,7 +149,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
           preferences.isolation.global.excludedContainers = preferences.isolation.global.excludedContainers.filter((cid: string) => cid !== id);
           await savePreferences(preferences);
           renderExcludedContainers();
-          showSuccess('Saved!');
+          showSuccess(browser.i18n.getMessage('savedMessage'));
         });
         tag.appendChild(remove);
         excludedContainersDiv.appendChild(tag);
@@ -163,7 +163,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         preferences.isolation.global.excludedContainers.push(id);
         await savePreferences(preferences);
         renderExcludedContainers();
-        showSuccess('Saved!');
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       }
     });
 
@@ -183,7 +183,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
           preferences.ignoreRequests = preferences.ignoreRequests.filter((d: string) => d !== domain);
           await savePreferences(preferences);
           renderIgnoredDomains();
-          showSuccess('Saved!');
+          showSuccess(browser.i18n.getMessage('savedMessage'));
         });
         tag.appendChild(remove);
         ignoredDomainsDiv.appendChild(tag);
@@ -199,12 +199,12 @@ export async function initIsolationGlobalPage(): Promise<void> {
           await savePreferences(preferences);
           renderIgnoredDomains();
           ignoredDomainsInput.value = '';
-          showSuccess('Saved!');
+          showSuccess(browser.i18n.getMessage('savedMessage'));
         }
       }
     });
 
   } catch (error) {
-    showError('Failed to load Isolation: Global settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
   }
 }

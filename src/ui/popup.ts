@@ -63,16 +63,18 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   },
 };
 
-const glossaryData = {
-  'Isolation': `
-    <p>Isolation prevents websites from tracking you across different containers.</p>
-    <p>When enabled, Temporary Containers will:</p>
-    <ul>
-      <li>Open websites in new temporary containers based on your isolation settings</li>
-      <li>Prevent websites from sharing data between containers</li>
-    </ul>
-  `,
-};
+function getGlossaryData() {
+  return {
+    'Isolation': `
+      <p data-i18n="glossaryIsolationDescription">${browser.i18n.getMessage('glossaryIsolationDescription')}</p>
+      <p data-i18n="glossaryIsolationWhenEnabled">${browser.i18n.getMessage('glossaryIsolationWhenEnabled')}</p>
+      <ul>
+        <li data-i18n="glossaryIsolationFeature1">${browser.i18n.getMessage('glossaryIsolationFeature1')}</li>
+        <li data-i18n="glossaryIsolationFeature2">${browser.i18n.getMessage('glossaryIsolationFeature2')}</li>
+      </ul>
+    `,
+  };
+}
 
 function updateIsolationIcon() {
   if (!elements.toggleIsolation || !app.storage?.isolation) return;
@@ -254,7 +256,7 @@ async function initialize() {
     // Setup sidebar tab navigation
     setupSidebarTabs();
     // Initialize glossary
-    createGlossarySystem(glossaryData);
+    createGlossarySystem(getGlossaryData());
     // Set default tab based on preferences
     let defaultTab = 'isolation-global';
     if (app.preferences?.ui?.popupDefaultTab) {

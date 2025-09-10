@@ -26,6 +26,6 @@ export async function initAdvancedMiscPage(): Promise<void> {
 
     // ...bind fields to preferences and handle save events...
   } catch (error) {
-    showError('Failed to load Advanced: Misc settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedMisc'));
   }
 }

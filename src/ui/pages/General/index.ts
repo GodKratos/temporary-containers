@@ -202,7 +202,7 @@ export async function initGeneralPage(): Promise<void> {
         obj = obj[keys[i]];
       }
       obj[keys[keys.length - 1]] = value;
-      savePreferences(preferences).then(() => showSuccess('Saved')).catch(() => showError('Failed to save'));
+      savePreferences(preferences).then(() => showSuccess(browser.i18n.getMessage('savedMessage'))).catch(() => showError(browser.i18n.getMessage('errorFailedToSave')));
     }
 
     // Event listeners for all fields
@@ -251,6 +251,6 @@ export async function initGeneralPage(): Promise<void> {
     });
 
   } catch (error) {
-    showError('Failed to load General settings');
+    showError(browser.i18n.getMessage('errorFailedToLoadGeneral'));
   }
 }

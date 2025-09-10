@@ -1,108 +1,216 @@
 {
-  "automaticMode": {
+  "addDomainAndPressEnter": {
+    "message": "Alan adı ekleyip Enter tuşuna basın"
+  },
+  "addRule": {
+    "message": "Kural Ekle"
+  },
+  "allowAllCookies": {
+    "message": "Tüm çerezlere izin ver"
+  },
+  "alwaysIsolate": {
+    "message": "Her zaman izole et"
+  },
+  "blockAllCookies": {
+    "message": "Tüm çerezleri engelle"
+  },
+  "containerCleanup": {
+    "message": "Konteyner Temizliği"
+  },
+  "containerCleanupDescription": {
+    "message": "Çıkışta konteynerleri temizle."
+  },
+  "containerTimeout": {
+    "message": "Konteyner Zaman Aşımı"
+  },
+  "containerTimeoutDescription": {
+    "message": "Konteynerler için saniye cinsinden zaman aşımı."
+  },
+  "containersActive": {
+    "message": "Aktif Konteynerler"
+  },
+  "containersCreated": {
+    "message": "Oluşturulan Konteynerler"
+  },
+  "containersRemoved": {
+    "message": "Kaldırılan Konteynerler"
+  },
+  "contextMenu": {
+    "message": "Bağlam Menüsü"
+  },
+  "contextMenuDescription": {
+    "message": "Bağlam menüsünü göster."
+  },
+  "cookieBehavior": {
+    "message": "Çerez Davranışı"
+  },
+  "cookieStoreId": {
+    "message": "Çerez Deposu ID'si"
+  },
+  "cookieStoreIdDescription": {
+    "message": "Çerez deposu ID'sini kullan."
+  },
+  "debugMode": {
+    "message": "Hata Ayıklama Modu"
+  },
+  "debugModeDescription": {
+    "message": "Hata ayıklama modunu etkinleştir."
+  },
+  "default": {
+    "message": "Varsayılan"
+  },
+  "deleteCookies": {
+    "message": "Çerezleri Sil"
+  },
+  "deleteCookiesDescription": {
+    "message": "Çıkışta çerezleri sil."
+  },
+  "disableIsolation": {
+    "message": "İzolasyonu Devre Dışı Bırak"
+  },
+  "domainIsolation": {
+    "message": "Alan Adı İzolasyonu"
+  },
+  "domainPatternExampleCom": {
+    "message": "Alan adı deseni (örn. *.example.com)"
+  },
+  "enableIsolation": {
+    "message": "İzolasyonu Etkinleştir"
+  },
+  "errorFailedToLoadActions": {
+    "message": "Eylemler yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedContainer": {
+    "message": "Gelişmiş Konteyner ayarları yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedCookies": {
+    "message": "Gelişmiş Çerez ayarları yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedMisc": {
+    "message": "Gelişmiş Çeşitli ayarları yüklenemedi"
+  },
+  "errorFailedToLoadGeneral": {
+    "message": "Genel ayarlar yüklenemedi"
+  },
+  "errorFailedToLoadIsolationGlobal": {
+    "message": "Küresel İzolasyon ayarları yüklenemedi"
+  },
+  "errorFailedToLoadIsolationPerDomain": {
+    "message": "Alan Adı Başına İzolasyon ayarları yüklenemedi"
+  },
+  "errorFailedToLoadStatistics": {
+    "message": "İstatistikler yüklenemedi"
+  },
+  "errorFailedToSave": {
+    "message": "Kaydedilemedi"
+  },
+  "errorImportFileNotFound": {
+    "message": "İçe aktarma hatası: Dosya bulunamadı"
+  },
+  "exportSettings": {
+    "message": "Ayarları Dışa Aktar"
+  },
+  "exportSettingsDescription": {
+    "message": "Ayarları bir dosyaya aktarın."
+  },
+  "extensionName": {
+    "message": "Temporary Containers Plus"
+  },
+  "glossary": {
+    "message": "Sözlük"
+  },
+  "glossaryIsolationDescription": {
+    "message": "İzolasyon, web sitelerinin sizi farklı konteynerler arasında izlemesini önler."
+  },
+  "glossaryIsolationFeature1": {
+    "message": "İzolasyon ayarlarınıza göre web sitelerini yeni geçici konteynerlerde açar"
+  },
+  "glossaryIsolationFeature2": {
+    "message": "Web sitelerinin konteynerler arasında veri paylaşımını önler"
+  },
+  "glossaryIsolationWhenEnabled": {
+    "message": "Etkinleştirildiğinde, Temporary Containers şunları yapacaktır:"
+  },
+  "glossaryTitle": {
+    "message": "Sözlük"
+  },
+  "importSettings": {
+    "message": "Ayarları İçe Aktar"
+  },
+  "importSettingsDescription": {
+    "message": "Ayarları bir dosyadan içe aktarın."
+  },
+  "initializeErrorText": {
+    "message": "Başlatılamadı. Lütfen sayfayı yeniden yüklemeyi deneyin."
+  },
+  "initializingLabel": {
+    "message": "Başlatılıyor..."
+  },
+  "isolationPrevented": {
+    "message": "İzolasyon Engellendi"
+  },
+  "neverIsolate": {
+    "message": "Asla izole etme"
+  },
+  "noDomainIsolationRulesConfigured": {
+    "message": "Alan adı izolasyon kuralları yapılandırılmamış."
+  },
+  "openNewDeletesHistoryContainer": {
+    "message": "Yeni \"Geçmişi Silen Geçici Konteyner\" aç"
+  },
+  "openNewTemporaryContainer": {
+    "message": "Yeni geçici konteyner aç"
+  },
+  "openPreferences": {
+    "message": "Tercihleri/Seçenekleri Aç"
+  },
+  "optionsActionsConvertPermanent": {
+    "message": "Geçici konteyneri kalıcıya dönüştür"
+  },
+  "optionsActionsConvertTemporary": {
+    "message": "Kalıcı konteyneri geçiciye dönüştür"
+  },
+  "optionsActionsNewTemporaryContainer": {
+    "message": "Sekmeyi yeni geçici konteynerde yeniden aç"
+  },
+  "optionsActionsNotAvailable": {
+    "message": "Bu sekmede eylemler mevcut değil"
+  },
+  "optionsAdvancedContainer": {
+    "message": "Gelişmiş: Konteyner"
+  },
+  "optionsAdvancedCookies": {
+    "message": "Gelişmiş: Çerezler"
+  },
+  "optionsAdvancedMisc": {
+    "message": "Gelişmiş: Çeşitli"
+  },
+  "optionsGeneralAutomaticMode": {
     "message": "Otomatik Mod"
-  },
-  "optionsNavGeneral": {
-    "message": "Genel"
-  },
-  "optionsNavIsolation": {
-    "message": "Yalıtım"
-  },
-  "optionsNavAdvanced": {
-    "message": "Gelişmiş"
-  },
-  "optionsNavStatistics": {
-    "message": "İstatistikler"
-  },
-  "optionsNavExportImport": {
-    "message": "Dışa/İçe Aktar"
-  },
-  "optionsGeneralNotifications": {
-    "message": "Geçici Konteynerleri Silerken Bildirimler"
-  },
-  "optionsGeneralContainerNamePrefix": {
-    "message": "Konteyner Adı Ön Eki"
   },
   "optionsGeneralContainerColor": {
     "message": "Konteyner Rengi"
   },
-  "optionsGeneralContainerColorBlue": {
-    "message": "mavi"
-  },
-  "optionsGeneralContainerColorTurquoise": {
-    "message": "turkuaz"
-  },
-  "optionsGeneralContainerColorGreen": {
-    "message": "yeşil"
-  },
-  "optionsGeneralContainerColorYellow": {
-    "message": "sarı"
-  },
-  "optionsGeneralContainerColorOrange": {
-    "message": "turuncu"
-  },
-  "optionsGeneralContainerColorRed": {
-    "message": "kırmızı"
-  },
-  "optionsGeneralContainerColorPink": {
-    "message": "pembe"
-  },
-  "optionsGeneralContainerColorPurple": {
-    "message": "mor"
-  },
-  "optionsGeneralContainerColorToolbar": {
-    "message": "araç çubuğu (siyah/gri)"
-  },
-  "optionsGeneralContainerRandomColor": {
-    "message": "Rastgele Konteyner Rengi"
+  "optionsGeneralContainerColorRandomExcluded": {
+    "message": "Rastgele konteyner rengi için hariç tutulan renkler"
   },
   "optionsGeneralContainerIcon": {
     "message": "Konteyner Simgesi"
   },
-  "optionsGeneralContainerIconFingerprint": {
-    "message": "parmak izi"
-  },
-  "optionsGeneralContainerIconBriefcase": {
-    "message": "çanta"
-  },
-  "optionsGeneralContainerIconDollar": {
-    "message": "dolar"
-  },
-  "optionsGeneralContainerIconCart": {
-    "message": "sepet"
-  },
-  "optionsGeneralContainerIconCircle": {
-    "message": "daire"
-  },
-  "optionsGeneralContainerIconGift": {
-    "message": "hediye"
-  },
-  "optionsGeneralContainerIconVacation": {
-    "message": "tatil"
-  },
-  "optionsGeneralContainerIconFood": {
-    "message": "yiyecek"
-  },
-  "optionsGeneralContainerIconFruit": {
-    "message": "meyve"
-  },
-  "optionsGeneralContainerIconPet": {
-    "message": "hayvan"
-  },
-  "optionsGeneralContainerIconTree": {
-    "message": "ağaç"
-  },
-  "optionsGeneralContainerIconChill": {
-    "message": "ferahlık"
-  },
-  "optionsGeneralContainerIconFence": {
-    "message": "çit"
-  },
   "optionsGeneralContainerIconRandom": {
     "message": "Rastgele Konteyner Simgesi"
   },
+  "optionsGeneralContainerIconRandomExcluded": {
+    "message": "Rastgele konteyner simgesi için hariç tutulan simgeler"
+  },
+  "optionsGeneralContainerNamePrefix": {
+    "message": "Konteyner Adı Ön Eki"
+  },
   "optionsGeneralContainerNumber": {
     "message": "Konteyner Numarası"
+  },
+  "optionsGeneralContainerNumberHide": {
+    "message": "Numarayı gizle"
   },
   "optionsGeneralContainerNumberKeepCounting": {
     "message": "Saymaya devam et (öntanımlı)"
@@ -113,53 +221,77 @@
   "optionsGeneralContainerNumberReuseNumbers": {
     "message": "Kullanılabilir numaraları yeniden kullan"
   },
-  "optionsGeneralContainerNumberHide": {
-    "message": "Numarayı gizle"
+  "optionsGeneralContainerRandomColor": {
+    "message": "Rastgele Konteyner Rengi"
   },
   "optionsGeneralContainerRemoval": {
     "message": "Artık gerekli olmayan geçici konteynerleri sil"
   },
-  "optionsGeneralContainerRemovalTooltip": {
-    "message": "\"X dakika\", bu zaman çerçevesi içinde \"Sekmeyi Kapatmayı Geri Al\" yapmanızı sağlar"
-  },
   "optionsGeneralContainerRemoval15Minutes": {
     "message": "İçindeki son sekme kapandıktan 15 dakika sonra (öntanımlı)"
-  },
-  "optionsGeneralContainerRemoval5Minutes": {
-    "message": "İçindeki son sekme kapandıktan 5 dakika sonra"
   },
   "optionsGeneralContainerRemoval2Minutes": {
     "message": "İçindeki son sekme kapandıktan 2 dakika sonra"
   },
+  "optionsGeneralContainerRemoval5Minutes": {
+    "message": "İçindeki son sekme kapandıktan 5 dakika sonra"
+  },
   "optionsGeneralContainerRemovalInstant": {
     "message": "İçindeki son sekme kapandıktan sonra"
+  },
+  "optionsGeneralNotifications": {
+    "message": "Geçici Konteynerleri Silerken Bildirimler"
   },
   "optionsGeneralToolbarIconColor": {
     "message": "Araç Çubuğu Simge Rengi"
   },
-  "optionsGeneralToolbarIconColorTooltip": {
-    "message": "Öntanımlı değere geri dönerken, temanıza bağlı olarak tarayıcıyı yeniden başlatmanız gerekebilir."
+  "optionsGeneralToolbarPopup": {
+    "message": "Araç çubuğu simgesine tıklandığında açılır pencereyi göster"
   },
-  "optionsGeneralToolbarIconColorDefault": {
-    "message": "öntanımlı"
+  "optionsIsolationAlways": {
+    "message": "Her Zaman İzole Et"
   },
-  "optionsGeneralToolbarIconColorBlackSimple": {
-    "message": "siyah (basit)"
+  "optionsIsolationDomain": {
+    "message": "Hedef alan adı mevcut alan adıyla tam olarak eşleşmiyorsa izole et"
   },
-  "optionsGeneralToolbarIconColorBlueSimple": {
-    "message": "mavi (basit)"
+  "optionsIsolationExcludeContainers": {
+    "message": "Kalıcı Konteynerleri Hariç Tut"
   },
-  "optionsGeneralToolbarIconColorRedSimple": {
-    "message": "kırmızı (basit)"
+  "optionsIsolationExcludeContainersDescription": {
+    "message": "Seçilen konteynerler için izolasyon olaylarını devre dışı bırakır."
   },
-  "optionsGeneralToolbarIconColorWhiteSimple": {
-    "message": "beyaz (basit)"
+  "optionsIsolationGlobalCtrlLeftClick": {
+    "message": "Ctrl/Cmd + Sol Tık"
   },
-  "optionsDomainPattern": {
-    "message": "Etki Alanı Kalıbı"
+  "optionsIsolationGlobalLeftClick": {
+    "message": "Sol Tık"
   },
-  "optionsExclusionPattern": {
-    "message": "Hariç Tutma Kalıbı"
+  "optionsIsolationGlobalMiddleClick": {
+    "message": "Orta Tık"
+  },
+  "optionsIsolationGlobalMouseDescription": {
+    "message": "Fare tıklama etkinlikleri için küresel izolasyon kuralı. Küresel veya alan adı izolasyonu etkinken kullanıldığında, izolasyonu etkinleştiren herhangi bir ayar uygulanacaktır."
+  },
+  "optionsIsolationGlobalMouseNavigation": {
+    "message": "Fare Navigasyonu"
+  },
+  "optionsIsolationGlobalUrlNavigation": {
+    "message": "URL Navigasyonu"
+  },
+  "optionsIsolationGlobalUrlNavigationDescription": {
+    "message": "Mevcut sekmeler, yeni sekmeler, adres çubuğu ve fare tıklamaları için tüm URL navigasyonu için küresel izolasyon kuralı."
+  },
+  "optionsIsolationIgnoredDomains": {
+    "message": "Yoksayılan Alan Adları"
+  },
+  "optionsIsolationIgnoredDomainsDescription": {
+    "message": "Yoksayılan alan adları izole edilmeyecektir."
+  },
+  "optionsIsolationNever": {
+    "message": "Asla İzole Etme"
+  },
+  "optionsIsolationSubdomain": {
+    "message": "Hedef alan adı mevcut alan adı veya alt alan adlarıyla eşleşmiyorsa izole et"
   },
   "optionsIsolationTabGlobal": {
     "message": "Genel"
@@ -167,154 +299,31 @@
   "optionsIsolationTabPerDomain": {
     "message": "Etki Alanı Başına"
   },
-  "optionsIsolationTabMac": {
-    "message": "Çok Hesaplı Konteynerler"
+  "optionsNavActions": {
+    "message": "Eylemler"
   },
-  "optionsIsolationNavigation": {
-    "message": "Gezinme"
+  "optionsNavExportImport": {
+    "message": "Dışa/İçe Aktar"
   },
-  "optionsIsolationTargetDomain": {
-    "message": "Hedef Etki Alanı"
+  "optionsNavGeneral": {
+    "message": "Genel"
   },
-  "optionsIsolationMouseClick": {
-    "message": "Fare Tıklaması"
+  "optionsNavStatistics": {
+    "message": "İstatistikler"
   },
-  "optionsIsolationMouseClickLeftMouse": {
-    "message": "Sol Tıklama",
-    "description": "Left mouse click"
+  "rejectTrackers": {
+    "message": "İzleyicileri Reddet"
   },
-  "optionsIsolationMouseClickCtrlLeftMouse": {
-    "message": "Ctrl/Cmd+Sol Tıklama",
-    "description": "Ctrl or Cmd key + left mouse click"
+  "resetStatistics": {
+    "message": "İstatistikleri Sıfırla"
   },
-  "optionsIsolationMouseClickMiddleMouse": {
-    "message": "Orta Tıklama",
-    "description": "Middle mouse click"
-  },
-  "optionsIsolationExclude": {
-    "message": "Hariç Tut",
-    "description": "verb"
-  },
-  "optionsIsolationDisabled": {
-    "message": "Devre Dışı"
-  },
-  "optionsIsolationEnabled": {
-    "message": "Etkin"
-  },
-  "optionsIsolationGlobalExcludePermanentContainers": {
-    "message": "Kalıcı Konteynerleri Hariç Tut"
-  },
-  "optionsIsolationGlobalExclusionPermanentContainers": {
-    "message": "Hariç Tutulacak Kalıcı Konteynerler"
-  },
-  "optionsIsolationGlobalSelectExclusionContainers": {
-    "message": "Yalıtımdan Hariç Tutulacak Kalıcı Konteynerleri Seçin"
-  },
-  "optionsIsolationExcludeTargetDomains": {
-    "message": "Hedef Etki Alanlarını Hariç Tut"
-  },
-  "optionsIsolationNoDomainsExcluded": {
-    "message": "Hariç tutulan etki alanı yok"
-  },
-  "optionsIsolationMacIsolateNonMac": {
-    "message": "Hedef etki alanı o konteynere MAC-\"Her zaman burada aç\" olarak atanmayan kalıcı konteynerlerdeki gezinmeleri yalıt"
-  },
-  "optionsIsolationPerDomainPatternNoEmpty": {
-    "message": "Etki alanı kalıbı boş olamaz"
-  },
-  "optionsIsolationPerDomainPatternExists": {
-    "message": "Etki alanı kalıbı zaten var"
-  },
-  "optionsIsolationPerDomainAlwaysOpenIn": {
-    "message": "Her zaman burada aç"
-  },
-  "optionsIsolationPerDomainDisableIfNavPermContainer": {
-    "message": "Kalıcı Konteynerlerde Geziniliyorsa Devre Dışı Bırak"
-  },
-  "optionsIsolationPerDomainDisableIfPermContainer": {
-    "message": "Kalıcı Konteynerlerde Devre Dışı Bırak"
-  },
-  "optionsIsolationPerDomainDisableIfNavTempContainer": {
-    "message": "Geçici Konteynerlerde Geziniliyorsa Devre Dışı Bırak"
-  },
-  "optionsIsolationPerDomainDisableIfTempContainer": {
-    "message": "Geçici Konteynerlerde Devre Dışı Bırak"
-  },
-  "optionsIsolationPerDomainSaved": {
+  "savedMessage": {
     "message": "Kaydedildi"
   },
-  "optionsIsolationPerDomainAdd": {
-    "message": "$PATTERN$ ekle",
-    "description": "To finish adding a new domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "Pattern42"
-      }
-    }
+  "toggleIsolation": {
+    "message": "İzolasyonu Değiştir"
   },
-  "optionsIsolationPerDomainEdit": {
-    "message": "$PATTERN$ düzenle",
-    "description": "To start editing a domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheReallyBeautifulPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainDoneEditing": {
-    "message": "$PATTERN$ düzenleme tamamlandı",
-    "description": "To finish editing a domain pattern",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheWaitWhyArentMyContainersWorkingPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainRemove": {
-    "message": "$PATTERN$ kaldır",
-    "placeholders": {
-      "pattern": {
-        "content": "$1",
-        "example": "TheBestPattern"
-      }
-    }
-  },
-  "optionsIsolationPerDomainRemoveConfirmation": {
-    "message": "$PATTERN$ kaldırılsın mı?",
-    "placeholders": {
-      "pattern": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionsIsolationPerDomainNoIsolatedDomainsAdded": {
-    "message": "Henüz yalıtılmış etki alanı eklenmedi"
-  },
-  "optionsIsolationPerDomainFilterIsolatedDomains": {
-    "message": "Yalıtılmış Etki Alanlarını Süz"
-  },
-  "optionsIsolationPerDomainIsolatedDomains": {
-    "message": "Yalıtılmış Etki Alanları"
-  },
-  "optionsIsolationPerDomainDragTooltip": {
-    "message": "Yukarı/aşağı sürükleyin - Listede önce olan ilk eşleşir"
-  },
-  "optionsIsolationSettingsGlobal": {
-    "message": "Genel Kullan"
-  },
-  "optionsIsolationSettingsNotSameDomain": {
-    "message": "Sekme Etki Alanı ve Alt Etki Alanlarından Farklı"
-  },
-  "optionsIsolationSettingsNotSameDomainExact": {
-    "message": "Sekme Etki Alanından Farklı"
-  },
-  "optionsIsolationSettingsAlways": {
-    "message": "Her Zaman"
-  },
-  "optionsIsolationSettingsNever": {
-    "message": "Asla"
+  "useGlobalSetting": {
+    "message": "Küresel Ayarı Kullan"
   }
 }
