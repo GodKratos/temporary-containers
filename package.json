@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Temporary Containers Plus",
   "scripts": {
+    "prepare": "husky install",
     "clean": "rimraf web-ext-artifacts .web-ext-artifacts dist",
     "build": "run-s clean build:webpack",
     "build:webpack": "webpack",
@@ -86,19 +87,14 @@
   "browserslist": [
     "Firefox >= 67"
   ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint --edit $1",
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
-  },
   "lint-staged": {
     "*.{ts,js}": [
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ],
     "*.{html,css,json,yml,md}": [
-      "prettier --write"
+      "prettier --write",
+      "git add"
     ]
   },
   "private": true,
