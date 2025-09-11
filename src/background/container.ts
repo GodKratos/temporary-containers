@@ -112,9 +112,7 @@ export class Container {
     request?: false | WebRequestOnBeforeRequestDetails;
     deletesHistory?: boolean;
   }): Promise<browser.contextualIdentities.ContextualIdentity> {
-    const containerOptions = this.generateContainerNameIconColor(
-      (request && request.url) || url
-    );
+    const containerOptions = this.generateContainerNameIconColor((request && request.url) || url);
 
     if (containerOptions.number) {
       this.storage.local.tempContainersNumbers.push(containerOptions.number);
@@ -130,32 +128,20 @@ export class Container {
     containerOptions.deletesHistory = deletesHistory;
 
     try {
-      this.debug(
-        '[createTabInTempContainer] creating new container',
-        containerOptions
-      );
+      this.debug('[createTabInTempContainer] creating new container', containerOptions);
       const contextualIdentity = await browser.contextualIdentities.create({
         name: containerOptions.name,
         icon: containerOptions.icon,
         color: containerOptions.color,
       });
-      this.debug(
-        '[createTabInTempContainer] contextualIdentity created',
-        contextualIdentity
-      );
+      this.debug('[createTabInTempContainer] contextualIdentity created', contextualIdentity);
 
-      this.storage.local.tempContainers[
-        contextualIdentity.cookieStoreId
-      ] = containerOptions;
+      this.storage.local.tempContainers[contextualIdentity.cookieStoreId] = containerOptions;
       await this.storage.persist();
 
       return contextualIdentity;
     } catch (error) {
-      this.debug(
-        '[createTabInTempContainer] error while creating container',
-        containerOptions.name,
-        error
-      );
+      this.debug('[createTabInTempContainer] error while creating container', containerOptions.name, error);
       throw error;
     }
   }
@@ -185,28 +171,14 @@ export class Container {
       if (tab) {
         newTabOptions.active = tab.active;
         if (tab.index >= 0) {
-          if (
-            !tab.active &&
-            this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT]
-          ) {
-            this.debug(
-              '[createTabInTempContainer] lastCreatedInactiveTab id',
-              this.lastCreatedInactiveTab
-            );
+          if (!tab.active && this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT]) {
+            this.debug('[createTabInTempContainer] lastCreatedInactiveTab id', this.lastCreatedInactiveTab);
             try {
-              const lastCreatedInactiveTab = await browser.tabs.get(
-                this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT]
-              );
-              this.debug(
-                '[createTabInTempContainer] lastCreatedInactiveTab',
-                lastCreatedInactiveTab
-              );
+              const lastCreatedInactiveTab = await browser.tabs.get(this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT]);
+              this.debug('[createTabInTempContainer] lastCreatedInactiveTab', lastCreatedInactiveTab);
               newTabOptions.index = lastCreatedInactiveTab.index + 1;
             } catch (error) {
-              this.debug(
-                '[createTabInTempContainer] failed to get lastCreatedInactiveTab',
-                error
-              );
+              this.debug('[createTabInTempContainer] failed to get lastCreatedInactiveTab', error);
               newTabOptions.index = tab.index + 1;
             }
           } else {
@@ -244,26 +216,16 @@ export class Container {
         newTabOptions.active = false;
       }
 
-      this.debug(
-        '[createTabInTempContainer] creating tab in temporary container',
-        newTabOptions
-      );
+      this.debug('[createTabInTempContainer] creating tab in temporary container', newTabOptions);
       const newTab = (await browser.tabs.create(newTabOptions)) as Tab;
       if (tab && !tab.active) {
-        this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT] =
-          newTab.id;
+        this.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT] = newTab.id;
       }
-      this.debug(
-        '[createTabInTempContainer] new tab in temp container created',
-        newTab
-      );
+      this.debug('[createTabInTempContainer] new tab in temp container created', newTab);
       if (url) {
         this.urlCreatedContainer[url] = contextualIdentity.cookieStoreId;
         delay(1000).then(() => {
-          this.debug(
-            '[createTabInTempContainer] cleaning up urlCreatedContainer',
-            url
-          );
+          this.debug('[createTabInTempContainer] cleaning up urlCreatedContainer', url);
           delete this.urlCreatedContainer[url];
         });
       }
@@ -275,10 +237,7 @@ export class Container {
 
       return newTab;
     } catch (error) {
-      this.debug(
-        '[createTabInTempContainer] error while creating new tab',
-        error
-      );
+      this.debug('[createTabInTempContainer] error while creating new tab', error);
       throw error;
     }
   }
@@ -329,23 +288,16 @@ export class Container {
     if (url) {
       const parsedUrl = new URL(url);
       if (containerName.includes('%fulldomain%')) {
-        containerName = containerName.replace(
-          '%fulldomain%',
-          parsedUrl.hostname
-        );
+        containerName = containerName.replace('%fulldomain%', parsedUrl.hostname);
       }
       if (containerName.includes('%domain%')) {
-        const domain = psl.isValid(parsedUrl.hostname)
-          ? psl.get(parsedUrl.hostname)
-          : parsedUrl.hostname;
+        const domain = psl.isValid(parsedUrl.hostname) ? psl.get(parsedUrl.hostname) : parsedUrl.hostname;
         if (domain) {
           containerName = containerName.replace('%domain%', domain);
         }
       }
     } else {
-      containerName = containerName
-        .replace('%fulldomain%', '')
-        .replace('%domain%', '');
+      containerName = containerName.replace('%fulldomain%', '').replace('%domain%', '');
     }
     if (tempContainerNumber) {
       containerName = `${containerName}${tempContainerNumber}`;
@@ -357,19 +309,15 @@ export class Container {
     let containerColor = this.pref.container.color;
     if (this.pref.container.colorRandom) {
       const containerColors = this.getAvailableContainerColors();
-      containerColor =
-        containerColors[Math.floor(Math.random() * containerColors.length)];
+      containerColor = containerColors[Math.floor(Math.random() * containerColors.length)];
     }
     let containerIcon = this.pref.container.icon;
     if (this.pref.container.iconRandom) {
-      let containerIcons = this.containerIcons.filter(
-        (icon) => !this.pref.container.iconRandomExcluded.includes(icon)
-      );
+      let containerIcons = this.containerIcons.filter(icon => !this.pref.container.iconRandomExcluded.includes(icon));
       if (!containerIcons.length) {
         containerIcons = this.containerIcons;
       }
-      containerIcon =
-        containerIcons[Math.floor(Math.random() * containerIcons.length)];
+      containerIcon = containerIcons[Math.floor(Math.random() * containerIcons.length)];
     }
     return {
       name: containerName,
@@ -381,36 +329,24 @@ export class Container {
   }
 
   isPermanent(cookieStoreId: CookieStoreId): boolean {
-    if (
-      cookieStoreId !== `${this.background.containerPrefix}-default` &&
-      !this.storage.local.tempContainers[cookieStoreId]
-    ) {
+    if (cookieStoreId !== `${this.background.containerPrefix}-default` && !this.storage.local.tempContainers[cookieStoreId]) {
       return true;
     }
     return false;
   }
 
   isTemporary(cookieStoreId: CookieStoreId, type?: 'deletesHistory'): boolean {
-    return !!(
-      this.storage.local.tempContainers[cookieStoreId] &&
-      (!type || this.storage.local.tempContainers[cookieStoreId][type])
-    );
+    return !!(this.storage.local.tempContainers[cookieStoreId] && (!type || this.storage.local.tempContainers[cookieStoreId][type]));
   }
 
   isClean(cookieStoreId: CookieStoreId): boolean {
-    return (
-      this.storage.local.tempContainers[cookieStoreId] &&
-      this.storage.local.tempContainers[cookieStoreId].clean
-    );
+    return this.storage.local.tempContainers[cookieStoreId] && this.storage.local.tempContainers[cookieStoreId].clean;
   }
 
   markUnclean(tabId: TabId): void {
     const cookieStoreId = this.tabs.containerMap.get(tabId);
     if (cookieStoreId && this.isClean(cookieStoreId)) {
-      this.debug(
-        '[markUnclean] marking tmp container as not clean anymore',
-        cookieStoreId
-      );
+      this.debug('[markUnclean] marking tmp container as not clean anymore', cookieStoreId);
       this.storage.local.tempContainers[cookieStoreId].clean = false;
     }
   }
@@ -461,9 +397,7 @@ export class Container {
     }
 
     if (!availableColors.length) {
-      availableColors = this.containerColors.filter(
-        (color) => !this.pref.container.colorRandomExcluded.includes(color)
-      );
+      availableColors = this.containerColors.filter(color => !this.pref.container.colorRandomExcluded.includes(color));
       if (!availableColors.length) {
         availableColors = this.containerColors;
       }
@@ -474,37 +408,27 @@ export class Container {
 
   removeFromStorage(cookieStoreId: CookieStoreId): Promise<boolean> {
     this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-      (containerNumber) =>
-        this.storage.local.tempContainers[cookieStoreId].number !==
-        containerNumber
+      containerNumber => this.storage.local.tempContainers[cookieStoreId].number !== containerNumber
     );
     delete this.storage.local.tempContainers[cookieStoreId];
     return this.storage.persist();
   }
 
   getType(cookieStoreId: CookieStoreId): string {
-    return this.storage.local.tempContainers[cookieStoreId].deletesHistory
-      ? 'deletesHistory'
-      : 'regular';
+    return this.storage.local.tempContainers[cookieStoreId].deletesHistory ? 'deletesHistory' : 'regular';
   }
 
   getRemovalDelay(cookieStoreId: CookieStoreId): number {
-    return this.getType(cookieStoreId) === 'deletesHistory'
-      ? this.pref.deletesHistory.containerRemoval
-      : this.pref.container.removal;
+    return this.getType(cookieStoreId) === 'deletesHistory' ? this.pref.deletesHistory.containerRemoval : this.pref.container.removal;
   }
 
   cleanupNumbers(): void {
-    this.storage.local.tempContainersNumbers = Object.values(
-      this.storage.local.tempContainers
-    ).map((container) => container.number);
+    this.storage.local.tempContainersNumbers = Object.values(this.storage.local.tempContainers).map(container => container.number);
   }
 
   cleanupNumber(cookieStoreId: CookieStoreId): void {
     this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-      (containerNumber) =>
-        this.storage.local.tempContainers[cookieStoreId].number !==
-        containerNumber
+      containerNumber => this.storage.local.tempContainers[cookieStoreId].number !== containerNumber
     );
   }
 

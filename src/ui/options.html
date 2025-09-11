@@ -1,120 +1,120 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title data-i18n="extensionName">Temporary Containers Plus</title>
-  <link rel="stylesheet" href="css/photon.css" />
-  <link rel="stylesheet" href="css/options.css" />
-  <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
-  <meta name="color-scheme" content="light dark">
-</head>
-<body>
-  <div id="container" class="container">
-    <div id="message-container" class="message-container hidden">
-      <div id="message" class="message"></div>
-    </div>
-    
-    <div id="initialize-loader" class="initialize-loader hidden">
-      <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
-    </div>
-    
-    <div id="initialize-error" class="initialize-error hidden">
-      <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
-      <div id="initialize-error-details" class="error-details"></div>
-    </div>
-    
-    <div id="app" class="app">
-      <!-- Sidebar Navigation -->
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <h1 data-i18n="extensionName">Temporary Containers Plus</h1>
+  <head>
+    <meta charset="utf-8" />
+    <title data-i18n="extensionName">Temporary Containers Plus</title>
+    <link rel="stylesheet" href="css/photon.css" />
+    <link rel="stylesheet" href="css/options.css" />
+    <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <div id="container" class="container">
+      <div id="message-container" class="message-container hidden">
+        <div id="message" class="message"></div>
+      </div>
+
+      <div id="initialize-loader" class="initialize-loader hidden">
+        <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
+      </div>
+
+      <div id="initialize-error" class="initialize-error hidden">
+        <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
+        <div id="initialize-error-details" class="error-details"></div>
+      </div>
+
+      <div id="app" class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+          <div class="sidebar-header">
+            <h1 data-i18n="extensionName">Temporary Containers Plus</h1>
+          </div>
+          <nav class="sidebar-nav">
+            <ul>
+              <li>
+                <button id="nav-general" class="nav-button active" data-section="general">
+                  <i class="icon-cog"></i>
+                  <span data-i18n="optionsNavGeneral">General</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-isolation-global" class="nav-button" data-section="isolation-global">
+                  <i class="icon-circle-empty"></i>
+                  <span data-i18n="optionsIsolationTabGlobal">Isolation: Global</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-isolation-domain" class="nav-button" data-section="isolation-domain">
+                  <i class="icon-dot-circled"></i>
+                  <span data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-advanced-misc" class="nav-button" data-section="advanced-misc">
+                  <i class="icon-cog-alt"></i>
+                  <span data-i18n="optionsAdvancedMisc">Advanced Settings</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-advanced-cookies" class="nav-button" data-section="advanced-cookies">
+                  <i class="icon-doc-text"></i>
+                  <span data-i18n="optionsAdvancedCookies">Cookie Injection</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-advanced-scripts" class="nav-button" data-section="advanced-scripts">
+                  <i class="icon-file-code"></i>
+                  <span data-i18n="optionsAdvancedScripts">Script Injection</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-advanced-delete-history" class="nav-button" data-section="advanced-delete-history">
+                  <i class="icon-trash-empty"></i>
+                  <span data-i18n="optionsAdvancedDeletesHistory">Deletes History Containers</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-statistics" class="nav-button" data-section="statistics">
+                  <i class="icon-chart-bar"></i>
+                  <span data-i18n="optionsNavStatistics">Statistics</span>
+                </button>
+              </li>
+              <li>
+                <button id="nav-export-import" class="nav-button" data-section="export-import">
+                  <i class="icon-exchange"></i>
+                  <span data-i18n="optionsNavExportImport">Export/Import</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- Main Content Area: Only shell, no static content. Sections will be loaded dynamically. -->
+        <main class="content">
+          <section id="general" class="content-section active"></section>
+          <section id="isolation-global" class="content-section hidden"></section>
+          <section id="isolation-domain" class="content-section hidden"></section>
+          <section id="advanced-container" class="content-section hidden"></section>
+          <section id="advanced-cookies" class="content-section hidden"></section>
+          <section id="advanced-scripts" class="content-section hidden"></section>
+          <section id="advanced-delete-history" class="content-section hidden"></section>
+          <section id="advanced-misc" class="content-section hidden"></section>
+          <section id="statistics" class="content-section hidden"></section>
+          <section id="export-import" class="content-section hidden"></section>
+        </main>
+      </div>
+
+      <div id="glossary" class="glossary hidden">
+        <div class="glossary-content">
+          <div class="glossary-header">
+            <h2 id="glossary-title" data-i18n="glossary">Glossary</h2>
+            <button id="glossary-close" class="button-icon">×</button>
+          </div>
+          <div id="glossary-body" class="glossary-body"></div>
         </div>
-        <nav class="sidebar-nav">
-          <ul>
-            <li>
-              <button id="nav-general" class="nav-button active" data-section="general">
-                <i class="icon-cog"></i>
-                <span data-i18n="optionsNavGeneral">General</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-isolation-global" class="nav-button" data-section="isolation-global">
-                <i class="icon-circle-empty"></i>
-                <span data-i18n="optionsIsolationTabGlobal">Isolation: Global</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-isolation-domain" class="nav-button" data-section="isolation-domain">
-                <i class="icon-dot-circled"></i>
-                <span data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-advanced-misc" class="nav-button" data-section="advanced-misc">
-                <i class="icon-cog-alt"></i>
-                <span data-i18n="optionsAdvancedMisc">Advanced Settings</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-advanced-cookies" class="nav-button" data-section="advanced-cookies">
-                <i class="icon-doc-text"></i>
-                <span data-i18n="optionsAdvancedCookies">Cookie Injection</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-advanced-scripts" class="nav-button" data-section="advanced-scripts">
-                <i class="icon-file-code"></i>
-                <span data-i18n="optionsAdvancedScripts">Script Injection</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-advanced-delete-history" class="nav-button" data-section="advanced-delete-history">
-                <i class="icon-trash-empty"></i>
-                <span data-i18n="optionsAdvancedDeletesHistory">Deletes History Containers</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-statistics" class="nav-button" data-section="statistics">
-                <i class="icon-chart-bar"></i>
-                <span data-i18n="optionsNavStatistics">Statistics</span>
-              </button>
-            </li>
-            <li>
-              <button id="nav-export-import" class="nav-button" data-section="export-import">
-                <i class="icon-exchange"></i>
-                <span data-i18n="optionsNavExportImport">Export/Import</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      
-      <!-- Main Content Area: Only shell, no static content. Sections will be loaded dynamically. -->
-      <main class="content">
-        <section id="general" class="content-section active"></section>
-        <section id="isolation-global" class="content-section hidden"></section>
-        <section id="isolation-domain" class="content-section hidden"></section>
-        <section id="advanced-container" class="content-section hidden"></section>
-        <section id="advanced-cookies" class="content-section hidden"></section>
-        <section id="advanced-scripts" class="content-section hidden"></section>
-        <section id="advanced-delete-history" class="content-section hidden"></section>
-        <section id="advanced-misc" class="content-section hidden"></section>
-        <section id="statistics" class="content-section hidden"></section>
-        <section id="export-import" class="content-section hidden"></section>
-      </main>
-    </div>
-    
-    <div id="glossary" class="glossary hidden">
-      <div class="glossary-content">
-        <div class="glossary-header">
-          <h2 id="glossary-title" data-i18n="glossary">Glossary</h2>
-          <button id="glossary-close" class="button-icon">×</button>
-        </div>
-        <div id="glossary-body" class="glossary-body"></div>
       </div>
     </div>
-  </div>
-  
-  <script src="options.js"></script>
-</body>
+
+    <script src="options.js"></script>
+  </body>
 </html>

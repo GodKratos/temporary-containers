@@ -34,12 +34,12 @@ export async function initAdvancedCookiesPage(): Promise<void> {
     const section = document.getElementById('advanced-cookies');
     if (!section) return;
     section.innerHTML = '';
-    
+
     let editing = false;
     let editingIndex = -1;
     let currentDomainPattern = '';
     let currentCookie: CookieDefaults = { ...cookieDefaults };
-    
+
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -141,31 +141,33 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         <div id="cookiesDisplay"></div>
       </div>
     `;
-    
+
     section.appendChild(content);
-    
+
     // Setup collapsible advanced options
     const collapsibleHeader = content.querySelector('.collapsible-header') as HTMLElement;
     const collapsibleContent = content.querySelector('.collapsible-content') as HTMLElement;
     collapsibleHeader.addEventListener('click', () => {
       const isHidden = collapsibleContent.style.display === 'none';
       collapsibleContent.style.display = isHidden ? 'block' : 'none';
-      collapsibleHeader.textContent = isHidden ? 
-        browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions2') : 
-        browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions1');
+      collapsibleHeader.textContent = isHidden
+        ? browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions2')
+        : browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions1');
     });
-    
+
     function updateCookieDisplay() {
       const cookiesDisplay = document.getElementById('cookiesDisplay') as HTMLElement;
       const cookiesDomain = preferences.cookies?.domain || {};
-      
+
       if (Object.keys(cookiesDomain).length === 0) {
-        cookiesDisplay.innerHTML = `<p data-i18n="optionsAdvancedCookiesNoCookies">${browser.i18n.getMessage('optionsAdvancedCookiesNoCookies')}</p>`;
+        cookiesDisplay.innerHTML = `<p data-i18n="optionsAdvancedCookiesNoCookies">${browser.i18n.getMessage(
+          'optionsAdvancedCookiesNoCookies'
+        )}</p>`;
         return;
       }
-      
+
       cookiesDisplay.innerHTML = '';
-      
+
       for (const [domainPattern, cookies] of Object.entries(cookiesDomain)) {
         const domainSection = document.createElement('div');
         domainSection.className = 'cookie-domain-section';
@@ -173,44 +175,48 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           <h4>${domainPattern}</h4>
           <div class="cookie-list"></div>
         `;
-        
+
         const cookieList = domainSection.querySelector('.cookie-list') as HTMLElement;
-        
+
         cookies.forEach((cookie: Cookie, index: number) => {
           const cookieItem = document.createElement('div');
           cookieItem.className = 'cookie-item';
-          
+
           const cookieDetails = Object.entries(cookie)
             .filter(([key, value]) => value !== '')
             .map(([key, value]) => `<span class="cookie-property"><strong>${key}:</strong> ${value}</span>`)
             .join('');
-          
+
           cookieItem.innerHTML = `
             <div class="cookie-details">${cookieDetails}</div>
             <div class="cookie-actions">
-              <button class="button-secondary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage('optionsAdvancedCookiesEdit')}</button>
-              <button class="button-danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage('optionsAdvancedCookiesRemove')}</button>
+              <button class="button-secondary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage(
+            'optionsAdvancedCookiesEdit'
+          )}</button>
+              <button class="button-danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage(
+            'optionsAdvancedCookiesRemove'
+          )}</button>
             </div>
           `;
-          
+
           cookieList.appendChild(cookieItem);
         });
-        
+
         cookiesDisplay.appendChild(domainSection);
       }
-      
+
       // Attach event listeners to edit/remove buttons
       cookiesDisplay.querySelectorAll('.cookie-edit').forEach(button => {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', e => {
           const target = e.target as HTMLElement;
           const domain = target.dataset.domain!;
           const index = parseInt(target.dataset.index!);
           editCookie(domain, index);
         });
       });
-      
+
       cookiesDisplay.querySelectorAll('.cookie-remove').forEach(button => {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', e => {
           const target = e.target as HTMLElement;
           const domain = target.dataset.domain!;
           const index = parseInt(target.dataset.index!);
@@ -218,13 +224,13 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         });
       });
     }
-    
+
     function resetForm() {
       editing = false;
       editingIndex = -1;
       currentDomainPattern = '';
       currentCookie = { ...cookieDefaults };
-      
+
       // Reset form fields
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).value = '';
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).disabled = false;
@@ -238,21 +244,22 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       (document.getElementById('cookiePath') as HTMLInputElement).value = '';
       (document.getElementById('cookieSameSite') as HTMLSelectElement).value = '';
       (document.getElementById('cookieSecure') as HTMLSelectElement).value = '';
-      
+
       // Reset button states
-      (document.getElementById('cookieSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedCookiesAddCookie');
+      (document.getElementById('cookieSubmit') as HTMLButtonElement).textContent =
+        browser.i18n.getMessage('optionsAdvancedCookiesAddCookie');
       (document.getElementById('cookieCancel') as HTMLButtonElement).style.display = 'none';
     }
-    
+
     function editCookie(domainPattern: string, index: number) {
       const cookies = preferences.cookies?.domain?.[domainPattern];
       if (!cookies || !cookies[index]) return;
-      
+
       editing = true;
       editingIndex = index;
       currentDomainPattern = domainPattern;
       currentCookie = { ...cookies[index] };
-      
+
       // Fill form with cookie data
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).value = domainPattern;
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).disabled = true;
@@ -266,29 +273,30 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       (document.getElementById('cookiePath') as HTMLInputElement).value = currentCookie.path;
       (document.getElementById('cookieSameSite') as HTMLSelectElement).value = currentCookie.sameSite;
       (document.getElementById('cookieSecure') as HTMLSelectElement).value = currentCookie.secure;
-      
+
       // Update button states
-      (document.getElementById('cookieSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedCookiesSaveCookie');
+      (document.getElementById('cookieSubmit') as HTMLButtonElement).textContent =
+        browser.i18n.getMessage('optionsAdvancedCookiesSaveCookie');
       (document.getElementById('cookieCancel') as HTMLButtonElement).style.display = 'inline-block';
-      
+
       // Scroll to form
       document.getElementById('cookieForm')?.scrollIntoView({ behavior: 'smooth' });
     }
-    
+
     async function removeCookie(domainPattern: string, index: number) {
       if (!confirm(browser.i18n.getMessage('optionsAdvancedCookiesRemoveConfirm'))) return;
-      
+
       if (!preferences.cookies) preferences.cookies = { domain: {} };
       if (!preferences.cookies.domain) preferences.cookies.domain = {};
       if (!preferences.cookies.domain[domainPattern]) return;
-      
+
       preferences.cookies.domain[domainPattern].splice(index, 1);
-      
+
       // Remove domain if no cookies left
       if (preferences.cookies.domain[domainPattern].length === 0) {
         delete preferences.cookies.domain[domainPattern];
       }
-      
+
       try {
         await savePreferences(preferences);
         updateCookieDisplay();
@@ -297,23 +305,23 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
-    
+
     // Form submission handler
     const form = document.getElementById('cookieForm') as HTMLFormElement;
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      
+
       const domainPattern = (document.getElementById('cookieDomainPattern') as HTMLInputElement).value.trim();
       const name = (document.getElementById('cookieName') as HTMLInputElement).value.trim();
       const value = (document.getElementById('cookieValue') as HTMLInputElement).value.trim();
       const domain = (document.getElementById('cookieDomain') as HTMLInputElement).value.trim();
       const url = (document.getElementById('cookieUrl') as HTMLInputElement).value.trim();
-      
+
       if (!domainPattern || !name || !url) {
         showError(browser.i18n.getMessage('optionsAdvancedCookiesValidationError'));
         return;
       }
-      
+
       const cookie: Cookie = {
         name,
         value,
@@ -321,16 +329,16 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         url,
         expirationDate: (document.getElementById('cookieExpirationDate') as HTMLInputElement).value.trim(),
         firstPartyDomain: (document.getElementById('cookieFirstPartyDomain') as HTMLInputElement).value.trim(),
-        httpOnly: (document.getElementById('cookieHttpOnly') as HTMLSelectElement).value as "" | "true" | "false",
+        httpOnly: (document.getElementById('cookieHttpOnly') as HTMLSelectElement).value as '' | 'true' | 'false',
         path: (document.getElementById('cookiePath') as HTMLInputElement).value.trim(),
-        sameSite: (document.getElementById('cookieSameSite') as HTMLSelectElement).value as "" | "no_restriction" | "lax" | "strict",
-        secure: (document.getElementById('cookieSecure') as HTMLSelectElement).value as "" | "true" | "false",
+        sameSite: (document.getElementById('cookieSameSite') as HTMLSelectElement).value as '' | 'no_restriction' | 'lax' | 'strict',
+        secure: (document.getElementById('cookieSecure') as HTMLSelectElement).value as '' | 'true' | 'false',
       };
-      
+
       // Initialize cookies structure if needed
       if (!preferences.cookies) preferences.cookies = { domain: {} };
       if (!preferences.cookies.domain) preferences.cookies.domain = {};
-      
+
       if (editing) {
         // Update existing cookie
         if (preferences.cookies.domain[currentDomainPattern]) {
@@ -343,7 +351,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         }
         preferences.cookies.domain[domainPattern].unshift(cookie);
       }
-      
+
       try {
         await savePreferences(preferences);
         updateCookieDisplay();
@@ -353,15 +361,14 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
-    
+
     // Cancel button handler
     document.getElementById('cookieCancel')?.addEventListener('click', () => {
       resetForm();
     });
-    
+
     // Initial display update
     updateCookieDisplay();
-    
   } catch (error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'));
   }

@@ -1,10 +1,4 @@
-import {
-  expect,
-  preferencesTestSet,
-  loadBackground,
-  nextTick,
-  Background,
-} from './setup';
+import { expect, preferencesTestSet, loadBackground, nextTick, Background } from './setup';
 
 preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {
@@ -46,8 +40,7 @@ preferencesTestSet.map(preferences => {
 
         describe('opening new tmptab and left clicking link with global always setting', () => {
           beforeEach(async () => {
-            bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action =
-              'always';
+            bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action = 'always';
             await bg.helper.openNewTmpTab({
               tabId: 1,
               createsTabId: 2,
@@ -120,8 +113,7 @@ preferencesTestSet.map(preferences => {
       describe('link cleaner', () => {
         describe('opening new tmptab and left clicking link with global always setting', () => {
           beforeEach(async () => {
-            bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action =
-              'always';
+            bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action = 'always';
             await bg.helper.openNewTmpTab({
               tabId: 1,
               createsTabId: 2,
@@ -173,8 +165,7 @@ preferencesTestSet.map(preferences => {
 
       describe('opening new tmptab and left clicking link with global always setting', () => {
         beforeEach(async () => {
-          bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action =
-            'always';
+          bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action = 'always';
           await bg.helper.openNewTmpTab({
             tabId: 1,
             createsTabId: 2,
@@ -236,8 +227,7 @@ preferencesTestSet.map(preferences => {
 
       describe('opening new tmptab and left clicking link', () => {
         beforeEach(async () => {
-          bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action =
-            'never';
+          bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action = 'never';
           await bg.helper.openNewTmpTab({
             tabId: 1,
             createsTabId: 2,
@@ -276,8 +266,7 @@ preferencesTestSet.map(preferences => {
           expect(request2).to.be.undefined;
           expect(request3).to.be.undefined;
           bg.browser.tabs.create.should.not.have.been.calledOnce;
-          bg.browser.contextualIdentities.create.should.not.have.been
-            .calledOnce;
+          bg.browser.contextualIdentities.create.should.not.have.been.calledOnce;
           bg.browser.tabs.remove.should.not.have.been.called;
         });
       });

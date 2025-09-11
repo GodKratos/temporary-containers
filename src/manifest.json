@@ -96,13 +96,7 @@
     "webRequest",
     "webRequestBlocking"
   ],
-  "optional_permissions": [
-    "bookmarks",
-    "downloads",
-    "history",
-    "notifications",
-    "webNavigation"
-  ],
+  "optional_permissions": ["bookmarks", "downloads", "history", "notifications", "webNavigation"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

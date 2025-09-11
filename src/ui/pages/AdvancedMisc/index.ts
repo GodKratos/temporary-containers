@@ -9,10 +9,10 @@ export async function initAdvancedMiscPage(): Promise<void> {
     const section = document.getElementById('advanced-misc');
     if (!section) return;
     section.innerHTML = '';
-    
+
     const content = document.createElement('div');
     content.className = 'form';
-    
+
     content.innerHTML = `
       <!-- Automatic Mode Configuration -->
       <div class="section">
@@ -20,8 +20,12 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field">
           <label for="automaticModeNewTab" data-i18n="optionsAdvancedMiscAutomaticModeNewTab">When to create Temporary Containers for new tabs:</label>
           <select id="automaticModeNewTab">
-            <option value="created" data-i18n="optionsAdvancedMiscAutomaticModeNewTabCreated" ${preferences.automaticMode?.newTab === 'created' ? 'selected' : ''}>On Tab Creation (default - best cookie protection)</option>
-            <option value="navigation" data-i18n="optionsAdvancedMiscAutomaticModeNewTabNavigation" ${preferences.automaticMode?.newTab === 'navigation' ? 'selected' : ''}>On Tab Navigation (typed address protection)</option>
+            <option value="created" data-i18n="optionsAdvancedMiscAutomaticModeNewTabCreated" ${
+              preferences.automaticMode?.newTab === 'created' ? 'selected' : ''
+            }>On Tab Creation (default - best cookie protection)</option>
+            <option value="navigation" data-i18n="optionsAdvancedMiscAutomaticModeNewTabNavigation" ${
+              preferences.automaticMode?.newTab === 'navigation' ? 'selected' : ''
+            }>On Tab Navigation (typed address protection)</option>
           </select>
         </div>
       </div>
@@ -61,8 +65,12 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field">
           <label for="isolationMac" data-i18n="optionsAdvancedMiscIsolationMac">Multi-Account Containers</label>
           <select id="isolationMac">
-            <option value="disabled" ${preferences.isolation?.mac?.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
-            <option value="enabled" ${preferences.isolation?.mac?.action === 'enabled' ? 'selected' : ''} data-i18n="optionsAdvancedMiscIsolationMacEnabled">Isolate Non-MAC</option>
+            <option value="disabled" ${
+              preferences.isolation?.mac?.action === 'disabled' ? 'selected' : ''
+            } data-i18n="optionsIsolationDisabled">Disabled</option>
+            <option value="enabled" ${
+              preferences.isolation?.mac?.action === 'enabled' ? 'selected' : ''
+            } data-i18n="optionsAdvancedMiscIsolationMacEnabled">Isolate Non-MAC</option>
           </select>
         </div>
       </div>
@@ -81,14 +89,18 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
         
         <div id="ignoredDomainsList" class="ignored-domains-list">
-          ${preferences.ignoreRequests?.length === 0 ? 
-            '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>' : 
-            (preferences.ignoreRequests || []).map(ignoredDomain => 
-              `<div class="ignored-domain-item">
+          ${
+            preferences.ignoreRequests?.length === 0
+              ? '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>'
+              : (preferences.ignoreRequests || [])
+                  .map(
+                    ignoredDomain =>
+                      `<div class="ignored-domain-item">
                 <span>${ignoredDomain}</span>
                 <button type="button" class="button-small button-danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="remove">Remove</button>
               </div>`
-            ).join('')
+                  )
+                  .join('')
           }
         </div>
       </div>
@@ -104,10 +116,18 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field">
           <label for="popupDefaultTab" data-i18n="optionsAdvancedMiscPopupDefaultTab">Default Popup Tab</label>
           <select id="popupDefaultTab">
-            <option value="isolation-global" ${preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''} data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>
-            <option value="isolation-per-domain" ${preferences.ui?.popupDefaultTab === 'isolation-per-domain' ? 'selected' : ''} data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</option>
-            <option value="actions" ${preferences.ui?.popupDefaultTab === 'actions' ? 'selected' : ''} data-i18n="optionsNavActions">Actions</option>
-            <option value="statistics" ${preferences.ui?.popupDefaultTab === 'statistics' ? 'selected' : ''} data-i18n="optionsNavStatistics">Statistics</option>
+            <option value="isolation-global" ${
+              preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''
+            } data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>
+            <option value="isolation-per-domain" ${
+              preferences.ui?.popupDefaultTab === 'isolation-per-domain' ? 'selected' : ''
+            } data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</option>
+            <option value="actions" ${
+              preferences.ui?.popupDefaultTab === 'actions' ? 'selected' : ''
+            } data-i18n="optionsNavActions">Actions</option>
+            <option value="statistics" ${
+              preferences.ui?.popupDefaultTab === 'statistics' ? 'selected' : ''
+            } data-i18n="optionsNavStatistics">Statistics</option>
           </select>
         </div>
       </div>
@@ -121,12 +141,11 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
     `;
-    
+
     if (!section.firstChild) section.appendChild(content);
 
     // Set up event listeners
     setupEventListeners(content, preferences, permissions);
-
   } catch (error) {
     console.error('Error initializing advanced misc page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedMisc'));
@@ -137,13 +156,13 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   // Context Menu settings
   const contextMenuCheckbox = content.querySelector('#contextMenu') as HTMLInputElement;
   const contextMenuBookmarksCheckbox = content.querySelector('#contextMenuBookmarks') as HTMLInputElement;
-  
+
   contextMenuCheckbox?.addEventListener('change', async () => {
     preferences.contextMenu = contextMenuCheckbox.checked;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
-  
+
   contextMenuBookmarksCheckbox?.addEventListener('change', async () => {
     preferences.contextMenuBookmarks = contextMenuBookmarksCheckbox.checked;
     await savePreferences(preferences);
@@ -152,7 +171,7 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
 
   // Automatic mode new tab behavior setting
   const automaticModeNewTabSelect = content.querySelector('#automaticModeNewTab') as HTMLSelectElement;
-  
+
   automaticModeNewTabSelect?.addEventListener('change', async () => {
     if (!preferences.automaticMode) preferences.automaticMode = { active: false, newTab: 'created' };
     preferences.automaticMode.newTab = automaticModeNewTabSelect.value as 'created' | 'navigation';
@@ -165,33 +184,33 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   const closeRedirectorTabsCheckbox = content.querySelector('#closeRedirectorTabs') as HTMLInputElement;
   const reactivateDelayInput = content.querySelector('#reactivateDelay') as HTMLInputElement;
   const isolationMacSelect = content.querySelector('#isolationMac') as HTMLSelectElement;
-  
+
   replaceTabsCheckbox?.addEventListener('change', async () => {
     preferences.replaceTabs = replaceTabsCheckbox.checked;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
-  
+
   closeRedirectorTabsCheckbox?.addEventListener('change', async () => {
     if (!preferences.closeRedirectorTabs) {
-      preferences.closeRedirectorTabs = { 
-        active: false, 
-        delay: 2000, 
-        domains: ['t.co', 'outgoing.prod.mozaws.net', 'slack-redir.net', 'away.vk.com'] 
+      preferences.closeRedirectorTabs = {
+        active: false,
+        delay: 2000,
+        domains: ['t.co', 'outgoing.prod.mozaws.net', 'slack-redir.net', 'away.vk.com'],
       };
     }
     preferences.closeRedirectorTabs.active = closeRedirectorTabsCheckbox.checked;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
-  
+
   reactivateDelayInput?.addEventListener('change', async () => {
     if (!preferences.isolation) preferences.isolation = {} as any;
     preferences.isolation.reactivateDelay = parseInt(reactivateDelayInput.value) || 0;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
-  
+
   isolationMacSelect?.addEventListener('change', async () => {
     if (!preferences.isolation) preferences.isolation = {} as any;
     if (!preferences.isolation.mac) preferences.isolation.mac = { action: 'disabled' };
@@ -203,13 +222,13 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   // UI settings
   const pageActionCheckbox = content.querySelector('#pageAction') as HTMLInputElement;
   const popupDefaultTabSelect = content.querySelector('#popupDefaultTab') as HTMLSelectElement;
-  
+
   pageActionCheckbox?.addEventListener('change', async () => {
     preferences.pageAction = pageActionCheckbox.checked;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
-  
+
   popupDefaultTabSelect?.addEventListener('change', async () => {
     if (!preferences.ui) preferences.ui = {} as any;
     preferences.ui.popupDefaultTab = popupDefaultTabSelect.value as any;
@@ -220,7 +239,7 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   // Ignored domains
   const ignoreRequestsInput = content.querySelector('#ignoreRequestsInput') as HTMLInputElement;
   const addIgnoredDomainButton = content.querySelector('#addIgnoredDomain') as HTMLButtonElement;
-  
+
   addIgnoredDomainButton?.addEventListener('click', async () => {
     const domain = ignoreRequestsInput.value.trim();
     if (domain && !preferences.ignoreRequests?.includes(domain)) {

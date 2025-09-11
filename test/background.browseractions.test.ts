@@ -29,9 +29,7 @@ preferencesTestSet.map(preferences => {
           url: undefined,
           cookieStoreId: 'firefox-container-1',
         });
-        browser.storage.local.set.should.have.been.calledWith(
-          background.storage.local
-        );
+        browser.storage.local.set.should.have.been.calledWith(background.storage.local);
       });
 
       it('should open a new tab in a new temporary container with custom settings', async () => {
@@ -64,9 +62,7 @@ preferencesTestSet.map(preferences => {
             cookieStoreId: 'firefox-container-1',
           })
         );
-        expect(browser.storage.local.set).to.have.been.calledWith(
-          background.storage.local
-        );
+        expect(browser.storage.local.set).to.have.been.calledWith(background.storage.local);
       });
     });
   });

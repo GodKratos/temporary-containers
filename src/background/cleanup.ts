@@ -41,26 +41,16 @@ export class Cleanup {
     this.tabs = this.background.tabs;
   }
 
-  async addToRemoveQueue(
-    cookieStoreId: CookieStoreId,
-    skipDelay = false
-  ): Promise<void> {
+  async addToRemoveQueue(cookieStoreId: CookieStoreId, skipDelay = false): Promise<void> {
     if (this.queued.has(cookieStoreId)) {
-      this.debug(
-        '[addToRemoveQueue] container already in queue',
-        cookieStoreId
-      );
+      this.debug('[addToRemoveQueue] container already in queue', cookieStoreId);
       return;
     }
     this.queued.add(cookieStoreId);
 
     const containerRemovalDelay = this.container.getRemovalDelay(cookieStoreId);
     if (containerRemovalDelay && !skipDelay) {
-      this.debug(
-        '[addToRemoveQueue] waiting before adding container removal to queue',
-        containerRemovalDelay,
-        cookieStoreId
-      );
+      this.debug('[addToRemoveQueue] waiting before adding container removal to queue', containerRemovalDelay, cookieStoreId);
       await delay(containerRemovalDelay);
     }
 
@@ -70,10 +60,7 @@ export class Cleanup {
       .add(async () => {
         const containerRemoved = await this.tryToRemove(cookieStoreId);
         if (containerRemoved) {
-          this.debug(
-            '[addToRemoveQueue] container removed, waiting 2s',
-            cookieStoreId
-          );
+          this.debug('[addToRemoveQueue] container removed, waiting 2s', cookieStoreId);
           await delay(2500);
         }
       })
@@ -93,11 +80,7 @@ export class Cleanup {
   async tryToRemove(cookieStoreId: CookieStoreId): Promise<boolean> {
     const containerTabs = this.tabs.containerTabs.get(cookieStoreId);
     if (containerTabs?.size) {
-      this.debug(
-        '[tryToRemove] not removing container because it still has tabs',
-        cookieStoreId,
-        containerTabs.size
-      );
+      this.debug('[tryToRemove] not removing container because it still has tabs', cookieStoreId, containerTabs.size);
       return false;
     }
 
@@ -113,25 +96,16 @@ export class Cleanup {
 
   async removeContainer(cookieStoreId: CookieStoreId): Promise<boolean> {
     try {
-      const contextualIdentity = await browser.contextualIdentities.remove(
-        cookieStoreId
-      );
+      const contextualIdentity = await browser.contextualIdentities.remove(cookieStoreId);
       if (!contextualIdentity) {
-        this.debug(
-          '[removeContainer] couldnt find container to remove, probably already removed',
-          cookieStoreId
-        );
+        this.debug('[removeContainer] couldnt find container to remove, probably already removed', cookieStoreId);
       } else {
         this.debug('[removeContainer] container removed', cookieStoreId);
       }
       await this.container.removeFromStorage(cookieStoreId);
       return true;
     } catch (error) {
-      this.debug(
-        '[removeContainer] error while removing container',
-        cookieStoreId,
-        error
-      );
+      this.debug('[removeContainer] error while removing container', cookieStoreId, error);
       return false;
     }
   }
@@ -142,19 +116,12 @@ export class Cleanup {
       this.debug('[cleanup] canceling, no tmpcontainers at all');
       return;
     }
-    if (
-      startup &&
-      (await browser.tabs.query({ url: 'about:sessionrestore' })).length
-    ) {
-      this.debug(
-        "[cleanup] canceling because there's a about:sessionrestore tab"
-      );
+    if (startup && (await browser.tabs.query({ url: 'about:sessionrestore' })).length) {
+      this.debug("[cleanup] canceling because there's a about:sessionrestore tab");
       return;
     }
 
-    containers.map((cookieStoreId) =>
-      this.addToRemoveQueue(cookieStoreId, startup)
-    );
+    containers.map(cookieStoreId => this.addToRemoveQueue(cookieStoreId, startup));
   }
 
   maybeShowNotification(message: string): void {

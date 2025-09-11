@@ -1,15 +1,13 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "shell",
-			"label": "Build extension UI",
-			"command": "npm run build",
-			"group": "build",
-			"isBackground": false,
-			"problemMatcher": [
-				"$tsc"
-			]
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "Build extension UI",
+      "command": "npm run build",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    }
+  ]
 }

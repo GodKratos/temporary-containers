@@ -18,9 +18,7 @@ export class MigrationLegacy {
       });
     }).catch(debug);
 
-    const migrationOnInstalledListener = async (
-      ...args: any[]
-    ): Promise<any> => {
+    const migrationOnInstalledListener = async (...args: any[]): Promise<any> => {
       browser.runtime.onInstalled.removeListener(migrationOnInstalledListener);
       const { version } = await browser.storage.local.get('version');
       if (version) {
@@ -30,18 +28,13 @@ export class MigrationLegacy {
       }
 
       await migrationReadyPromise;
-      return background.migration.onInstalled.call(
-        background.migration,
-        ...args
-      );
+      return background.migration.onInstalled.call(background.migration, ...args);
     };
     browser.runtime.onInstalled.addListener(migrationOnInstalledListener);
 
     window.migrationLegacy = async (migration: any): Promise<any> => {
       try {
-        debug(
-          '[migration-legacy] no previousVersion found, waiting for onInstalled'
-        );
+        debug('[migration-legacy] no previousVersion found, waiting for onInstalled');
         const updateDetails: any = await new Promise((resolve, reject) => {
           migration.onInstalled = resolve;
           window.setTimeout(() => {
@@ -53,9 +46,7 @@ export class MigrationLegacy {
         });
         migration.previousVersion = updateDetails.previousVersion;
       } catch (error) {
-        debug(
-          '[migration-legacy] waiting for onInstalled failed, assuming 0.103'
-        );
+        debug('[migration-legacy] waiting for onInstalled failed, assuming 0.103');
         migration.previousVersion = '0.103';
       }
     };

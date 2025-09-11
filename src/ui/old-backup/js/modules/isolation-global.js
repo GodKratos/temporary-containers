@@ -14,9 +14,9 @@ import { savePreferences, t } from '../utils.js';
 export function createIsolationGlobalContent(preferences, onSave) {
   const content = document.createElement('div');
   content.className = 'form';
-  
+
   const isolationGlobal = preferences.isolation.global;
-  
+
   content.innerHTML = `
     <div class="field">
       <label for="isolationGlobalUrlNavigation" data-i18n="optionsIsolationGlobalUrlNavigation">URL Navigation</label>
@@ -76,21 +76,21 @@ export function createIsolationGlobalContent(preferences, onSave) {
       <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
     </div>
   `;
-  
+
   // Set initial values
   const urlNavigationSelect = content.querySelector('#isolationGlobalUrlNavigation');
   const leftClickSelect = content.querySelector('#isolationGlobalLeftClick');
   const middleClickSelect = content.querySelector('#isolationGlobalMiddleClick');
   const ctrlLeftClickSelect = content.querySelector('#isolationGlobalCtrlLeftClick');
-  
+
   if (urlNavigationSelect) urlNavigationSelect.value = isolationGlobal.navigation.action || 'never';
   if (leftClickSelect) leftClickSelect.value = isolationGlobal.mouseClick.left.action || 'always';
   if (middleClickSelect) middleClickSelect.value = isolationGlobal.mouseClick.middle.action || 'never';
   if (ctrlLeftClickSelect) ctrlLeftClickSelect.value = isolationGlobal.mouseClick.ctrlleft.action || 'never';
-  
+
   // Add event listeners
   setupIsolationGlobalEventListeners(content, preferences, onSave);
-  
+
   return content;
 }
 
@@ -109,7 +109,7 @@ function setupIsolationGlobalEventListeners(content, preferences, onSave) {
       onSave(preferences);
     });
   }
-  
+
   // Left Click
   const leftClickSelect = content.querySelector('#isolationGlobalLeftClick');
   if (leftClickSelect) {
@@ -118,7 +118,7 @@ function setupIsolationGlobalEventListeners(content, preferences, onSave) {
       onSave(preferences);
     });
   }
-  
+
   // Middle Click
   const middleClickSelect = content.querySelector('#isolationGlobalMiddleClick');
   if (middleClickSelect) {
@@ -127,7 +127,7 @@ function setupIsolationGlobalEventListeners(content, preferences, onSave) {
       onSave(preferences);
     });
   }
-  
+
   // Ctrl+Left Click
   const ctrlLeftClickSelect = content.querySelector('#isolationGlobalCtrlLeftClick');
   if (ctrlLeftClickSelect) {

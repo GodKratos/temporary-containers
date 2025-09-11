@@ -31,33 +31,17 @@ export class Utils {
         return false;
       }
     } else {
-      const parsedUrl =
-        url.startsWith('about:') || url.startsWith('moz-extension:')
-          ? url
-          : new URL(url).hostname;
-      return (
-        parsedUrl === domainPattern ||
-        this.globToRegexp(domainPattern).test(parsedUrl)
-      );
+      const parsedUrl = url.startsWith('about:') || url.startsWith('moz-extension:') ? url : new URL(url).hostname;
+      return parsedUrl === domainPattern || this.globToRegexp(domainPattern).test(parsedUrl);
     }
   }
 
-  addMissingKeys({
-    defaults,
-    source,
-  }: {
-    defaults: any;
-    source: any;
-  }): boolean {
+  addMissingKeys({ defaults, source }: { defaults: any; source: any }): boolean {
     let addedMissing = false;
     const addKeys = (defaultsNode: any, sourceNode: any): void => {
-      Object.keys(defaultsNode).map((key) => {
+      Object.keys(defaultsNode).map(key => {
         if (sourceNode[key] === undefined) {
-          this.debug(
-            '[addMissingKeys] key not found, setting default',
-            key,
-            defaultsNode[key]
-          );
+          this.debug('[addMissingKeys] key not found, setting default', key, defaultsNode[key]);
           sourceNode[key] = defaultsNode[key];
           addedMissing = true;
         } else if (Array.isArray(sourceNode[key])) {

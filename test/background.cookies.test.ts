@@ -27,13 +27,9 @@ preferencesTestSet.map(preferences => {
         };
 
         const tab = await background.container.createTabInTempContainer({});
-        const results = await browser.tabs._navigate(
-          tab?.id,
-          'https://example.com',
-          {
-            requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo' }],
-          }
-        );
+        const results = await browser.tabs._navigate(tab?.id, 'https://example.com', {
+          requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo' }],
+        });
 
         browser.cookies.set.should.have.been.calledWith({
           domain: 'domain',
@@ -51,14 +47,16 @@ preferencesTestSet.map(preferences => {
 
         (await results.onBeforeSendHeaders[0]).should.deep.match({
           url: 'https://example.com',
-          requestHeaders: [
-            { name: 'Cookie', value: 'foo=bar; moo=foo; name=value' },
-          ],
+          requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo; name=value' }],
         });
       });
 
       it('should set the cookie and not add it to the header if not allowed', async () => {
-        const { tmp: background, browser, helper } = await loadBackground({
+        const {
+          tmp: background,
+          browser,
+          helper,
+        } = await loadBackground({
           preferences,
         });
         await helper.openNewTmpTab({
@@ -80,14 +78,12 @@ preferencesTestSet.map(preferences => {
         background.storage.local.preferences.cookies.domain = {
           'example.com': [cookie],
         };
-        const [
-          promise,
-        ] = (browser.webRequest.onBeforeSendHeaders.addListener.yield({
+        const [promise] = browser.webRequest.onBeforeSendHeaders.addListener.yield({
           tabId: 1,
           url: 'https://example.com',
           requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo' }],
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        }) as unknown) as any[];
+        }) as unknown as any[];
         const result = await promise;
         browser.cookies.set.should.have.been.called;
         expect(result).to.be.undefined;
@@ -119,12 +115,10 @@ preferencesTestSet.map(preferences => {
         background.storage.local.preferences.cookies.domain = {
           'example.com': [{ ...cookie, name: 'example', value: 'content' }],
         };
-        const [
-          response,
-        ] = (browser.webRequest.onBeforeSendHeaders.addListener.yield({
+        const [response] = browser.webRequest.onBeforeSendHeaders.addListener.yield({
           url: 'https://example.com',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        }) as unknown) as any[];
+        }) as unknown as any[];
         expect(await response).to.be.undefined;
       });
     });

@@ -28,8 +28,7 @@ export class ContextMenu {
           tab,
           url: info.linkUrl,
           active: false,
-          deletesHistory:
-            this.pref.deletesHistory.automaticMode === 'automatic',
+          deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
           openerTab: tab,
         });
         break;
@@ -51,8 +50,7 @@ export class ContextMenu {
             tab,
             url: bookmarks[0].url,
             active: false,
-            deletesHistory:
-              this.pref.deletesHistory.automaticMode === 'automatic',
+            deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
           });
         }
         break;
@@ -96,28 +94,15 @@ export class ContextMenu {
   }
 
   async toggleBookmarks(visible: boolean): Promise<void> {
-    if (
-      this.pref.contextMenuBookmarks &&
-      this.background.permissions.bookmarks
-    ) {
-      await browser.contextMenus.update(
-        'open-bookmark-in-new-temporary-container-tab',
-        {
-          visible,
-        }
-      );
+    if (this.pref.contextMenuBookmarks && this.background.permissions.bookmarks) {
+      await browser.contextMenus.update('open-bookmark-in-new-temporary-container-tab', {
+        visible,
+      });
     }
-    if (
-      this.pref.deletesHistory.contextMenuBookmarks &&
-      this.background.permissions.history &&
-      this.background.permissions.bookmarks
-    ) {
-      await browser.contextMenus.update(
-        'open-bookmark-in-new-deletes-history-temporary-container-tab',
-        {
-          visible,
-        }
-      );
+    if (this.pref.deletesHistory.contextMenuBookmarks && this.background.permissions.history && this.background.permissions.bookmarks) {
+      await browser.contextMenus.update('open-bookmark-in-new-deletes-history-temporary-container-tab', {
+        visible,
+      });
     }
   }
 
@@ -133,10 +118,7 @@ export class ContextMenu {
         },
       });
     }
-    if (
-      this.pref.deletesHistory.contextMenu &&
-      this.background.permissions.history
-    ) {
+    if (this.pref.deletesHistory.contextMenu && this.background.permissions.history) {
       browser.contextMenus.create({
         id: 'open-link-in-new-deletes-history-temporary-container-tab',
         title: 'Open link in new "Deletes History Temporary Container" tab',
@@ -147,10 +129,7 @@ export class ContextMenu {
         },
       });
     }
-    if (
-      this.pref.contextMenuBookmarks &&
-      this.background.permissions.bookmarks
-    ) {
+    if (this.pref.contextMenuBookmarks && this.background.permissions.bookmarks) {
       browser.contextMenus.create({
         id: 'open-bookmark-in-new-temporary-container-tab',
         title: 'Open Bookmark in new Temporary Container tab',
@@ -161,11 +140,7 @@ export class ContextMenu {
         },
       });
     }
-    if (
-      this.pref.deletesHistory.contextMenuBookmarks &&
-      this.background.permissions.history &&
-      this.background.permissions.bookmarks
-    ) {
+    if (this.pref.deletesHistory.contextMenuBookmarks && this.background.permissions.history && this.background.permissions.bookmarks) {
       browser.contextMenus.create({
         id: 'open-bookmark-in-new-deletes-history-temporary-container-tab',
         title: 'Open Bookmark in new "Deletes History Temporary Container" tab',

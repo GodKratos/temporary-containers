@@ -12,14 +12,14 @@ import { createTabSystem, showInitializeLoader, showInitializeError, hideInitial
 
 // Map tab IDs to page initializers
 const pageInitializers: Record<string, () => Promise<void>> = {
-  'general': initGeneralPage,
+  general: initGeneralPage,
   'isolation-global': initIsolationGlobalPage,
   'isolation-domain': initIsolationPerDomainPage,
   'advanced-misc': initAdvancedMiscPage,
   'advanced-cookies': initAdvancedCookiesPage,
   'advanced-scripts': initAdvancedScriptsPage,
   'advanced-delete-history': initAdvancedDeleteHistoryPage,
-  'statistics': initStatisticsPage,
+  statistics: initStatisticsPage,
   'export-import': initExportImportPage,
 };
 
@@ -27,7 +27,7 @@ async function initializeOptionsUI() {
   try {
     showInitializeLoader();
     // Setup tab system
-    createTabSystem('.nav-button', '.content-section', async (tabId) => {
+    createTabSystem('.nav-button', '.content-section', async tabId => {
       if (pageInitializers[tabId]) {
         await pageInitializers[tabId]();
       }

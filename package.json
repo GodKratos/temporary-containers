@@ -11,12 +11,12 @@
     "beta:manifest-update-url": "ts-node manifest-update-url.ts",
     "beta:sign": "web-ext sign --channel unlisted -s dist",
     "lint": "run-p lint:*",
-    "lint:eslint": "eslint *.js src/**/*.'{ts,js}'",
+    "lint:eslint": "eslint *.js \"src/**/*.{ts,js}\"",
     "lint:tsc": "tsc -p tsconfig.lint.json",
     "lint:localization": "node scripts/validate-localization.js",
     "webext:build": "web-ext build -s dist",
     "webext:lint": "web-ext lint -s dist",
-    "format": "prettier --write '{*,src/**/*,test/**/*}.{html,css,json,yml,md}'",
+    "format": "prettier --write \"./**/*.{html,css,json,yml,md,ts,js}\"",
     "test": "nyc --reporter=html --reporter=text ts-mocha --paths -p tsconfig.json test/*.test.ts",
     "test:functional": "ts-mocha ./test/functional/*.test.ts --timeout 10000",
     "dev": "webpack-dev-server --mode development",
@@ -117,7 +117,7 @@
     "bracketSpacing": true,
     "bracketSameLine": false,
     "arrowParens": "avoid",
-    "endOfLine": "lf"
+    "endOfLine": "auto"
   },
   "mocha": {
     "bail": true,

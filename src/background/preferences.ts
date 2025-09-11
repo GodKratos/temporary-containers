@@ -118,9 +118,7 @@ export class Preferences {
     if (oldPreferences.iconColor !== newPreferences.iconColor) {
       this.browseraction.setIcon(newPreferences.iconColor);
     }
-    if (
-      oldPreferences.browserActionPopup !== newPreferences.browserActionPopup
-    ) {
+    if (oldPreferences.browserActionPopup !== newPreferences.browserActionPopup) {
       if (newPreferences.browserActionPopup) {
         this.browseraction.setPopup();
       } else {
@@ -136,10 +134,7 @@ export class Preferences {
     if (!this.permissions.history && newPreferences.deletesHistory.active) {
       this.permissions.history = true;
     }
-    if (
-      newPreferences.contextMenuBookmarks ||
-      newPreferences.deletesHistory.contextMenuBookmarks
-    ) {
+    if (newPreferences.contextMenuBookmarks || newPreferences.deletesHistory.contextMenuBookmarks) {
       this.permissions.bookmarks = true;
     }
     if (!this.permissions.webNavigation && newPreferences.scripts.active) {
@@ -149,12 +144,9 @@ export class Preferences {
 
     if (
       oldPreferences.contextMenu !== newPreferences.contextMenu ||
-      oldPreferences.contextMenuBookmarks !==
-        newPreferences.contextMenuBookmarks ||
-      oldPreferences.deletesHistory.contextMenu !==
-        newPreferences.deletesHistory.contextMenu ||
-      oldPreferences.deletesHistory.contextMenuBookmarks !==
-        newPreferences.deletesHistory.contextMenuBookmarks
+      oldPreferences.contextMenuBookmarks !== newPreferences.contextMenuBookmarks ||
+      oldPreferences.deletesHistory.contextMenu !== newPreferences.deletesHistory.contextMenu ||
+      oldPreferences.deletesHistory.contextMenuBookmarks !== newPreferences.deletesHistory.contextMenuBookmarks
     ) {
       await this.contextmenu.remove();
       this.contextmenu.add();

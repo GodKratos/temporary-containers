@@ -28,152 +28,57 @@ export class EventListeners {
     this.debug('[event-listeners] registering');
 
     browser.webRequest.onBeforeRequest.addListener(
-      this.wrap(
-        browser.webRequest.onBeforeRequest,
-        this.background.request,
-        'webRequestOnBeforeRequest',
-        { timeout: 5 }
-      ),
+      this.wrap(browser.webRequest.onBeforeRequest, this.background.request, 'webRequestOnBeforeRequest', { timeout: 5 }),
       { urls: ['<all_urls>'], types: ['main_frame'] },
       ['blocking']
     );
     browser.webRequest.onBeforeSendHeaders.addListener(
-      this.wrap(
-        browser.webRequest.onBeforeSendHeaders,
-        this.background.cookies,
-        'maybeSetAndAddToHeader'
-      ),
+      this.wrap(browser.webRequest.onBeforeSendHeaders, this.background.cookies, 'maybeSetAndAddToHeader'),
       { urls: ['<all_urls>'], types: ['main_frame'] },
       ['blocking', 'requestHeaders']
     );
     browser.webRequest.onCompleted.addListener(
-      this.wrap(
-        browser.webRequest.onCompleted,
-        this.background.statistics,
-        'collect'
-      ),
+      this.wrap(browser.webRequest.onCompleted, this.background.statistics, 'collect'),
       {
         urls: ['<all_urls>'],
         types: ['script', 'font', 'image', 'imageset', 'stylesheet'],
       },
       ['responseHeaders']
     );
-    browser.webRequest.onCompleted.addListener(
-      this.wrap(
-        browser.webRequest.onCompleted,
-        this.background.request,
-        'cleanupCanceled'
-      ),
-      { urls: ['<all_urls>'], types: ['main_frame'] }
-    );
+    browser.webRequest.onCompleted.addListener(this.wrap(browser.webRequest.onCompleted, this.background.request, 'cleanupCanceled'), {
+      urls: ['<all_urls>'],
+      types: ['main_frame'],
+    });
     browser.webRequest.onErrorOccurred.addListener(
-      this.wrap(
-        browser.webRequest.onErrorOccurred,
-        this.background.request,
-        'cleanupCanceled'
-      ),
+      this.wrap(browser.webRequest.onErrorOccurred, this.background.request, 'cleanupCanceled'),
       { urls: ['<all_urls>'], types: ['main_frame'] }
     );
-    browser.browserAction.onClicked.addListener(
-      this.wrap(
-        browser.browserAction.onClicked,
-        this.background.browseraction,
-        'onClicked'
-      )
-    );
-    browser.contextMenus.onClicked.addListener(
-      this.wrap(
-        browser.contextMenus.onClicked,
-        this.background.contextmenu,
-        'onClicked'
-      )
-    );
-    browser.contextMenus.onShown.addListener(
-      this.wrap(
-        browser.contextMenus.onShown,
-        this.background.contextmenu,
-        'onShown'
-      )
-    );
+    browser.browserAction.onClicked.addListener(this.wrap(browser.browserAction.onClicked, this.background.browseraction, 'onClicked'));
+    browser.contextMenus.onClicked.addListener(this.wrap(browser.contextMenus.onClicked, this.background.contextmenu, 'onClicked'));
+    browser.contextMenus.onShown.addListener(this.wrap(browser.contextMenus.onShown, this.background.contextmenu, 'onShown'));
     browser.windows.onFocusChanged.addListener(
-      this.wrap(
-        browser.windows.onFocusChanged,
-        this.background.contextmenu,
-        'windowsOnFocusChanged'
-      )
+      this.wrap(browser.windows.onFocusChanged, this.background.contextmenu, 'windowsOnFocusChanged')
     );
-    browser.management.onDisabled.addListener(
-      this.wrap(
-        browser.management.onDisabled,
-        this.background.management,
-        'disable'
-      )
-    );
-    browser.management.onUninstalled.addListener(
-      this.wrap(
-        browser.management.onUninstalled,
-        this.background.management,
-        'disable'
-      )
-    );
-    browser.management.onEnabled.addListener(
-      this.wrap(
-        browser.management.onEnabled,
-        this.background.management,
-        'enable'
-      )
-    );
-    browser.management.onInstalled.addListener(
-      this.wrap(
-        browser.management.onUninstalled,
-        this.background.management,
-        'enable'
-      )
-    );
-    browser.commands.onCommand.addListener(
-      this.wrap(
-        browser.commands.onCommand,
-        this.background.commands,
-        'onCommand'
-      )
-    );
-    browser.tabs.onActivated.addListener(
-      this.wrap(browser.tabs.onActivated, this.background.tabs, 'onActivated')
-    );
-    browser.tabs.onCreated.addListener(
-      this.wrap(browser.tabs.onCreated, this.background.tabs, 'onCreated')
-    );
-    browser.tabs.onUpdated.addListener(
-      this.wrap(browser.tabs.onUpdated, this.background.tabs, 'onUpdated')
-    );
-    browser.tabs.onRemoved.addListener(
-      this.wrap(browser.tabs.onRemoved, this.background.tabs, 'onRemoved')
-    );
-    browser.runtime.onMessage.addListener(
-      this.wrap(browser.runtime.onMessage, this.background.runtime, 'onMessage')
-    );
+    browser.management.onDisabled.addListener(this.wrap(browser.management.onDisabled, this.background.management, 'disable'));
+    browser.management.onUninstalled.addListener(this.wrap(browser.management.onUninstalled, this.background.management, 'disable'));
+    browser.management.onEnabled.addListener(this.wrap(browser.management.onEnabled, this.background.management, 'enable'));
+    browser.management.onInstalled.addListener(this.wrap(browser.management.onUninstalled, this.background.management, 'enable'));
+    browser.commands.onCommand.addListener(this.wrap(browser.commands.onCommand, this.background.commands, 'onCommand'));
+    browser.tabs.onActivated.addListener(this.wrap(browser.tabs.onActivated, this.background.tabs, 'onActivated'));
+    browser.tabs.onCreated.addListener(this.wrap(browser.tabs.onCreated, this.background.tabs, 'onCreated'));
+    browser.tabs.onUpdated.addListener(this.wrap(browser.tabs.onUpdated, this.background.tabs, 'onUpdated'));
+    browser.tabs.onRemoved.addListener(this.wrap(browser.tabs.onRemoved, this.background.tabs, 'onRemoved'));
+    browser.runtime.onMessage.addListener(this.wrap(browser.runtime.onMessage, this.background.runtime, 'onMessage'));
     browser.runtime.onMessageExternal.addListener(
-      this.wrap(
-        browser.runtime.onMessageExternal,
-        this.background.runtime,
-        'onMessageExternal'
-      )
+      this.wrap(browser.runtime.onMessageExternal, this.background.runtime, 'onMessageExternal')
     );
-    browser.runtime.onStartup.addListener(
-      this.wrap(browser.runtime.onStartup, this.background.runtime, 'onStartup')
-    );
+    browser.runtime.onStartup.addListener(this.wrap(browser.runtime.onStartup, this.background.runtime, 'onStartup'));
 
     this.registerPermissionedListener();
   }
 
   registerPermissionedListener(): void {
-    browser.webNavigation?.onCommitted.addListener(
-      this.wrap(
-        browser.webNavigation?.onCommitted,
-        this.background.scripts,
-        'maybeExecute'
-      )
-    );
+    browser.webNavigation?.onCommitted.addListener(this.wrap(browser.webNavigation?.onCommitted, this.background.scripts, 'maybeExecute'));
   }
 
   wrap(
@@ -189,11 +94,7 @@ export class EventListeners {
         try {
           await tmpInitializedPromise;
         } catch (error) {
-          this.debug(
-            `[event-listeners] call to ${target.join('.')} timed out after ${
-              options.timeout
-            }s`
-          );
+          this.debug(`[event-listeners] call to ${target.join('.')} timed out after ${options.timeout}s`);
           throw error;
         }
       }
@@ -221,14 +122,14 @@ export class EventListeners {
   }
 
   public tmpInitialized = (): void => {
-    this.tmpInitializedPromiseResolvers.map((resolver) => {
+    this.tmpInitializedPromiseResolvers.map(resolver => {
       resolver.resolve();
       window.clearTimeout(resolver.timeout);
     });
   };
 
   remove(): void {
-    this.listeners.map((listener) => {
+    this.listeners.map(listener => {
       listener.api.removeListener(listener.listener);
     });
   }

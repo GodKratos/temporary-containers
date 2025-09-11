@@ -18,28 +18,32 @@ export function createIsolationPerDomainContent(preferences, onSave, options = {
   const { currentDomain, isPopup = false } = options;
   const content = document.createElement('div');
   content.className = 'form';
-  
+
   // Current domain section (only for popup)
   if (isPopup && currentDomain) {
     const domainIsolation = preferences.isolation.domain.find(d => d.pattern === currentDomain);
-    
+
     const currentDomainSection = document.createElement('div');
     currentDomainSection.className = 'field';
     currentDomainSection.innerHTML = `
       <h3><span data-i18n="currentDomain">Current Domain</span>: ${currentDomain}</h3>
       <div class="isolation-actions">
-        ${domainIsolation ? `
+        ${
+          domainIsolation
+            ? `
           <button id="edit-domain-isolation" class="button-default" data-i18n="editDomainIsolation">Edit Domain Isolation</button>
           <button id="remove-domain-isolation" class="button-default button-ghost" data-i18n="remove">Remove</button>
-        ` : `
+        `
+            : `
           <button id="add-domain-isolation" class="button-default button-primary" data-i18n="addDomainIsolation">Add Domain Isolation</button>
-        `}
+        `
+        }
       </div>
     `;
-    
+
     content.appendChild(currentDomainSection);
   }
-  
+
   // Domain rules section
   const domainRulesSection = document.createElement('div');
   domainRulesSection.className = 'field';
@@ -56,18 +60,22 @@ export function createIsolationPerDomainContent(preferences, onSave, options = {
         <button id="addDomainRule" class="button-default" data-i18n="addRule">Add Rule</button>
       </div>
       <div id="domainRulesList" class="domain-rules-list">
-        ${preferences.isolation.domain.length === 0 ? `
+        ${
+          preferences.isolation.domain.length === 0
+            ? `
           <p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     </div>
   `;
-  
+
   content.appendChild(domainRulesSection);
-  
+
   // Add domain list items
   const domainList = domainRulesSection.querySelector('#domainRulesList');
-  
+
   preferences.isolation.domain.forEach(domain => {
     const domainItem = document.createElement('div');
     domainItem.className = 'domain-rule';
@@ -83,13 +91,13 @@ export function createIsolationPerDomainContent(preferences, onSave, options = {
         </button>
       </div>
     `;
-    
+
     domainList.appendChild(domainItem);
   });
-  
+
   // Add event listeners
   setupIsolationPerDomainEventListeners(content, preferences, onSave, options);
-  
+
   return content;
 }
 
@@ -102,31 +110,31 @@ export function createIsolationPerDomainContent(preferences, onSave, options = {
  */
 function setupIsolationPerDomainEventListeners(content, preferences, onSave, options = {}) {
   const { currentDomain, isPopup = false } = options;
-  
+
   // Current domain actions (popup only)
   if (isPopup && currentDomain) {
     const domainIsolation = preferences.isolation.domain.find(d => d.pattern === currentDomain);
-    
+
     if (domainIsolation) {
       const editButton = content.querySelector('#edit-domain-isolation');
       const removeButton = content.querySelector('#remove-domain-isolation');
-      
+
       if (editButton) {
         editButton.addEventListener('click', () => {
           // Open edit dialog (to be implemented)
           alert(t('editDomainIsolationFor', currentDomain));
         });
       }
-      
+
       if (removeButton) {
         removeButton.addEventListener('click', () => {
           if (confirm(t('removeIsolationRuleFor', currentDomain))) {
             const index = preferences.isolation.domain.findIndex(d => d.pattern === currentDomain);
-            
+
             if (index !== -1) {
               preferences.isolation.domain.splice(index, 1);
               onSave(preferences);
-              
+
               // Reload the content
               if (options.onReload) {
                 options.onReload();
@@ -137,7 +145,7 @@ function setupIsolationPerDomainEventListeners(content, preferences, onSave, opt
       }
     } else {
       const addButton = content.querySelector('#add-domain-isolation');
-      
+
       if (addButton) {
         addButton.addEventListener('click', () => {
           // Create new domain isolation rule based on global settings
@@ -158,10 +166,10 @@ function setupIsolationPerDomainEventListeners(content, preferences, onSave, opt
               allowedInTemporary: false,
             },
           };
-          
+
           preferences.isolation.domain.push(newDomainRule);
           onSave(preferences);
-          
+
           // Reload the content
           if (options.onReload) {
             options.onReload();
@@ -170,35 +178,35 @@ function setupIsolationPerDomainEventListeners(content, preferences, onSave, opt
       }
     }
   }
-  
+
   // Add domain rule
   const addDomainRuleButton = content.querySelector('#addDomainRule');
   const domainRuleInput = content.querySelector('#domainRuleInput');
   const domainRuleAction = content.querySelector('#domainRuleAction');
-  
+
   if (addDomainRuleButton) {
     addDomainRuleButton.addEventListener('click', async () => {
       const domain = domainRuleInput.value.trim();
       const action = domainRuleAction.value;
-      
+
       if (!domain) {
         alert('Please enter a domain');
         return;
       }
-      
+
       try {
         // Add rule
         preferences.isolation.domain.push({
           pattern: domain,
-          action: action
+          action: action,
         });
-        
+
         // Save rules
         await sendMessage('saveDomainRules', { domainRules: preferences.isolation.domain });
-        
+
         // Clear input
         domainRuleInput.value = '';
-        
+
         // Reload the content
         if (options.onReload) {
           options.onReload();
@@ -209,11 +217,11 @@ function setupIsolationPerDomainEventListeners(content, preferences, onSave, opt
       }
     });
   }
-  
+
   // Domain list item actions
   const editButtons = content.querySelectorAll('.edit-domain');
   const removeButtons = content.querySelectorAll('.remove-domain');
-  
+
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const domainPattern = button.dataset.domain;
@@ -221,18 +229,18 @@ function setupIsolationPerDomainEventListeners(content, preferences, onSave, opt
       alert(t('editDomainIsolationFor', domainPattern));
     });
   });
-  
+
   removeButtons.forEach(button => {
     button.addEventListener('click', () => {
       const domainPattern = button.dataset.domain;
-      
+
       if (confirm(t('removeIsolationRuleFor', domainPattern))) {
         const index = preferences.isolation.domain.findIndex(d => d.pattern === domainPattern);
-        
+
         if (index !== -1) {
           preferences.isolation.domain.splice(index, 1);
           onSave(preferences);
-          
+
           // Reload the content
           if (options.onReload) {
             options.onReload();

@@ -42,36 +42,21 @@ export class Cookies {
         if (!tab) {
           tab = (await browser.tabs.get(request.tabId)) as Tab;
           if (!this.storage.local.tempContainers[tab.cookieStoreId]) {
-            this.debug(
-              '[maybeSetAndAddCookiesToHeader] not a temporary container',
-              tab
-            );
+            this.debug('[maybeSetAndAddCookiesToHeader] not a temporary container', tab);
             return;
           }
 
-          cookieHeader = request.requestHeaders?.find(
-            (element): boolean => element.name.toLowerCase() === 'cookie'
-          );
+          cookieHeader = request.requestHeaders?.find((element): boolean => element.name.toLowerCase() === 'cookie');
           if (cookieHeader && cookieHeader.value) {
-            cookiesHeader = cookieHeader.value
-              .split('; ')
-              .reduce(
-                (accumulator: { [key: string]: string }, cookie: string) => {
-                  const split = cookie.split('=');
-                  if (split.length === 2) {
-                    accumulator[split[0]] = split[1];
-                  }
-                  return accumulator;
-                },
-                {}
-              );
+            cookiesHeader = cookieHeader.value.split('; ').reduce((accumulator: { [key: string]: string }, cookie: string) => {
+              const split = cookie.split('=');
+              if (split.length === 2) {
+                accumulator[split[0]] = split[1];
+              }
+              return accumulator;
+            }, {});
           }
-          this.debug(
-            '[maybeAddCookiesToHeader] found temp tab and header',
-            request,
-            cookieHeader,
-            cookiesHeader
-          );
+          this.debug('[maybeAddCookiesToHeader] found temp tab and header', request, cookieHeader, cookiesHeader);
         }
 
         for (const cookie of this.pref.cookies.domain[domainPattern]) {
@@ -81,24 +66,12 @@ export class Cookies {
           // website pattern matched request, set cookie
           const setCookie = {
             domain: cookie.domain || undefined,
-            expirationDate: cookie.expirationDate
-              ? parseInt(cookie.expirationDate, 10)
-              : undefined,
+            expirationDate: cookie.expirationDate ? parseInt(cookie.expirationDate, 10) : undefined,
             firstPartyDomain: cookie.firstPartyDomain || undefined,
-            httpOnly:
-              cookie.httpOnly === ''
-                ? undefined
-                : cookie.httpOnly === 'true'
-                ? true
-                : false,
+            httpOnly: cookie.httpOnly === '' ? undefined : cookie.httpOnly === 'true' ? true : false,
             name: cookie.name,
             path: cookie.path || undefined,
-            secure:
-              cookie.secure === ''
-                ? undefined
-                : cookie.secure === 'true'
-                ? true
-                : false,
+            secure: cookie.secure === '' ? undefined : cookie.secure === 'true' ? true : false,
             url: cookie.url,
             value: cookie.value || undefined,
             sameSite: cookie.sameSite || undefined,
@@ -109,11 +82,7 @@ export class Cookies {
           this.debug('[maybeSetCookies] cookie set', cookieSet);
 
           if (cookiesHeader[cookie.name] === cookie.value) {
-            this.debug(
-              '[maybeSetCookies] the set cookie is already in the header',
-              cookie,
-              cookiesHeader
-            );
+            this.debug('[maybeSetCookies] the set cookie is already in the header', cookie, cookiesHeader);
             continue;
           }
 
@@ -126,45 +95,29 @@ export class Cookies {
               firstPartyDomain: cookie.firstPartyDomain || undefined,
             });
 
-            this.debug(
-              '[maybeAddCookiesToHeader] checked if allowed to add cookie to header',
-              cookieAllowed
-            );
+            this.debug('[maybeAddCookiesToHeader] checked if allowed to add cookie to header', cookieAllowed);
 
             if (cookieAllowed) {
               cookieHeaderChanged = true;
               // eslint-disable-next-line require-atomic-updates
               cookiesHeader[cookieAllowed.name] = cookieAllowed.value;
-              this.debug(
-                '[maybeAddCookiesToHeader] cookie value changed',
-                cookiesHeader
-              );
+              this.debug('[maybeAddCookiesToHeader] cookie value changed', cookiesHeader);
             }
           } catch (error) {
             this.debug('[maybeAddCookiesToHeader] couldnt get cookie', cookie);
           }
         }
       }
-      this.debug(
-        '[maybeAddCookiesToHeader] cookieHeaderChanged',
-        cookieHeaderChanged,
-        cookieHeader,
-        cookiesHeader
-      );
+      this.debug('[maybeAddCookiesToHeader] cookieHeaderChanged', cookieHeaderChanged, cookieHeader, cookiesHeader);
       if (!cookieHeaderChanged) {
         return;
       } else {
         const changedCookieHeaderValues: string[] = [];
-        Object.keys(cookiesHeader).map((cookieName) => {
-          changedCookieHeaderValues.push(
-            `${cookieName}=${cookiesHeader[cookieName]}`
-          );
+        Object.keys(cookiesHeader).map(cookieName => {
+          changedCookieHeaderValues.push(`${cookieName}=${cookiesHeader[cookieName]}`);
         });
         const changedCookieHeaderValue = changedCookieHeaderValues.join('; ');
-        this.debug(
-          '[maybeAddCookiesToHeader] changedCookieHeaderValue',
-          changedCookieHeaderValue
-        );
+        this.debug('[maybeAddCookiesToHeader] changedCookieHeaderValue', changedCookieHeaderValue);
         if (cookieHeader) {
           cookieHeader.value = changedCookieHeaderValue;
         } else {
@@ -173,20 +126,11 @@ export class Cookies {
             value: changedCookieHeaderValue,
           });
         }
-        this.debug(
-          '[maybeAddCookiesToHeader] changed cookieHeader to',
-          cookieHeader,
-          request
-        );
+        this.debug('[maybeAddCookiesToHeader] changed cookieHeader to', cookieHeader, request);
         return request;
       }
     } catch (error) {
-      this.debug(
-        '[maybeAddCookiesToHeader] something went wrong while adding cookies to header',
-        tab,
-        request.url,
-        error
-      );
+      this.debug('[maybeAddCookiesToHeader] something went wrong while adding cookies to header', tab, request.url, error);
       return;
     }
   }

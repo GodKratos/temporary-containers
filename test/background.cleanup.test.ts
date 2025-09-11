@@ -21,9 +21,7 @@ preferencesTestSet.map(preferences => {
           });
 
           browser.tabs.query.withArgs({}).resolves([{}, {}]);
-          browser.tabs.query
-            .withArgs({ cookieStoreId: 'firefox-tmp1' })
-            .resolves([]);
+          browser.tabs.query.withArgs({ cookieStoreId: 'firefox-tmp1' }).resolves([]);
           browser.contextualIdentities.remove.resolves({});
 
           browser.tabs.onRemoved.addListener.yield(2);
@@ -39,7 +37,11 @@ preferencesTestSet.map(preferences => {
 
       describe('when no timeout is given', () => {
         it('should remove the container instantly', async () => {
-          const { tmp: background, browser, helper } = await loadBackground({
+          const {
+            tmp: background,
+            browser,
+            helper,
+          } = await loadBackground({
             preferences,
           });
           background.storage.local.preferences.container.removal = 0;
@@ -49,9 +51,7 @@ preferencesTestSet.map(preferences => {
           });
 
           browser.tabs.query.withArgs({}).resolves([{}, {}]);
-          browser.tabs.query
-            .withArgs({ cookieStoreId: 'firefox-tmp1' })
-            .resolves([]);
+          browser.tabs.query.withArgs({ cookieStoreId: 'firefox-tmp1' }).resolves([]);
           browser.contextualIdentities.remove.resolves({});
 
           browser.tabs.onRemoved.addListener.yield(2);
@@ -67,14 +67,10 @@ preferencesTestSet.map(preferences => {
             const bg = await loadBackground({ preferences });
             bg.tmp.storage.local.preferences.container.removal = 0;
             await bg.browser.tabs._create({});
-            const tab = (await bg.tmp.container.createTabInTempContainer(
-              {}
-            )) as Tab;
+            const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
             await bg.tmp.tabs.remove(tab);
 
-            bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(
-              tab.cookieStoreId
-            );
+            bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(tab.cookieStoreId);
           });
         });
 
@@ -83,16 +79,12 @@ preferencesTestSet.map(preferences => {
             const bg = await loadBackground({ preferences });
             bg.tmp.storage.local.preferences.container.removal = 0;
             await bg.browser.tabs._create({});
-            const tab = (await bg.tmp.container.createTabInTempContainer(
-              {}
-            )) as Tab;
+            const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
             await bg.browser.tabs._create({ cookieStoreId: tab.cookieStoreId });
             await bg.tmp.tabs.remove(tab);
             await nextTick();
 
-            bg.browser.contextualIdentities.remove.should.not.have.been.calledOnceWith(
-              tab.cookieStoreId
-            );
+            bg.browser.contextualIdentities.remove.should.not.have.been.calledOnceWith(tab.cookieStoreId);
           });
         });
       });
@@ -102,27 +94,19 @@ preferencesTestSet.map(preferences => {
           const bg = await loadBackground({ preferences });
           bg.tmp.storage.local.preferences.container.removal = 0;
           await bg.browser.tabs._create({});
-          const tab1 = (await bg.tmp.container.createTabInTempContainer(
-            {}
-          )) as Tab;
-          const tab2 = (await bg.tmp.container.createTabInTempContainer(
-            {}
-          )) as Tab;
+          const tab1 = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
+          const tab2 = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
           bg.tmp.tabs.remove(tab1);
           bg.tmp.tabs.remove(tab2);
           await nextTick();
 
-          bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(
-            tab1.cookieStoreId
-          );
+          bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(tab1.cookieStoreId);
           bg.browser.contextualIdentities.remove.resetHistory();
 
           bg.clock.tick(2500);
           await nextTick();
 
-          bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(
-            tab2.cookieStoreId
-          );
+          bg.browser.contextualIdentities.remove.should.have.been.calledOnceWith(tab2.cookieStoreId);
         });
       });
 
@@ -131,22 +115,15 @@ preferencesTestSet.map(preferences => {
           const bg = await loadBackground({ preferences });
           bg.tmp.storage.local.preferences.container.removal = 0;
           await bg.browser.tabs._create({ url: 'about:sessionrestore' });
-          const tab = (await bg.tmp.container.createTabInTempContainer(
-            {}
-          )) as Tab;
+          const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
 
-          const stub = bg.browser.sinonSandbox.stub(
-            bg.tmp.cleanup,
-            'addToRemoveQueue'
-          );
+          const stub = bg.browser.sinonSandbox.stub(bg.tmp.cleanup, 'addToRemoveQueue');
           await bg.tmp.tabs.remove(tab);
           stub.restore();
           await nextTick();
           await bg.tmp.cleanup.cleanup(true);
 
-          bg.browser.contextualIdentities.remove.should.not.have.been.calledOnceWith(
-            tab.cookieStoreId
-          );
+          bg.browser.contextualIdentities.remove.should.not.have.been.calledOnceWith(tab.cookieStoreId);
         });
       });
     });

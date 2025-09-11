@@ -40,7 +40,7 @@ export class Tabs {
     this.cleanup = this.background.cleanup;
 
     const tabs = (await browser.tabs.query({})) as Tab[];
-    tabs.forEach((tab) => this.registerTab(tab));
+    tabs.forEach(tab => this.registerTab(tab));
   }
 
   // onUpdated sometimes (often) fires before onCreated
@@ -54,11 +54,7 @@ export class Tabs {
     }
   }
 
-  async onUpdated(
-    tabId: number,
-    changeInfo: browser.tabs._OnUpdatedChangeInfo,
-    tab: Tab
-  ): Promise<void> {
+  async onUpdated(tabId: number, changeInfo: browser.tabs._OnUpdatedChangeInfo, tab: Tab): Promise<void> {
     this.debug('[onUpdated] tab updated', tab, changeInfo);
     this.maybeCloseRedirectorTab(tab, changeInfo);
 
@@ -86,21 +82,14 @@ export class Tabs {
     if (tmpCookieStoreId) {
       this.unregisterTab(tabId, tmpCookieStoreId);
 
-      this.debug(
-        '[onRemoved] queuing container removal because of tab removal',
-        tabId
-      );
+      this.debug('[onRemoved] queuing container removal because of tab removal', tabId);
       this.cleanup.addToRemoveQueue(tmpCookieStoreId);
     }
   }
 
-  async onActivated(
-    activeInfo: browser.tabs._OnActivatedActiveInfo
-  ): Promise<void> {
+  async onActivated(activeInfo: browser.tabs._OnActivatedActiveInfo): Promise<void> {
     this.debug('[onActivated]', activeInfo);
-    delete this.container.lastCreatedInactiveTab[
-      browser.windows.WINDOW_ID_CURRENT
-    ];
+    delete this.container.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT];
     const activatedTab = (await browser.tabs.get(activeInfo.tabId)) as Tab;
     this.pageaction.showOrHide(activatedTab);
   }
@@ -132,15 +121,12 @@ export class Tabs {
 
   async handleAlreadyOpen(): Promise<(void | boolean)[]> {
     const tabs = (await browser.tabs.query({})) as Tab[];
-    return Promise.all(tabs.map((tab) => this.maybeReopenInTmpContainer(tab)));
+    return Promise.all(tabs.map(tab => this.maybeReopenInTmpContainer(tab)));
   }
 
   async maybeReopenInTmpContainer(tab: Tab): Promise<void | boolean> {
     if (this.creatingInSameContainer) {
-      this.debug(
-        '[maybeReopenInTmpContainer] we are in the process of creating a tab in same container, ignore',
-        tab
-      );
+      this.debug('[maybeReopenInTmpContainer] we are in the process of creating a tab in same container, ignore', tab);
       return;
     }
 
@@ -156,39 +142,26 @@ export class Tabs {
     }
 
     if (!this.pref.automaticMode.active) {
-      this.debug(
-        '[maybeReopenInTmpContainer] automatic mode not active, we ignore that',
-        tab
-      );
+      this.debug('[maybeReopenInTmpContainer] automatic mode not active, we ignore that', tab);
       return;
     }
 
     if (tab.url !== 'about:home' && tab.url !== 'about:newtab') {
-      this.debug(
-        '[maybeReopenInTmpContainer] not a home/new tab, we dont handle that',
-        tab
-      );
+      this.debug('[maybeReopenInTmpContainer] not a home/new tab, we dont handle that', tab);
       return;
     }
 
-    const deletesHistory =
-      this.pref.deletesHistory.automaticMode === 'automatic';
+    const deletesHistory = this.pref.deletesHistory.automaticMode === 'automatic';
 
     if (tab.cookieStoreId === `${this.background.containerPrefix}-default`) {
       if (this.pref.automaticMode.newTab === 'navigation' && !deletesHistory) {
-        this.debug(
-          '[maybeReopenInTmpContainer] automatic mode on navigation, setting icon badge',
-          tab
-        );
+        this.debug('[maybeReopenInTmpContainer] automatic mode on navigation, setting icon badge', tab);
         this.browseraction.addBadge(tab.id);
         return;
       }
 
       if (this.pref.automaticMode.newTab === 'created' || deletesHistory) {
-        this.debug(
-          '[maybeReopenInTmpContainer] about:home/new tab in firefox-default container, reload in temp container',
-          tab
-        );
+        this.debug('[maybeReopenInTmpContainer] about:home/new tab in firefox-default container, reload in temp container', tab);
         await this.container.reloadTabInTempContainer({
           tab,
           deletesHistory,
@@ -197,11 +170,7 @@ export class Tabs {
       }
     }
 
-    if (
-      tab.url === 'about:home' &&
-      this.container.isTemporary(tab.cookieStoreId) &&
-      this.pref.automaticMode.newTab === 'navigation'
-    ) {
+    if (tab.url === 'about:home' && this.container.isTemporary(tab.cookieStoreId) && this.pref.automaticMode.newTab === 'navigation') {
       this.debug(
         '[maybeReopenInTmpContainer] about:home and automatic mode on navigation but already in tmp container, open in default container',
         tab
@@ -215,14 +184,8 @@ export class Tabs {
     }
   }
 
-  async maybeCloseRedirectorTab(
-    tab: Tab,
-    changeInfo: browser.tabs._OnUpdatedChangeInfo
-  ): Promise<void> {
-    if (
-      !this.pref.closeRedirectorTabs.active ||
-      changeInfo.status !== 'complete'
-    ) {
+  async maybeCloseRedirectorTab(tab: Tab, changeInfo: browser.tabs._OnUpdatedChangeInfo): Promise<void> {
+    if (!this.pref.closeRedirectorTabs.active || changeInfo.status !== 'complete') {
       return;
     }
 
@@ -247,25 +210,15 @@ export class Tabs {
   async maybeMoveTab(tab: Tab): Promise<void> {
     if (
       !tab.active &&
-      this.container.lastCreatedInactiveTab[
-        browser.windows.WINDOW_ID_CURRENT
-      ] &&
-      this.container.lastCreatedInactiveTab[
-        browser.windows.WINDOW_ID_CURRENT
-      ] !== tab.id
+      this.container.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT] &&
+      this.container.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT] !== tab.id
     ) {
       try {
-        const lastCreatedInactiveTab = await browser.tabs.get(
-          this.container.lastCreatedInactiveTab[
-            browser.windows.WINDOW_ID_CURRENT
-          ]
-        );
+        const lastCreatedInactiveTab = await browser.tabs.get(this.container.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT]);
         if (lastCreatedInactiveTab.index > tab.index) {
           this.debug('[onCreated] moving tab', lastCreatedInactiveTab, tab);
           browser.tabs.move(tab.id, { index: lastCreatedInactiveTab.index });
-          this.container.lastCreatedInactiveTab[
-            browser.windows.WINDOW_ID_CURRENT
-          ] = tab.id;
+          this.container.lastCreatedInactiveTab[browser.windows.WINDOW_ID_CURRENT] = tab.id;
         }
       } catch (error) {
         this.debug('[onCreated] getting lastCreatedInactiveTab failed', error);
@@ -282,21 +235,14 @@ export class Tabs {
       });
       const activeTab = tabs[0];
       if (!activeTab) {
-        this.debug(
-          '[createInSameContainer] couldnt find an active tab',
-          activeTab
-        );
+        this.debug('[createInSameContainer] couldnt find an active tab', activeTab);
         return;
       }
       try {
         const newTab = await browser.tabs.create({
           cookieStoreId: activeTab.cookieStoreId,
         });
-        this.debug(
-          '[createInSameContainer] new same container tab created',
-          activeTab,
-          newTab
-        );
+        this.debug('[createInSameContainer] new same container tab created', activeTab, newTab);
       } catch (error) {
         this.debug('[createInSameContainer] couldnt create tab', error);
       }

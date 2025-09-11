@@ -25,8 +25,8 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           // Skip type checking to allow building with TypeScript errors
-          transpileOnly: true
-        }
+          transpileOnly: true,
+        },
       },
       {
         test: /\.css$/,

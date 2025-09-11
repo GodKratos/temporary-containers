@@ -11,7 +11,7 @@ export async function initExportImportPage(): Promise<void> {
     const preferences = await getPreferences();
     const section = document.getElementById('export-import');
     if (!section) return;
-    
+
     section.innerHTML = '';
     const content = document.createElement('div');
     content.className = 'form';
@@ -32,7 +32,7 @@ export async function initExportImportPage(): Promise<void> {
         <div class="field-description" data-i18n="importSettingsDescription">Import settings from a file.</div>
       </div>
     `;
-    
+
     if (!section.firstChild) section.appendChild(content);
 
     // Bind export/import events
@@ -58,25 +58,25 @@ async function handleExport(): Promise<void> {
     const [preferences, { domainRules }, { statistics }] = await Promise.all([
       getPreferences(),
       browser.runtime.sendMessage({ method: 'getDomainRules' }) as Promise<{ domainRules: any[] }>,
-      browser.storage.local.get('statistics') as Promise<{ statistics: any }>
+      browser.storage.local.get('statistics') as Promise<{ statistics: any }>,
     ]);
 
     const settings = {
       preferences,
       domainRules,
-      statistics
+      statistics,
     };
 
     const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = `temporary-containers-settings-${formatDate(new Date())}.json`;
     a.click();
-    
+
     URL.revokeObjectURL(url);
-    
+
     showSuccess(browser.i18n.getMessage('optionsExportImportExportSuccess'));
   } catch (error) {
     console.error('Error exporting settings:', error);
@@ -86,40 +86,40 @@ async function handleExport(): Promise<void> {
 
 async function handleImport(fileInput: HTMLInputElement): Promise<void> {
   const file = fileInput.files?.[0];
-  
+
   if (!file) {
     showError(browser.i18n.getMessage('errorImportFileNotFound'));
     return;
   }
-  
+
   try {
     const text = await file.text();
     const settings = JSON.parse(text);
-    
+
     // Validate settings
     if (!settings.preferences) {
       throw new Error(`Import error: Invalid file`);
     }
-    
+
     // Save preferences
     await savePreferences(settings.preferences as PreferencesSchema);
-    
+
     // Import domain rules if available
     if (settings.domainRules) {
       await browser.runtime.sendMessage({
         method: 'saveDomainRules',
-        domainRules: settings.domainRules
+        domainRules: settings.domainRules,
       });
     }
-    
+
     // Import statistics if available
     if (settings.statistics) {
       await browser.storage.local.set({ statistics: settings.statistics });
     }
-    
+
     // Reset file input
     fileInput.value = '';
-    
+
     showSuccess(browser.i18n.getMessage('optionsExportImportImportSuccess'));
   } catch (error) {
     console.error('Error importing settings:', error);

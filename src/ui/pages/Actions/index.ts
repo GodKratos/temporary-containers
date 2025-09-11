@@ -16,27 +16,43 @@ export async function initActionsPage(): Promise<void> {
     if (activeTab && activeTab.url) {
       try {
         parsedUrl = new URL(activeTab.url);
-      } catch {}
+      } catch (error) {
+        // Invalid URL, parsedUrl remains undefined
+      }
     }
 
     // Compute disables
     const isHttpTab = !!(activeTab && typeof activeTab.url === 'string' && activeTab.url.startsWith('http'));
     const tempContainers = storage.tempContainers || {};
     const isTemp = isHttpTab && !!tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
-    const isPermanent = isHttpTab && activeTab && activeTab.cookieStoreId !== 'firefox-default' && !tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
+    const isPermanent =
+      isHttpTab &&
+      activeTab &&
+      activeTab.cookieStoreId !== 'firefox-default' &&
+      !tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
 
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
       <div class="actions-grid">
-        ${!isHttpTab ? '<div class="action-label message error" data-i18n="optionsActionsNotAvailable" style="margin-bottom:12px;">Actions are not available in this tab</div>' : ''}
-        <button id="action-reopen-tmp" class="action-card" data-i18n="optionsActionsNewTemporaryContainer" style="width:100%;margin-bottom:12px;"${!isHttpTab ? ' disabled' : ''}>
+        ${
+          !isHttpTab
+            ? '<div class="action-label message error" data-i18n="optionsActionsNotAvailable" style="margin-bottom:12px;">Actions are not available in this tab</div>'
+            : ''
+        }
+        <button id="action-reopen-tmp" class="action-card" data-i18n="optionsActionsNewTemporaryContainer" style="width:100%;margin-bottom:12px;"${
+          !isHttpTab ? ' disabled' : ''
+        }>
           Reopen Tab in a new Temporary Container
         </button>
-        <button id="action-convert-permanent" class="action-card" data-i18n="optionsActionsConvertPermanent" style="width:100%;margin-bottom:12px;"${!isTemp ? ' disabled' : ''}>
+        <button id="action-convert-permanent" class="action-card" data-i18n="optionsActionsConvertPermanent" style="width:100%;margin-bottom:12px;"${
+          !isTemp ? ' disabled' : ''
+        }>
           Convert Temporary Container to Permanent
         </button>
-        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;"${!isPermanent ? ' disabled' : ''}>
+        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;"${
+          !isPermanent ? ' disabled' : ''
+        }>
           Convert Permanent Container to Temporary
         </button>
       </div>

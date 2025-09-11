@@ -22,11 +22,7 @@ export class History {
     }
     const cookieStoreId = tab.cookieStoreId;
     const container = this.storage.local.tempContainers[cookieStoreId];
-    if (
-      cookieStoreId !== `${this.background.containerPrefix}-default` &&
-      container &&
-      container.deletesHistory
-    ) {
+    if (cookieStoreId !== `${this.background.containerPrefix}-default` && container && container.deletesHistory) {
       if (!container.history) {
         container.history = {};
       }
@@ -43,7 +39,7 @@ export class History {
     if (container && container.deletesHistory && container.history) {
       const urls = Object.keys(container.history);
       count = urls.length;
-      urls.map((url) => {
+      urls.map(url => {
         if (!url) {
           return;
         }

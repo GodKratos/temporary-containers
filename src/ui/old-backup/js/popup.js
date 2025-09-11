@@ -16,15 +16,11 @@ import {
   createTabSystem,
   createGlossarySystem,
   t,
-  capitalize
+  capitalize,
 } from './utils.js';
 
 // Import shared constants if needed
-import {
-  CONTAINER_COLORS,
-  CONTAINER_ICONS,
-  TOOLBAR_ICON_COLORS
-} from './shared.js';
+import { CONTAINER_COLORS, CONTAINER_ICONS, TOOLBAR_ICON_COLORS } from './shared.js';
 
 // Import shared modules
 import { initializeIsolationGlobalTab } from './modules/isolation-global.js';
@@ -55,7 +51,7 @@ const elements = {
 
 // Glossary data
 const glossaryData = {
-  'Isolation': `
+  Isolation: `
     <p>Isolation prevents websites from tracking you across different containers.</p>
     <p>When enabled, Temporary Containers will:</p>
     <ul>
@@ -70,18 +66,18 @@ const glossaryData = {
  */
 async function initialize() {
   let initializeLoader = false;
-  
+
   if (window.location.search.startsWith('?error')) {
     showInitializeError();
     return;
   }
-  
+
   // Show loader after a short delay if initialization takes time
   const loaderTimeout = setTimeout(() => {
     initializeLoader = true;
     showInitializeLoader();
   }, 500);
-  
+
   try {
     // Check if background script is available
     const pong = await sendMessage('ping');
@@ -90,10 +86,10 @@ async function initialize() {
       showInitializeError(new Error('Background script not responding'));
       return;
     }
-    
+
     // Get permissions
     const permissions = await getPermissions();
-    
+
     // Get storage data
     let storage;
     try {
@@ -108,19 +104,19 @@ async function initialize() {
       showError(`Loading preferences failed, please try again. ${error.toString()}`);
       return;
     }
-    
+
     // Get current tab
     const currentTab = await browser.tabs.getCurrent();
-    
+
     // Get active tab
     const [activeTab] = await browser.tabs.query({
       currentWindow: true,
       active: true,
     });
-    
+
     // Add parsed URL to active tab
     const parsedUrl = new URL(activeTab.url);
-    
+
     // Update app state
     app = {
       initialized: true,
@@ -134,13 +130,13 @@ async function initialize() {
         parsedUrl,
       },
     };
-    
+
     // Apply localization to the page
     applyLocalization();
-    
+
     // Initialize UI
     initializeUI();
-    
+
     // Hide loader
     clearTimeout(loaderTimeout);
     if (initializeLoader) {
@@ -165,7 +161,7 @@ function applyLocalization() {
       element.textContent = translation;
     }
   });
-  
+
   // Localize titles/tooltips
   document.querySelectorAll('[data-i18n-title]').forEach(element => {
     const key = element.getAttribute('data-i18n-title');
@@ -174,7 +170,7 @@ function applyLocalization() {
       element.setAttribute('title', translation);
     }
   });
-  
+
   // Localize placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
     const key = element.getAttribute('data-i18n-placeholder');
@@ -183,7 +179,7 @@ function applyLocalization() {
       element.setAttribute('placeholder', translation);
     }
   });
-  
+
   // Update document title
   const titleElement = document.querySelector('title[data-i18n]');
   if (titleElement) {
@@ -201,27 +197,23 @@ function applyLocalization() {
 function initializeUI() {
   // Set up tab system for sidebar
   initializeSidebar();
-  
+
   // Set up glossary system
   createGlossarySystem(glossaryData);
-  
+
   // Initialize action buttons
   initializeActions();
-  
+
   // Initialize tab content
   initializeTabContent();
-  
+
   // Set up message listener for preference updates
   browser.runtime.onMessage.addListener(message => {
     if (typeof message !== 'object') {
       return;
     }
-    
-    if (
-      message.info &&
-      message.info === 'preferencesUpdated' &&
-      (!message.fromTabId || message.fromTabId !== app.currentTab.id)
-    ) {
+
+    if (message.info && message.info === 'preferencesUpdated' && (!message.fromTabId || message.fromTabId !== app.currentTab.id)) {
       initialize();
     }
   });
@@ -234,7 +226,7 @@ function initializeSidebar() {
   // Toggle sidebar
   elements.toggleSidebar.addEventListener('click', () => {
     elements.sidebar.classList.toggle('visible');
-    
+
     // Add overlay when sidebar is visible
     if (elements.sidebar.classList.contains('visible')) {
       // Create overlay if it doesn't exist
@@ -261,19 +253,19 @@ function initializeSidebar() {
       }
     }
   });
-  
+
   // Set up tab navigation
   const sidebarItems = document.querySelectorAll('.sidebar-item');
   const tabPanels = document.querySelectorAll('.tab-panel');
-  
+
   sidebarItems.forEach(item => {
     item.addEventListener('click', () => {
       const tabId = item.dataset.tab;
-      
+
       // Update active sidebar item
       sidebarItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      
+
       // Update active panel
       tabPanels.forEach(panel => {
         if (panel.id === tabId) {
@@ -284,7 +276,7 @@ function initializeSidebar() {
           panel.classList.remove('active');
         }
       });
-      
+
       // Hide sidebar after selection
       elements.sidebar.classList.remove('visible');
       const overlay = document.getElementById('sidebar-overlay');
@@ -293,7 +285,7 @@ function initializeSidebar() {
       }
     });
   });
-  
+
   // Set default active tab based on preferences
   if (app.preferences.ui && app.preferences.ui.popupDefaultTab) {
     const defaultTab = document.querySelector(`[data-tab="${app.preferences.ui.popupDefaultTab}"]`);
@@ -317,25 +309,25 @@ function initializeActions() {
   elements.toggleIsolation.addEventListener('click', () => {
     app.storage.isolation.active = !app.storage.isolation.active;
     updateIsolationIcon();
-    
+
     sendMessage('saveIsolation', {
       isolation: app.storage.isolation,
     });
   });
-  
+
   // Update isolation icon
   updateIsolationIcon();
-  
+
   // Open preferences
   elements.openPreferences.addEventListener('click', async () => {
     const [tab] = await browser.tabs.query({
       url: browser.runtime.getURL('options.html'),
     });
-    
+
     if (tab && tab.id && tab.windowId) {
       await browser.tabs.update(tab.id, { active: true });
       await browser.tabs.reload(tab.id);
-      
+
       if (tab.windowId !== browser.windows.WINDOW_ID_CURRENT) {
         await browser.windows.update(tab.windowId, { focused: true });
       }
@@ -344,10 +336,10 @@ function initializeActions() {
         url: browser.runtime.getURL('options.html'),
       });
     }
-    
+
     window.close();
   });
-  
+
   // Create deletes history container
   if (app.permissions.history) {
     elements.createDeletesHistoryContainer.classList.remove('hidden');
@@ -355,11 +347,11 @@ function initializeActions() {
       sendMessage('createTabInTempContainer', {
         deletesHistory: true,
       });
-      
+
       window.close();
     });
   }
-  
+
   // Create temporary container
   elements.createTmpContainer.addEventListener('click', () => {
     sendMessage('createTabInTempContainer');
@@ -380,7 +372,7 @@ function updateIsolationIcon() {
     elements.toggleIsolation.setAttribute('data-i18n-title', 'enableIsolation');
     elements.toggleIsolation.innerHTML = '<i class="icon-toggle-off"></i>';
   }
-  
+
   applyLocalization();
 }
 
@@ -391,56 +383,64 @@ function initializeTabContent() {
   // Initialize isolation global tab
   const isolationGlobalTab = document.getElementById('isolation-global');
   if (isolationGlobalTab) {
-    initializeIsolationGlobalTab(isolationGlobalTab, app.preferences, async (preferences) => {
+    initializeIsolationGlobalTab(isolationGlobalTab, app.preferences, async preferences => {
       await savePreferences(preferences);
     });
   }
-  
+
   // Initialize isolation per domain tab
   const isolationPerDomainTab = document.getElementById('isolation-per-domain');
   if (isolationPerDomainTab) {
-    initializeIsolationPerDomainTab(isolationPerDomainTab, app.preferences, async (preferences) => {
-      await savePreferences(preferences);
-    }, {
-      currentDomain: app.activeTab?.parsedUrl?.hostname,
-      isPopup: true,
-      onReload: () => {
-        // Reload the popup
-        initialize();
+    initializeIsolationPerDomainTab(
+      isolationPerDomainTab,
+      app.preferences,
+      async preferences => {
+        await savePreferences(preferences);
+      },
+      {
+        currentDomain: app.activeTab?.parsedUrl?.hostname,
+        isPopup: true,
+        onReload: () => {
+          // Reload the popup
+          initialize();
+        },
       }
-    });
+    );
   }
-  
+
   // Initialize actions tab
   initializeActionsTab();
-  
+
   // Initialize statistics tab
   const statisticsTab = document.getElementById('statistics');
   if (statisticsTab) {
-    initializeStatisticsTab(statisticsTab, app.storage.statistics, async () => {
-      try {
-        await sendMessage('resetStatistics');
-        app.storage.statistics = await sendMessage('getStatistics');
-        // Reload the popup to refresh statistics
-        initialize();
-      } catch (error) {
-        console.error('Error resetting statistics:', error);
-        showError(`Error resetting statistics: ${error.toString()}`);
+    initializeStatisticsTab(
+      statisticsTab,
+      app.storage.statistics,
+      async () => {
+        try {
+          await sendMessage('resetStatistics');
+          app.storage.statistics = await sendMessage('getStatistics');
+          // Reload the popup to refresh statistics
+          initialize();
+        } catch (error) {
+          console.error('Error resetting statistics:', error);
+          showError(`Error resetting statistics: ${error.toString()}`);
+        }
+      },
+      {
+        showResetButton: false,
       }
-    }, {
-      showResetButton: false
-    });
+    );
   }
 }
-
-
 
 /**
  * Initialize the actions tab
  */
 function initializeActionsTab() {
   const actionsTab = document.getElementById('actions');
-  
+
   if (actionsTab) {
     // Create content
     const content = document.createElement('div');
@@ -453,14 +453,18 @@ function initializeActionsTab() {
           <div class="action-label" data-i18n="newTemporaryContainer">New Temporary Container</div>
         </div>
         
-        ${app.permissions.history ? `
+        ${
+          app.permissions.history
+            ? `
           <div class="action-card" id="action-new-history-tmp">
             <div class="action-icon">
               <i class="icon-user-secret"></i>
             </div>
             <div class="action-label" data-i18n="newDeletesHistoryContainer">New Deletes History Container</div>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         
         <div class="action-card" id="action-open-preferences">
           <div class="action-icon">
@@ -471,10 +475,7 @@ function initializeActionsTab() {
         
         <div class="action-card" id="action-toggle-isolation">
           <div class="action-icon">
-            ${app.storage.isolation.active ? 
-              '<i class="icon-toggle-on"></i>' : 
-              '<i class="icon-toggle-off"></i>'
-            }
+            ${app.storage.isolation.active ? '<i class="icon-toggle-on"></i>' : '<i class="icon-toggle-off"></i>'}
           </div>
           <div class="action-label" data-i18n="${app.storage.isolation.active ? 'disableIsolation' : 'enableIsolation'}">
             ${app.storage.isolation.active ? 'Disable Isolation' : 'Enable Isolation'}
@@ -482,23 +483,23 @@ function initializeActionsTab() {
         </div>
       </div>
     `;
-    
+
     actionsTab.appendChild(content);
-    
+
     // Apply localization to the new content
     applyLocalization();
-    
+
     // Add event listeners
     const newTmpAction = content.querySelector('#action-new-tmp');
     const newHistoryTmpAction = content.querySelector('#action-new-history-tmp');
     const openPreferencesAction = content.querySelector('#action-open-preferences');
     const toggleIsolationAction = content.querySelector('#action-toggle-isolation');
-    
+
     newTmpAction.addEventListener('click', () => {
       sendMessage('createTabInTempContainer');
       window.close();
     });
-    
+
     if (newHistoryTmpAction) {
       newHistoryTmpAction.addEventListener('click', () => {
         sendMessage('createTabInTempContainer', {
@@ -507,16 +508,16 @@ function initializeActionsTab() {
         window.close();
       });
     }
-    
+
     openPreferencesAction.addEventListener('click', async () => {
       const [tab] = await browser.tabs.query({
         url: browser.runtime.getURL('options.html'),
       });
-      
+
       if (tab && tab.id && tab.windowId) {
         await browser.tabs.update(tab.id, { active: true });
         await browser.tabs.reload(tab.id);
-        
+
         if (tab.windowId !== browser.windows.WINDOW_ID_CURRENT) {
           await browser.windows.update(tab.windowId, { focused: true });
         }
@@ -525,21 +526,21 @@ function initializeActionsTab() {
           url: browser.runtime.getURL('options.html'),
         });
       }
-      
+
       window.close();
     });
-    
+
     toggleIsolationAction.addEventListener('click', () => {
       app.storage.isolation.active = !app.storage.isolation.active;
-      
+
       sendMessage('saveIsolation', {
         isolation: app.storage.isolation,
       });
-      
+
       // Update UI
       const icon = toggleIsolationAction.querySelector('.action-icon');
       const label = toggleIsolationAction.querySelector('.action-label');
-      
+
       if (app.storage.isolation.active) {
         icon.innerHTML = '<i class="icon-toggle-on"></i>';
         label.setAttribute('data-i18n', 'disableIsolation');
@@ -549,13 +550,12 @@ function initializeActionsTab() {
         label.setAttribute('data-i18n', 'enableIsolation');
         label.textContent = 'Enable Isolation';
       }
-      
+
       // Update header icon
       updateIsolationIcon();
     });
   }
 }
-
 
 // Initialize the popup page when the DOM is loaded
 document.addEventListener('DOMContentLoaded', initialize);

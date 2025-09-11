@@ -18,12 +18,12 @@ export async function initAdvancedScriptsPage(): Promise<void> {
     const section = document.getElementById('advanced-scripts');
     if (!section) return;
     section.innerHTML = '';
-    
+
     let editing = false;
     let editingIndex = -1;
     let currentDomainPattern = '';
     let currentScript: ScriptDefaults = { ...scriptDefaults };
-    
+
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -35,7 +35,9 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="scriptsWarningRead" ${preferences.scripts?.active ? 'checked' : ''} ${preferences.scripts?.active ? 'disabled' : ''} />
+              <input type="checkbox" id="scriptsWarningRead" ${preferences.scripts?.active ? 'checked' : ''} ${
+      preferences.scripts?.active ? 'disabled' : ''
+    } />
               <span data-i18n="optionsAdvancedScriptsWarningAccept">I have read the warning and understand the implications that come with using "Scripts". When ticking the checkbox Firefox will ask you for "Access browser activity" permissions.</span>
             </label>
           </strong>
@@ -82,22 +84,22 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         <div id="scriptsDisplay"></div>
       </div>
     `;
-    
+
     section.appendChild(content);
-    
+
     // Scripts warning checkbox handler
     const scriptsWarningCheckbox = document.getElementById('scriptsWarningRead') as HTMLInputElement;
     scriptsWarningCheckbox.addEventListener('change', async () => {
       if (!preferences.scripts) preferences.scripts = { active: false, domain: {} };
       preferences.scripts.active = scriptsWarningCheckbox.checked;
-      
+
       // Update form sections visibility
       const formSection = document.getElementById('scriptsFormSection') as HTMLElement;
       const listSection = document.getElementById('scriptsList') as HTMLElement;
       const opacity = scriptsWarningCheckbox.checked ? '' : 'opacity: 0.3; pointer-events: none;';
       formSection.style.cssText = opacity;
       listSection.style.cssText = opacity;
-      
+
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
@@ -105,18 +107,20 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
-    
+
     function updateScriptDisplay() {
       const scriptsDisplay = document.getElementById('scriptsDisplay') as HTMLElement;
       const scriptsDomain = preferences.scripts?.domain || {};
-      
+
       if (Object.keys(scriptsDomain).length === 0) {
-        scriptsDisplay.innerHTML = `<p data-i18n="optionsAdvancedScriptsNoScripts">${browser.i18n.getMessage('optionsAdvancedScriptsNoScripts')}</p>`;
+        scriptsDisplay.innerHTML = `<p data-i18n="optionsAdvancedScriptsNoScripts">${browser.i18n.getMessage(
+          'optionsAdvancedScriptsNoScripts'
+        )}</p>`;
         return;
       }
-      
+
       scriptsDisplay.innerHTML = '';
-      
+
       for (const [domainPattern, scripts] of Object.entries(scriptsDomain)) {
         const domainSection = document.createElement('div');
         domainSection.className = 'script-domain-section';
@@ -124,47 +128,53 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <h4>${domainPattern}</h4>
           <div class="script-list"></div>
         `;
-        
+
         const scriptList = domainSection.querySelector('.script-list') as HTMLElement;
-        
+
         scripts.forEach((script: Script, index: number) => {
           const scriptItem = document.createElement('div');
           scriptItem.className = 'script-item';
-          
-          const codePreview = script.code.length > 100 ? 
-            script.code.substring(0, 100) + '...' : 
-            script.code;
-          
+
+          const codePreview = script.code.length > 100 ? script.code.substring(0, 100) + '...' : script.code;
+
           scriptItem.innerHTML = `
             <div class="script-details">
-              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsRunAt">${browser.i18n.getMessage('optionsAdvancedScriptsRunAt')}:</strong> ${script.runAt}</div>
-              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsCode">${browser.i18n.getMessage('optionsAdvancedScriptsCode')}:</strong></div>
+              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsRunAt">${browser.i18n.getMessage(
+                'optionsAdvancedScriptsRunAt'
+              )}:</strong> ${script.runAt}</div>
+              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsCode">${browser.i18n.getMessage(
+                'optionsAdvancedScriptsCode'
+              )}:</strong></div>
               <pre class="script-code">${codePreview}</pre>
             </div>
             <div class="script-actions">
-              <button class="button-secondary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage('optionsAdvancedScriptsEdit')}</button>
-              <button class="button-danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage('optionsAdvancedScriptsRemove')}</button>
+              <button class="button-secondary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage(
+            'optionsAdvancedScriptsEdit'
+          )}</button>
+              <button class="button-danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage(
+            'optionsAdvancedScriptsRemove'
+          )}</button>
             </div>
           `;
-          
+
           scriptList.appendChild(scriptItem);
         });
-        
+
         scriptsDisplay.appendChild(domainSection);
       }
-      
+
       // Attach event listeners to edit/remove buttons
       scriptsDisplay.querySelectorAll('.script-edit').forEach(button => {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', e => {
           const target = e.target as HTMLElement;
           const domain = target.dataset.domain!;
           const index = parseInt(target.dataset.index!);
           editScript(domain, index);
         });
       });
-      
+
       scriptsDisplay.querySelectorAll('.script-remove').forEach(button => {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', e => {
           const target = e.target as HTMLElement;
           const domain = target.dataset.domain!;
           const index = parseInt(target.dataset.index!);
@@ -172,61 +182,61 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         });
       });
     }
-    
+
     function resetForm() {
       editing = false;
       editingIndex = -1;
       currentDomainPattern = '';
       currentScript = { ...scriptDefaults };
-      
+
       // Reset form fields
       (document.getElementById('scriptDomainPattern') as HTMLInputElement).value = '';
       (document.getElementById('scriptDomainPattern') as HTMLInputElement).disabled = false;
       (document.getElementById('scriptCode') as HTMLTextAreaElement).value = '';
       (document.getElementById('scriptRunAt') as HTMLSelectElement).value = 'document_idle';
-      
+
       // Reset button states
       (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsAdd');
       (document.getElementById('scriptCancel') as HTMLButtonElement).style.display = 'none';
     }
-    
+
     function editScript(domainPattern: string, index: number) {
       const scripts = preferences.scripts?.domain?.[domainPattern];
       if (!scripts || !scripts[index]) return;
-      
+
       editing = true;
       editingIndex = index;
       currentDomainPattern = domainPattern;
       currentScript = { ...scripts[index] };
-      
+
       // Fill form with script data
       (document.getElementById('scriptDomainPattern') as HTMLInputElement).value = domainPattern;
       (document.getElementById('scriptDomainPattern') as HTMLInputElement).disabled = true;
       (document.getElementById('scriptCode') as HTMLTextAreaElement).value = currentScript.code;
       (document.getElementById('scriptRunAt') as HTMLSelectElement).value = currentScript.runAt;
-      
+
       // Update button states
       (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsSave');
       (document.getElementById('scriptCancel') as HTMLButtonElement).style.display = 'inline-block';
-      
+
       // Scroll to form
       document.getElementById('scriptForm')?.scrollIntoView({ behavior: 'smooth' });
     }
-    
+
     async function removeScript(domainPattern: string, index: number) {
       if (!confirm(browser.i18n.getMessage('optionsAdvancedScriptsRemoveConfirm'))) return;
-      
+
       if (!preferences.scripts) preferences.scripts = { active: false, domain: {} };
       if (!preferences.scripts.domain) preferences.scripts.domain = {};
       if (!preferences.scripts.domain[domainPattern]) return;
-      
+
       preferences.scripts.domain[domainPattern].splice(index, 1);
-      
+
       // Remove domain if no scripts left
       if (preferences.scripts.domain[domainPattern].length === 0) {
         delete preferences.scripts.domain[domainPattern];
       }
-      
+
       try {
         await savePreferences(preferences);
         updateScriptDisplay();
@@ -235,30 +245,33 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
-    
+
     // Form submission handler
     const form = document.getElementById('scriptForm') as HTMLFormElement;
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      
+
       const domainPattern = (document.getElementById('scriptDomainPattern') as HTMLInputElement).value.trim();
       const code = (document.getElementById('scriptCode') as HTMLTextAreaElement).value.trim();
-      const runAt = (document.getElementById('scriptRunAt') as HTMLSelectElement).value as 'document_start' | 'document_end' | 'document_idle';
-      
+      const runAt = (document.getElementById('scriptRunAt') as HTMLSelectElement).value as
+        | 'document_start'
+        | 'document_end'
+        | 'document_idle';
+
       if (!domainPattern || !code) {
         showError(browser.i18n.getMessage('optionsAdvancedScriptsValidationError'));
         return;
       }
-      
+
       const script: Script = {
         code,
         runAt,
       };
-      
+
       // Initialize scripts structure if needed
       if (!preferences.scripts) preferences.scripts = { active: false, domain: {} };
       if (!preferences.scripts.domain) preferences.scripts.domain = {};
-      
+
       if (editing) {
         // Update existing script
         if (preferences.scripts.domain[currentDomainPattern]) {
@@ -271,7 +284,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         }
         preferences.scripts.domain[domainPattern].unshift(script);
       }
-      
+
       try {
         await savePreferences(preferences);
         updateScriptDisplay();
@@ -281,15 +294,14 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
-    
+
     // Cancel button handler
     document.getElementById('scriptCancel')?.addEventListener('click', () => {
       resetForm();
     });
-    
+
     // Initial display update
     updateScriptDisplay();
-    
   } catch (error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedScripts'));
   }

@@ -1,94 +1,99 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title data-i18n="extensionName">Temporary Containers Plus</title>
-  <link rel="stylesheet" href="css/photon.css" />
-  <link rel="stylesheet" href="css/options.css" />
-  <link rel="stylesheet" href="css/popup.css" />
-  <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
-</head>
-<body>
-  <div id="container" class="container">
-    <div id="message-container" class="message-container hidden">
-      <div id="message" class="message"></div>
-    </div>
-    
-    <div id="initialize-loader" class="initialize-loader hidden">
-      <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
-    </div>
-    
-    <div id="initialize-error" class="initialize-error hidden">
-      <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
-      <div id="initialize-error-details" class="error-details"></div>
-    </div>
-    
-    <div id="app" class="app">
-      <header class="popup-header">
-        <button id="toggle-sidebar" class="button-icon">
-          <i class="icon-menu"></i>
-        </button>
-        
-        <div class="header-actions">
-          <button id="toggle-isolation" class="button-icon" data-i18n-title="toggleIsolation" title="Toggle Isolation">
-            <i class="icon-toggle-on"></i>
+  <head>
+    <meta charset="utf-8" />
+    <title data-i18n="extensionName">Temporary Containers Plus</title>
+    <link rel="stylesheet" href="css/photon.css" />
+    <link rel="stylesheet" href="css/options.css" />
+    <link rel="stylesheet" href="css/popup.css" />
+    <link rel="stylesheet" href="vendor/fontello/css/fontello-embedded.css" />
+  </head>
+  <body>
+    <div id="container" class="container">
+      <div id="message-container" class="message-container hidden">
+        <div id="message" class="message"></div>
+      </div>
+
+      <div id="initialize-loader" class="initialize-loader hidden">
+        <div class="loader-text" data-i18n="initializingLabel">Initializing...</div>
+      </div>
+
+      <div id="initialize-error" class="initialize-error hidden">
+        <div class="error-text" data-i18n="initializeErrorText">Failed to initialize. Please try reloading the page.</div>
+        <div id="initialize-error-details" class="error-details"></div>
+      </div>
+
+      <div id="app" class="app">
+        <header class="popup-header">
+          <button id="toggle-sidebar" class="button-icon">
+            <i class="icon-menu"></i>
           </button>
-          
-          <button id="open-preferences" class="button-icon" data-i18n-title="openPreferences" title="Open Preferences/Options">
-            <i class="icon-cog-alt"></i>
-          </button>
-          
-          <!-- Don't use button yet
+
+          <div class="header-actions">
+            <button id="toggle-isolation" class="button-icon" data-i18n-title="toggleIsolation" title="Toggle Isolation">
+              <i class="icon-toggle-on"></i>
+            </button>
+
+            <button id="open-preferences" class="button-icon" data-i18n-title="openPreferences" title="Open Preferences/Options">
+              <i class="icon-cog-alt"></i>
+            </button>
+
+            <!-- Don't use button yet
           <button id="create-deletes-history-container" class="button-icon hidden" data-i18n-title="openNewDeletesHistoryContainer" title="Open new 'Deletes History Temporary Container'">
             <i class="icon-user-secret"></i>
           </button>
           -->
-          
-          <button id="create-tmp-container" class="button-icon" data-i18n-title="openNewTemporaryContainer" title="Open new Temporary Container">
-            <i class="icon-tmp-default"></i>
-          </button>
+
+            <button
+              id="create-tmp-container"
+              class="button-icon"
+              data-i18n-title="openNewTemporaryContainer"
+              title="Open new Temporary Container"
+            >
+              <i class="icon-tmp-default"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="popup-content">
+          <aside id="sidebar" class="sidebar">
+            <nav class="sidebar-nav">
+              <button class="sidebar-item" data-tab="isolation-global">
+                <i class="icon-circle-empty"></i> <span data-i18n="optionsIsolationTabGlobal">Isolation Global</span>
+              </button>
+              <button class="sidebar-item" data-tab="isolation-domain">
+                <i class="icon-dot-circled"></i> <span data-i18n="optionsIsolationTabPerDomain">Isolation Per Domain</span>
+              </button>
+              <button class="sidebar-item" data-tab="actions">
+                <i class="icon-exchange"></i> <span data-i18n="optionsNavActions">Actions</span>
+              </button>
+              <button class="sidebar-item" data-tab="statistics">
+                <i class="icon-chart-bar"></i> <span data-i18n="optionsNavStatistics">Statistics</span>
+              </button>
+            </nav>
+          </aside>
+
+          <!-- Main Content Area: Only shell, no static content. Sections will be loaded dynamically. -->
+          <main class="tab-content">
+            <section id="isolation-global" class="tab-panel active"></section>
+            <section id="isolation-domain" class="tab-panel hidden"></section>
+            <section id="actions" class="tab-panel hidden"></section>
+            <section id="statistics" class="tab-panel hidden"></section>
+          </main>
         </div>
-      </header>
-      
-      <div class="popup-content">
-        <aside id="sidebar" class="sidebar">
-          <nav class="sidebar-nav">
-            <button class="sidebar-item" data-tab="isolation-global">
-              <i class="icon-circle-empty"></i> <span data-i18n="optionsIsolationTabGlobal">Isolation Global</span>
-            </button>
-            <button class="sidebar-item" data-tab="isolation-domain">
-              <i class="icon-dot-circled"></i> <span data-i18n="optionsIsolationTabPerDomain">Isolation Per Domain</span>
-            </button>
-            <button class="sidebar-item" data-tab="actions">
-              <i class="icon-exchange"></i> <span data-i18n="optionsNavActions">Actions</span>
-            </button>
-            <button class="sidebar-item" data-tab="statistics">
-              <i class="icon-chart-bar"></i> <span data-i18n="optionsNavStatistics">Statistics</span>
-            </button>
-          </nav>
-        </aside>
-          
-        <!-- Main Content Area: Only shell, no static content. Sections will be loaded dynamically. -->
-        <main class="tab-content">
-          <section id="isolation-global" class="tab-panel active"></section>
-          <section id="isolation-domain" class="tab-panel hidden"></section>
-          <section id="actions" class="tab-panel hidden"></section>
-          <section id="statistics" class="tab-panel hidden"></section>
-        </main>
+      </div>
+
+      <div id="glossary" class="glossary hidden">
+        <div class="glossary-content">
+          <div class="glossary-header">
+            <h2 id="glossary-title" data-i18n="glossaryTitle">Glossary</h2>
+            <button id="glossary-close" class="button-icon">×</button>
+          </div>
+          <div id="glossary-body" class="glossary-body"></div>
+        </div>
       </div>
     </div>
-    
-    <div id="glossary" class="glossary hidden">
-      <div class="glossary-content">
-        <div class="glossary-header">
-          <h2 id="glossary-title" data-i18n="glossaryTitle">Glossary</h2>
-          <button id="glossary-close" class="button-icon">×</button>
-        </div>
-        <div id="glossary-body" class="glossary-body"></div>
-      </div>
-    </div>
-  </div>
-  
-  <script src="popup.js"></script>
-</body>
+
+    <script src="popup.js"></script>
+  </body>
 </html>

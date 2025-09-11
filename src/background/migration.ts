@@ -45,42 +45,32 @@ export class Migration {
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.91')) {
-      this.debug(
-        'updated from version <= 0.91, migrate container numbers into dedicated array'
-      );
-      Object.values(this.storage.local.tempContainers).map((container) => {
+      this.debug('updated from version <= 0.91, migrate container numbers into dedicated array');
+      Object.values(this.storage.local.tempContainers).map(container => {
         this.storage.local.tempContainersNumbers.push(container.number);
       });
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.103', '1.0.1')) {
-      this.debug(
-        'updated from version <= 0.103, migrate deletesHistory.active and ignoreRequestsTo'
-      );
+      this.debug('updated from version <= 0.103, migrate deletesHistory.active and ignoreRequestsTo');
       if (this.background.permissions.history) {
         preferences.deletesHistory.active = true;
       }
 
       if (preferences.ignoreRequestsToAMO === false) {
-        preferences.ignoreRequests = preferences.ignoreRequests.filter(
-          (ignoredPattern: string) => ignoredPattern !== 'addons.mozilla.org'
-        );
+        preferences.ignoreRequests = preferences.ignoreRequests.filter((ignoredPattern: string) => ignoredPattern !== 'addons.mozilla.org');
       }
       if (preferences.ignoreRequestsToPocket === false) {
-        preferences.ignoreRequests = preferences.ignoreRequests.filter(
-          (ignoredPattern: string) => ignoredPattern !== 'getpocket.com'
-        );
+        preferences.ignoreRequests = preferences.ignoreRequests.filter((ignoredPattern: string) => ignoredPattern !== 'getpocket.com');
       }
       delete preferences.ignoreRequestsToAMO;
       delete preferences.ignoreRequestsToPocket;
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.103', '1.0.6')) {
-      this.debug(
-        'updated from version <= 0.103, migrate per domain isolation to array'
-      );
+      this.debug('updated from version <= 0.103, migrate per domain isolation to array');
       const perDomainIsolation: IsolationDomain[] = [];
-      Object.keys(preferences.isolation.domain).map((domainPattern) => {
+      Object.keys(preferences.isolation.domain).map(domainPattern => {
         perDomainIsolation.push(
           Object.assign(
             {
@@ -94,25 +84,19 @@ export class Migration {
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.103')) {
-      this.debug(
-        '[migrate] updated from version <= 0.103, migrate popup default tab to isolation-per-domain'
-      );
+      this.debug('[migrate] updated from version <= 0.103, migrate popup default tab to isolation-per-domain');
       if (preferences.browserActionPopup || preferences.pageAction) {
         preferences.ui.popupDefaultTab = 'isolation-per-domain';
       }
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('1.1')) {
-      this.debug(
-        '[migrate] updated from version <= 1.1, migrate redirectorCloseTabs'
-      );
+      this.debug('[migrate] updated from version <= 1.1, migrate redirectorCloseTabs');
       preferences.closeRedirectorTabs.domains.push('slack-redir.net');
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('1.3', '1.4.1')) {
-      this.debug(
-        '[migrate] updated from version <= 1.3, migrate container.removal'
-      );
+      this.debug('[migrate] updated from version <= 1.3, migrate container.removal');
 
       switch (preferences.container.removal) {
         case 'instant':
@@ -144,17 +128,13 @@ export class Migration {
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('1.8')) {
-      this.debug(
-        '[migrate] updated from version <= 1.8, migrate isolation.active'
-      );
+      this.debug('[migrate] updated from version <= 1.8, migrate isolation.active');
       this.storage.local.isolation.active = preferences.isolation.active;
       delete preferences.isolation.active;
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('1.9.1')) {
-      this.debug(
-        '[migrate] updated from version <= 1.9.1, migrate isolation.automaticReactivate'
-      );
+      this.debug('[migrate] updated from version <= 1.9.1, migrate isolation.automaticReactivate');
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.storage.local.isolation.reactivateTargetTime = this.storage.local.isolation.automaticReactivateTargetTime;
@@ -162,15 +142,12 @@ export class Migration {
       // @ts-ignore
       delete this.storage.local.isolation.automaticReactivateTargetTime;
 
-      preferences.isolation.reactivateDelay =
-        preferences.isolation.automaticReactivateDelay;
+      preferences.isolation.reactivateDelay = preferences.isolation.automaticReactivateDelay;
       delete preferences.isolation.automaticReactivateDelay;
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('1.9.1')) {
-      this.debug(
-        '[migrate] updated from version <= 1.9.1, migrate ui.popupDefaultTab'
-      );
+      this.debug('[migrate] updated from version <= 1.9.1, migrate ui.popupDefaultTab');
 
       if (preferences.ui.popupDefaultTab === 'isolation-mac') {
         preferences.ui.popupDefaultTab = 'isolation-global';
@@ -186,10 +163,7 @@ export class Migration {
     await this.storage.persist();
   }
 
-  updatedFromVersionEqualToOrLessThan(
-    compareVersion: string,
-    compareBetaVersion = ''
-  ): boolean {
+  updatedFromVersionEqualToOrLessThan(compareVersion: string, compareBetaVersion = ''): boolean {
     if (compareBetaVersion && this.previousVersionBeta) {
       compareVersion = compareBetaVersion;
     }

@@ -57,10 +57,7 @@ export class Storage {
         await this.persist();
       }
     } catch (error) {
-      this.debug(
-        '[initialize] accessing managed storage failed:',
-        (error as Error).toString()
-      );
+      this.debug('[initialize] accessing managed storage failed:', (error as Error).toString());
     }
 
     this.debug('[initialize] storage initialized', this.local);
@@ -98,10 +95,7 @@ export class Storage {
       this.debug('[persist] storage persisted');
       return true;
     } catch (error) {
-      this.debug(
-        '[persist] something went wrong while trying to persist the storage',
-        error
-      );
+      this.debug('[persist] something went wrong while trying to persist the storage', error);
       return false;
     }
   }

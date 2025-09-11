@@ -21,9 +21,7 @@ export class Scripts {
     this.utils = this.background.utils;
   }
 
-  async maybeExecute(
-    request: browser.webNavigation._OnCommittedDetails
-  ): Promise<void> {
+  async maybeExecute(request: browser.webNavigation._OnCommittedDetails): Promise<void> {
     if (!Object.keys(this.pref.scripts.domain).length) {
       return;
     }
@@ -42,10 +40,7 @@ export class Scripts {
           this.debug('[maybeExecute] executing script', request);
           await browser.tabs.executeScript(request.tabId, script);
         } catch (error) {
-          this.debug(
-            '[maybeExecute] executing script failed',
-            (error as Error).toString()
-          );
+          this.debug('[maybeExecute] executing script failed', (error as Error).toString());
         }
       }
     }

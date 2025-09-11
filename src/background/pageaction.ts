@@ -28,22 +28,16 @@ export class PageAction {
     let color;
     if (!this.background.isolation.getActiveState()) {
       color = 'warning-red';
-    } else if (
-      activatedTab.cookieStoreId ===
-      `${this.background.containerPrefix}-default`
-    ) {
+    } else if (activatedTab.cookieStoreId === `${this.background.containerPrefix}-default`) {
       color = 'gray';
     } else if (
       this.storage.local.tempContainers[activatedTab.cookieStoreId] &&
       this.storage.local.tempContainers[activatedTab.cookieStoreId].color
     ) {
-      color = this.storage.local.tempContainers[activatedTab.cookieStoreId]
-        .color;
+      color = this.storage.local.tempContainers[activatedTab.cookieStoreId].color;
     } else {
       try {
-        const container = await browser.contextualIdentities.get(
-          activatedTab.cookieStoreId
-        );
+        const container = await browser.contextualIdentities.get(activatedTab.cookieStoreId);
         color = container.color;
       } catch (error) {
         color = 'gray';

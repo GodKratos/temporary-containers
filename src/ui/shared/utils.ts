@@ -19,7 +19,7 @@ export async function sendMessage(method: string, payload: Record<string, unknow
  */
 export async function getStorage(): Promise<StorageLocal> {
   try {
-    const storage = await sendMessage('getStorage') as StorageLocal;
+    const storage = (await sendMessage('getStorage')) as StorageLocal;
     if (!storage) {
       throw new Error('Failed to initialize storage');
     }
@@ -35,7 +35,7 @@ export async function getStorage(): Promise<StorageLocal> {
  */
 export async function getPreferences(): Promise<PreferencesSchema> {
   try {
-    const preferences = await sendMessage('getPreferences') as PreferencesSchema;
+    const preferences = (await sendMessage('getPreferences')) as PreferencesSchema;
     if (!preferences) {
       throw new Error('Failed to get preferences');
     }
@@ -64,7 +64,7 @@ export async function savePreferences(preferences: Partial<PreferencesSchema>): 
  */
 export async function getPermissions(): Promise<Permissions> {
   try {
-    const permissions = await sendMessage('getPermissions') as Permissions;
+    const permissions = (await sendMessage('getPermissions')) as Permissions;
     if (!permissions) {
       throw new Error('Failed to get permissions');
     }
@@ -98,15 +98,15 @@ export function formatBytes(bytes: number, decimals = 2): string {
 export function showMessage(message: string, type = ''): void {
   const container = document.getElementById('message-container');
   const messageEl = document.getElementById('message');
-  
+
   if (!container || !messageEl) {
     return;
   }
-  
+
   messageEl.textContent = message;
   container.className = `message-container ${type}`;
   container.classList.remove('hidden');
-  
+
   setTimeout(() => {
     container.classList.add('hidden');
   }, 3000);
@@ -122,7 +122,7 @@ export function showError(message: string): void {
 
 /**
  * Show a success message
- * @param message - The success message 
+ * @param message - The success message
  */
 export function showSuccess(message: string): void {
   showMessage(message, 'success');
@@ -166,11 +166,7 @@ export function showInitializeError(message: string): void {
  * @param panelsSelector - Selector for the tab panels
  * @param onChange - Callback when the tab changes
  */
-export function createTabSystem(
-  tabsSelector: string,
-  panelsSelector: string,
-  onChange: ((tabId: string) => void) | null = null
-): void {
+export function createTabSystem(tabsSelector: string, panelsSelector: string, onChange: ((tabId: string) => void) | null = null): void {
   const tabs = document.querySelectorAll<HTMLElement>(tabsSelector);
   const panels = document.querySelectorAll<HTMLElement>(panelsSelector);
 
@@ -328,7 +324,7 @@ export function createMultiSelect(
 ): void {
   selectElement.innerHTML = '';
   const formattedOptions = Array.isArray(options)
-    ? options.map(option => typeof option === 'object' ? option : { id: option, text: option })
+    ? options.map(option => (typeof option === 'object' ? option : { id: option, text: option }))
     : [];
   const selected = Array.isArray(selectedValues) ? selectedValues : [];
   formattedOptions.forEach(option => {

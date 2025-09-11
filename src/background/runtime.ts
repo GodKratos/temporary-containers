@@ -49,10 +49,7 @@ export class Runtime {
     this.utils = this.background.utils;
   }
 
-  async onMessage(
-    message: RuntimeMessage,
-    sender: browser.runtime.MessageSender
-  ): Promise<void | boolean | Tab | 'pong'> {
+  async onMessage(message: RuntimeMessage, sender: browser.runtime.MessageSender): Promise<void | boolean | Tab | 'pong'> {
     this.debug('[onMessage] message received', message, sender);
     if (typeof message !== 'object') {
       return;
@@ -115,9 +112,7 @@ export class Runtime {
 
       case 'resetStatistics':
         this.debug('[onMessage] resetting statistics');
-        this.storage.local.statistics = this.utils.clone(
-          this.storage.defaults.statistics
-        );
+        this.storage.local.statistics = this.utils.clone(this.storage.defaults.statistics);
         this.storage.local.statistics.startTime = new Date();
         await this.storage.persist();
         return true;
@@ -139,9 +134,7 @@ export class Runtime {
       case 'createTabInTempContainer':
         return this.container.createTabInTempContainer({
           url: message.payload ? message.payload.url : undefined,
-          deletesHistory: message.payload
-            ? message.payload.deletesHistory
-            : undefined,
+          deletesHistory: message.payload ? message.payload.deletesHistory : undefined,
         });
 
       case 'convertTempContainerToPermanent':
@@ -171,9 +164,10 @@ export class Runtime {
         return 'pong';
 
       case 'getPreferences': {
-        const rawPrefs = this.storage.local.preferences && Object.keys(this.storage.local.preferences).length > 0
-          ? this.storage.local.preferences
-          : this.preferences.defaults;
+        const rawPrefs =
+          this.storage.local.preferences && Object.keys(this.storage.local.preferences).length > 0
+            ? this.storage.local.preferences
+            : this.preferences.defaults;
         return rawPrefs as any;
       }
 
@@ -212,16 +206,10 @@ export class Runtime {
         return this.container.createTabInTempContainer({
           url: message.url || undefined,
           active: message.active,
-          deletesHistory:
-            this.pref.deletesHistory.automaticMode === 'automatic'
-              ? true
-              : false,
+          deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic' ? true : false,
         });
       case 'isTempContainer':
-        return message.cookieStoreId &&
-          this.storage.local.tempContainers[message.cookieStoreId]
-          ? true
-          : false;
+        return message.cookieStoreId && this.storage.local.tempContainers[message.cookieStoreId] ? true : false;
       default:
         throw new Error('Unknown message.method');
     }

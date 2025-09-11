@@ -1,13 +1,6 @@
 import fs from 'fs';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const manifestJson = require('./dist/manifest.json');
-const updateUrl =
-  'https://raw.githubusercontent.com/GodKratos/temporary-containers/beta-updates/updates.json';
-// eslint-disable-next-line @typescript-eslint/camelcase
+const updateUrl = 'https://raw.githubusercontent.com/GodKratos/temporary-containers/beta-updates/updates.json';
 manifestJson.applications.gecko.update_url = updateUrl;
 
-// eslint-disable-next-line quotes
-fs.writeFileSync(
-  './dist/manifest.json',
-  JSON.stringify(manifestJson, null, 2) + '\n'
-);
+fs.writeFileSync('./dist/manifest.json', JSON.stringify(manifestJson, null, 2) + '\n');

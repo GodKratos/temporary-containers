@@ -15,16 +15,21 @@
 - Firefox Version:
 
 ### Actual behavior
+
 ..
 
 ### Expected behavior
+
 ..
 
 ### Steps to reproduce
+
 <!-- When your issue involves clicking links or buttons, then please make sure to include exactly where (e.g. website loaded in a tab in a temporary container) and how (which keyboard/mouse buttons) you used -->
+
 1. ..
 2. ..
 3. ..
 
 ### Notes
+
 ..

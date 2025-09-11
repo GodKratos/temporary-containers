@@ -16,7 +16,7 @@ import { t, sendMessage } from '../utils.js';
 export function createStatisticsContent(statistics, onReset, options = {}) {
   const { showResetButton = true } = options;
   const content = document.createElement('div');
-  
+
   if (!statistics) {
     content.innerHTML = `
       <div class="statistics-container">
@@ -25,35 +25,35 @@ export function createStatisticsContent(statistics, onReset, options = {}) {
     `;
     return content;
   }
-  
+
   // Create statistics container
   const statisticsContainer = document.createElement('div');
   statisticsContainer.className = 'statistics-container';
-  
+
   // Statistics items (based on options menu)
   const statisticsItems = [
     {
       key: 'containersCreated',
       label: 'containersCreated',
-      value: statistics.containersCreated || 0
+      value: statistics.containersCreated || 0,
     },
     {
       key: 'containersActive',
-      label: 'containersActive', 
-      value: statistics.containersActive || 0
+      label: 'containersActive',
+      value: statistics.containersActive || 0,
     },
     {
       key: 'containersRemoved',
       label: 'containersRemoved',
-      value: statistics.containersRemoved || 0
+      value: statistics.containersRemoved || 0,
     },
     {
       key: 'isolationPrevented',
       label: 'isolationPrevented',
-      value: statistics.isolationPrevented || 0
-    }
+      value: statistics.isolationPrevented || 0,
+    },
   ];
-  
+
   // Create statistics HTML (same format as options menu)
   let statisticsHTML = '<div class="statistics-container">';
   statisticsItems.forEach(item => {
@@ -65,10 +65,10 @@ export function createStatisticsContent(statistics, onReset, options = {}) {
     `;
   });
   statisticsHTML += '</div>';
-  
+
   statisticsContainer.innerHTML = statisticsHTML;
   content.appendChild(statisticsContainer);
-  
+
   // Add reset button if requested
   if (showResetButton) {
     const buttonGroup = document.createElement('div');
@@ -76,16 +76,16 @@ export function createStatisticsContent(statistics, onReset, options = {}) {
     buttonGroup.innerHTML = `
       <button id="resetStatistics" class="button-default" data-i18n="resetStatistics">Reset Statistics</button>
     `;
-    
+
     // Add event listener for reset button
     const resetButton = buttonGroup.querySelector('#resetStatistics');
     if (resetButton && onReset) {
       resetButton.addEventListener('click', onReset);
     }
-    
+
     content.appendChild(buttonGroup);
   }
-  
+
   return content;
 }
 
@@ -96,14 +96,14 @@ export function createStatisticsContent(statistics, onReset, options = {}) {
  */
 export function updateStatisticsDisplay(content, statistics) {
   if (!content || !statistics) return;
-  
+
   // Update individual statistic values
   const statisticElements = content.querySelectorAll('.statistic-value');
   statisticElements.forEach(element => {
     const key = element.id;
     if (key) {
       let value = 0;
-      
+
       switch (key) {
         case 'containersCreated':
           value = statistics.containersCreated || 0;
@@ -118,7 +118,7 @@ export function updateStatisticsDisplay(content, statistics) {
           value = statistics.isolationPrevented || 0;
           break;
       }
-      
+
       element.textContent = value;
     }
   });

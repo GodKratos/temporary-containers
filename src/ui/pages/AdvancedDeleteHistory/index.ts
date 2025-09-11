@@ -8,7 +8,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
     const section = document.getElementById('advanced-delete-history');
     if (!section) return;
     section.innerHTML = '';
-    
+
     const content = document.createElement('div');
     content.className = 'form';
     content.innerHTML = `
@@ -22,7 +22,9 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="deletesHistoryWarningRead" ${preferences.deletesHistory?.active ? 'checked' : ''} ${preferences.deletesHistory?.active ? 'disabled' : ''} />
+              <input type="checkbox" id="deletesHistoryWarningRead" ${preferences.deletesHistory?.active ? 'checked' : ''} ${
+      preferences.deletesHistory?.active ? 'disabled' : ''
+    } />
               <span data-i18n="optionsAdvancedDeleteHistoryWarningAccept">I have read the Warning and understand the implications that come with using "Deletes History Temporary Containers". When ticking the checkbox Firefox will ask you for "Access browsing history" permissions.</span>
             </label>
           </strong>
@@ -34,7 +36,9 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         </div>
       </div>
       
-      <div class="section" id="deletesHistoryOptions" ${!preferences.deletesHistory?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+      <div class="section" id="deletesHistoryOptions" ${
+        !preferences.deletesHistory?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''
+      }>
         <div class="field">
           <label for="deletesHistoryAutomaticMode" data-i18n="optionsAdvancedDeleteHistoryAutomaticMode">Automatically create "Deletes History Temporary Containers"</label>
           <select id="deletesHistoryAutomaticMode">
@@ -112,27 +116,37 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         </div>
       </div>
     `;
-    
+
     section.appendChild(content);
-    
+
     // Load initial values
     if (preferences.deletesHistory) {
-      (document.getElementById('deletesHistoryAutomaticMode') as HTMLSelectElement).value = preferences.deletesHistory.automaticMode || 'never';
+      (document.getElementById('deletesHistoryAutomaticMode') as HTMLSelectElement).value =
+        preferences.deletesHistory.automaticMode || 'never';
       (document.getElementById('deletesHistoryContextMenu') as HTMLInputElement).checked = preferences.deletesHistory.contextMenu || false;
-      (document.getElementById('deletesHistoryContextMenuBookmarks') as HTMLInputElement).checked = preferences.deletesHistory.contextMenuBookmarks || false;
-      (document.getElementById('deletesHistoryContainerRemoval') as HTMLSelectElement).value = String(preferences.deletesHistory.containerRemoval || 0);
-      (document.getElementById('deletesHistoryAlwaysPerDomain') as HTMLSelectElement).value = preferences.deletesHistory.containerAlwaysPerDomain || 'never';
-      (document.getElementById('deletesHistoryContainerIsolation') as HTMLSelectElement).value = preferences.deletesHistory.containerIsolation || 'never';
-      (document.getElementById('deletesHistoryMouseClicks') as HTMLSelectElement).value = preferences.deletesHistory.containerMouseClicks || 'never';
+      (document.getElementById('deletesHistoryContextMenuBookmarks') as HTMLInputElement).checked =
+        preferences.deletesHistory.contextMenuBookmarks || false;
+      (document.getElementById('deletesHistoryContainerRemoval') as HTMLSelectElement).value = String(
+        preferences.deletesHistory.containerRemoval || 0
+      );
+      (document.getElementById('deletesHistoryAlwaysPerDomain') as HTMLSelectElement).value =
+        preferences.deletesHistory.containerAlwaysPerDomain || 'never';
+      (document.getElementById('deletesHistoryContainerIsolation') as HTMLSelectElement).value =
+        preferences.deletesHistory.containerIsolation || 'never';
+      (document.getElementById('deletesHistoryMouseClicks') as HTMLSelectElement).value =
+        preferences.deletesHistory.containerMouseClicks || 'never';
     }
-    
+
     // Load mouse click preferences
     if (preferences.isolation?.global?.mouseClick) {
-      (document.getElementById('deletesHistoryMiddleClick') as HTMLSelectElement).value = preferences.isolation.global.mouseClick.middle?.container || 'default';
-      (document.getElementById('deletesHistoryCtrlLeftClick') as HTMLSelectElement).value = preferences.isolation.global.mouseClick.ctrlleft?.container || 'default';
-      (document.getElementById('deletesHistoryLeftClick') as HTMLSelectElement).value = preferences.isolation.global.mouseClick.left?.container || 'default';
+      (document.getElementById('deletesHistoryMiddleClick') as HTMLSelectElement).value =
+        preferences.isolation.global.mouseClick.middle?.container || 'default';
+      (document.getElementById('deletesHistoryCtrlLeftClick') as HTMLSelectElement).value =
+        preferences.isolation.global.mouseClick.ctrlleft?.container || 'default';
+      (document.getElementById('deletesHistoryLeftClick') as HTMLSelectElement).value =
+        preferences.isolation.global.mouseClick.left?.container || 'default';
     }
-    
+
     // Warning checkbox handler
     const warningCheckbox = document.getElementById('deletesHistoryWarningRead') as HTMLInputElement;
     warningCheckbox.addEventListener('change', async () => {
@@ -146,15 +160,15 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           containerIsolation: 'never',
           containerRemoval: 0,
           containerMouseClicks: 'never',
-          statistics: true
+          statistics: true,
         };
       }
       preferences.deletesHistory.active = warningCheckbox.checked;
-      
+
       // Update options section visibility
       const optionsSection = document.getElementById('deletesHistoryOptions') as HTMLElement;
       optionsSection.style.cssText = warningCheckbox.checked ? '' : 'opacity: 0.3; pointer-events: none;';
-      
+
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
@@ -162,7 +176,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
-    
+
     // Helper function to save preference
     async function savePref(path: string, value: any) {
       const keys = path.split('.');
@@ -172,7 +186,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         obj = obj[keys[i]];
       }
       obj[keys[keys.length - 1]] = value;
-      
+
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
@@ -180,48 +194,47 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
-    
+
     // Event listeners for all form fields
-    document.getElementById('deletesHistoryAutomaticMode')?.addEventListener('change', (e) => {
+    document.getElementById('deletesHistoryAutomaticMode')?.addEventListener('change', e => {
       savePref('deletesHistory.automaticMode', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryContextMenu')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryContextMenu')?.addEventListener('change', e => {
       savePref('deletesHistory.contextMenu', (e.target as HTMLInputElement).checked);
     });
-    
-    document.getElementById('deletesHistoryContextMenuBookmarks')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryContextMenuBookmarks')?.addEventListener('change', e => {
       savePref('deletesHistory.contextMenuBookmarks', (e.target as HTMLInputElement).checked);
     });
-    
-    document.getElementById('deletesHistoryContainerRemoval')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryContainerRemoval')?.addEventListener('change', e => {
       savePref('deletesHistory.containerRemoval', parseInt((e.target as HTMLSelectElement).value));
     });
-    
-    document.getElementById('deletesHistoryAlwaysPerDomain')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryAlwaysPerDomain')?.addEventListener('change', e => {
       savePref('deletesHistory.containerAlwaysPerDomain', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryContainerIsolation')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryContainerIsolation')?.addEventListener('change', e => {
       savePref('deletesHistory.containerIsolation', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryMouseClicks')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryMouseClicks')?.addEventListener('change', e => {
       savePref('deletesHistory.containerMouseClicks', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryMiddleClick')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryMiddleClick')?.addEventListener('change', e => {
       savePref('isolation.global.mouseClick.middle.container', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryCtrlLeftClick')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryCtrlLeftClick')?.addEventListener('change', e => {
       savePref('isolation.global.mouseClick.ctrlleft.container', (e.target as HTMLSelectElement).value);
     });
-    
-    document.getElementById('deletesHistoryLeftClick')?.addEventListener('change', (e) => {
+
+    document.getElementById('deletesHistoryLeftClick')?.addEventListener('change', e => {
       savePref('isolation.global.mouseClick.left.container', (e.target as HTMLSelectElement).value);
     });
-    
   } catch (error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedDeleteHistory'));
   }

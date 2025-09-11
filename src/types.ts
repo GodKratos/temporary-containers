@@ -1,19 +1,11 @@
-import {
-  CONTAINER_COLORS,
-  CONTAINER_ICONS,
-  TOOLBAR_ICON_COLORS,
-  IGNORED_DOMAINS_DEFAULT,
-  REDIRECTOR_DOMAINS_DEFAULT,
-} from './shared';
+import { CONTAINER_COLORS, CONTAINER_ICONS, TOOLBAR_ICON_COLORS, IGNORED_DOMAINS_DEFAULT, REDIRECTOR_DOMAINS_DEFAULT } from './shared';
 
 export type TabId = number;
 export type WindowId = number;
 
 export type Milliseconds = number;
-export type IgnoredDomain = typeof IGNORED_DOMAINS_DEFAULT[number] | string;
-export type RedirectorDomain =
-  | typeof REDIRECTOR_DOMAINS_DEFAULT[number]
-  | string;
+export type IgnoredDomain = (typeof IGNORED_DOMAINS_DEFAULT)[number] | string;
+export type RedirectorDomain = (typeof REDIRECTOR_DOMAINS_DEFAULT)[number] | string;
 
 export type CookieStoreId = string;
 
@@ -50,12 +42,7 @@ export interface TmpTabOptions {
   openerTab?: Tab;
 }
 
-export type IsolationAction =
-  | 'never'
-  | 'notsamedomain'
-  | 'notsamedomainexact'
-  | 'always'
-  | 'global';
+export type IsolationAction = 'never' | 'notsamedomain' | 'notsamedomainexact' | 'always' | 'global';
 
 export interface IsolationGlobal {
   navigation: {
@@ -107,12 +94,7 @@ export interface Script {
   runAt: 'document_start' | 'document_end' | 'document_idle';
 }
 
-export type ToolbarIconColor =
-  | 'default'
-  | 'black-simple'
-  | 'blue-simple'
-  | 'red-simple'
-  | 'white-simple';
+export type ToolbarIconColor = 'default' | 'black-simple' | 'blue-simple' | 'red-simple' | 'white-simple';
 
 export interface StorageLocal {
   containerPrefix: string | false;
@@ -203,11 +185,7 @@ export interface PreferencesSchema {
   statistics: boolean;
   ui: {
     expandPreferences: boolean;
-    popupDefaultTab:
-      | 'isolation-global'
-      | 'isolation-per-domain'
-      | 'actions'
-      | 'statistics';
+    popupDefaultTab: 'isolation-global' | 'isolation-per-domain' | 'actions' | 'statistics';
   };
 }
 
@@ -226,9 +204,9 @@ export interface Permissions {
   webNavigation: boolean;
 }
 
-export type ContainerColor = typeof CONTAINER_COLORS[number];
-export type ContainerIcon = typeof CONTAINER_ICONS[number];
-export type ToolbarIconColors = typeof TOOLBAR_ICON_COLORS[number];
+export type ContainerColor = (typeof CONTAINER_COLORS)[number];
+export type ContainerIcon = (typeof CONTAINER_ICONS)[number];
+export type ToolbarIconColors = (typeof TOOLBAR_ICON_COLORS)[number];
 
 export interface MacAssignment {
   userContextId: string;
@@ -236,10 +214,7 @@ export interface MacAssignment {
   neverAsk: boolean;
 }
 
-export type OnBeforeRequestResult =
-  | undefined
-  | boolean
-  | { clean?: boolean; cancel?: boolean };
+export type OnBeforeRequestResult = undefined | boolean | { clean?: boolean; cancel?: boolean };
 
 export type ClickType = 'middle' | 'left' | 'ctrlleft';
 export interface ClickEvent {
@@ -262,7 +237,6 @@ export interface RuntimeMessage {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Debug = (...args: any[]) => Promise<void>;
 
-export interface WebRequestOnBeforeRequestDetails
-  extends browser.webRequest._OnBeforeRequestDetails {
+export interface WebRequestOnBeforeRequestDetails extends browser.webRequest._OnBeforeRequestDetails {
   cookieStoreId: string;
 }

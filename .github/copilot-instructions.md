@@ -7,7 +7,7 @@ This project is a Firefox extension for managing temporary containers. It allows
 - `/src`: Contains the source code for the extension.
 - `/src/background`: Background scripts for managing container logic.
 - `/src/ui`: scripts for user interface components.
-  - `popup`: Code for the popup interface for the extension icon. 
+  - `popup`: Code for the popup interface for the extension icon.
   - `options`: Code for the options/settings page.
   - `pages`: Settings pages accessed through options and popup interfaces.
   - `_locales`: Localization files for different languages.

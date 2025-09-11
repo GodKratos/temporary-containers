@@ -82,13 +82,13 @@ export class TemporaryContainers {
     this.preferences.initialize();
     await this.storage.initialize();
 
-    this.pref = (new Proxy(this.storage, {
+    this.pref = new Proxy(this.storage, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       get(target, key): any {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (target.local.preferences as any)[key];
       },
-    }) as unknown) as PreferencesSchema;
+    }) as unknown as PreferencesSchema;
 
     if (!this.storage.local.containerPrefix) {
       const browserInfo = await browser.runtime.getBrowserInfo();

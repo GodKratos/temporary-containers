@@ -12,9 +12,7 @@ export class Helper {
   }
 
   async createTmpTab(options: TmpTabOptions): Promise<Tab> {
-    const tab = await this.background.container.createTabInTempContainer(
-      options
-    );
+    const tab = await this.background.container.createTabInTempContainer(options);
     if (!tab) {
       throw new Error('something went wrong while creating tmp tab');
     }
@@ -61,12 +59,7 @@ export class Helper {
 
   private requestId = 1;
 
-  async openNewTmpTab({
-    tabId = 1,
-    createsTabId = 2,
-    createsContainer = 'firefox-tmp1',
-    resetHistory = true,
-  }): Promise<void> {
+  async openNewTmpTab({ tabId = 1, createsTabId = 2, createsContainer = 'firefox-tmp1', resetHistory = true }): Promise<void> {
     this.browser.tabs.query.resolves([{}, {}]);
     const fakeCreatedContainer = {
       cookieStoreId: createsContainer,
@@ -81,10 +74,10 @@ export class Helper {
       id: tabId,
       cookieStoreId: createsContainer,
     });
-    const [promise] = (this.browser.browserAction.onClicked.addListener.yield({
+    const [promise] = this.browser.browserAction.onClicked.addListener.yield({
       id: tabId,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as unknown) as any[];
+    }) as unknown as any[];
     await promise;
     if (resetHistory) {
       this.browser.contextualIdentities.create.resetHistory();
@@ -247,10 +240,7 @@ export class Helper {
     }
 
     let confirmPageUrl =
-      'moz-extension://multi-account-containers/confirm-page.html?url=' +
-      encodeURIComponent(url) +
-      '&cookieStoreId=' +
-      targetContainer;
+      'moz-extension://multi-account-containers/confirm-page.html?url=' + encodeURIComponent(url) + '&cookieStoreId=' + targetContainer;
     if (originContainer !== 'firefox-default') {
       confirmPageUrl += '&currentCookieStoreId=' + originContainer;
     }

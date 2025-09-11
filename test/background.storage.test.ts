@@ -2,9 +2,7 @@ import { expect, loadBackground } from './setup';
 describe('storage', () => {
   it('should initialize storage and version', async () => {
     const { tmp: background } = await loadBackground();
-    expect(background.storage.local.preferences).to.deep.equal(
-      background.preferences.defaults
-    );
+    expect(background.storage.local.preferences).to.deep.equal(background.preferences.defaults);
     expect(background.storage.local.version).to.equal('0.1');
   });
 
@@ -20,7 +18,6 @@ describe('storage', () => {
     (background.preferences.defaults as any).newPreference = true;
     await background.initialize();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((background.storage.local.preferences as any).newPreference).to.be
-      .true;
+    expect((background.storage.local.preferences as any).newPreference).to.be.true;
   });
 });

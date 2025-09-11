@@ -65,10 +65,7 @@ Array.prototype.move = function (from, to): void {
   this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
-export default (
-  App: ExtendedVue<Vue, unknown, unknown, unknown, unknown>,
-  { popup = false }
-): void => {
+export default (App: ExtendedVue<Vue, unknown, unknown, unknown, unknown>, { popup = false }): void => {
   new Vue({
     el: '#app',
     data(): Data {
@@ -103,10 +100,7 @@ export default (
             });
           } catch (error) {
             console.error('error while saving preferences', error);
-            this.$root.$emit(
-              'showError',
-              `Error while saving preferences: ${(error as Error).toString()}`
-            );
+            this.$root.$emit('showError', `Error while saving preferences: ${(error as Error).toString()}`);
             window.setTimeout(() => {
               this.$root.$emit('initialize');
             }, 5000);
@@ -171,21 +165,12 @@ export default (
         let storage;
         try {
           storage = (await browser.storage.local.get()) as StorageLocal;
-          if (
-            !storage.preferences ||
-            !Object.keys(storage.preferences).length
-          ) {
-            this.$root.$emit(
-              'showError',
-              'Loading preferences failed, please try again'
-            );
+          if (!storage.preferences || !Object.keys(storage.preferences).length) {
+            this.$root.$emit('showError', 'Loading preferences failed, please try again');
             return;
           }
         } catch (error) {
-          this.$root.$emit(
-            'showError',
-            `Loading preferences failed, please try again. ${(error as Error).toString()}`
-          );
+          this.$root.$emit('showError', `Loading preferences failed, please try again. ${(error as Error).toString()}`);
           return;
         }
         const currentTab = (await browser.tabs.getCurrent()) as Tab;
@@ -229,69 +214,47 @@ export default (
       async checkPermissions(app: App): Promise<void> {
         if (app.preferences.notifications && !app.permissions.notifications) {
           // eslint-disable-next-line require-atomic-updates
-          app.preferences.notifications = app.permissions.notifications = await browser.permissions.request(
-            {
-              permissions: ['notifications'],
-            }
-          );
+          app.preferences.notifications = app.permissions.notifications = await browser.permissions.request({
+            permissions: ['notifications'],
+          });
         }
 
-        if (
-          app.preferences.contextMenuBookmarks &&
-          !app.permissions.bookmarks
-        ) {
+        if (app.preferences.contextMenuBookmarks && !app.permissions.bookmarks) {
           // eslint-disable-next-line require-atomic-updates
-          app.preferences.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request(
-            {
-              permissions: ['bookmarks'],
-            }
-          );
+          app.preferences.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request({
+            permissions: ['bookmarks'],
+          });
         }
 
-        if (
-          app.preferences.deletesHistory.contextMenuBookmarks &&
-          !app.permissions.bookmarks
-        ) {
+        if (app.preferences.deletesHistory.contextMenuBookmarks && !app.permissions.bookmarks) {
           // eslint-disable-next-line require-atomic-updates
-          app.preferences.deletesHistory.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request(
-            {
-              permissions: ['bookmarks'],
-            }
-          );
+          app.preferences.deletesHistory.contextMenuBookmarks = app.permissions.bookmarks = await browser.permissions.request({
+            permissions: ['bookmarks'],
+          });
         }
 
         if (app.preferences.deletesHistory.active && !app.permissions.history) {
           // eslint-disable-next-line require-atomic-updates
-          app.preferences.deletesHistory.active = app.permissions.history = await browser.permissions.request(
-            {
-              permissions: ['history'],
-            }
-          );
+          app.preferences.deletesHistory.active = app.permissions.history = await browser.permissions.request({
+            permissions: ['history'],
+          });
         }
 
         if (app.preferences.scripts.active && !app.permissions.webNavigation) {
           // eslint-disable-next-line require-atomic-updates
-          app.preferences.scripts.active = app.permissions.webNavigation = await browser.permissions.request(
-            {
-              permissions: ['webNavigation'],
-            }
-          );
+          app.preferences.scripts.active = app.permissions.webNavigation = await browser.permissions.request({
+            permissions: ['webNavigation'],
+          });
         }
       },
       maybeExpandPreferences(app: App): void {
         this.$nextTick(() => {
-          if (
-            app.preferences.ui.expandPreferences &&
-            !this.expandedPreferences
-          ) {
+          if (app.preferences.ui.expandPreferences && !this.expandedPreferences) {
             Array.from(Array(15)).map((_, idx) => {
               $('.ui.accordion:not(#glossaryAccordion)').accordion('open', idx);
             });
             this.expandedPreferences = true;
-          } else if (
-            !app.preferences.ui.expandPreferences &&
-            this.expandedPreferences
-          ) {
+          } else if (!app.preferences.ui.expandPreferences && this.expandedPreferences) {
             this.expandedPreferences = false;
             this.$root.$emit('initialize');
           }

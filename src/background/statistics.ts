@@ -33,9 +33,7 @@ export class Statistics {
     this.cleanup = this.background.cleanup;
   }
 
-  async collect(
-    request: browser.webRequest._OnCompletedDetails
-  ): Promise<void> {
+  async collect(request: browser.webRequest._OnCompletedDetails): Promise<void> {
     if (!this.pref.statistics && !this.pref.deletesHistory.statistics) {
       return;
     }
@@ -61,22 +59,14 @@ export class Statistics {
       };
     }
     if (!request.fromCache && request.responseHeaders) {
-      const contentLength = request.responseHeaders.find(
-        (header) => header.name === 'content-length'
-      );
+      const contentLength = request.responseHeaders.find(header => header.name === 'content-length');
       if (contentLength && contentLength.value) {
-        this.requests[tab.cookieStoreId].contentLength += parseInt(
-          contentLength.value,
-          10
-        );
+        this.requests[tab.cookieStoreId].contentLength += parseInt(contentLength.value, 10);
       }
     }
   }
 
-  async update(
-    historyClearedCount: number,
-    cookieStoreId: CookieStoreId
-  ): Promise<void> {
+  async update(historyClearedCount: number, cookieStoreId: CookieStoreId): Promise<void> {
     this.removedContainerCount++;
 
     let cookieCount = 0;
@@ -94,10 +84,7 @@ export class Statistics {
       this.storage.local.statistics.containersDeleted++;
     }
 
-    if (
-      this.pref.deletesHistory.statistics &&
-      this.container.isTemporary(cookieStoreId, 'deletesHistory')
-    ) {
+    if (this.pref.deletesHistory.statistics && this.container.isTemporary(cookieStoreId, 'deletesHistory')) {
       this.storage.local.statistics.deletesHistory.containersDeleted++;
       if (historyClearedCount) {
         this.storage.local.statistics.deletesHistory.urlsDeleted += historyClearedCount;
@@ -113,14 +100,9 @@ export class Statistics {
       this.removedContainerCookiesCount += cookieCount;
     }
 
-    if (
-      this.requests[cookieStoreId] &&
-      this.requests[cookieStoreId].contentLength
-    ) {
+    if (this.requests[cookieStoreId] && this.requests[cookieStoreId].contentLength) {
       if (this.pref.statistics) {
-        this.storage.local.statistics.cacheDeleted += this.requests[
-          cookieStoreId
-        ].contentLength;
+        this.storage.local.statistics.cacheDeleted += this.requests[cookieStoreId].contentLength;
       }
       this.removedContentLength += this.requests[cookieStoreId].contentLength;
     }
@@ -135,9 +117,7 @@ export class Statistics {
         notificationMessage += `\nand ${this.removedContainerCookiesCount} Cookies`;
       }
       if (this.removedContentLength) {
-        notificationMessage += `\nand ~${formatBytes(
-          this.removedContentLength
-        )} Cache`;
+        notificationMessage += `\nand ~${formatBytes(this.removedContentLength)} Cache`;
       }
       if (this.removedContainerHistoryCount) {
         notificationMessage += `\nand ${this.removedContainerHistoryCount} URLs from History`;

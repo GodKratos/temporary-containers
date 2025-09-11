@@ -86,9 +86,7 @@ export class BrowserAction {
     }
 
     browser.browserAction.setTitle({
-      title: !this.pref.browserActionPopup
-        ? 'Open a new tab in a new Temporary Container (Alt+C)'
-        : 'Temporary Containers',
+      title: !this.pref.browserActionPopup ? 'Open a new tab in a new Temporary Container (Alt+C)' : 'Temporary Containers',
       tabId,
     });
     browser.browserAction.setBadgeText({

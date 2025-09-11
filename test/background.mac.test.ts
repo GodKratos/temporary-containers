@@ -1,10 +1,4 @@
-import {
-  expect,
-  preferencesTestSet,
-  loadBackground,
-  nextTick,
-  Background,
-} from './setup';
+import { expect, preferencesTestSet, loadBackground, nextTick, Background } from './setup';
 
 preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {
@@ -65,16 +59,12 @@ preferencesTestSet.map(preferences => {
                       await bg.helper.openMacConfirmPage(confirmPageOptions);
                       break;
                     case 'firstrace':
-                      promises.push(
-                        bg.helper.openMacConfirmPage(confirmPageOptions)
-                      );
+                      promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                       promises.push(bg.helper.request(request));
                       break;
                     case 'lastrace':
                       promises.push(bg.helper.request(request));
-                      promises.push(
-                        bg.helper.openMacConfirmPage(confirmPageOptions)
-                      );
+                      promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                       break;
                   }
                   await Promise.all(promises);
@@ -134,11 +124,7 @@ preferencesTestSet.map(preferences => {
                           url: 'https://example.com',
                         });
 
-                        results = await Promise.all([
-                          request1,
-                          request2,
-                          request3,
-                        ]);
+                        results = await Promise.all([request1, request2, request3]);
                         await nextTick();
                       });
 
@@ -194,16 +180,12 @@ preferencesTestSet.map(preferences => {
                       await bg.helper.openMacConfirmPage(confirmPageOptions);
                       break;
                     case 'firstrace':
-                      promises.push(
-                        bg.helper.openMacConfirmPage(confirmPageOptions)
-                      );
+                      promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                       promises.push(bg.helper.request(request));
                       break;
                     case 'lastrace':
                       promises.push(bg.helper.request(request));
-                      promises.push(
-                        bg.helper.openMacConfirmPage(confirmPageOptions)
-                      );
+                      promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                       break;
                   }
                   await Promise.all(promises);
@@ -283,14 +265,11 @@ preferencesTestSet.map(preferences => {
                   },
                 ];
                 clickPreferences.map(preferences => {
-                  describe(`preferences: ${JSON.stringify(
-                    preferences
-                  )}`, () => {
+                  describe(`preferences: ${JSON.stringify(preferences)}`, () => {
                     describe('clicks on links in the loaded website that are mac assigned with not "remember my choice"', () => {
                       beforeEach(async () => {
-                        bg.tmp.storage.local.preferences.isolation.global.mouseClick[
-                          preferences.click.type
-                        ].action = preferences.click.action;
+                        bg.tmp.storage.local.preferences.isolation.global.mouseClick[preferences.click.type].action =
+                          preferences.click.action;
 
                         bg.browser.runtime.sendMessage.resolves({
                           userContextId: '1',
@@ -318,28 +297,20 @@ preferencesTestSet.map(preferences => {
                         const promises: any[] = [];
                         switch (confirmPage) {
                           case 'first':
-                            await bg.helper.openMacConfirmPage(
-                              confirmPageOptions
-                            );
+                            await bg.helper.openMacConfirmPage(confirmPageOptions);
                             await bg.helper.request(request);
                             break;
                           case 'last':
                             await bg.helper.request(request);
-                            await bg.helper.openMacConfirmPage(
-                              confirmPageOptions
-                            );
+                            await bg.helper.openMacConfirmPage(confirmPageOptions);
                             break;
                           case 'firstrace':
-                            promises.push(
-                              bg.helper.openMacConfirmPage(confirmPageOptions)
-                            );
+                            promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                             promises.push(bg.helper.request(request));
                             break;
                           case 'lastrace':
                             promises.push(bg.helper.request(request));
-                            promises.push(
-                              bg.helper.openMacConfirmPage(confirmPageOptions)
-                            );
+                            promises.push(bg.helper.openMacConfirmPage(confirmPageOptions));
                             break;
                         }
                         await Promise.all(promises);

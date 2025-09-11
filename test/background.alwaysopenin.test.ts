@@ -1,9 +1,4 @@
-import {
-  preferencesTestSet,
-  loadBackground,
-  Background,
-  expect,
-} from './setup';
+import { preferencesTestSet, loadBackground, Background, expect } from './setup';
 
 preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {

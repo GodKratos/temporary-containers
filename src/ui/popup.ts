@@ -14,7 +14,7 @@ import {
   createGlossarySystem,
   t,
   capitalize,
-  applyLocalization
+  applyLocalization,
 } from './shared/utils';
 import { StorageLocal } from '../types';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
@@ -53,11 +53,11 @@ const pageInitializers: Record<string, () => Promise<void>> = {
     const tab = document.getElementById('isolation-domain');
     if (tab) await initIsolationPerDomainPage();
   },
-  'statistics': async () => {
+  statistics: async () => {
     const tab = document.getElementById('statistics');
     if (tab) await initStatisticsPage();
   },
-  'actions': async () => {
+  actions: async () => {
     const tab = document.getElementById('actions');
     if (tab) await initActionsPage();
   },
@@ -65,7 +65,7 @@ const pageInitializers: Record<string, () => Promise<void>> = {
 
 function getGlossaryData() {
   return {
-    'Isolation': `
+    Isolation: `
       <p data-i18n="glossaryIsolationDescription">${browser.i18n.getMessage('glossaryIsolationDescription')}</p>
       <p data-i18n="glossaryIsolationWhenEnabled">${browser.i18n.getMessage('glossaryIsolationWhenEnabled')}</p>
       <ul>

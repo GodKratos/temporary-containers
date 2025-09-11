@@ -21,16 +21,10 @@ import {
   capitalize,
   createMultiSelect,
   createTagInput,
-  initializeStorage
+  initializeStorage,
 } from './utils.js';
 
-import {
-  CONTAINER_COLORS,
-  CONTAINER_ICONS,
-  CONTAINER_REMOVAL_DEFAULT,
-  TOOLBAR_ICON_COLORS,
-  REDIRECTOR_DOMAINS_DEFAULT,
-} from './shared.js';
+import { CONTAINER_COLORS, CONTAINER_ICONS, CONTAINER_REMOVAL_DEFAULT, TOOLBAR_ICON_COLORS, REDIRECTOR_DOMAINS_DEFAULT } from './shared.js';
 
 // State
 /** @type {{
@@ -51,17 +45,17 @@ let app = {
   domainRules: [],
   activeSection: 'general',
   themeMode: 'light',
-  storage: null
+  storage: null,
 };
 
 // DOM Elements
 const elements = {
   // Navigation buttons
   navButtons: document.querySelectorAll('.nav-button'),
-  
+
   // Content sections
   contentSections: document.querySelectorAll('.content-section'),
-  
+
   // General settings
   automaticMode: document.getElementById('automaticMode'),
   browserActionPopup: document.getElementById('browserActionPopup'),
@@ -82,7 +76,7 @@ const elements = {
   //resetContainerNumber: document.getElementById('resetContainerNumber'),
   //containerCounter: document.getElementById('containerCounter'),
   iconColor: document.getElementById('iconColor'),
-  
+
   // Isolation: Global
   isolationGlobalUrlNavigation: document.getElementById('isolationGlobalUrlNavigation'),
   isolationGlobalLeftClick: document.getElementById('isolationGlobalLeftClick'),
@@ -93,38 +87,38 @@ const elements = {
   excludedContainersSelect: document.getElementById('excludedContainersSelect'),
   addExcludedContainer: document.getElementById('addExcludedContainer'),
   excludedContainers: document.getElementById('excludedContainers'),
-  
+
   // Isolation: Per Domain
   domainRuleInput: document.getElementById('domainRuleInput'),
   domainRuleAction: document.getElementById('domainRuleAction'),
   addDomainRule: document.getElementById('addDomainRule'),
   domainRulesList: document.getElementById('domainRulesList'),
-  
+
   // Advanced: Container
   containerCleanup: document.getElementById('containerCleanup'),
   containerTimeout: document.getElementById('containerTimeout'),
   containerHistory: document.getElementById('containerHistory'),
-  
+
   // Advanced: Cookies
   deleteCookies: document.getElementById('deleteCookies'),
   cookieStoreId: document.getElementById('cookieStoreId'),
   cookieBehavior: document.getElementById('cookieBehavior'),
-  
+
   // Advanced: Misc
   contextMenu: document.getElementById('contextMenu'),
   debug: document.getElementById('debug'),
-  
+
   // Statistics
   containersCreated: document.getElementById('containersCreated'),
   containersActive: document.getElementById('containersActive'),
   containersRemoved: document.getElementById('containersRemoved'),
   isolationPrevented: document.getElementById('isolationPrevented'),
   resetStatistics: document.getElementById('resetStatistics'),
-  
+
   // Export/Import
   exportSettings: document.getElementById('exportSettings'),
   importFile: document.getElementById('importFile'),
-  importSettings: document.getElementById('importSettings')
+  importSettings: document.getElementById('importSettings'),
 };
 
 /**
@@ -133,51 +127,51 @@ const elements = {
 async function initialize() {
   try {
     showInitializeLoader();
-    
+
     // Apply localization to the page
     applyLocalization();
-    
+
     // Detect theme mode
     detectThemeMode();
-    
+
     // Initialize storage
     app.storage = await initializeStorage();
-    
+
     // Get preferences from storage
     app.preferences = await getPreferences();
-    
+
     // Get permissions
     app.permissions = await getPermissions();
-    
+
     // Validate required data
     if (!app.storage || !app.preferences) {
       throw new Error('Failed to initialize storage or preferences');
     }
-    
+
     // Initialize navigation
     initNavigation();
-    
+
     // Initialize form elements
     initFormElements();
-    
+
     // Initialize tag inputs
     initTagInputs();
-    
+
     // Initialize domain rules
     initDomainRules();
-    
+
     // Update statistics
     updateStatistics();
-    
+
     // Initialize event listeners
     initEventListeners();
-    
+
     // Mark as initialized
     app.initialized = true;
-    
+
     // Hide loader
     hideInitializeLoader();
-    
+
     // Show app
     document.getElementById('app').classList.remove('hidden');
   } catch (error) {
@@ -198,7 +192,7 @@ function applyLocalization() {
       element.textContent = translation;
     }
   });
-  
+
   // Localize titles/tooltips
   document.querySelectorAll('[data-i18n-title]').forEach(element => {
     const key = element.getAttribute('data-i18n-title');
@@ -207,7 +201,7 @@ function applyLocalization() {
       element.setAttribute('title', translation);
     }
   });
-  
+
   // Localize placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
     const key = element.getAttribute('data-i18n-placeholder');
@@ -216,7 +210,7 @@ function applyLocalization() {
       element.setAttribute('placeholder', translation);
     }
   });
-  
+
   // Update document title
   const titleElement = document.querySelector('title[data-i18n]');
   if (titleElement) {
@@ -234,9 +228,9 @@ function applyLocalization() {
 function detectThemeMode() {
   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   app.themeMode = prefersDarkMode ? 'dark' : 'light';
-  
+
   // Listen for theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     app.themeMode = e.matches ? 'dark' : 'light';
   });
 }
@@ -260,7 +254,7 @@ function initNavigation() {
 function setActiveSection(section) {
   // Update active section in state
   app.activeSection = section;
-  
+
   // Update active button
   elements.navButtons.forEach(button => {
     if (button.dataset.section === section) {
@@ -269,7 +263,7 @@ function setActiveSection(section) {
       button.classList.remove('active');
     }
   });
-  
+
   // Update active content section
   elements.contentSections.forEach(contentSection => {
     if (contentSection.id === section) {
@@ -286,7 +280,7 @@ function setActiveSection(section) {
 async function initFormElements() {
   // Ensure preferences object exists with defaults
   if (!app.preferences) app.preferences = {};
-  
+
   // General settings
   elements.automaticMode.checked = app.preferences.automaticMode.active || false;
   elements.browserActionPopup.checked = app.preferences.browserActionPopup || false;
@@ -296,7 +290,7 @@ async function initFormElements() {
   elements.containerIconRandom.checked = app.preferences.container.iconRandom || false;
   elements.containerNumberMode.value = app.preferences.container.numberMode || 'keep';
   //elements.containerCounter.textContent = `Current container number: ${app.preferences.container.number || 1}`;
-  
+
   // Populate container colors
   CONTAINER_COLORS.forEach(color => {
     const option = document.createElement('option');
@@ -305,7 +299,7 @@ async function initFormElements() {
     elements.containerColor.appendChild(option);
   });
   elements.containerColor.value = app.preferences.container.color || CONTAINER_COLORS[8];
-  
+
   // Populate container icons
   CONTAINER_ICONS.forEach(icon => {
     const option = document.createElement('option');
@@ -314,7 +308,7 @@ async function initFormElements() {
     elements.containerIcon.appendChild(option);
   });
   elements.containerIcon.value = app.preferences.container.icon || CONTAINER_ICONS[4];
-  
+
   // Populate toolbar icon colors
   TOOLBAR_ICON_COLORS.forEach(color => {
     const option = document.createElement('option');
@@ -323,7 +317,7 @@ async function initFormElements() {
     elements.iconColor.appendChild(option);
   });
   elements.iconColor.value = app.preferences.iconColor || TOOLBAR_ICON_COLORS[0];
-  
+
   // Populate container removal options
   Object.entries(CONTAINER_REMOVAL_DEFAULT).forEach(([value, text]) => {
     const option = document.createElement('option');
@@ -333,30 +327,30 @@ async function initFormElements() {
     elements.containerRemoval.appendChild(option);
   });
   elements.containerRemoval.value = app.preferences.container.removal || 900000;
-  
+
   // Initialize multi-selects
   createMultiSelect(elements.containerColorRandomExcluded, CONTAINER_COLORS, app.preferences.container.colorRandomExcluded || []);
   createMultiSelect(elements.containerIconRandomExcluded, CONTAINER_ICONS, app.preferences.container.iconRandomExcluded || []);
-  
+
   // Show/hide random excluded sections
   toggleRandomExcludedSections();
-  
+
   // Get all permanent containers from Firefox
   const containers = await browser.contextualIdentities.query({});
   const select = elements.excludedContainersSelect;
-  
+
   // Clear existing options
   select.innerHTML = '';
-  
+
   // Add a blank option
   const blankOption = document.createElement('option');
   blankOption.value = '';
   blankOption.textContent = 'Select a container...';
   select.appendChild(blankOption);
-  
+
   // Get existing excluded containers
   const excludedContainers = app.preferences?.isolation?.global?.excludedContainers || [];
-  
+
   // Populate the select with permanent containers (excluding temporary ones)
   containers.forEach(container => {
     // Skip if it's a temporary container or already selected
@@ -397,7 +391,7 @@ async function initFormElements() {
 
   // Initialize tag removal functionality
   const excludedContainersDiv = elements.excludedContainers;
-  excludedContainersDiv.addEventListener('click', async (e) => {
+  excludedContainersDiv.addEventListener('click', async e => {
     if (e.target.classList.contains('tag-remove')) {
       const tag = e.target.closest('.tag');
       const containerId = tag.dataset.containerId;
@@ -406,27 +400,27 @@ async function initFormElements() {
       refreshContainerDropdown();
     }
   });
-  
+
   // Isolation: Global
   elements.isolationGlobalUrlNavigation.value = app.preferences.isolation.global.navigation.action || 'never';
   elements.isolationGlobalLeftClick.value = app.preferences.isolation.global.mouseClick.left.action || 'always';
   elements.isolationGlobalMiddleClick.value = app.preferences.isolation.global.mouseClick.middle.action || 'never';
   elements.isolationGlobalCtrlLeftClick.value = app.preferences.isolation.global.mouseClick.ctrlleft.action || 'never';
-  
+
   // Advanced: Container
   elements.containerCleanup.checked = app.preferences.containerCleanup || false;
   elements.containerTimeout.value = app.preferences.containerTimeout || 0;
   elements.containerHistory.checked = app.preferences.containerHistory || false;
-  
+
   // Advanced: Cookies
   elements.deleteCookies.checked = app.preferences.deleteCookies || false;
   elements.cookieStoreId.checked = app.preferences.cookieStoreId || false;
   elements.cookieBehavior.value = app.preferences.cookieBehavior || 'default';
-  
+
   // Advanced: Misc
   elements.contextMenu.checked = app.preferences.contextMenu || false;
   elements.debug.checked = app.preferences.debug || false;
-  
+
   // Statistics
   updateStatistics();
 }
@@ -442,7 +436,7 @@ function toggleRandomExcludedSections() {
     elements.containerColorSection.classList.remove('hidden');
     elements.containerColorRandomExcludedSection.classList.add('hidden');
   }
-  
+
   if (elements.containerIconRandom.checked) {
     elements.containerIconSection.classList.add('hidden');
     elements.containerIconRandomExcludedSection.classList.remove('hidden');
@@ -457,15 +451,10 @@ function toggleRandomExcludedSections() {
  */
 function initTagInputs() {
   // Initialize ignored domains tag input
-  createTagInput(
-    elements.ignoredDomainsInput,
-    elements.ignoredDomains,
-    app.preferences.isolation.global.excluded,
-    (domains) => {
-      app.preferences.isolation.global.excluded = domains;
-      savePreferences(app.preferences);
-    }
-  );
+  createTagInput(elements.ignoredDomainsInput, elements.ignoredDomains, app.preferences.isolation.global.excluded, domains => {
+    app.preferences.isolation.global.excluded = domains;
+    savePreferences(app.preferences);
+  });
 }
 
 /**
@@ -474,13 +463,13 @@ function initTagInputs() {
 function addExcludedContainer(container) {
   const excludedContainersDiv = elements.excludedContainers;
   const existingTag = document.querySelector(`[data-container-id="${container.cookieStoreId}"]`);
-  
+
   if (!existingTag) {
     const tag = document.createElement('div');
     tag.className = 'tag';
     tag.dataset.containerId = container.cookieStoreId;
     tag.textContent = container.name;
-    
+
     // Create remove button
     const removeButton = document.createElement('button');
     removeButton.className = 'small tag-remove';
@@ -488,10 +477,10 @@ function addExcludedContainer(container) {
     removeButton.textContent = '×';
     removeButton.addEventListener('click', () => removeExcludedContainer(container.cookieStoreId));
     tag.appendChild(removeButton);
-    
+
     // Add tag to container
     excludedContainersDiv.appendChild(tag);
-    
+
     // Update preferences
     if (!app.preferences.isolation.global.excludedContainers) {
       app.preferences.isolation.global.excludedContainers = [];
@@ -511,7 +500,7 @@ function removeExcludedContainer(containerId) {
   const tag = document.querySelector(`[data-container-id="${containerId}"]`);
   if (tag) {
     tag.remove();
-    
+
     // Update preferences
     const index = app.preferences.isolation.global.excludedContainers.indexOf(containerId);
     if (index > -1) {
@@ -527,10 +516,10 @@ function removeExcludedContainer(containerId) {
 async function initDomainRules() {
   // Get domain rules
   app.domainRules = await sendMessage('getDomainRules');
-  
+
   // Render domain rules
   renderDomainRules();
-  
+
   // Add event listener for adding new domain rules
   elements.addDomainRule.addEventListener('click', addDomainRule);
 }
@@ -541,46 +530,46 @@ async function initDomainRules() {
 function renderDomainRules() {
   // Clear existing rules
   elements.domainRulesList.innerHTML = '';
-  
+
   // Ensure domainRules exists
   if (!app.domainRules || !Array.isArray(app.domainRules)) {
     app.domainRules = [];
     return;
   }
-  
+
   // Add each rule
   app.domainRules.forEach((rule, index) => {
     const ruleElement = document.createElement('div');
     ruleElement.className = 'domain-rule';
-    
+
     const domainElement = document.createElement('div');
     domainElement.className = 'domain-rule-domain';
     domainElement.textContent = rule.domain;
-    
+
     const actionElement = document.createElement('div');
     actionElement.className = 'domain-rule-action';
     actionElement.textContent = rule.action;
-    
+
     const buttonsElement = document.createElement('div');
     buttonsElement.className = 'domain-rule-buttons';
-    
+
     const editButton = document.createElement('button');
     editButton.className = 'button small';
     editButton.textContent = 'Edit';
     editButton.addEventListener('click', () => editDomainRule(index));
-    
+
     const deleteButton = document.createElement('button');
     deleteButton.className = 'button small danger';
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', () => deleteDomainRule(index));
-    
+
     buttonsElement.appendChild(editButton);
     buttonsElement.appendChild(deleteButton);
-    
+
     ruleElement.appendChild(domainElement);
     ruleElement.appendChild(actionElement);
     ruleElement.appendChild(buttonsElement);
-    
+
     elements.domainRulesList.appendChild(ruleElement);
   });
 }
@@ -591,33 +580,33 @@ function renderDomainRules() {
 async function addDomainRule() {
   const domain = elements.domainRuleInput.value.trim();
   const action = elements.domainRuleAction.value;
-  
+
   if (!domain) {
     showError('Please enter a domain');
     return;
   }
-  
+
   try {
     // Ensure app.domainRules is initialized
     if (!app.domainRules || !Array.isArray(app.domainRules)) {
       app.domainRules = [];
     }
-    
+
     // Add rule
     app.domainRules.push({
       domain,
-      action
+      action,
     });
-    
+
     // Save rules
     await sendMessage('saveDomainRules', { domainRules: app.domainRules });
-    
+
     // Clear input
     elements.domainRuleInput.value = '';
-    
+
     // Render rules
     renderDomainRules();
-    
+
     // Show success message
     showSuccess(`Added rule for ${domain}`);
   } catch (error) {
@@ -636,16 +625,16 @@ async function editDomainRule(index) {
     showError('Invalid domain rule');
     return;
   }
-  
+
   const rule = app.domainRules[index];
-  
+
   // Populate input fields
   elements.domainRuleInput.value = rule.domain;
   elements.domainRuleAction.value = rule.action;
-  
+
   // Remove the rule
   app.domainRules.splice(index, 1);
-  
+
   // Render rules
   renderDomainRules();
 }
@@ -661,19 +650,19 @@ async function deleteDomainRule(index, showNotification = true) {
     showError('Invalid domain rule');
     return;
   }
-  
+
   const rule = app.domainRules[index];
-  
+
   try {
     // Remove rule
     app.domainRules.splice(index, 1);
-    
+
     // Save rules
     await sendMessage('saveDomainRules', { domainRules: app.domainRules });
-    
+
     // Render rules
     renderDomainRules();
-    
+
     if (showNotification) {
       showSuccess(`Removed rule for ${rule.domain}`);
     }
@@ -688,7 +677,7 @@ async function deleteDomainRule(index, showNotification = true) {
  */
 function updateStatistics() {
   if (!app.statistics) return;
-  
+
   elements.containersCreated.textContent = app.statistics.containersCreated;
   elements.containersActive.textContent = app.statistics.containersActive;
   elements.containersRemoved.textContent = app.statistics.containersRemoved;
@@ -701,11 +690,11 @@ function updateStatistics() {
 async function resetStatistics() {
   try {
     await sendMessage('resetStatistics');
-    
+
     // Refresh statistics
     app.statistics = await sendMessage('getStatistics');
     updateStatistics();
-    
+
     showSuccess('Statistics reset successfully');
   } catch (error) {
     console.error('Error resetting statistics:', error);
@@ -720,19 +709,19 @@ function exportSettings() {
   const settings = {
     preferences: app.preferences,
     domainRules: app.domainRules,
-    statistics: app.statistics
+    statistics: app.statistics,
   };
-  
+
   const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  
+
   const a = document.createElement('a');
   a.href = url;
   a.download = `temporary-containers-settings-${formatDate(new Date())}.json`;
   a.click();
-  
+
   URL.revokeObjectURL(url);
-  
+
   showSuccess('Settings exported successfully');
 }
 
@@ -741,35 +730,35 @@ function exportSettings() {
  */
 async function importSettings() {
   const file = elements.importFile.files[0];
-  
+
   if (!file) {
     showError('Please select a file to import');
     return;
   }
-  
+
   try {
     const text = await file.text();
     const settings = JSON.parse(text);
-    
+
     // Validate settings
     if (!settings.preferences) {
       throw new Error('Invalid settings file: missing preferences');
     }
-    
+
     // Import preferences
     app.preferences = settings.preferences;
     await savePreferences(app.preferences);
-    
+
     // Import domain rules
     if (settings.domainRules) {
       await sendMessage('saveDomainRules', { domainRules: settings.domainRules });
       app.domainRules = settings.domainRules;
       renderDomainRules();
     }
-    
+
     // Refresh UI
     initFormElements();
-    
+
     showSuccess('Settings imported successfully');
   } catch (error) {
     console.error('Error importing settings:', error);
@@ -782,22 +771,22 @@ async function importSettings() {
  */
 async function refreshContainerDropdown() {
   const select = elements.excludedContainersSelect;
-  
+
   // Clear existing options
   select.innerHTML = '';
-  
+
   // Add a blank option
   const blankOption = document.createElement('option');
   blankOption.value = '';
   blankOption.textContent = 'Select a container...';
   select.appendChild(blankOption);
-  
+
   // Get existing excluded containers
   const excludedContainers = app.preferences?.isolation?.global?.excludedContainers || [];
-  
+
   // Get all permanent containers from Firefox
   const containers = await browser.contextualIdentities.query({});
-  
+
   // Populate the select with permanent containers (excluding temporary ones)
   containers.forEach(container => {
     // Skip if it's a temporary container or already selected
@@ -820,44 +809,44 @@ async function refreshContainerDropdown() {
 async function checkPermissions(key, value) {
   if (key === 'notifications' && value && !app.permissions.notifications) {
     const granted = await browser.permissions.request({
-      permissions: ['notifications']
+      permissions: ['notifications'],
     });
     app.permissions.notifications = granted;
     return granted;
   }
-  
+
   if (key === 'contextMenuBookmarks' && value && !app.permissions.bookmarks) {
     const granted = await browser.permissions.request({
-      permissions: ['bookmarks']
+      permissions: ['bookmarks'],
     });
     app.permissions.bookmarks = granted;
     return granted;
   }
-  
+
   if (key === 'deletesHistory.contextMenuBookmarks' && value && !app.permissions.bookmarks) {
     const granted = await browser.permissions.request({
-      permissions: ['bookmarks']
+      permissions: ['bookmarks'],
     });
     app.permissions.bookmarks = granted;
     return granted;
   }
-  
+
   if (key === 'deletesHistory.active' && value && !app.permissions.history) {
     const granted = await browser.permissions.request({
-      permissions: ['history']
+      permissions: ['history'],
     });
     app.permissions.history = granted;
     return granted;
   }
-  
+
   if (key === 'scripts.active' && value && !app.permissions.webNavigation) {
     const granted = await browser.permissions.request({
-      permissions: ['webNavigation']
+      permissions: ['webNavigation'],
     });
     app.permissions.webNavigation = granted;
     return granted;
   }
-  
+
   return true;
 }
 
@@ -867,7 +856,7 @@ async function checkPermissions(key, value) {
  * @returns {Function} - Event handler function
  */
 function savePreference(key) {
-  return async (e) => {
+  return async e => {
     try {
       let value;
       if (e.target.type === 'checkbox') {
@@ -877,7 +866,7 @@ function savePreference(key) {
       } else {
         value = e.target.value;
       }
-        
+
       // Check permissions if needed
       if (e.target.type === 'checkbox' && value) {
         const permissionGranted = await checkPermissions(key, value);
@@ -887,12 +876,12 @@ function savePreference(key) {
           return;
         }
       }
-    
+
       // Ensure preferences object exists
       if (!app.preferences) {
         app.preferences = {};
       }
-      
+
       // handle sub keys with multiple levels
       if (key.includes('.')) {
         const keys = key.split('.');
@@ -909,10 +898,10 @@ function savePreference(key) {
       } else {
         app.preferences[key] = value;
       }
-      
+
       // Save preferences
       const success = await savePreferences(app.preferences);
-      
+
       if (success) {
         console.log(`Saved preference: ${key} = ${value}`);
       }
@@ -932,12 +921,12 @@ function initEventListeners() {
   elements.browserActionPopup.addEventListener('change', savePreference('browserActionPopup'));
   elements.notificationsCheckbox.addEventListener('change', savePreference('notifications'));
   elements.containerNamePrefix.addEventListener('change', savePreference('container.namePrefix'));
-  elements.containerColorRandom.addEventListener('change', (e) => {
+  elements.containerColorRandom.addEventListener('change', e => {
     savePreference('container.colorRandom')(e);
     toggleRandomExcludedSections();
   });
   elements.containerColor.addEventListener('change', savePreference('container.color'));
-  elements.containerIconRandom.addEventListener('change', (e) => {
+  elements.containerIconRandom.addEventListener('change', e => {
     savePreference('container.iconRandom')(e);
     toggleRandomExcludedSections();
   });
@@ -945,7 +934,7 @@ function initEventListeners() {
   elements.containerNumberMode.addEventListener('change', savePreference('container.numberMode'));
   elements.containerRemoval.addEventListener('change', savePreference('container.removal'));
   elements.iconColor.addEventListener('change', savePreference('iconColor'));
-  
+
   /*// Reset container number - Blocked out for now
   elements.resetContainerNumber.addEventListener('click', async () => {
     try {
@@ -959,43 +948,43 @@ function initEventListeners() {
     }
   });
   */
-  
+
   // Multi-select changes
   elements.containerColorRandomExcluded.addEventListener('change', () => {
     const selected = Array.from(elements.containerColorRandomExcluded.selectedOptions).map(option => option.value);
     app.preferences.container.colorRandomExcluded = selected;
     savePreferences(app.preferences);
   });
-  
+
   elements.containerIconRandomExcluded.addEventListener('change', () => {
     const selected = Array.from(elements.containerIconRandomExcluded.selectedOptions).map(option => option.value);
     app.preferences.container.iconRandomExcluded = selected;
     savePreferences(app.preferences);
   });
-  
+
   // Isolation: Global
   elements.isolationGlobalUrlNavigation.addEventListener('change', savePreference('isolation.global.navigation.action'));
   elements.isolationGlobalLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.left.action'));
   elements.isolationGlobalMiddleClick.addEventListener('change', savePreference('isolation.global.mouseClick.middle.action'));
   elements.isolationGlobalCtrlLeftClick.addEventListener('change', savePreference('isolation.global.mouseClick.ctrlleft.action'));
-  
+
   // Advanced: Container
   elements.containerCleanup.addEventListener('change', savePreference('containerCleanup'));
   elements.containerTimeout.addEventListener('change', savePreference('containerTimeout'));
   elements.containerHistory.addEventListener('change', savePreference('containerHistory'));
-  
+
   // Advanced: Cookies
   elements.deleteCookies.addEventListener('change', savePreference('deleteCookies'));
   elements.cookieStoreId.addEventListener('change', savePreference('cookieStoreId'));
   elements.cookieBehavior.addEventListener('change', savePreference('cookieBehavior'));
-  
+
   // Advanced: Misc
   elements.contextMenu.addEventListener('change', savePreference('contextMenu'));
   elements.debug.addEventListener('change', savePreference('debug'));
-  
+
   // Statistics
   elements.resetStatistics.addEventListener('click', resetStatistics);
-  
+
   // Export/Import
   elements.exportSettings.addEventListener('click', exportSettings);
   elements.importSettings.addEventListener('click', importSettings);

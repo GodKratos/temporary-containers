@@ -30,8 +30,7 @@ export class Commands {
     switch (name) {
       case 'new_temporary_container_tab':
         this.container.createTabInTempContainer({
-          deletesHistory:
-            this.pref.deletesHistory.automaticMode === 'automatic',
+          deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
         });
         break;
 
@@ -41,10 +40,7 @@ export class Commands {
             url: 'about:blank',
           })) as Tab;
           this.container.noContainerTabs[tab.id] = true;
-          this.debug(
-            '[onCommand] new no container tab created',
-            this.container.noContainerTabs
-          );
+          this.debug('[onCommand] new no container tab created', this.container.noContainerTabs);
         } catch (error) {
           this.debug('[onCommand] couldnt create tab', error);
         }
@@ -60,11 +56,7 @@ export class Commands {
           }
           const [tab] = browserWindow.tabs as Tab[];
           this.container.noContainerTabs[tab.id] = true;
-          this.debug(
-            '[onCommand] new no container tab created in window',
-            browserWindow,
-            this.container.noContainerTabs
-          );
+          this.debug('[onCommand] new no container tab created in window', browserWindow, this.container.noContainerTabs);
         } catch (error) {
           this.debug('[onCommand] couldnt create tab in window', error);
         }
@@ -90,8 +82,7 @@ export class Commands {
         }
         this.container.createTabInTempContainer({
           url: activeTab.url,
-          deletesHistory:
-            this.pref.deletesHistory.automaticMode === 'automatic',
+          deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
         });
         break;
       }

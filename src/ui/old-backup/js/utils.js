@@ -33,13 +33,13 @@ export async function initializeStorage() {
       deletesHistory: {
         containersDeleted: 0,
         cookiesDeleted: 0,
-        urlsDeleted: 0
-      }
+        urlsDeleted: 0,
+      },
     },
     isolation: {
       active: false,
-      reactivateTargetTime: 0
-    }
+      reactivateTargetTime: 0,
+    },
   };
 }
 
@@ -107,16 +107,16 @@ export async function requestPermission(permission) {
 export function showMessage(message, type = '') {
   const messageContainer = document.getElementById('message-container');
   const messageElement = document.getElementById('message');
-  
+
   messageElement.textContent = message;
   messageContainer.className = 'message-container';
-  
+
   if (type) {
     messageContainer.classList.add(type);
   }
-  
+
   messageContainer.classList.remove('hidden');
-  
+
   // Hide the message after 5 seconds
   setTimeout(() => {
     messageContainer.classList.add('hidden');
@@ -160,11 +160,11 @@ export function hideInitializeLoader() {
 export function showInitializeError(error) {
   const errorElement = document.getElementById('initialize-error');
   const errorDetailsElement = document.getElementById('initialize-error-details');
-  
+
   if (error) {
     errorDetailsElement.textContent = error.toString();
   }
-  
+
   errorElement.classList.remove('hidden');
 }
 
@@ -177,15 +177,15 @@ export function showInitializeError(error) {
 export function createTabSystem(tabsSelector, panelsSelector, onChange = null) {
   const tabs = document.querySelectorAll(tabsSelector);
   const panels = document.querySelectorAll(panelsSelector);
-  
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const tabId = tab.dataset.tab;
-      
+
       // Update active tab
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      
+
       // Update active panel
       panels.forEach(panel => {
         if (panel.id === tabId) {
@@ -196,21 +196,21 @@ export function createTabSystem(tabsSelector, panelsSelector, onChange = null) {
           panel.classList.remove('active');
         }
       });
-      
+
       // Update URL hash
       if (window.history && window.history.pushState) {
         window.history.pushState(null, null, `#${tabId}`);
       } else {
         window.location.hash = tabId;
       }
-      
+
       // Call onChange callback if provided
       if (onChange) {
         onChange(tabId);
       }
     });
   });
-  
+
   // Check for hash in URL
   const hash = window.location.hash.substring(1);
   if (hash) {
@@ -230,16 +230,16 @@ export function createGlossarySystem(glossaryData) {
   const glossaryTitleElement = document.getElementById('glossary-title');
   const glossaryBodyElement = document.getElementById('glossary-body');
   const glossaryCloseElement = document.getElementById('glossary-close');
-  
+
   // Add click event to all elements with data-glossary attribute
   document.querySelectorAll('[data-glossary]').forEach(element => {
     element.style.cursor = 'help';
     element.style.borderBottom = '1px dotted var(--grey-50)';
-    
+
     element.addEventListener('click', () => {
       const term = element.dataset.glossary;
       const label = element.dataset.glossaryLabel || term;
-      
+
       if (glossaryData[term]) {
         glossaryTitleElement.textContent = label;
         glossaryBodyElement.innerHTML = glossaryData[term];
@@ -247,19 +247,19 @@ export function createGlossarySystem(glossaryData) {
       }
     });
   });
-  
+
   // Close glossary when close button is clicked
   glossaryCloseElement.addEventListener('click', () => {
     glossaryElement.classList.add('hidden');
   });
-  
+
   // Close glossary when clicking outside the content
   glossaryElement.addEventListener('click', event => {
     if (event.target === glossaryElement) {
       glossaryElement.classList.add('hidden');
     }
   });
-  
+
   // Close glossary when pressing Escape
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !glossaryElement.classList.contains('hidden')) {
@@ -275,7 +275,7 @@ export function createGlossarySystem(glossaryData) {
 export function createAccordionSystem(selector) {
   document.querySelectorAll(selector).forEach(accordion => {
     const header = accordion.querySelector('.accordion-header');
-    
+
     header.addEventListener('click', () => {
       accordion.classList.toggle('collapsed');
     });
@@ -320,15 +320,15 @@ export function capitalize(str) {
 export function createMultiSelect(selectElement, options, selectedValues = [], onAdd, onRemove) {
   // Clear existing options
   selectElement.innerHTML = '';
-  
+
   // Ensure options is an array of objects with id and text properties
-  const formattedOptions = Array.isArray(options) 
-    ? options.map(option => typeof option === 'object' ? option : { id: option, text: option })
+  const formattedOptions = Array.isArray(options)
+    ? options.map(option => (typeof option === 'object' ? option : { id: option, text: option }))
     : [];
-  
+
   // Ensure selectedValues is an array
   const selected = Array.isArray(selectedValues) ? selectedValues : [];
-  
+
   // Add options
   formattedOptions.forEach(option => {
     const optionElement = document.createElement('option');
@@ -337,18 +337,18 @@ export function createMultiSelect(selectElement, options, selectedValues = [], o
     optionElement.selected = selected.includes(option.id);
     selectElement.appendChild(optionElement);
   });
-  
+
   // Add change event listener
   selectElement.addEventListener('change', () => {
     const selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
-    
+
     // Find added options
     selectedOptions.forEach(value => {
       if (!selected.includes(value) && onAdd) {
         onAdd(value);
       }
     });
-    
+
     // Find removed options
     selected.forEach(value => {
       if (!selectedOptions.includes(value) && onRemove) {
@@ -368,63 +368,63 @@ export function createMultiSelect(selectElement, options, selectedValues = [], o
 export function createTagInput(inputElement, tagContainer, initialTags = [], onChange = null) {
   // Ensure initialTags is an array
   const tags = Array.isArray(initialTags) ? [...initialTags] : [];
-  
+
   // Render initial tags
   renderTags();
-  
+
   // Add event listener for input
-  inputElement.addEventListener('keydown', (e) => {
+  inputElement.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
-      
+
       const value = inputElement.value.trim();
       if (value && !tags.includes(value)) {
         tags.push(value);
         renderTags();
         inputElement.value = '';
-        
+
         if (onChange) {
           onChange(tags);
         }
       }
     }
   });
-  
+
   // Add event delegation for tag removal
-  tagContainer.addEventListener('click', (e) => {
+  tagContainer.addEventListener('click', e => {
     if (e.target.classList.contains('tag-remove')) {
       const tag = e.target.parentElement.querySelector('.tag-text').textContent;
       const index = tags.indexOf(tag);
-      
+
       if (index !== -1) {
         tags.splice(index, 1);
         renderTags();
-        
+
         if (onChange) {
           onChange(tags);
         }
       }
     }
   });
-  
+
   // Render tags
   function renderTags() {
     // Clear container
     tagContainer.innerHTML = '';
-    
+
     // Add tags
     tags.forEach(tag => {
       const tagElement = document.createElement('div');
       tagElement.className = 'tag';
-      
+
       const tagText = document.createElement('span');
       tagText.className = 'tag-text';
       tagText.textContent = tag;
-      
+
       const tagRemove = document.createElement('span');
       tagRemove.className = 'tag-remove';
       tagRemove.textContent = '×';
-      
+
       tagElement.appendChild(tagText);
       tagElement.appendChild(tagRemove);
       tagContainer.appendChild(tagElement);
