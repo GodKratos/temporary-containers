@@ -137,14 +137,17 @@
   "optionsActionsNotAvailable": {
     "message": "Actions are not available in this tab"
   },
-  "optionsAdvancedContainer": {
-    "message": "Advanced: Container"
+  "optionsAdvancedMisc": {
+    "message": "Advanced Settings"
   },
   "optionsAdvancedCookies": {
-    "message": "Advanced: Cookies"
+    "message": "Cookie Injection"
   },
-  "optionsAdvancedMisc": {
-    "message": "Advanced: Misc"
+  "optionsAdvancedScripts": {
+    "message": "Script Injection"
+  },
+  "optionsAdvancedDeletesHistory": {
+    "message": "Deletes History Containers"
   },
   "optionsGeneralAutomaticMode": {
     "message": "Automatic Mode"
@@ -574,5 +577,176 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Domain pattern, name, and URL are required"
+  },
+  "optionsAdvancedScriptsTitle": {
+    "message": "Configure scripts to execute for certain domains in Temporary Containers"
+  },
+  "optionsAdvancedScriptsDescription": {
+    "message": "You can execute custom JavaScript code in Temporary Containers. Scripts are domain-based and execute only on matching domains. Use with caution - scripts can access sensitive page content and modify website behavior."
+  },
+  "optionsAdvancedScriptsWarningTitle": {
+    "message": "Security Warning"
+  },
+  "optionsAdvancedScriptsWarning": {
+    "message": "Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. Only add scripts from trusted sources."
+  },
+  "optionsAdvancedScriptsPermissionsWarning": {
+    "message": "This feature requires additional permissions to access browser activity during navigation."
+  },
+  "optionsAdvancedScriptsPermissionsAccept": {
+    "message": "I understand and want to enable script injection"
+  },
+  "optionsAdvancedScriptsDomainPattern": {
+    "message": "Domain Pattern"
+  },
+  "optionsAdvancedScriptsDomainPatternPlaceholder": {
+    "message": "example.com or *.example.com"
+  },
+  "optionsAdvancedScriptsDomainPatternDescription": {
+    "message": "Use exact domains (example.com) or wildcards (*.example.com) to match subdomains"
+  },
+  "optionsAdvancedScriptsCode": {
+    "message": "JavaScript Code"
+  },
+  "optionsAdvancedScriptsCodePlaceholder": {
+    "message": "console.log('Hello from temporary container!');"
+  },
+  "optionsAdvancedScriptsCodeDescription": {
+    "message": "JavaScript code to execute when the page loads"
+  },
+  "optionsAdvancedScriptsRunAt": {
+    "message": "Execute At"
+  },
+  "optionsAdvancedScriptsRunAtStart": {
+    "message": "Document Start"
+  },
+  "optionsAdvancedScriptsRunAtEnd": {
+    "message": "Document End"
+  },
+  "optionsAdvancedScriptsRunAtIdle": {
+    "message": "Document Idle"
+  },
+  "optionsAdvancedScriptsRunAtDescription": {
+    "message": "When to execute the script during page load"
+  },
+  "optionsAdvancedScriptsAdd": {
+    "message": "Add Script"
+  },
+  "optionsAdvancedScriptsEdit": {
+    "message": "Edit Script"
+  },
+  "optionsAdvancedScriptsSave": {
+    "message": "Save Script"
+  },
+  "optionsAdvancedScriptsCancel": {
+    "message": "Cancel"
+  },
+  "optionsAdvancedScriptsRemove": {
+    "message": "Remove"
+  },
+  "optionsAdvancedScriptsRemoveConfirm": {
+    "message": "Remove this script configuration?"
+  },
+  "optionsAdvancedScriptsValidationError": {
+    "message": "Domain pattern and code are required"
+  },
+  "optionsAdvancedDeleteHistoryTitle": {
+    "message": "Deletes History Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryWarningTitle": {
+    "message": "Warning"
+  },
+  "optionsAdvancedDeleteHistoryWarning": {
+    "message": "Every website URL that you visit in a \"Deletes History Temporary Container\" will get deleted from your entire history. This means if you visited the same website URL in another Container, Temporary Container or in the Default Container before or while visiting it in a \"Deletes History Temporary Container\" then those visits will get deleted from history too. This is true until Firefox supports a special history for container tabs."
+  },
+  "optionsAdvancedDeleteHistoryBugLink": {
+    "message": "The related Firefox bug can be found here"
+  },
+  "optionsAdvancedDeleteHistoryCareful": {
+    "message": "Be careful. You have been warned. \"Deletes History Temporary Containers\" tabs have a \"-deletes-history\" suffix in the container name to remind you."
+  },
+  "optionsAdvancedDeleteHistoryWarningAccept": {
+    "message": "I have read the Warning and understand the implications that come with using \"Deletes History Temporary Containers\". When ticking the checkbox Firefox will ask you for \"Access browsing history\" permissions."
+  },
+  "optionsAdvancedDeleteHistoryInfoMessage": {
+    "message": "You can open \"Deletes History Temporary Containers\" - also with the keyboard shortcut (default: Alt+P) - after you read The Warning and ticked the checkbox."
+  },
+  "optionsAdvancedDeleteHistoryUrlInfo": {
+    "message": "The deletion applies to the full website URL, not only the domain. That means, if you e.g. open a news article on your favorite news site in a \"Deletes History Temporary Container\" it won't delete all your previous visits to other news articles that you made outside of \"Deletes History Temporary Containers\" because the full website URLs are different."
+  },
+  "optionsAdvancedDeleteHistoryDeletionInfo": {
+    "message": "\"Deletes History Temporary Containers\" will delete history when the \"Deletes History Temporary Container\" itself gets deleted after the last tab in it closes."
+  },
+  "optionsAdvancedDeleteHistoryAutomaticMode": {
+    "message": "Automatically create \"Deletes History Temporary Containers\""
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeNever": {
+    "message": "Don't automatically create \"Deletes History Temporary Containers\" instead of normal Temporary Containers (default)"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeAlways": {
+    "message": "Automatically create \"Deletes History Temporary Containers\" instead of normal Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeDescription": {
+    "message": "This affects Automatic Mode, Toolbar Icon and the right-click context menu entry"
+  },
+  "optionsAdvancedDeleteHistoryContextMenu": {
+    "message": "Show additional \"Deletes History Temporary Containers\" entry in the right click on links context menu"
+  },
+  "optionsAdvancedDeleteHistoryContextMenuBookmarks": {
+    "message": "Show additional \"Deletes History Temporary Containers\" entry in the right click on bookmarks context menu"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval": {
+    "message": "Delete no longer needed \"Deletes History Temporary Containers\""
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval15min": {
+    "message": "15 minutes after the last tab in it closes"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalImmediate": {
+    "message": "After the last tab in it closes (default)"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalDescription": {
+    "message": "\"15minutes\" lets you \"Undo Close Tab\" in that timeframe"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomain": {
+    "message": "Isolation - Always per domain"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomainAutomatic": {
+    "message": "Open new \"Deletes History Temporary Containers\" for Domains configured \"Isolation Always\" instead of normal Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolation": {
+    "message": "Isolation - Navigating in tabs"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolationAutomatic": {
+    "message": "Open new \"Deletes History Temporary Containers\" when \"Navigating in tabs Isolation\" takes place instead of normal Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryMouseClicks": {
+    "message": "Isolation - Mouse clicks in \"Deletes History Temporary Containers\""
+  },
+  "optionsAdvancedDeleteHistoryMouseClicksAutomatic": {
+    "message": "Open new \"Deletes History Temporary Containers\" with Mouse clicks on links in \"Deletes History Temporary Containers\" instead of normal Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClick": {
+    "message": "Isolation - Middle Mouse Click in Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClickDeletesHistory": {
+    "message": "Open new \"Deletes History Temporary Containers\" with Middle Mouse clicks instead of Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClick": {
+    "message": "Isolation - Ctrl/Cmd+Left Mouse Click in Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClickDeletesHistory": {
+    "message": "Open new \"Deletes History Temporary Containers\" with Ctrl/Cmd+Left Mouse clicks instead of Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryLeftClick": {
+    "message": "Isolation - Left Mouse Click in Temporary Containers"
+  },
+  "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
+    "message": "Open new \"Deletes History Temporary Containers\" with Left Mouse clicks instead of Temporary Containers"
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Failed to load advanced scripts settings"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Failed to load advanced delete history settings"
   }
 }

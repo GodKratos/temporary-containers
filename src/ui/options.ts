@@ -4,6 +4,8 @@ import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
 import { initAdvancedMiscPage } from './pages/AdvancedMisc';
 import { initAdvancedCookiesPage } from './pages/AdvancedCookies';
+import { initAdvancedScriptsPage } from './pages/AdvancedScripts';
+import { initAdvancedDeleteHistoryPage } from './pages/AdvancedDeleteHistory';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
 import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader, applyLocalization } from './shared/utils';
@@ -15,6 +17,8 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   'isolation-domain': initIsolationPerDomainPage,
   'advanced-misc': initAdvancedMiscPage,
   'advanced-cookies': initAdvancedCookiesPage,
+  'advanced-scripts': initAdvancedScriptsPage,
+  'advanced-delete-history': initAdvancedDeleteHistoryPage,
   'statistics': initStatisticsPage,
   'export-import': initExportImportPage,
 };

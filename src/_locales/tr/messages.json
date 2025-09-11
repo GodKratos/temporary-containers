@@ -176,14 +176,17 @@
   "optionsActionsNotAvailable": {
     "message": "Bu sekmede eylemler mevcut değil"
   },
-  "optionsAdvancedContainer": {
-    "message": "Gelişmiş: Konteyner"
+  "optionsAdvancedMisc": {
+    "message": "Gelişmiş Ayarlar"
   },
   "optionsAdvancedCookies": {
-    "message": "Gelişmiş: Çerezler"
+    "message": "Çerez Enjeksiyonu"
   },
-  "optionsAdvancedMisc": {
-    "message": "Gelişmiş: Çeşitli"
+  "optionsAdvancedScripts": {
+    "message": "Betik Enjeksiyonu"
+  },
+  "optionsAdvancedDeletesHistory": {
+    "message": "Geçmişi Silen Konteynerler"
   },
   "optionsGeneralAutomaticMode": {
     "message": "Otomatik Mod"
@@ -487,5 +490,176 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Alan adı deseni, ad ve URL gereklidir"
+  },
+  "optionsAdvancedScriptsTitle": {
+    "message": "Geçici konteynerlerde belirli alan adları için çalıştırılacak betikleri yapılandır"
+  },
+  "optionsAdvancedScriptsDescription": {
+    "message": "Geçici konteynerlerde özel JavaScript kodu çalıştırabilirsiniz. Betikler alan adına dayalıdır ve yalnızca eşleşen alan adlarında çalışır. Dikkatli kullanın - betikler hassas sayfa içeriğine erişebilir ve web sitesi davranışını değiştirebilir."
+  },
+  "optionsAdvancedScriptsWarningTitle": {
+    "message": "Güvenlik Uyarısı"
+  },
+  "optionsAdvancedScriptsWarning": {
+    "message": "Betikler web sayfasına tam erişime sahiptir ve hassas verileri okuyabilir, içeriği değiştirebilir veya sizin adınıza eylemler gerçekleştirebilir. Yalnızca güvenilir kaynaklardan betikler ekleyin."
+  },
+  "optionsAdvancedScriptsPermissionsWarning": {
+    "message": "Bu özellik, gezinme sırasında tarayıcı etkinliğine erişim için ek izinler gerektirir."
+  },
+  "optionsAdvancedScriptsPermissionsAccept": {
+    "message": "Anlıyorum ve betik enjeksiyonunu etkinleştirmek istiyorum"
+  },
+  "optionsAdvancedScriptsDomainPattern": {
+    "message": "Alan Adı Deseni"
+  },
+  "optionsAdvancedScriptsDomainPatternPlaceholder": {
+    "message": "example.com veya *.example.com"
+  },
+  "optionsAdvancedScriptsDomainPatternDescription": {
+    "message": "Alt alan adlarını eşleştirmek için tam alan adları (example.com) veya joker karakterler (*.example.com) kullanın"
+  },
+  "optionsAdvancedScriptsCode": {
+    "message": "JavaScript Kodu"
+  },
+  "optionsAdvancedScriptsCodePlaceholder": {
+    "message": "console.log('Geçici konteynerden merhaba!');"
+  },
+  "optionsAdvancedScriptsCodeDescription": {
+    "message": "Sayfa yüklendiğinde çalıştırılacak JavaScript kodu"
+  },
+  "optionsAdvancedScriptsRunAt": {
+    "message": "Çalıştırma Zamanı"
+  },
+  "optionsAdvancedScriptsRunAtStart": {
+    "message": "Belge Başlangıcı"
+  },
+  "optionsAdvancedScriptsRunAtEnd": {
+    "message": "Belge Sonu"
+  },
+  "optionsAdvancedScriptsRunAtIdle": {
+    "message": "Belge Boşta"
+  },
+  "optionsAdvancedScriptsRunAtDescription": {
+    "message": "Sayfa yükleme sırasında betiğin ne zaman çalıştırılacağı"
+  },
+  "optionsAdvancedScriptsAdd": {
+    "message": "Betik Ekle"
+  },
+  "optionsAdvancedScriptsEdit": {
+    "message": "Betik Düzenle"
+  },
+  "optionsAdvancedScriptsSave": {
+    "message": "Betiği Kaydet"
+  },
+  "optionsAdvancedScriptsCancel": {
+    "message": "İptal"
+  },
+  "optionsAdvancedScriptsRemove": {
+    "message": "Kaldır"
+  },
+  "optionsAdvancedScriptsRemoveConfirm": {
+    "message": "Bu betik yapılandırmasını kaldır?"
+  },
+  "optionsAdvancedScriptsValidationError": {
+    "message": "Alan adı deseni ve kod gereklidir"
+  },
+  "optionsAdvancedDeleteHistoryTitle": {
+    "message": "Geçmişi Silen Geçici Konteynerler"
+  },
+  "optionsAdvancedDeleteHistoryWarningTitle": {
+    "message": "Uyarı"
+  },
+  "optionsAdvancedDeleteHistoryWarning": {
+    "message": "Bir \"Geçmişi Silen Geçici Konteyner\"de ziyaret ettiğiniz her web sitesi URL'si tüm geçmişinizden silinecektir. Bu, aynı web sitesi URL'sini daha önce başka bir konteynerde, geçici konteynerde veya varsayılan konteynerde ziyaret ettiyseniz veya \"Geçmişi Silen Geçici Konteyner\"de ziyaret ederken ziyaret ettiyseniz, o ziyaretlerin de geçmişten silineceği anlamına gelir. Firefox konteyner sekmeleri için özel bir geçmişi destekleyene kadar bu böyle olacaktır."
+  },
+  "optionsAdvancedDeleteHistoryBugLink": {
+    "message": "İlgili Firefox hatası burada bulunabilir"
+  },
+  "optionsAdvancedDeleteHistoryCareful": {
+    "message": "Dikkatli olun. Uyarıldınız. \"Geçmişi Silen Geçici Konteyner\" sekmelerinin konteyner adında size hatırlatmak için \"-deletes-history\" eki vardır."
+  },
+  "optionsAdvancedDeleteHistoryWarningAccept": {
+    "message": "Uyarıyı okudum ve \"Geçmişi Silen Geçici Konteynerler\" kullanmanın getirdiği sonuçları anlıyorum. Onay kutusunu işaretlediğinizde Firefox sizden \"Tarama geçmişine erişim\" izinleri isteyecektir."
+  },
+  "optionsAdvancedDeleteHistoryInfoMessage": {
+    "message": "\"Geçmişi Silen Geçici Konteynerler\"i - ayrıca klavye kısayolu ile (varsayılan: Alt+P) - uyarıyı okuduktan ve onay kutusunu işaretledikten sonra açabilirsiniz."
+  },
+  "optionsAdvancedDeleteHistoryUrlInfo": {
+    "message": "Silme işlemi yalnızca alan adına değil, tam web sitesi URL'sine uygulanır. Bu, örneğin favori haber sitenizde bir haber makalesini \"Geçmişi Silen Geçici Konteyner\"de açarsanız, \"Geçmişi Silen Geçici Konteynerler\" dışında yaptığınız diğer haber makalelerine yapılan tüm önceki ziyaretlerinizi silmeyeceği anlamına gelir çünkü tam web sitesi URL'leri farklıdır."
+  },
+  "optionsAdvancedDeleteHistoryDeletionInfo": {
+    "message": "\"Geçmişi Silen Geçici Konteynerler\", \"Geçmişi Silen Geçici Konteyner\"in kendisi içindeki son sekme kapandıktan sonra silindiğinde geçmişi silecektir."
+  },
+  "optionsAdvancedDeleteHistoryAutomaticMode": {
+    "message": "Otomatik olarak \"Geçmişi Silen Geçici Konteynerler\" oluştur"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeNever": {
+    "message": "Normal geçici konteynerler yerine otomatik olarak \"Geçmişi Silen Geçici Konteynerler\" oluşturma (varsayılan)"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeAlways": {
+    "message": "Normal geçici konteynerler yerine otomatik olarak \"Geçmişi Silen Geçici Konteynerler\" oluştur"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeDescription": {
+    "message": "Bu, otomatik mod, araç çubuğu simgesi ve sağ tıklama bağlam menüsü girişini etkiler"
+  },
+  "optionsAdvancedDeleteHistoryContextMenu": {
+    "message": "Bağlantılara sağ tıklama bağlam menüsünde ek \"Geçmişi Silen Geçici Konteynerler\" girişi göster"
+  },
+  "optionsAdvancedDeleteHistoryContextMenuBookmarks": {
+    "message": "Yer imlerine sağ tıklama bağlam menüsünde ek \"Geçmişi Silen Geçici Konteynerler\" girişi göster"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval": {
+    "message": "Artık gerekli olmayan \"Geçmişi Silen Geçici Konteynerler\"i sil"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval15min": {
+    "message": "İçindeki son sekme kapandıktan 15 dakika sonra"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalImmediate": {
+    "message": "İçindeki son sekme kapandıktan sonra (varsayılan)"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalDescription": {
+    "message": "\"15 dakika\" bu zaman diliminde \"Sekmeyi Geri Al\" yapmanıza olanak tanır"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomain": {
+    "message": "İzolasyon - Her zaman alan adı başına"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomainAutomatic": {
+    "message": "\"İzolasyon Her Zaman\" olarak yapılandırılmış alan adları için normal geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolation": {
+    "message": "İzolasyon - Sekmelerde gezinme"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolationAutomatic": {
+    "message": "\"Sekmelerde Gezinme İzolasyonu\" gerçekleştiğinde normal geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "optionsAdvancedDeleteHistoryMouseClicks": {
+    "message": "İzolasyon - \"Geçmişi Silen Geçici Konteynerler\"de fare tıklamaları"
+  },
+  "optionsAdvancedDeleteHistoryMouseClicksAutomatic": {
+    "message": "\"Geçmişi Silen Geçici Konteynerler\"de bağlantılara fare tıklamalarıyla normal geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClick": {
+    "message": "İzolasyon - Geçici konteynerlerde orta fare tıklaması"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClickDeletesHistory": {
+    "message": "Orta fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClick": {
+    "message": "İzolasyon - Geçici konteynerlerde Ctrl/Cmd+sol fare tıklaması"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClickDeletesHistory": {
+    "message": "Ctrl/Cmd+sol fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "optionsAdvancedDeleteHistoryLeftClick": {
+    "message": "İzolasyon - Geçici konteynerlerde sol fare tıklaması"
+  },
+  "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
+    "message": "Sol fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Gelişmiş betik ayarları yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Gelişmiş geçmiş silme ayarları yüklenemedi"
   }
 }

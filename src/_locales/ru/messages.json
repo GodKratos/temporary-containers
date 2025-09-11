@@ -176,14 +176,17 @@
   "optionsActionsNotAvailable": {
     "message": "Действия недоступны на этой вкладке"
   },
-  "optionsAdvancedContainer": {
-    "message": "Дополнительно: Контейнер"
+  "optionsAdvancedMisc": {
+    "message": "Дополнительные настройки"
   },
   "optionsAdvancedCookies": {
-    "message": "Дополнительно: Cookies"
+    "message": "Внедрение cookies"
   },
-  "optionsAdvancedMisc": {
-    "message": "Дополнительно: Разное"
+  "optionsAdvancedScripts": {
+    "message": "Внедрение скриптов"
+  },
+  "optionsAdvancedDeletesHistory": {
+    "message": "Контейнеры с удалением истории"
   },
   "optionsGeneralAutomaticMode": {
     "message": "Автоматический режим"
@@ -487,5 +490,176 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Шаблон домена, название и URL обязательны"
+  },
+  "optionsAdvancedScriptsTitle": {
+    "message": "Настройка скриптов для выполнения на определенных доменах во временных контейнерах"
+  },
+  "optionsAdvancedScriptsDescription": {
+    "message": "Вы можете выполнять пользовательский JavaScript код в временных контейнерах. Скрипты привязаны к доменам и выполняются только на соответствующих доменах. Используйте с осторожностью - скрипты могут получить доступ к конфиденциальному содержимому страницы и изменить поведение веб-сайта."
+  },
+  "optionsAdvancedScriptsWarningTitle": {
+    "message": "Предупреждение о безопасности"
+  },
+  "optionsAdvancedScriptsWarning": {
+    "message": "Скрипты имеют полный доступ к веб-странице и могут читать конфиденциальные данные, изменять содержимое или выполнять действия от вашего имени. Добавляйте только скрипты из надежных источников."
+  },
+  "optionsAdvancedScriptsPermissionsWarning": {
+    "message": "Эта функция требует дополнительных разрешений для доступа к активности браузера во время навигации."
+  },
+  "optionsAdvancedScriptsPermissionsAccept": {
+    "message": "Я понимаю и хочу включить внедрение скриптов"
+  },
+  "optionsAdvancedScriptsDomainPattern": {
+    "message": "Шаблон домена"
+  },
+  "optionsAdvancedScriptsDomainPatternPlaceholder": {
+    "message": "example.com или *.example.com"
+  },
+  "optionsAdvancedScriptsDomainPatternDescription": {
+    "message": "Используйте точные домены (example.com) или подстановочные знаки (*.example.com) для соответствия поддоменам"
+  },
+  "optionsAdvancedScriptsCode": {
+    "message": "Код JavaScript"
+  },
+  "optionsAdvancedScriptsCodePlaceholder": {
+    "message": "console.log('Привет из временного контейнера!');"
+  },
+  "optionsAdvancedScriptsCodeDescription": {
+    "message": "JavaScript код для выполнения при загрузке страницы"
+  },
+  "optionsAdvancedScriptsRunAt": {
+    "message": "Выполнить в"
+  },
+  "optionsAdvancedScriptsRunAtStart": {
+    "message": "Начало документа"
+  },
+  "optionsAdvancedScriptsRunAtEnd": {
+    "message": "Конец документа"
+  },
+  "optionsAdvancedScriptsRunAtIdle": {
+    "message": "Документ готов"
+  },
+  "optionsAdvancedScriptsRunAtDescription": {
+    "message": "Когда выполнять скрипт во время загрузки страницы"
+  },
+  "optionsAdvancedScriptsAdd": {
+    "message": "Добавить скрипт"
+  },
+  "optionsAdvancedScriptsEdit": {
+    "message": "Изменить скрипт"
+  },
+  "optionsAdvancedScriptsSave": {
+    "message": "Сохранить скрипт"
+  },
+  "optionsAdvancedScriptsCancel": {
+    "message": "Отмена"
+  },
+  "optionsAdvancedScriptsRemove": {
+    "message": "Удалить"
+  },
+  "optionsAdvancedScriptsRemoveConfirm": {
+    "message": "Удалить эту настройку скрипта?"
+  },
+  "optionsAdvancedScriptsValidationError": {
+    "message": "Шаблон домена и код обязательны"
+  },
+  "optionsAdvancedDeleteHistoryTitle": {
+    "message": "Временные контейнеры с удалением истории"
+  },
+  "optionsAdvancedDeleteHistoryWarningTitle": {
+    "message": "Предупреждение"
+  },
+  "optionsAdvancedDeleteHistoryWarning": {
+    "message": "Каждый URL веб-сайта, который вы посещаете во \"Временном контейнере с удалением истории\", будет удален из всей вашей истории. Это означает, что если вы посещали тот же URL веб-сайта в другом контейнере, временном контейнере или в контейнере по умолчанию до или во время посещения во \"Временном контейнере с удалением истории\", то эти посещения также будут удалены из истории. Это будет так до тех пор, пока Firefox не поддержит специальную историю для вкладок контейнера."
+  },
+  "optionsAdvancedDeleteHistoryBugLink": {
+    "message": "Соответствующая ошибка Firefox может быть найдена здесь"
+  },
+  "optionsAdvancedDeleteHistoryCareful": {
+    "message": "Будьте осторожны. Вас предупредили. Вкладки \"Временных контейнеров с удалением истории\" имеют суффикс \"-deletes-history\" в имени контейнера, чтобы напомнить вам."
+  },
+  "optionsAdvancedDeleteHistoryWarningAccept": {
+    "message": "Я прочитал предупреждение и понимаю последствия, связанные с использованием \"Временных контейнеров с удалением истории\". При установке флажка Firefox запросит у вас разрешения \"Доступ к истории браузера\"."
+  },
+  "optionsAdvancedDeleteHistoryInfoMessage": {
+    "message": "Вы можете открыть \"Временные контейнеры с удалением истории\" - также с помощью горячей клавиши (по умолчанию: Alt+P) - после того, как прочтете предупреждение и установите флажок."
+  },
+  "optionsAdvancedDeleteHistoryUrlInfo": {
+    "message": "Удаление применяется к полному URL веб-сайта, а не только к домену. Это означает, что если вы, например, откроете новостную статью на своем любимом новостном сайте во \"Временном контейнере с удалением истории\", это не удалит все ваши предыдущие посещения других новостных статей, которые вы делали вне \"Временных контейнеров с удалением истории\", потому что полные URL веб-сайтов отличаются."
+  },
+  "optionsAdvancedDeleteHistoryDeletionInfo": {
+    "message": "\"Временные контейнеры с удалением истории\" будут удалять историю, когда сам \"Временный контейнер с удалением истории\" будет удален после закрытия последней вкладки в нем."
+  },
+  "optionsAdvancedDeleteHistoryAutomaticMode": {
+    "message": "Автоматически создавать \"Временные контейнеры с удалением истории\""
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeNever": {
+    "message": "Не создавать автоматически \"Временные контейнеры с удалением истории\" вместо обычных временных контейнеров (по умолчанию)"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeAlways": {
+    "message": "Автоматически создавать \"Временные контейнеры с удалением истории\" вместо обычных временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryAutomaticModeDescription": {
+    "message": "Это влияет на автоматический режим, значок панели инструментов и пункт контекстного меню правого клика"
+  },
+  "optionsAdvancedDeleteHistoryContextMenu": {
+    "message": "Показать дополнительный пункт \"Временные контейнеры с удалением истории\" в контекстном меню правого клика по ссылкам"
+  },
+  "optionsAdvancedDeleteHistoryContextMenuBookmarks": {
+    "message": "Показать дополнительный пункт \"Временные контейнеры с удалением истории\" в контекстном меню правого клика по закладкам"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval": {
+    "message": "Удалить больше не нужные \"Временные контейнеры с удалением истории\""
+  },
+  "optionsAdvancedDeleteHistoryContainerRemoval15min": {
+    "message": "Через 15 минут после закрытия последней вкладки в нем"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalImmediate": {
+    "message": "После закрытия последней вкладки в нем (по умолчанию)"
+  },
+  "optionsAdvancedDeleteHistoryContainerRemovalDescription": {
+    "message": "\"15 минут\" позволяет \"Отменить закрытие вкладки\" в этом временном интервале"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomain": {
+    "message": "Изоляция - всегда по доменам"
+  },
+  "optionsAdvancedDeleteHistoryAlwaysPerDomainAutomatic": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" для доменов, настроенных на \"Изоляцию всегда\" вместо обычных временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolation": {
+    "message": "Изоляция - навигация во вкладках"
+  },
+  "optionsAdvancedDeleteHistoryContainerIsolationAutomatic": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" когда происходит \"Изоляция при навигации во вкладках\" вместо обычных временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryMouseClicks": {
+    "message": "Изоляция - клики мыши во \"Временных контейнерах с удалением истории\""
+  },
+  "optionsAdvancedDeleteHistoryMouseClicksAutomatic": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" при кликах мыши по ссылкам во \"Временных контейнерах с удалением истории\" вместо обычных временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClick": {
+    "message": "Изоляция - средний клик мыши во временных контейнерах"
+  },
+  "optionsAdvancedDeleteHistoryMiddleClickDeletesHistory": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" при средних кликах мыши вместо временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClick": {
+    "message": "Изоляция - Ctrl/Cmd+левый клик мыши во временных контейнерах"
+  },
+  "optionsAdvancedDeleteHistoryCtrlLeftClickDeletesHistory": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" при Ctrl/Cmd+левых кликах мыши вместо временных контейнеров"
+  },
+  "optionsAdvancedDeleteHistoryLeftClick": {
+    "message": "Изоляция - левый клик мыши во временных контейнерах"
+  },
+  "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
+    "message": "Открывать новые \"Временные контейнеры с удалением истории\" при левых кликах мыши вместо временных контейнеров"
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Не удалось загрузить дополнительные настройки скриптов"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Не удалось загрузить дополнительные настройки удаления истории"
   }
 }
