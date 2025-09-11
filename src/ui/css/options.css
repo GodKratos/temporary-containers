@@ -3,7 +3,7 @@
 
 /* Base Styles */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
@@ -131,7 +131,7 @@ body {
   align-items: flex-start;
 }
 
-.checkbox-field input[type="checkbox"] {
+.checkbox-field input[type='checkbox'] {
   margin-right: 8px;
   margin-top: 3px;
 }
@@ -152,8 +152,8 @@ label {
   font-weight: normal;
 }
 
-input[type="text"],
-input[type="number"],
+input[type='text'],
+input[type='number'],
 select,
 textarea {
   width: 100%;
@@ -166,7 +166,7 @@ textarea {
   box-sizing: border-box;
 }
 
-input[type="file"] {
+input[type='file'] {
   padding: 8px 0;
   color: var(--text-color);
 }
@@ -300,17 +300,17 @@ button.danger:hover {
 }
 
 /* Statistics Styles */
-.statistics-container {
+.statistics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .statistic-item {
   background-color: var(--sidebar-background);
-  border-radius: 4px;
-  padding: 16px;
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-md);
   text-align: center;
 }
 
@@ -474,7 +474,7 @@ button.danger:hover {
   .app {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
     height: auto;
@@ -482,17 +482,13 @@ button.danger:hover {
     border-right: none;
     border-bottom: 1px solid var(--border-color);
   }
-  
+
   .content {
     margin-left: 0;
   }
-  
+
   .nav-button {
     padding: 10px 16px;
-  }
-  
-  .statistics-container {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
 

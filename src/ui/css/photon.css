@@ -132,10 +132,11 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-size: var(--font-size-md);
   color: var(--text-color);
   background-color: var(--background-color);
@@ -143,7 +144,12 @@ html, body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: var(--space-md);
   font-weight: 500;
@@ -274,8 +280,8 @@ button {
 }
 
 .field input:not([type]),
-.field input[type="text"],
-.field input[type="number"],
+.field input[type='text'],
+.field input[type='number'],
 .field select {
   height: 32px;
   padding: var(--space-xs) var(--space-sm);
@@ -287,8 +293,8 @@ button {
 }
 
 .field input:not([type]):focus,
-.field input[type="text"]:focus,
-.field input[type="number"]:focus,
+.field input[type='text']:focus,
+.field input[type='number']:focus,
 .field select:focus {
   border-color: var(--blue-50);
   box-shadow: 0 0 0 1px var(--blue-50), 0 0 0 4px rgba(10, 132, 255, 0.3);
@@ -302,7 +308,7 @@ button {
   gap: var(--space-sm);
 }
 
-.checkbox-field input[type="checkbox"] {
+.checkbox-field input[type='checkbox'] {
   width: 16px;
   height: 16px;
   margin: 0;
@@ -319,7 +325,7 @@ button {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: var(--space-md);
 }

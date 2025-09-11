@@ -12,7 +12,7 @@ export async function initStatisticsPage(): Promise<void> {
     const content = document.createElement('div');
     content.className = 'statistics-container';
     const stats = storage.statistics;
-    
+
     content.innerHTML = `
       <div class="statistics-grid">
         <div class="statistic-item">
@@ -31,29 +31,31 @@ export async function initStatisticsPage(): Promise<void> {
           <div class="statistic-label" data-i18n="optionsStatisticsCacheDeleted">Cache Deleted</div>
           <div class="statistic-value">${formatBytes(stats.cacheDeleted || 0)}</div>
         </div>
-        ${stats.deletesHistory ? `
-        <div class="statistic-section">
-          <h4 data-i18n="optionsStatisticsDeletesHistoryStatistics">Deletes History Statistics</h4>
-          <div class="statistic-item">
-            <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryContainers">Deletes History Containers</div>
-            <div class="statistic-value">${stats.deletesHistory.containersDeleted || 0}</div>
-          </div>
-          <div class="statistic-item">
-            <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryCookies">Deletes History Cookies</div>
-            <div class="statistic-value">${stats.deletesHistory.cookiesDeleted || 0}</div>
-          </div>
-          <div class="statistic-item">
-            <div class="statistic-label" data-i18n="optionsStatisticsUrlsDeletedFromHistory">URLs Deleted from History</div>
-            <div class="statistic-value">${stats.deletesHistory.urlsDeleted || 0}</div>
-          </div>
+        ${
+          stats.deletesHistory
+            ? `
+        <h4 data-i18n="optionsStatisticsDeletesHistoryStatistics">Deletes History Statistics</h4>
+        <div class="statistic-item">
+          <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryContainers">Deletes History Containers</div>
+          <div class="statistic-value">${stats.deletesHistory.containersDeleted || 0}</div>
         </div>
-        ` : ''}
+        <div class="statistic-item">
+          <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryCookies">Deletes History Cookies</div>
+          <div class="statistic-value">${stats.deletesHistory.cookiesDeleted || 0}</div>
+        </div>
+        <div class="statistic-item">
+          <div class="statistic-label" data-i18n="optionsStatisticsUrlsDeletedFromHistory">URLs Deleted from History</div>
+          <div class="statistic-value">${stats.deletesHistory.urlsDeleted || 0}</div>
+        </div>
+        `
+            : ''
+        }
       </div>
       <div class="button-group">
         <button id="resetStatistics" class="button-default" data-i18n="resetStatistics">Reset Statistics</button>
       </div>
     `;
-    
+
     if (!section.firstChild) section.appendChild(content);
 
     // Bind reset statistics event
@@ -64,7 +66,7 @@ export async function initStatisticsPage(): Promise<void> {
         if (!window.confirm('Reset statistics?')) {
           return;
         }
-        
+
         try {
           await browser.runtime.sendMessage({
             method: 'resetStatistics',

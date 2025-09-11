@@ -159,7 +159,7 @@ body {
 }
 
 /* Statistics tab */
-.statistics-list {
+.statistics-grid {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
@@ -171,16 +171,16 @@ body {
   justify-content: space-between;
   padding: var(--space-sm);
   background-color: var(--input-background);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-1);
 }
 
-.statistic-name {
+.statistic-label {
   font-weight: 500;
   color: var(--text-color);
 }
 
-.statistic-count {
+.statistic-value {
   font-weight: bold;
   color: var(--blue-60);
 }
