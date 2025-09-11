@@ -312,7 +312,7 @@
     "message": "No domains excluded."
   },
   "optionsIsolationPerDomainSaveChanges": {
-    "message": "Save Changes to {domain}"
+    "message": "Save Changes to $1"
   },
   "optionsIsolationPerDomainAddRule": {
     "message": "Add Domain Rule"
@@ -330,7 +330,7 @@
     "message": "Remove"
   },
   "optionsIsolationPerDomainRemoveConfirm": {
-    "message": "Remove isolation rule for {domain}?"
+    "message": "Remove isolation rule for $1?"
   },
   "optionsIsolationPerDomainRuleAdded": {
     "message": "Domain rule added successfully"

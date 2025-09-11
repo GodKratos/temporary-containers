@@ -306,7 +306,7 @@
     "message": "Нет исключенных доменов."
   },
   "optionsIsolationPerDomainSaveChanges": {
-    "message": "Сохранить изменения для {domain}"
+    "message": "Сохранить изменения для $1"
   },
   "optionsIsolationPerDomainAddRule": {
     "message": "Добавить правило домена"
@@ -324,7 +324,7 @@
     "message": "Удалить"
   },
   "optionsIsolationPerDomainRemoveConfirm": {
-    "message": "Удалить правило изоляции для {domain}?"
+    "message": "Удалить правило изоляции для $1?"
   },
   "optionsIsolationPerDomainRuleAdded": {
     "message": "Правило домена успешно добавлено"

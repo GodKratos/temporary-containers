@@ -306,7 +306,7 @@
     "message": "Hariç tutulan alan adı yok."
   },
   "optionsIsolationPerDomainSaveChanges": {
-    "message": "{domain} için Değişiklikleri Kaydet"
+    "message": "$1 için Değişiklikleri Kaydet"
   },
   "optionsIsolationPerDomainAddRule": {
     "message": "Alan Adı Kuralı Ekle"
@@ -324,7 +324,7 @@
     "message": "Kaldır"
   },
   "optionsIsolationPerDomainRemoveConfirm": {
-    "message": "{domain} için izolasyon kuralını kaldır?"
+    "message": "$1 için izolasyon kuralını kaldır?"
   },
   "optionsIsolationPerDomainRuleAdded": {
     "message": "Alan adı kuralı başarıyla eklendi"

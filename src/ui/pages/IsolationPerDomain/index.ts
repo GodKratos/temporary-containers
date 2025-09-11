@@ -206,7 +206,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
           <button type="button" id="saveDomainRule" class="button-primary" ${!editState.domain.pattern.trim() ? 'disabled' : ''}>
             ${
               editState.editing
-                ? browser.i18n.getMessage('optionsIsolationPerDomainSaveChanges')
+                ? browser.i18n.getMessage('optionsIsolationPerDomainSaveChanges', editState.domain.pattern)
                 : browser.i18n.getMessage('optionsIsolationPerDomainAddRule')
             }
           </button>
@@ -365,8 +365,11 @@ function updateDomainSettingsVisibility(domainSettings: HTMLElement, saveDomainR
 }
 
 function updateSaveButtonText(saveDomainRuleButton: HTMLButtonElement): void {
-  const messageKey = editState.editing ? 'optionsIsolationPerDomainSaveChanges' : 'optionsIsolationPerDomainAddRule';
-  saveDomainRuleButton.textContent = browser.i18n.getMessage(messageKey);
+  if (editState.editing) {
+    saveDomainRuleButton.textContent = browser.i18n.getMessage('optionsIsolationPerDomainSaveChanges', editState.domain.pattern);
+  } else {
+    saveDomainRuleButton.textContent = browser.i18n.getMessage('optionsIsolationPerDomainAddRule');
+  }
 }
 
 function updateExcludedDomainsList(content: HTMLElement): void {
