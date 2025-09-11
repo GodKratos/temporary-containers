@@ -73,7 +73,7 @@ jobs:
             ./artifacts/*.zip
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             ./artifacts/*.xpi
@@ -82,5 +82,6 @@ jobs:
           prerelease: ${{ steps.release-type.outputs.prerelease }}
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
+          make_latest: ${{ steps.release-type.outputs.type == 'release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

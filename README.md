@@ -113,6 +113,11 @@ The project uses automated GitHub Actions workflows for releases. All releases a
    git tag release-1.0.0
    git push origin release-1.0.0
    ```
+7. Generate release notes:
+   ```bash
+   git log $(git tag --sort=-version:refname | sed -n 2p)..HEAD --pretty=format:%s
+   ```
+8. Update release notes on github after workflow completes
 
 The GitHub Actions workflow will automatically:
 
@@ -131,13 +136,18 @@ The GitHub Actions workflow will automatically:
 5. Commit and push:
    ```bash
    git commit -am "chore: prepare beta v1.0.0"
-   git push origin main
+   git push origin branch
    ```
 6. Create and push beta tag:
    ```bash
    git tag beta-1.0.0
    git push origin beta-1.0.0
    ```
+7. Generate release notes:
+   ```bash
+   git log $(git tag --sort=-version:refname | sed -n 2p)..HEAD --pretty=format:%s
+   ```
+8. Update release notes on github after workflow completes
 
 The GitHub Actions workflow will automatically:
 
