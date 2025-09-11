@@ -24,26 +24,26 @@ export async function initStatisticsPage(): Promise<void> {
           <div class="statistic-value">${Object.keys(storage.tempContainers || {}).length}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-label">Cookies Deleted</div>
+          <div class="statistic-label" data-i18n="optionsStatisticsCookiesDeleted">Cookies Deleted</div>
           <div class="statistic-value">${stats.cookiesDeleted || 0}</div>
         </div>
         <div class="statistic-item">
-          <div class="statistic-label">Cache Deleted</div>
+          <div class="statistic-label" data-i18n="optionsStatisticsCacheDeleted">Cache Deleted</div>
           <div class="statistic-value">${formatBytes(stats.cacheDeleted || 0)}</div>
         </div>
         ${stats.deletesHistory ? `
         <div class="statistic-section">
-          <h4>Deletes History Statistics</h4>
+          <h4 data-i18n="optionsStatisticsDeletesHistoryStatistics">Deletes History Statistics</h4>
           <div class="statistic-item">
-            <div class="statistic-label">Deletes History Containers</div>
+            <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryContainers">Deletes History Containers</div>
             <div class="statistic-value">${stats.deletesHistory.containersDeleted || 0}</div>
           </div>
           <div class="statistic-item">
-            <div class="statistic-label">Deletes History Cookies</div>
+            <div class="statistic-label" data-i18n="optionsStatisticsDeletesHistoryCookies">Deletes History Cookies</div>
             <div class="statistic-value">${stats.deletesHistory.cookiesDeleted || 0}</div>
           </div>
           <div class="statistic-item">
-            <div class="statistic-label">URLs Deleted from History</div>
+            <div class="statistic-label" data-i18n="optionsStatisticsUrlsDeletedFromHistory">URLs Deleted from History</div>
             <div class="statistic-value">${stats.deletesHistory.urlsDeleted || 0}</div>
           </div>
         </div>
@@ -69,12 +69,12 @@ export async function initStatisticsPage(): Promise<void> {
           await browser.runtime.sendMessage({
             method: 'resetStatistics',
           });
-          showSuccess('Statistics have been reset.');
+          showSuccess(browser.i18n.getMessage('optionsStatisticsResetSuccess'));
           // Refresh the page to show updated stats
           await initStatisticsPage();
         } catch (error) {
           console.error('Error resetting statistics:', error);
-          showError('Failed to reset statistics.');
+          showError(browser.i18n.getMessage('optionsStatisticsResetError'));
         }
       });
     }

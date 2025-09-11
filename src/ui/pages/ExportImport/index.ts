@@ -77,7 +77,7 @@ async function handleExport(): Promise<void> {
     
     URL.revokeObjectURL(url);
     
-    showSuccess('Settings exported successfully');
+    showSuccess(browser.i18n.getMessage('optionsExportImportExportSuccess'));
   } catch (error) {
     console.error('Error exporting settings:', error);
     showError(`Error exporting settings: ${error?.toString() ?? 'Unknown error'}`);
@@ -120,7 +120,7 @@ async function handleImport(fileInput: HTMLInputElement): Promise<void> {
     // Reset file input
     fileInput.value = '';
     
-    showSuccess('Settings imported successfully');
+    showSuccess(browser.i18n.getMessage('optionsExportImportImportSuccess'));
   } catch (error) {
     console.error('Error importing settings:', error);
     showError(`Error importing settings: ${error?.toString() ?? 'Unknown error'}`);

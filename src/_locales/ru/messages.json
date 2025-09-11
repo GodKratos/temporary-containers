@@ -329,6 +329,93 @@
   "savedMessage": {
     "message": "Сохранено"
   },
+  "optionsIsolationPerDomainPattern": {
+    "message": "Шаблон домена"
+  },
+  "optionsIsolationPerDomainPatternDescription": {
+    "message": "Введите шаблон домена для настройки правил изоляции для конкретных доменов."
+  },
+  "optionsIsolationPerDomainAlwaysOpenIn": {
+    "message": "Всегда открывать в"
+  },
+  "optionsIsolationEnabled": {
+    "message": "Включено"
+  },
+  "optionsIsolationDisabled": {
+    "message": "Отключено"
+  },
+  "optionsIsolationPerDomainDisableIfNavPermContainer": {
+    "message": "Отключить при переходе из постоянного контейнера"
+  },
+  "optionsIsolationPerDomainDisableIfNavTempContainer": {
+    "message": "Отключить при переходе из временного контейнера"
+  },
+  "optionsIsolationNavigation": {
+    "message": "URL навигация"
+  },
+  "optionsIsolationNavigationAction": {
+    "message": "Действие навигации"
+  },
+  "optionsIsolationMouseClick": {
+    "message": "Навигация по клику мыши"
+  },
+  "optionsIsolationExcludeTargetDomains": {
+    "message": "Исключить целевые домены"
+  },
+  "optionsIsolationExcludeDomainsDescription": {
+    "message": "Домены, которые не должны вызывать изоляцию для этого правила."
+  },
+  "optionsIsolationAddExcludedDomain": {
+    "message": "Добавить исключенный домен"
+  },
+  "optionsIsolationNoExcludedDomains": {
+    "message": "Нет исключенных доменов."
+  },
+  "optionsIsolationPerDomainSaveChanges": {
+    "message": "Сохранить изменения для {domain}"
+  },
+  "optionsIsolationPerDomainAddRule": {
+    "message": "Добавить правило домена"
+  },
+  "optionsIsolationPerDomainCancel": {
+    "message": "Отмена"
+  },
+  "optionsIsolationPerDomainConfiguredRules": {
+    "message": "Настроенные правила доменов"
+  },
+  "optionsIsolationPerDomainEdit": {
+    "message": "Изменить"
+  },
+  "optionsIsolationPerDomainRemove": {
+    "message": "Удалить"
+  },
+  "optionsIsolationPerDomainRemoveConfirm": {
+    "message": "Удалить правило изоляции для {domain}?"
+  },
+  "optionsIsolationPerDomainRuleAdded": {
+    "message": "Правило домена успешно добавлено"
+  },
+  "optionsIsolationPerDomainRuleUpdated": {
+    "message": "Правило домена успешно обновлено"
+  },
+  "optionsIsolationPerDomainRuleRemoved": {
+    "message": "Правило домена успешно удалено"
+  },
+  "optionsIsolationPerDomainPatternRequired": {
+    "message": "Пожалуйста, введите шаблон домена"
+  },
+  "optionsIsolationPerDomainPatternExists": {
+    "message": "Правило для этого шаблона домена уже существует"
+  },
+  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
+    "message": "subdomain.example.com"
+  },
+  "remove": {
+    "message": "Удалить"
+  },
+  "add": {
+    "message": "Добавить"
+  },
   "toggleIsolation": {
     "message": "Переключить изоляцию"
   },
@@ -420,22 +507,40 @@
     "message": "Установка cookies может сделать вас более узнаваемыми. Особенно если они содержат пользовательские/сессионные данные. Избегайте установки cookies, если возможно."
   },
   "optionsAdvancedCookiesInfoMessage": {
-    "message": "Это вызовет cookies.set и добавит cookie в заголовок (если разрешено) во время webRequest.onBeforeSendHeaders, если запрос принадлежит Временному контейнеру и домен соответствует заданному шаблону."
+    "message": "Это будет вызывать API cookies и добавлять cookie в заголовок (если разрешено) во время обработки запроса, если запрос принадлежит временному контейнеру и домен соответствует заданному шаблону."
   },
   "optionsAdvancedCookiesDomainPattern": {
-    "message": "Шаблон домена (например, *.example.com)"
+    "message": "Шаблон домена"
+  },
+  "optionsAdvancedCookiesDomainPatternPlaceholder": {
+    "message": "example.com или *.example.com"
+  },
+  "optionsAdvancedCookiesDomainPatternDescription": {
+    "message": "Используйте точные домены (example.com), поддомены (sub.example.com) или подстановочные знаки (*.example.com) для сопоставления URL-адресов"
   },
   "optionsAdvancedCookiesName": {
     "message": "Название"
   },
+  "optionsAdvancedCookiesNamePlaceholder": {
+    "message": "session_id"
+  },
   "optionsAdvancedCookiesValue": {
     "message": "Значение"
+  },
+  "optionsAdvancedCookiesValuePlaceholder": {
+    "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
     "message": "Домен"
   },
+  "optionsAdvancedCookiesDomainPlaceholder": {
+    "message": "example.com"
+  },
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
+  },
+  "optionsAdvancedCookiesUrlPlaceholder": {
+    "message": "https://example.com"
   },
   "optionsAdvancedCookiesAdvancedOptions1": {
     "message": "▶ Расширенные опции"
@@ -446,14 +551,23 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Дата истечения"
   },
+  "optionsAdvancedCookiesExpirationDatePlaceholder": {
+    "message": "1640995200"
+  },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "Основной домен"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
+    "message": "example.com"
   },
   "optionsAdvancedCookiesHttpOnly": {
     "message": "Только HTTP"
   },
   "optionsAdvancedCookiesPath": {
     "message": "Путь"
+  },
+  "optionsAdvancedCookiesPathPlaceholder": {
+    "message": "/api"
   },
   "optionsAdvancedCookiesSameSite": {
     "message": "Same Site"
@@ -491,11 +605,74 @@
   "optionsAdvancedCookiesValidationError": {
     "message": "Шаблон домена, название и URL обязательны"
   },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Дополнительные опции"
+  },
+  "optionsAdvancedCookiesWarningTitle": {
+    "message": "Предупреждение:"
+  },
+  "optionsAdvancedCookiesFalse": {
+    "message": "false"
+  },
+  "optionsAdvancedCookiesTrue": {
+    "message": "true"
+  },
+  "optionsAdvancedCookiesSameSiteNoRestriction": {
+    "message": "no_restriction"
+  },
+  "optionsAdvancedCookiesSameSiteLax": {
+    "message": "lax"
+  },
+  "optionsAdvancedCookiesSameSiteStrict": {
+    "message": "strict"
+  },
+  "optionsAdvancedScriptsAPITabsExecuteScript": {
+    "message": "tabs.executeScript"
+  },
+  "optionsAdvancedScriptsAPIWindowWrappedJSObject": {
+    "message": "window.wrappedJSObject"
+  },
+  "optionsAdvancedCookiesAPICookiesSet": {
+    "message": "cookies.set"
+  },
+  "optionsAdvancedCookiesAPIWebRequestOnBeforeSendHeaders": {
+    "message": "webRequest.onBeforeSendHeaders"
+  },
+  "optionsIsolationPerDomainAction": {
+    "message": "Действие"
+  },
+  "optionsStatisticsCookiesDeleted": {
+    "message": "Удаленные cookies"
+  },
+  "optionsStatisticsCacheDeleted": {
+    "message": "Очищенный кэш"
+  },
+  "optionsStatisticsDeletesHistoryStatistics": {
+    "message": "Статистика удаления истории"
+  },
+  "optionsStatisticsDeletesHistoryContainers": {
+    "message": "Контейнеры с удалением истории"
+  },
+  "optionsStatisticsDeletesHistoryCookies": {
+    "message": "Cookies удаления истории"
+  },
+  "optionsStatisticsUrlsDeletedFromHistory": {
+    "message": "URL удаленные из истории"
+  },
+  "optionsStatisticsResetSuccess": {
+    "message": "Статистика была сброшена."
+  },
+  "optionsStatisticsResetError": {
+    "message": "Не удалось сбросить статистику."
+  },
+  "optionsExportImportExportSuccess": {
+    "message": "Настройки успешно экспортированы"
+  },
+  "optionsExportImportImportSuccess": {
+    "message": "Настройки успешно импортированы"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Настройка скриптов для выполнения на определенных доменах во временных контейнерах"
-  },
-  "optionsAdvancedScriptsDescription": {
-    "message": "Вы можете выполнять пользовательский JavaScript код в временных контейнерах. Скрипты привязаны к доменам и выполняются только на соответствующих доменах. Используйте с осторожностью - скрипты могут получить доступ к конфиденциальному содержимому страницы и изменить поведение веб-сайта."
   },
   "optionsAdvancedScriptsWarningTitle": {
     "message": "Предупреждение о безопасности"
@@ -516,7 +693,7 @@
     "message": "example.com или *.example.com"
   },
   "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "Используйте точные домены (example.com) или подстановочные знаки (*.example.com) для соответствия поддоменам"
+    "message": "Используйте точные домены (example.com), поддомены (sub.example.com) или подстановочные знаки (*.example.com) для сопоставления URL-адресов"
   },
   "optionsAdvancedScriptsCode": {
     "message": "Код JavaScript"
@@ -525,7 +702,7 @@
     "message": "console.log('Привет из временного контейнера!');"
   },
   "optionsAdvancedScriptsCodeDescription": {
-    "message": "JavaScript код для выполнения при загрузке страницы"
+    "message": "Введите JavaScript код для выполнения при совпадении шаблона домена"
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Выполнить в"
@@ -563,6 +740,29 @@
   "optionsAdvancedScriptsValidationError": {
     "message": "Шаблон домена и код обязательны"
   },
+  "optionsAdvancedScriptsWarningAccept": {
+    "message": "Я понимаю и хочу включить внедрение скриптов"
+  },
+  "optionsAdvancedScriptsInfoMessage": {
+    "message": "Это будет вызывать tabs.executeScript и получать доступ к window.wrappedJSObject во время загрузки страницы, если запрос принадлежит временному контейнеру и домен соответствует заданному шаблону."
+  },
+  "optionsAdvancedScriptsDocumentStart": {
+    "message": "Начало документа"
+  },
+  "optionsAdvancedScriptsDocumentEnd": {
+    "message": "Конец документа"
+  },
+  "optionsAdvancedScriptsDocumentIdle": {
+    "message": "Документ готов"
+  },
+
+  "optionsAdvancedScriptsConfiguredScripts": {
+    "message": "Настроенные скрипты"
+  },
+  "optionsAdvancedScriptsNoScripts": {
+    "message": "Скрипты не настроены"
+  },
+
   "optionsAdvancedDeleteHistoryTitle": {
     "message": "Временные контейнеры с удалением истории"
   },

@@ -41,19 +41,23 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           </strong>
         </div>
         <div class="info-message">
-          <span data-i18n="optionsAdvancedScriptsInfoMessage">This will call <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/executeScript" target="_blank">tabs.executeScript</a> if the tab url being loaded belongs to a Temporary Container and its domain matches the given pattern. Pro-tip: You can use <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Xray_vision#Waiving_Xray_vision" target="_blank">window.wrappedJSObject</a> to access the original window.</span>
+          <span data-i18n="optionsAdvancedScriptsInfoMessage">This will call the script API if the tab url being loaded belongs to a Temporary Container and its domain matches the given pattern.</span>
+          <br>
+          <small>Technical details: Uses <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/executeScript" target="_blank" data-i18n="optionsAdvancedScriptsAPITabsExecuteScript">tabs.executeScript</a> API. Pro-tip: Use <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Xray_vision#Waiving_Xray_vision" target="_blank" data-i18n="optionsAdvancedScriptsAPIWindowWrappedJSObject">window.wrappedJSObject</a> to access the original window.</small>
         </div>
         
         <div id="scriptsFormSection" ${!preferences.scripts?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
           <form id="scriptForm">
             <div class="field">
               <label for="scriptDomainPattern" data-i18n="optionsAdvancedScriptsDomainPattern">Domain Pattern (e.g., *.example.com)</label>
-              <input type="text" id="scriptDomainPattern" placeholder="Domain pattern" required />
+              <small data-i18n="optionsAdvancedScriptsDomainPatternDescription">Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs</small>
+              <input type="text" id="scriptDomainPattern" data-i18n-placeholder="optionsAdvancedScriptsDomainPatternPlaceholder" placeholder="example.com or *.example.com" required />
             </div>
             
             <div class="field">
               <label for="scriptCode" data-i18n="optionsAdvancedScriptsCode">Code</label>
-              <textarea id="scriptCode" rows="6" placeholder="JavaScript code" required></textarea>
+              <small data-i18n="optionsAdvancedScriptsCodeDescription">Enter the JavaScript code to execute when the domain pattern matches</small>
+              <textarea id="scriptCode" rows="6" data-i18n-placeholder="optionsAdvancedScriptsCodePlaceholder" placeholder="console.log('Hello from temporary container!');" required></textarea>
             </div>
             
             <div class="field">
@@ -66,7 +70,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
             </div>
             
             <div class="field">
-              <button type="submit" id="scriptSubmit" class="button-primary" data-i18n="optionsAdvancedScriptsAddScript">Add Script</button>
+              <button type="submit" id="scriptSubmit" class="button-primary" data-i18n="optionsAdvancedScriptsAdd">Add Script</button>
               <button type="button" id="scriptCancel" class="button-secondary" style="display: none;" data-i18n="optionsAdvancedScriptsCancel">Cancel</button>
             </div>
           </form>
@@ -182,7 +186,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
       (document.getElementById('scriptRunAt') as HTMLSelectElement).value = 'document_idle';
       
       // Reset button states
-      (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsAddScript');
+      (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsAdd');
       (document.getElementById('scriptCancel') as HTMLButtonElement).style.display = 'none';
     }
     
@@ -202,7 +206,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
       (document.getElementById('scriptRunAt') as HTMLSelectElement).value = currentScript.runAt;
       
       // Update button states
-      (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsSaveScript');
+      (document.getElementById('scriptSubmit') as HTMLButtonElement).textContent = browser.i18n.getMessage('optionsAdvancedScriptsSave');
       (document.getElementById('scriptCancel') as HTMLButtonElement).style.display = 'inline-block';
       
       // Scroll to form

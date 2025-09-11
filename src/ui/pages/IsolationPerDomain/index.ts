@@ -59,7 +59,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
           <div class="section">
             <h4 data-i18n="optionsIsolationPerDomainAlwaysOpenIn">Always Open In</h4>
             <div class="field">
-              <label for="alwaysAction">Action</label>
+              <label for="alwaysAction" data-i18n="optionsIsolationPerDomainAction">Action</label>
               <select id="alwaysAction">
                 <option value="disabled" ${editState.domain.always.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
                 <option value="enabled" ${editState.domain.always.action === 'enabled' ? 'selected' : ''} data-i18n="optionsIsolationEnabled">Enabled</option>
@@ -154,7 +154,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
 
         <div class="form-actions">
           <button type="button" id="saveDomainRule" class="button-primary" ${!editState.domain.pattern.trim() ? 'disabled' : ''}>
-            ${editState.editing ? `Save Changes to ${editState.domain.pattern}` : `Add Domain Rule`}
+            ${editState.editing ? browser.i18n.getMessage('optionsIsolationPerDomainSaveChanges') : browser.i18n.getMessage('optionsIsolationPerDomainAddRule')}
           </button>
           ${editState.editing ? '<button type="button" id="cancelEdit" class="button-secondary" data-i18n="optionsIsolationPerDomainCancel">Cancel</button>' : ''}
         </div>
@@ -303,6 +303,12 @@ function updateDomainSettingsVisibility(domainSettings: HTMLElement, saveDomainR
     domainSettings.style.pointerEvents = 'none';
     saveDomainRuleButton.disabled = true;
   }
+  updateSaveButtonText(saveDomainRuleButton);
+}
+
+function updateSaveButtonText(saveDomainRuleButton: HTMLButtonElement): void {
+  const messageKey = editState.editing ? 'optionsIsolationPerDomainSaveChanges' : 'optionsIsolationPerDomainAddRule';
+  saveDomainRuleButton.textContent = browser.i18n.getMessage(messageKey);
 }
 
 function updateExcludedDomainsList(content: HTMLElement): void {

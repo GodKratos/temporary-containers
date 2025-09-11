@@ -329,6 +329,93 @@
   "savedMessage": {
     "message": "Kaydedildi"
   },
+  "optionsIsolationPerDomainPattern": {
+    "message": "Alan Adı Deseni"
+  },
+  "optionsIsolationPerDomainPatternDescription": {
+    "message": "Belirli alan adları için izolasyon kuralları yapılandırmak üzere bir alan adı deseni girin."
+  },
+  "optionsIsolationPerDomainAlwaysOpenIn": {
+    "message": "Her Zaman Şurada Aç"
+  },
+  "optionsIsolationEnabled": {
+    "message": "Etkin"
+  },
+  "optionsIsolationDisabled": {
+    "message": "Devre Dışı"
+  },
+  "optionsIsolationPerDomainDisableIfNavPermContainer": {
+    "message": "Kalıcı konteynerden gezinirken devre dışı bırak"
+  },
+  "optionsIsolationPerDomainDisableIfNavTempContainer": {
+    "message": "Geçici konteynerden gezinirken devre dışı bırak"
+  },
+  "optionsIsolationNavigation": {
+    "message": "URL Gezintisi"
+  },
+  "optionsIsolationNavigationAction": {
+    "message": "Gezinti Eylemi"
+  },
+  "optionsIsolationMouseClick": {
+    "message": "Fare Tıklama Gezintisi"
+  },
+  "optionsIsolationExcludeTargetDomains": {
+    "message": "Hedef Alan Adlarını Hariç Tut"
+  },
+  "optionsIsolationExcludeDomainsDescription": {
+    "message": "Bu kural için izolasyonu tetiklememesi gereken alan adları."
+  },
+  "optionsIsolationAddExcludedDomain": {
+    "message": "Hariç Tutulan Alan Adı Ekle"
+  },
+  "optionsIsolationNoExcludedDomains": {
+    "message": "Hariç tutulan alan adı yok."
+  },
+  "optionsIsolationPerDomainSaveChanges": {
+    "message": "{domain} için Değişiklikleri Kaydet"
+  },
+  "optionsIsolationPerDomainAddRule": {
+    "message": "Alan Adı Kuralı Ekle"
+  },
+  "optionsIsolationPerDomainCancel": {
+    "message": "İptal"
+  },
+  "optionsIsolationPerDomainConfiguredRules": {
+    "message": "Yapılandırılmış Alan Adı Kuralları"
+  },
+  "optionsIsolationPerDomainEdit": {
+    "message": "Düzenle"
+  },
+  "optionsIsolationPerDomainRemove": {
+    "message": "Kaldır"
+  },
+  "optionsIsolationPerDomainRemoveConfirm": {
+    "message": "{domain} için izolasyon kuralını kaldır?"
+  },
+  "optionsIsolationPerDomainRuleAdded": {
+    "message": "Alan adı kuralı başarıyla eklendi"
+  },
+  "optionsIsolationPerDomainRuleUpdated": {
+    "message": "Alan adı kuralı başarıyla güncellendi"
+  },
+  "optionsIsolationPerDomainRuleRemoved": {
+    "message": "Alan adı kuralı başarıyla kaldırıldı"
+  },
+  "optionsIsolationPerDomainPatternRequired": {
+    "message": "Lütfen bir alan adı deseni girin"
+  },
+  "optionsIsolationPerDomainPatternExists": {
+    "message": "Bu alan adı deseni için bir kural zaten mevcut"
+  },
+  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
+    "message": "subdomain.example.com"
+  },
+  "remove": {
+    "message": "Kaldır"
+  },
+  "add": {
+    "message": "Ekle"
+  },
   "toggleIsolation": {
     "message": "İzolasyonu Değiştir"
   },
@@ -420,22 +507,40 @@
     "message": "Çerez ayarlamak sizi daha kolay parmak izine alınabilir hale getirebilir. Özellikle kullanıcı/oturum özel verileri içeriyorlarsa. Mümkünse çerez ayarlamaktan kaçının."
   },
   "optionsAdvancedCookiesInfoMessage": {
-    "message": "Bu cookies.set çağırır ve istek bir Geçici Konteynere aitse ve alan adı verilen desenle eşleşirse webRequest.onBeforeSendHeaders sırasında çerezi başlığa ekler (izin verilirse)."
+    "message": "Bu çerez API'sini çağırır ve istek bir geçici konteynere aitse ve alan adı verilen desenle eşleşirse istek işleme sırasında çerezi başlığa ekler (izin verilirse)."
   },
   "optionsAdvancedCookiesDomainPattern": {
-    "message": "Alan Adı Deseni (örn. *.example.com)"
+    "message": "Alan Adı Deseni"
+  },
+  "optionsAdvancedCookiesDomainPatternPlaceholder": {
+    "message": "example.com veya *.example.com"
+  },
+  "optionsAdvancedCookiesDomainPatternDescription": {
+    "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
   },
   "optionsAdvancedCookiesName": {
     "message": "Ad"
   },
+  "optionsAdvancedCookiesNamePlaceholder": {
+    "message": "session_id"
+  },
   "optionsAdvancedCookiesValue": {
     "message": "Değer"
+  },
+  "optionsAdvancedCookiesValuePlaceholder": {
+    "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
     "message": "Alan Adı"
   },
+  "optionsAdvancedCookiesDomainPlaceholder": {
+    "message": "example.com"
+  },
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
+  },
+  "optionsAdvancedCookiesUrlPlaceholder": {
+    "message": "https://example.com"
   },
   "optionsAdvancedCookiesAdvancedOptions1": {
     "message": "▶ Gelişmiş Seçenekler"
@@ -446,14 +551,23 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Son Kullanma Tarihi"
   },
+  "optionsAdvancedCookiesExpirationDatePlaceholder": {
+    "message": "1640995200"
+  },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "Birinci Taraf Alan Adı"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
+    "message": "example.com"
   },
   "optionsAdvancedCookiesHttpOnly": {
     "message": "Yalnızca HTTP"
   },
   "optionsAdvancedCookiesPath": {
     "message": "Yol"
+  },
+  "optionsAdvancedCookiesPathPlaceholder": {
+    "message": "/api"
   },
   "optionsAdvancedCookiesSameSite": {
     "message": "Aynı Site"
@@ -491,11 +605,74 @@
   "optionsAdvancedCookiesValidationError": {
     "message": "Alan adı deseni, ad ve URL gereklidir"
   },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Gelişmiş Seçenekler"
+  },
+  "optionsAdvancedCookiesWarningTitle": {
+    "message": "Uyarı:"
+  },
+  "optionsAdvancedCookiesFalse": {
+    "message": "false"
+  },
+  "optionsAdvancedCookiesTrue": {
+    "message": "true"
+  },
+  "optionsAdvancedCookiesSameSiteNoRestriction": {
+    "message": "no_restriction"
+  },
+  "optionsAdvancedCookiesSameSiteLax": {
+    "message": "lax"
+  },
+  "optionsAdvancedCookiesSameSiteStrict": {
+    "message": "strict"
+  },
+  "optionsAdvancedScriptsAPITabsExecuteScript": {
+    "message": "tabs.executeScript"
+  },
+  "optionsAdvancedScriptsAPIWindowWrappedJSObject": {
+    "message": "window.wrappedJSObject"
+  },
+  "optionsAdvancedCookiesAPICookiesSet": {
+    "message": "cookies.set"
+  },
+  "optionsAdvancedCookiesAPIWebRequestOnBeforeSendHeaders": {
+    "message": "webRequest.onBeforeSendHeaders"
+  },
+  "optionsIsolationPerDomainAction": {
+    "message": "Eylem"
+  },
+  "optionsStatisticsCookiesDeleted": {
+    "message": "Silinen Çerezler"
+  },
+  "optionsStatisticsCacheDeleted": {
+    "message": "Silinen Önbellek"
+  },
+  "optionsStatisticsDeletesHistoryStatistics": {
+    "message": "Geçmiş Silme İstatistikleri"
+  },
+  "optionsStatisticsDeletesHistoryContainers": {
+    "message": "Geçmişi Silen Konteynerler"
+  },
+  "optionsStatisticsDeletesHistoryCookies": {
+    "message": "Geçmiş Silme Çerezleri"
+  },
+  "optionsStatisticsUrlsDeletedFromHistory": {
+    "message": "Geçmişten Silinen URL'ler"
+  },
+  "optionsStatisticsResetSuccess": {
+    "message": "İstatistikler sıfırlandı."
+  },
+  "optionsStatisticsResetError": {
+    "message": "İstatistikler sıfırlanamadı."
+  },
+  "optionsExportImportExportSuccess": {
+    "message": "Ayarlar başarıyla dışa aktarıldı"
+  },
+  "optionsExportImportImportSuccess": {
+    "message": "Ayarlar başarıyla içe aktarıldı"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Geçici konteynerlerde belirli alan adları için çalıştırılacak betikleri yapılandır"
-  },
-  "optionsAdvancedScriptsDescription": {
-    "message": "Geçici konteynerlerde özel JavaScript kodu çalıştırabilirsiniz. Betikler alan adına dayalıdır ve yalnızca eşleşen alan adlarında çalışır. Dikkatli kullanın - betikler hassas sayfa içeriğine erişebilir ve web sitesi davranışını değiştirebilir."
   },
   "optionsAdvancedScriptsWarningTitle": {
     "message": "Güvenlik Uyarısı"
@@ -516,7 +693,7 @@
     "message": "example.com veya *.example.com"
   },
   "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "Alt alan adlarını eşleştirmek için tam alan adları (example.com) veya joker karakterler (*.example.com) kullanın"
+    "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Kodu"
@@ -525,7 +702,7 @@
     "message": "console.log('Geçici konteynerden merhaba!');"
   },
   "optionsAdvancedScriptsCodeDescription": {
-    "message": "Sayfa yüklendiğinde çalıştırılacak JavaScript kodu"
+    "message": "Alan adı deseni eşleştiğinde çalıştırılacak JavaScript kodunu girin"
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Çalıştırma Zamanı"
@@ -563,6 +740,29 @@
   "optionsAdvancedScriptsValidationError": {
     "message": "Alan adı deseni ve kod gereklidir"
   },
+  "optionsAdvancedScriptsWarningAccept": {
+    "message": "Anlıyorum ve betik enjeksiyonunu etkinleştirmek istiyorum"
+  },
+  "optionsAdvancedScriptsInfoMessage": {
+    "message": "Bu, istek geçici bir konteynere aitse ve alan adı verilen desenle eşleşiyorsa, sayfa yükleme sırasında tabs.executeScript çağırır ve window.wrappedJSObject'e erişir."
+  },
+  "optionsAdvancedScriptsDocumentStart": {
+    "message": "Belge Başlangıcı"
+  },
+  "optionsAdvancedScriptsDocumentEnd": {
+    "message": "Belge Sonu"
+  },
+  "optionsAdvancedScriptsDocumentIdle": {
+    "message": "Belge Boşta"
+  },
+
+  "optionsAdvancedScriptsConfiguredScripts": {
+    "message": "Yapılandırılmış Betikler"
+  },
+  "optionsAdvancedScriptsNoScripts": {
+    "message": "Betik yapılandırılmamış"
+  },
+
   "optionsAdvancedDeleteHistoryTitle": {
     "message": "Geçmişi Silen Geçici Konteynerler"
   },

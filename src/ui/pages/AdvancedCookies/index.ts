@@ -46,36 +46,39 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="optionsAdvancedCookiesTitle">Configure cookies to be set on certain domains in Temporary Containers</h3>
         <div class="warning-message">
-          <strong>Warning:</strong> <span data-i18n="optionsAdvancedCookiesWarning">Setting cookies can make you easier fingerprintable. Especially when they contain user/session-specific data. Avoid setting cookies if you can.</span>
+          <strong data-i18n="optionsAdvancedCookiesWarningTitle">Warning:</strong> <span data-i18n="optionsAdvancedCookiesWarning">Setting cookies can make you easier fingerprintable. Especially when they contain user/session-specific data. Avoid setting cookies if you can.</span>
         </div>
         <div class="info-message">
-          <span data-i18n="optionsAdvancedCookiesInfoMessage">This will call <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/cookies/set" target="_blank">cookies.set</a> and add the cookie to the header (if allowed) during <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/onBeforeSendHeaders" target="_blank">webRequest.onBeforeSendHeaders</a> if the request belongs to a Temporary Container and the domain matches the given pattern.</span>
+          <span data-i18n="optionsAdvancedCookiesInfoMessage">This will call the cookie API and add the cookie to the header (if allowed) during request processing if the request belongs to a Temporary Container and the domain matches the given pattern.</span>
+          <br>
+          <small>Technical details: Uses <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/cookies/set" target="_blank" data-i18n="optionsAdvancedCookiesAPICookiesSet">cookies.set</a> API during <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/onBeforeSendHeaders" target="_blank" data-i18n="optionsAdvancedCookiesAPIWebRequestOnBeforeSendHeaders">webRequest.onBeforeSendHeaders</a> events.</small>
         </div>
         
         <form id="cookieForm">
           <div class="field">
-            <label for="cookieDomainPattern" data-i18n="optionsAdvancedCookiesDomainPattern">Domain Pattern (e.g., *.example.com)</label>
-            <input type="text" id="cookieDomainPattern" placeholder="Domain pattern" required />
+            <label for="cookieDomainPattern" data-i18n="optionsAdvancedCookiesDomainPattern">Domain Pattern</label>
+            <small data-i18n="optionsAdvancedCookiesDomainPatternDescription">Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs</small>
+            <input type="text" id="cookieDomainPattern" data-i18n-placeholder="optionsAdvancedCookiesDomainPatternPlaceholder" placeholder="Domain pattern" required />
           </div>
           
           <div class="field">
             <label for="cookieName" data-i18n="optionsAdvancedCookiesName">Name</label>
-            <input type="text" id="cookieName" placeholder="Cookie name" required />
+            <input type="text" id="cookieName" data-i18n-placeholder="optionsAdvancedCookiesNamePlaceholder" placeholder="Cookie name" required />
           </div>
           
           <div class="field">
             <label for="cookieValue" data-i18n="optionsAdvancedCookiesValue">Value</label>
-            <input type="text" id="cookieValue" placeholder="Cookie value" required />
+            <input type="text" id="cookieValue" data-i18n-placeholder="optionsAdvancedCookiesValuePlaceholder" placeholder="Cookie value" required />
           </div>
           
           <div class="field">
             <label for="cookieDomain" data-i18n="optionsAdvancedCookiesDomain">Domain</label>
-            <input type="text" id="cookieDomain" placeholder="Cookie domain" />
+            <input type="text" id="cookieDomain" data-i18n-placeholder="optionsAdvancedCookiesDomainPlaceholder" placeholder="Cookie domain" />
           </div>
           
           <div class="field">
             <label for="cookieUrl" data-i18n="optionsAdvancedCookiesUrl">URL</label>
-            <input type="text" id="cookieUrl" placeholder="Cookie URL" required />
+            <input type="text" id="cookieUrl" data-i18n-placeholder="optionsAdvancedCookiesUrlPlaceholder" placeholder="Cookie URL" required />
           </div>
           
           <div class="collapsible-section">
@@ -83,35 +86,35 @@ export async function initAdvancedCookiesPage(): Promise<void> {
             <div class="collapsible-content" style="display: none;">
               <div class="field">
                 <label for="cookieExpirationDate" data-i18n="optionsAdvancedCookiesExpirationDate">Expiration Date</label>
-                <input type="text" id="cookieExpirationDate" placeholder="Expiration date" />
+                <input type="text" id="cookieExpirationDate" data-i18n-placeholder="optionsAdvancedCookiesExpirationDatePlaceholder" placeholder="Expiration date" />
               </div>
               
               <div class="field">
                 <label for="cookieFirstPartyDomain" data-i18n="optionsAdvancedCookiesFirstPartyDomain">First Party Domain</label>
-                <input type="text" id="cookieFirstPartyDomain" placeholder="First party domain" />
+                <input type="text" id="cookieFirstPartyDomain" data-i18n-placeholder="optionsAdvancedCookiesFirstPartyDomainPlaceholder" placeholder="First party domain" />
               </div>
               
               <div class="field">
                 <label for="cookieHttpOnly" data-i18n="optionsAdvancedCookiesHttpOnly">HTTP Only</label>
                 <select id="cookieHttpOnly">
                   <option value="" data-i18n="optionsAdvancedCookiesNotSet">Not set</option>
-                  <option value="false">false</option>
-                  <option value="true">true</option>
+                  <option value="false" data-i18n="optionsAdvancedCookiesFalse">false</option>
+                  <option value="true" data-i18n="optionsAdvancedCookiesTrue">true</option>
                 </select>
               </div>
               
               <div class="field">
                 <label for="cookiePath" data-i18n="optionsAdvancedCookiesPath">Path</label>
-                <input type="text" id="cookiePath" placeholder="Cookie path" />
+                <input type="text" id="cookiePath" data-i18n-placeholder="optionsAdvancedCookiesPathPlaceholder" placeholder="Cookie path" />
               </div>
               
               <div class="field">
                 <label for="cookieSameSite" data-i18n="optionsAdvancedCookiesSameSite">Same Site</label>
                 <select id="cookieSameSite">
                   <option value="" data-i18n="optionsAdvancedCookiesNotSet">Not set</option>
-                  <option value="no_restriction">no_restriction</option>
-                  <option value="lax">lax</option>
-                  <option value="strict">strict</option>
+                  <option value="no_restriction" data-i18n="optionsAdvancedCookiesSameSiteNoRestriction">no_restriction</option>
+                  <option value="lax" data-i18n="optionsAdvancedCookiesSameSiteLax">lax</option>
+                  <option value="strict" data-i18n="optionsAdvancedCookiesSameSiteStrict">strict</option>
                 </select>
               </div>
               
@@ -119,8 +122,8 @@ export async function initAdvancedCookiesPage(): Promise<void> {
                 <label for="cookieSecure" data-i18n="optionsAdvancedCookiesSecure">Secure</label>
                 <select id="cookieSecure">
                   <option value="" data-i18n="optionsAdvancedCookiesNotSet">Not set</option>
-                  <option value="false">false</option>
-                  <option value="true">true</option>
+                  <option value="false" data-i18n="optionsAdvancedCookiesFalse">false</option>
+                  <option value="true" data-i18n="optionsAdvancedCookiesTrue">true</option>
                 </select>
               </div>
             </div>

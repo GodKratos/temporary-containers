@@ -507,22 +507,40 @@
     "message": "Setting cookies can make you easier fingerprintable. Especially when they contain user/session-specific data. Avoid setting cookies if you can."
   },
   "optionsAdvancedCookiesInfoMessage": {
-    "message": "This will call cookies.set and add the cookie to the header (if allowed) during webRequest.onBeforeSendHeaders if the request belongs to a Temporary Container and the domain matches the given pattern."
+    "message": "This will call the cookie API and add the cookie to the header (if allowed) during request processing if the request belongs to a Temporary Container and the domain matches the given pattern."
   },
   "optionsAdvancedCookiesDomainPattern": {
-    "message": "Domain Pattern (e.g., *.example.com)"
+    "message": "Domain Pattern"
+  },
+  "optionsAdvancedCookiesDomainPatternPlaceholder": {
+    "message": "example.com or *.example.com"
+  },
+  "optionsAdvancedCookiesDomainPatternDescription": {
+    "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
   },
   "optionsAdvancedCookiesName": {
     "message": "Name"
   },
+  "optionsAdvancedCookiesNamePlaceholder": {
+    "message": "session_id"
+  },
   "optionsAdvancedCookiesValue": {
     "message": "Value"
+  },
+  "optionsAdvancedCookiesValuePlaceholder": {
+    "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
     "message": "Domain"
   },
+  "optionsAdvancedCookiesDomainPlaceholder": {
+    "message": "example.com"
+  },
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
+  },
+  "optionsAdvancedCookiesUrlPlaceholder": {
+    "message": "https://example.com"
   },
   "optionsAdvancedCookiesAdvancedOptions1": {
     "message": "▶ Advanced Options"
@@ -533,14 +551,23 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Expiration Date"
   },
+  "optionsAdvancedCookiesExpirationDatePlaceholder": {
+    "message": "1640995200"
+  },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "First Party Domain"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
+    "message": "example.com"
   },
   "optionsAdvancedCookiesHttpOnly": {
     "message": "HTTP Only"
   },
   "optionsAdvancedCookiesPath": {
     "message": "Path"
+  },
+  "optionsAdvancedCookiesPathPlaceholder": {
+    "message": "/api"
   },
   "optionsAdvancedCookiesSameSite": {
     "message": "Same Site"
@@ -578,11 +605,74 @@
   "optionsAdvancedCookiesValidationError": {
     "message": "Domain pattern, name, and URL are required"
   },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Advanced Options"
+  },
+  "optionsAdvancedCookiesWarningTitle": {
+    "message": "Warning:"
+  },
+  "optionsAdvancedCookiesFalse": {
+    "message": "false"
+  },
+  "optionsAdvancedCookiesTrue": {
+    "message": "true"
+  },
+  "optionsAdvancedCookiesSameSiteNoRestriction": {
+    "message": "no_restriction"
+  },
+  "optionsAdvancedCookiesSameSiteLax": {
+    "message": "lax"
+  },
+  "optionsAdvancedCookiesSameSiteStrict": {
+    "message": "strict"
+  },
+  "optionsAdvancedScriptsAPITabsExecuteScript": {
+    "message": "tabs.executeScript"
+  },
+  "optionsAdvancedScriptsAPIWindowWrappedJSObject": {
+    "message": "window.wrappedJSObject"
+  },
+  "optionsAdvancedCookiesAPICookiesSet": {
+    "message": "cookies.set"
+  },
+  "optionsAdvancedCookiesAPIWebRequestOnBeforeSendHeaders": {
+    "message": "webRequest.onBeforeSendHeaders"
+  },
+  "optionsIsolationPerDomainAction": {
+    "message": "Action"
+  },
+  "optionsStatisticsCookiesDeleted": {
+    "message": "Cookies Deleted"
+  },
+  "optionsStatisticsCacheDeleted": {
+    "message": "Cache Deleted"
+  },
+  "optionsStatisticsDeletesHistoryStatistics": {
+    "message": "Deletes History Statistics"
+  },
+  "optionsStatisticsDeletesHistoryContainers": {
+    "message": "Deletes History Containers"
+  },
+  "optionsStatisticsDeletesHistoryCookies": {
+    "message": "Deletes History Cookies"
+  },
+  "optionsStatisticsUrlsDeletedFromHistory": {
+    "message": "URLs Deleted from History"
+  },
+  "optionsStatisticsResetSuccess": {
+    "message": "Statistics have been reset."
+  },
+  "optionsStatisticsResetError": {
+    "message": "Failed to reset statistics."
+  },
+  "optionsExportImportExportSuccess": {
+    "message": "Settings exported successfully"
+  },
+  "optionsExportImportImportSuccess": {
+    "message": "Settings imported successfully"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Configure scripts to execute for certain domains in Temporary Containers"
-  },
-  "optionsAdvancedScriptsDescription": {
-    "message": "You can execute custom JavaScript code in Temporary Containers. Scripts are domain-based and execute only on matching domains. Use with caution - scripts can access sensitive page content and modify website behavior."
   },
   "optionsAdvancedScriptsWarningTitle": {
     "message": "Security Warning"
@@ -603,7 +693,7 @@
     "message": "example.com or *.example.com"
   },
   "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "Use exact domains (example.com) or wildcards (*.example.com) to match subdomains"
+    "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Code"
@@ -612,7 +702,7 @@
     "message": "console.log('Hello from temporary container!');"
   },
   "optionsAdvancedScriptsCodeDescription": {
-    "message": "JavaScript code to execute when the page loads"
+    "message": "Enter the JavaScript code to execute when the domain pattern matches"
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Execute At"
@@ -650,6 +740,29 @@
   "optionsAdvancedScriptsValidationError": {
     "message": "Domain pattern and code are required"
   },
+  "optionsAdvancedScriptsWarningAccept": {
+    "message": "I understand and want to enable script injection"
+  },
+  "optionsAdvancedScriptsInfoMessage": {
+    "message": "This will call the script API if the tab url being loaded belongs to a Temporary Container and its domain matches the given pattern."
+  },
+  "optionsAdvancedScriptsDocumentStart": {
+    "message": "Document Start"
+  },
+  "optionsAdvancedScriptsDocumentEnd": {
+    "message": "Document End"
+  },
+  "optionsAdvancedScriptsDocumentIdle": {
+    "message": "Document Idle"
+  },
+
+  "optionsAdvancedScriptsConfiguredScripts": {
+    "message": "Configured Scripts"
+  },
+  "optionsAdvancedScriptsNoScripts": {
+    "message": "No scripts configured"
+  },
+
   "optionsAdvancedDeleteHistoryTitle": {
     "message": "Deletes History Temporary Containers"
   },
