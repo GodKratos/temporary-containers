@@ -2,9 +2,8 @@
 import { initGeneralPage } from './pages/General';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
-import { initAdvancedContainerPage } from './pages/AdvancedContainer';
-import { initAdvancedCookiesPage } from './pages/AdvancedCookies';
 import { initAdvancedMiscPage } from './pages/AdvancedMisc';
+import { initAdvancedCookiesPage } from './pages/AdvancedCookies';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
 import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader, applyLocalization } from './shared/utils';
@@ -14,9 +13,8 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   'general': initGeneralPage,
   'isolation-global': initIsolationGlobalPage,
   'isolation-domain': initIsolationPerDomainPage,
-  'advanced-container': initAdvancedContainerPage,
-  'advanced-cookies': initAdvancedCookiesPage,
   'advanced-misc': initAdvancedMiscPage,
+  'advanced-cookies': initAdvancedCookiesPage,
   'statistics': initStatisticsPage,
   'export-import': initExportImportPage,
 };

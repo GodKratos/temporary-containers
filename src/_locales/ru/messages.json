@@ -434,8 +434,11 @@
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
   },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Расширенные опции"
+  "optionsAdvancedCookiesAdvancedOptions1": {
+    "message": "▶ Расширенные опции"
+  },
+  "optionsAdvancedCookiesAdvancedOptions2": {
+    "message": "▼ Расширенные опции"
   },
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Дата истечения"

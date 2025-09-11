@@ -148,8 +148,8 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       const isHidden = collapsibleContent.style.display === 'none';
       collapsibleContent.style.display = isHidden ? 'block' : 'none';
       collapsibleHeader.textContent = isHidden ? 
-        `▼ ${browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions')}` : 
-        `▶ ${browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions')}`;
+        browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions2') : 
+        browser.i18n.getMessage('optionsAdvancedCookiesAdvancedOptions1');
     });
     
     function updateCookieDisplay() {

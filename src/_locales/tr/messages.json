@@ -434,8 +434,11 @@
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
   },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Gelişmiş Seçenekler"
+  "optionsAdvancedCookiesAdvancedOptions1": {
+    "message": "▶ Gelişmiş Seçenekler"
+  },
+  "optionsAdvancedCookiesAdvancedOptions2": {
+    "message": "▼ Gelişmiş Seçenekler"
   },
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Son Kullanma Tarihi"

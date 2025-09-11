@@ -521,8 +521,11 @@
   "optionsAdvancedCookiesUrl": {
     "message": "URL"
   },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Advanced Options"
+  "optionsAdvancedCookiesAdvancedOptions1": {
+    "message": "▶ Advanced Options"
+  },
+  "optionsAdvancedCookiesAdvancedOptions2": {
+    "message": "▼ Advanced Options"
   },
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Expiration Date"
