@@ -331,5 +331,74 @@
   },
   "useGlobalSetting": {
     "message": "Küresel Ayarı Kullan"
+  },
+  "optionsAdvancedMiscContextMenuLinks": {
+    "message": "Bağlantılara sağ tıklandığında bağlam menüsünde Geçici Konteyner girişini göster"
+  },
+  "optionsAdvancedMiscContextMenuBookmarks": {
+    "message": "Yer imlerine sağ tıklandığında bağlam menüsünde Geçici Konteyner girişini göster"
+  },
+  "optionsAdvancedMiscIsolation": {
+    "message": "İzolasyon"
+  },
+  "optionsAdvancedMiscReplaceTabs": {
+    "message": "İzolasyon durumunda yeni sekme oluşturmak yerine mevcut sekmeyi değiştir"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabs": {
+    "message": "Yönlendirici sekmeleri 2 saniye sonra otomatik olarak kapat"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabsDescription": {
+    "message": "Şu sitelerdeki sekmeleri kapatır: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)"
+  },
+  "optionsAdvancedMiscReactivateDelay": {
+    "message": "İzolasyonu n saniye sonra otomatik olarak yeniden etkinleştir (0 = devre dışı)"
+  },
+  "optionsAdvancedMiscIsolationMac": {
+    "message": "Çok Hesaplı Konteynerler"
+  },
+  "optionsAdvancedMiscIsolationMacEnabled": {
+    "message": "MAC Olmayan İzole Et"
+  },
+  "optionsAdvancedMiscIgnoringRequests": {
+    "message": "İstekleri Yoksayma"
+  },
+  "optionsAdvancedMiscIgnoringRequestsDescription": {
+    "message": "about:config extensions.webextensions.restrictedDomains listesindeki alan adları yoksayılmayi kaldırılamaz. Bu listeyi asla değiştirmemelisiniz."
+  },
+  "optionsAdvancedMiscAddIgnoredDomain": {
+    "message": "Yoksayılan Alan Adı Ekle"
+  },
+  "optionsAdvancedMiscNoIgnoredDomains": {
+    "message": "Yoksayılan alan adı yok."
+  },
+  "optionsAdvancedMiscUI": {
+    "message": "Kullanıcı Arayüzü"
+  },
+  "optionsAdvancedMiscExpandPreferences": {
+    "message": "Varsayılan olarak tüm tercihleri genişlet"
+  },
+  "optionsAdvancedMiscPageAction": {
+    "message": "Adres çubuğunda açılır pencereyi gösteren simgeyi göster"
+  },
+  "optionsAdvancedMiscPopupDefaultTab": {
+    "message": "Varsayılan Açılır Pencere Sekmesi"
+  },
+  "optionsAdvancedMiscResetStorage": {
+    "message": "Depolamayı Sıfırla"
+  },
+  "optionsAdvancedMiscResetStorageButton": {
+    "message": "Yerel depolamayı sil ve varsayılana sıfırla"
+  },
+  "optionsAdvancedMiscResetStorageDescription": {
+    "message": "Bu eylem geri alınamaz. Tüm ayarlar kaybolacak."
+  },
+  "optionsAdvancedMiscResetStorageConfirm": {
+    "message": "Tüm ayarları sıfırlamak istediğinizden emin misiniz? Bu eylem geri alınamaz."
+  },
+  "optionsAdvancedMiscResetStorageSuccess": {
+    "message": "Ayarlar başarıyla sıfırlandı. Sayfa yeniden yüklenecek."
+  },
+  "optionsAdvancedMiscResetStorageFailed": {
+    "message": "Ayarları sıfırlama başarısız. Lütfen tekrar deneyin."
   }
 }

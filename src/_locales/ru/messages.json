@@ -331,5 +331,74 @@
   },
   "useGlobalSetting": {
     "message": "Использовать глобальную настройку"
+  },
+  "optionsAdvancedMiscContextMenuLinks": {
+    "message": "Показывать пункт Временного контейнера в контекстном меню ссылок"
+  },
+  "optionsAdvancedMiscContextMenuBookmarks": {
+    "message": "Показывать пункт Временного контейнера в контекстном меню закладок"
+  },
+  "optionsAdvancedMiscIsolation": {
+    "message": "Изоляция"
+  },
+  "optionsAdvancedMiscReplaceTabs": {
+    "message": "Заменять текущую вкладку вместо создания новой при изоляции"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabs": {
+    "message": "Автоматически закрывать перенаправляющие вкладки через 2 секунды"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabsDescription": {
+    "message": "Закрывает вкладки с: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)"
+  },
+  "optionsAdvancedMiscReactivateDelay": {
+    "message": "Автоматически повторно включить изоляцию через n секунд (0 = отключено)"
+  },
+  "optionsAdvancedMiscIsolationMac": {
+    "message": "Мульти-аккаунт контейнеры"
+  },
+  "optionsAdvancedMiscIsolationMacEnabled": {
+    "message": "Изолировать Не-MAC"
+  },
+  "optionsAdvancedMiscIgnoringRequests": {
+    "message": "Игнорирование запросов"
+  },
+  "optionsAdvancedMiscIgnoringRequestsDescription": {
+    "message": "Домены из списка about:config extensions.webextensions.restrictedDomains нельзя разигнорировать. Никогда не изменяйте этот список."
+  },
+  "optionsAdvancedMiscAddIgnoredDomain": {
+    "message": "Добавить игнорируемый домен"
+  },
+  "optionsAdvancedMiscNoIgnoredDomains": {
+    "message": "Игнорируемые домены отсутствуют."
+  },
+  "optionsAdvancedMiscUI": {
+    "message": "Пользовательский интерфейс"
+  },
+  "optionsAdvancedMiscExpandPreferences": {
+    "message": "Развернуть все настройки по умолчанию"
+  },
+  "optionsAdvancedMiscPageAction": {
+    "message": "Показывать иконку в адресной строке для вызова всплывающего окна"
+  },
+  "optionsAdvancedMiscPopupDefaultTab": {
+    "message": "Вкладка по умолчанию во всплывающем окне"
+  },
+  "optionsAdvancedMiscResetStorage": {
+    "message": "Сброс хранилища"
+  },
+  "optionsAdvancedMiscResetStorageButton": {
+    "message": "Очистить локальное хранилище и сбросить к значениям по умолчанию"
+  },
+  "optionsAdvancedMiscResetStorageDescription": {
+    "message": "Это действие нельзя отменить. Все настройки будут потеряны."
+  },
+  "optionsAdvancedMiscResetStorageConfirm": {
+    "message": "Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить."
+  },
+  "optionsAdvancedMiscResetStorageSuccess": {
+    "message": "Настройки успешно сброшены. Страница будет перезагружена."
+  },
+  "optionsAdvancedMiscResetStorageFailed": {
+    "message": "Не удалось сбросить настройки. Попробуйте еще раз."
   }
 }

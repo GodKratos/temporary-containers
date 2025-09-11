@@ -18,6 +18,14 @@ This project is a Firefox extension for managing temporary containers. It allows
 - Webpack for module bundling.
 - Fontello for iconography.
 
+# General Instructions
+
+- Update the README.md file with any significant changes to functionality or setup instructions.
+- Follow the project's coding conventions and best practices.
+- Write clear and concise commit messages.
+- Include tests for new features and bug fixes.
+- Keep the codebase clean and well-organized.
+
 # Localisation
 
 ## Localisation Requirements

@@ -331,5 +331,161 @@
   },
   "savedMessage": {
     "message": "Saved"
+  },
+  "optionsIsolationPerDomainPattern": {
+    "message": "Domain Pattern"
+  },
+  "optionsIsolationPerDomainPatternDescription": {
+    "message": "Enter a domain pattern to configure isolation rules for specific domains."
+  },
+  "optionsIsolationPerDomainAlwaysOpenIn": {
+    "message": "Always Open In"
+  },
+  "optionsIsolationEnabled": {
+    "message": "Enabled"
+  },
+  "optionsIsolationDisabled": {
+    "message": "Disabled"
+  },
+  "optionsIsolationPerDomainDisableIfNavPermContainer": {
+    "message": "Disable if navigating from a Permanent Container"
+  },
+  "optionsIsolationPerDomainDisableIfNavTempContainer": {
+    "message": "Disable if navigating from a Temporary Container"
+  },
+  "optionsIsolationNavigation": {
+    "message": "URL Navigation"
+  },
+  "optionsIsolationNavigationAction": {
+    "message": "Navigation Action"
+  },
+  "optionsIsolationMouseClick": {
+    "message": "Mouse Click Navigation"
+  },
+  "optionsIsolationExcludeTargetDomains": {
+    "message": "Exclude Target Domains"
+  },
+  "optionsIsolationExcludeDomainsDescription": {
+    "message": "Domains that should not trigger isolation for this rule."
+  },
+  "optionsIsolationAddExcludedDomain": {
+    "message": "Add Excluded Domain"
+  },
+  "optionsIsolationNoExcludedDomains": {
+    "message": "No domains excluded."
+  },
+  "optionsIsolationPerDomainSaveChanges": {
+    "message": "Save Changes to {domain}"
+  },
+  "optionsIsolationPerDomainAddRule": {
+    "message": "Add Domain Rule"
+  },
+  "optionsIsolationPerDomainCancel": {
+    "message": "Cancel"
+  },
+  "optionsIsolationPerDomainConfiguredRules": {
+    "message": "Configured Domain Rules"
+  },
+  "optionsIsolationPerDomainEdit": {
+    "message": "Edit"
+  },
+  "optionsIsolationPerDomainRemove": {
+    "message": "Remove"
+  },
+  "optionsIsolationPerDomainRemoveConfirm": {
+    "message": "Remove isolation rule for {domain}?"
+  },
+  "optionsIsolationPerDomainRuleAdded": {
+    "message": "Domain rule added successfully"
+  },
+  "optionsIsolationPerDomainRuleUpdated": {
+    "message": "Domain rule updated successfully"
+  },
+  "optionsIsolationPerDomainRuleRemoved": {
+    "message": "Domain rule removed successfully"
+  },
+  "optionsIsolationPerDomainPatternRequired": {
+    "message": "Please enter a domain pattern"
+  },
+  "optionsIsolationPerDomainPatternExists": {
+    "message": "A rule for this domain pattern already exists"
+  },
+  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
+    "message": "subdomain.example.com"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "add": {
+    "message": "Add"
+  },
+  "optionsAdvancedMiscContextMenuLinks": {
+    "message": "Show Temporary Container entry in the right click on links context menu"
+  },
+  "optionsAdvancedMiscContextMenuBookmarks": {
+    "message": "Show Temporary Container entry in the right click on bookmarks context menu"
+  },
+  "optionsAdvancedMiscIsolation": {
+    "message": "Isolation"
+  },
+  "optionsAdvancedMiscReplaceTabs": {
+    "message": "Instead of creating a new tab replace the current tab in case of Isolation"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabs": {
+    "message": "Automatically close leftover redirector tabs after 2 seconds"
+  },
+  "optionsAdvancedMiscCloseRedirectorTabsDescription": {
+    "message": "Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)"
+  },
+  "optionsAdvancedMiscReactivateDelay": {
+    "message": "Automatically re-enable Isolation after n seconds (0 = disabled)"
+  },
+  "optionsAdvancedMiscIsolationMac": {
+    "message": "Multi-Account Containers"
+  },
+  "optionsAdvancedMiscIsolationMacEnabled": {
+    "message": "Isolate Non-MAC"
+  },
+  "optionsAdvancedMiscIgnoringRequests": {
+    "message": "Ignoring Requests"
+  },
+  "optionsAdvancedMiscIgnoringRequestsDescription": {
+    "message": "Domains on the about:config extensions.webextensions.restrictedDomains list can't be unignored. You should never change that list."
+  },
+  "optionsAdvancedMiscAddIgnoredDomain": {
+    "message": "Add Ignored Domain"
+  },
+  "optionsAdvancedMiscNoIgnoredDomains": {
+    "message": "No domains ignored."
+  },
+  "optionsAdvancedMiscUI": {
+    "message": "User Interface"
+  },
+  "optionsAdvancedMiscExpandPreferences": {
+    "message": "Expand all preferences by default"
+  },
+  "optionsAdvancedMiscPageAction": {
+    "message": "Show icon in the address bar that reveals the popup"
+  },
+  "optionsAdvancedMiscPopupDefaultTab": {
+    "message": "Default Popup Tab"
+  },
+  "optionsAdvancedMiscResetStorage": {
+    "message": "Reset Storage"
+  },
+  "optionsAdvancedMiscResetStorageButton": {
+    "message": "Wipe local storage and reset it to default"
+  },
+  "optionsAdvancedMiscResetStorageDescription": {
+    "message": "This action cannot be undone. All settings will be lost."
+  },
+  "optionsAdvancedMiscResetStorageConfirm": {
+    "message": "Are you sure you want to reset all settings? This action cannot be undone."
+  },
+  "optionsAdvancedMiscResetStorageSuccess": {
+    "message": "Settings reset successfully. Page will reload."
+  },
+  "optionsAdvancedMiscResetStorageFailed": {
+    "message": "Failed to reset settings. Please try again."
   }
 }
