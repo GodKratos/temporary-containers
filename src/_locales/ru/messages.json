@@ -2,35 +2,8 @@
   "addDomainAndPressEnter": {
     "message": "Добавьте домен и нажмите Enter"
   },
-  "addRule": {
-    "message": "Добавить правило"
-  },
-  "allowAllCookies": {
-    "message": "Разрешить все cookies"
-  },
-  "alwaysIsolate": {
-    "message": "Всегда изолировать"
-  },
-  "blockAllCookies": {
-    "message": "Блокировать все cookies"
-  },
-  "containerCleanup": {
-    "message": "Очистка контейнеров"
-  },
-  "containerCleanupDescription": {
-    "message": "Очищать контейнеры при выходе."
-  },
-  "containerTimeout": {
-    "message": "Таймаут контейнера"
-  },
-  "containerTimeoutDescription": {
-    "message": "Таймаут для контейнеров в секундах."
-  },
   "containersActive": {
     "message": "Активные контейнеры"
-  },
-  "containersCreated": {
-    "message": "Созданные контейнеры"
   },
   "containersRemoved": {
     "message": "Удаленные контейнеры"
@@ -38,38 +11,11 @@
   "contextMenu": {
     "message": "Контекстное меню"
   },
-  "contextMenuDescription": {
-    "message": "Показывать контекстное меню."
-  },
-  "cookieBehavior": {
-    "message": "Поведение cookies"
-  },
-  "cookieStoreId": {
-    "message": "ID хранилища cookies"
-  },
-  "cookieStoreIdDescription": {
-    "message": "Использовать ID хранилища cookies."
-  },
-  "debugMode": {
-    "message": "Режим отладки"
-  },
-  "debugModeDescription": {
-    "message": "Включить режим отладки."
-  },
   "default": {
     "message": "По умолчанию"
   },
-  "deleteCookies": {
-    "message": "Удалить cookies"
-  },
-  "deleteCookiesDescription": {
-    "message": "Удалять cookies при выходе."
-  },
   "disableIsolation": {
     "message": "Отключить изоляцию"
-  },
-  "domainIsolation": {
-    "message": "Изоляция доменов"
   },
   "domainPatternExampleCom": {
     "message": "Шаблон домена (например *.example.com)"
@@ -79,9 +25,6 @@
   },
   "errorFailedToLoadActions": {
     "message": "Не удалось загрузить действия"
-  },
-  "errorFailedToLoadAdvancedContainer": {
-    "message": "Не удалось загрузить дополнительные настройки контейнера"
   },
   "errorFailedToLoadAdvancedCookies": {
     "message": "Не удалось загрузить дополнительные настройки cookies"
@@ -145,12 +88,6 @@
   },
   "initializingLabel": {
     "message": "Инициализация..."
-  },
-  "isolationPrevented": {
-    "message": "Изоляция предотвращена"
-  },
-  "neverIsolate": {
-    "message": "Никогда не изолировать"
   },
   "noDomainIsolationRulesConfigured": {
     "message": "Правила изоляции доменов не настроены."
@@ -319,9 +256,6 @@
   },
   "optionsNavStatistics": {
     "message": "Статистика"
-  },
-  "rejectTrackers": {
-    "message": "Отклонить трекеры"
   },
   "resetStatistics": {
     "message": "Сбросить статистику"
@@ -680,12 +614,6 @@
   "optionsAdvancedScriptsWarning": {
     "message": "Скрипты имеют полный доступ к веб-странице и могут читать конфиденциальные данные, изменять содержимое или выполнять действия от вашего имени. Добавляйте только скрипты из надежных источников."
   },
-  "optionsAdvancedScriptsPermissionsWarning": {
-    "message": "Эта функция требует дополнительных разрешений для доступа к активности браузера во время навигации."
-  },
-  "optionsAdvancedScriptsPermissionsAccept": {
-    "message": "Я понимаю и хочу включить внедрение скриптов"
-  },
   "optionsAdvancedScriptsDomainPattern": {
     "message": "Шаблон домена"
   },
@@ -706,18 +634,6 @@
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Выполнить в"
-  },
-  "optionsAdvancedScriptsRunAtStart": {
-    "message": "Начало документа"
-  },
-  "optionsAdvancedScriptsRunAtEnd": {
-    "message": "Конец документа"
-  },
-  "optionsAdvancedScriptsRunAtIdle": {
-    "message": "Документ готов"
-  },
-  "optionsAdvancedScriptsRunAtDescription": {
-    "message": "Когда выполнять скрипт во время загрузки страницы"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Добавить скрипт"

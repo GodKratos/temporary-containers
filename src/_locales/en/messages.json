@@ -29,35 +29,8 @@
   "addDomainAndPressEnter": {
     "message": "Add domain and press Enter"
   },
-  "addRule": {
-    "message": "Add Rule"
-  },
-  "allowAllCookies": {
-    "message": "Allow All Cookies"
-  },
-  "alwaysIsolate": {
-    "message": "Always Isolate"
-  },
-  "blockAllCookies": {
-    "message": "Block All Cookies"
-  },
-  "containerCleanup": {
-    "message": "Container Cleanup"
-  },
-  "containerCleanupDescription": {
-    "message": "Cleanup containers on exit."
-  },
-  "containerTimeout": {
-    "message": "Container Timeout"
-  },
-  "containerTimeoutDescription": {
-    "message": "Timeout for containers in seconds."
-  },
   "containersActive": {
     "message": "Containers Active"
-  },
-  "containersCreated": {
-    "message": "Containers Created"
   },
   "containersRemoved": {
     "message": "Containers Removed"
@@ -65,35 +38,8 @@
   "contextMenu": {
     "message": "Context Menu"
   },
-  "contextMenuDescription": {
-    "message": "Show context menu."
-  },
-  "cookieBehavior": {
-    "message": "Cookie Behavior"
-  },
-  "cookieStoreId": {
-    "message": "Cookie Store ID"
-  },
-  "cookieStoreIdDescription": {
-    "message": "Use cookie store ID."
-  },
-  "debugMode": {
-    "message": "Debug Mode"
-  },
-  "debugModeDescription": {
-    "message": "Enable debug mode."
-  },
   "default": {
     "message": "Default"
-  },
-  "deleteCookies": {
-    "message": "Delete Cookies"
-  },
-  "deleteCookiesDescription": {
-    "message": "Delete cookies on exit."
-  },
-  "domainIsolation": {
-    "message": "Domain Isolation"
   },
   "domainPatternExampleCom": {
     "message": "Domain pattern (e.g. *.example.com)"
@@ -115,12 +61,6 @@
   },
   "importSettingsDescription": {
     "message": "Import settings from a file."
-  },
-  "isolationPrevented": {
-    "message": "Isolation Prevented"
-  },
-  "neverIsolate": {
-    "message": "Never Isolate"
   },
   "noDomainIsolationRulesConfigured": {
     "message": "No domain isolation rules configured."
@@ -281,9 +221,6 @@
   "optionsNavStatistics": {
     "message": "Statistics"
   },
-  "rejectTrackers": {
-    "message": "Reject Trackers"
-  },
   "resetStatistics": {
     "message": "Reset Statistics"
   },
@@ -325,9 +262,6 @@
   },
   "errorFailedToLoadAdvancedCookies": {
     "message": "Failed to load Advanced: Cookies settings"
-  },
-  "errorFailedToLoadAdvancedContainer": {
-    "message": "Failed to load Advanced: Container settings"
   },
   "errorFailedToLoadActions": {
     "message": "Failed to load Actions"
@@ -680,12 +614,6 @@
   "optionsAdvancedScriptsWarning": {
     "message": "Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. Only add scripts from trusted sources."
   },
-  "optionsAdvancedScriptsPermissionsWarning": {
-    "message": "This feature requires additional permissions to access browser activity during navigation."
-  },
-  "optionsAdvancedScriptsPermissionsAccept": {
-    "message": "I understand and want to enable script injection"
-  },
   "optionsAdvancedScriptsDomainPattern": {
     "message": "Domain Pattern"
   },
@@ -706,18 +634,6 @@
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Execute At"
-  },
-  "optionsAdvancedScriptsRunAtStart": {
-    "message": "Document Start"
-  },
-  "optionsAdvancedScriptsRunAtEnd": {
-    "message": "Document End"
-  },
-  "optionsAdvancedScriptsRunAtIdle": {
-    "message": "Document Idle"
-  },
-  "optionsAdvancedScriptsRunAtDescription": {
-    "message": "When to execute the script during page load"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Add Script"

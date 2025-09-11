@@ -2,35 +2,8 @@
   "addDomainAndPressEnter": {
     "message": "Alan adı ekleyip Enter tuşuna basın"
   },
-  "addRule": {
-    "message": "Kural Ekle"
-  },
-  "allowAllCookies": {
-    "message": "Tüm çerezlere izin ver"
-  },
-  "alwaysIsolate": {
-    "message": "Her zaman izole et"
-  },
-  "blockAllCookies": {
-    "message": "Tüm çerezleri engelle"
-  },
-  "containerCleanup": {
-    "message": "Konteyner Temizliği"
-  },
-  "containerCleanupDescription": {
-    "message": "Çıkışta konteynerleri temizle."
-  },
-  "containerTimeout": {
-    "message": "Konteyner Zaman Aşımı"
-  },
-  "containerTimeoutDescription": {
-    "message": "Konteynerler için saniye cinsinden zaman aşımı."
-  },
   "containersActive": {
     "message": "Aktif Konteynerler"
-  },
-  "containersCreated": {
-    "message": "Oluşturulan Konteynerler"
   },
   "containersRemoved": {
     "message": "Kaldırılan Konteynerler"
@@ -38,38 +11,11 @@
   "contextMenu": {
     "message": "Bağlam Menüsü"
   },
-  "contextMenuDescription": {
-    "message": "Bağlam menüsünü göster."
-  },
-  "cookieBehavior": {
-    "message": "Çerez Davranışı"
-  },
-  "cookieStoreId": {
-    "message": "Çerez Deposu ID'si"
-  },
-  "cookieStoreIdDescription": {
-    "message": "Çerez deposu ID'sini kullan."
-  },
-  "debugMode": {
-    "message": "Hata Ayıklama Modu"
-  },
-  "debugModeDescription": {
-    "message": "Hata ayıklama modunu etkinleştir."
-  },
   "default": {
     "message": "Varsayılan"
   },
-  "deleteCookies": {
-    "message": "Çerezleri Sil"
-  },
-  "deleteCookiesDescription": {
-    "message": "Çıkışta çerezleri sil."
-  },
   "disableIsolation": {
     "message": "İzolasyonu Devre Dışı Bırak"
-  },
-  "domainIsolation": {
-    "message": "Alan Adı İzolasyonu"
   },
   "domainPatternExampleCom": {
     "message": "Alan adı deseni (örn. *.example.com)"
@@ -79,9 +25,6 @@
   },
   "errorFailedToLoadActions": {
     "message": "Eylemler yüklenemedi"
-  },
-  "errorFailedToLoadAdvancedContainer": {
-    "message": "Gelişmiş Konteyner ayarları yüklenemedi"
   },
   "errorFailedToLoadAdvancedCookies": {
     "message": "Gelişmiş Çerez ayarları yüklenemedi"
@@ -145,12 +88,6 @@
   },
   "initializingLabel": {
     "message": "Başlatılıyor..."
-  },
-  "isolationPrevented": {
-    "message": "İzolasyon Engellendi"
-  },
-  "neverIsolate": {
-    "message": "Asla izole etme"
   },
   "noDomainIsolationRulesConfigured": {
     "message": "Alan adı izolasyon kuralları yapılandırılmamış."
@@ -319,9 +256,6 @@
   },
   "optionsNavStatistics": {
     "message": "İstatistikler"
-  },
-  "rejectTrackers": {
-    "message": "İzleyicileri Reddet"
   },
   "resetStatistics": {
     "message": "İstatistikleri Sıfırla"
@@ -680,12 +614,6 @@
   "optionsAdvancedScriptsWarning": {
     "message": "Betikler web sayfasına tam erişime sahiptir ve hassas verileri okuyabilir, içeriği değiştirebilir veya sizin adınıza eylemler gerçekleştirebilir. Yalnızca güvenilir kaynaklardan betikler ekleyin."
   },
-  "optionsAdvancedScriptsPermissionsWarning": {
-    "message": "Bu özellik, gezinme sırasında tarayıcı etkinliğine erişim için ek izinler gerektirir."
-  },
-  "optionsAdvancedScriptsPermissionsAccept": {
-    "message": "Anlıyorum ve betik enjeksiyonunu etkinleştirmek istiyorum"
-  },
   "optionsAdvancedScriptsDomainPattern": {
     "message": "Alan Adı Deseni"
   },
@@ -706,18 +634,6 @@
   },
   "optionsAdvancedScriptsRunAt": {
     "message": "Çalıştırma Zamanı"
-  },
-  "optionsAdvancedScriptsRunAtStart": {
-    "message": "Belge Başlangıcı"
-  },
-  "optionsAdvancedScriptsRunAtEnd": {
-    "message": "Belge Sonu"
-  },
-  "optionsAdvancedScriptsRunAtIdle": {
-    "message": "Belge Boşta"
-  },
-  "optionsAdvancedScriptsRunAtDescription": {
-    "message": "Sayfa yükleme sırasında betiğin ne zaman çalıştırılacağı"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Betik Ekle"
