@@ -496,5 +496,80 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Failed to reset settings. Please try again."
+  },
+  "optionsAdvancedCookiesTitle": {
+    "message": "Configure cookies to be set on certain domains in Temporary Containers"
+  },
+  "optionsAdvancedCookiesWarning": {
+    "message": "Setting cookies can make you easier fingerprintable. Especially when they contain user/session-specific data. Avoid setting cookies if you can."
+  },
+  "optionsAdvancedCookiesInfoMessage": {
+    "message": "This will call cookies.set and add the cookie to the header (if allowed) during webRequest.onBeforeSendHeaders if the request belongs to a Temporary Container and the domain matches the given pattern."
+  },
+  "optionsAdvancedCookiesDomainPattern": {
+    "message": "Domain Pattern (e.g., *.example.com)"
+  },
+  "optionsAdvancedCookiesName": {
+    "message": "Name"
+  },
+  "optionsAdvancedCookiesValue": {
+    "message": "Value"
+  },
+  "optionsAdvancedCookiesDomain": {
+    "message": "Domain"
+  },
+  "optionsAdvancedCookiesUrl": {
+    "message": "URL"
+  },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Advanced Options"
+  },
+  "optionsAdvancedCookiesExpirationDate": {
+    "message": "Expiration Date"
+  },
+  "optionsAdvancedCookiesFirstPartyDomain": {
+    "message": "First Party Domain"
+  },
+  "optionsAdvancedCookiesHttpOnly": {
+    "message": "HTTP Only"
+  },
+  "optionsAdvancedCookiesPath": {
+    "message": "Path"
+  },
+  "optionsAdvancedCookiesSameSite": {
+    "message": "Same Site"
+  },
+  "optionsAdvancedCookiesSecure": {
+    "message": "Secure"
+  },
+  "optionsAdvancedCookiesNotSet": {
+    "message": "Not set"
+  },
+  "optionsAdvancedCookiesAddCookie": {
+    "message": "Add Cookie"
+  },
+  "optionsAdvancedCookiesSaveCookie": {
+    "message": "Save Cookie"
+  },
+  "optionsAdvancedCookiesCancel": {
+    "message": "Cancel"
+  },
+  "optionsAdvancedCookiesConfiguredCookies": {
+    "message": "Configured Cookies"
+  },
+  "optionsAdvancedCookiesNoCookies": {
+    "message": "No cookies configured"
+  },
+  "optionsAdvancedCookiesEdit": {
+    "message": "Edit"
+  },
+  "optionsAdvancedCookiesRemove": {
+    "message": "Remove"
+  },
+  "optionsAdvancedCookiesRemoveConfirm": {
+    "message": "Remove this cookie configuration?"
+  },
+  "optionsAdvancedCookiesValidationError": {
+    "message": "Domain pattern, name, and URL are required"
   }
 }

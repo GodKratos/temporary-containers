@@ -409,5 +409,80 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Ayarları sıfırlama başarısız. Lütfen tekrar deneyin."
+  },
+  "optionsAdvancedCookiesTitle": {
+    "message": "Geçici Konteynerlerde belirli alan adları için çerez ayarlarını yapılandır"
+  },
+  "optionsAdvancedCookiesWarning": {
+    "message": "Çerez ayarlamak sizi daha kolay parmak izine alınabilir hale getirebilir. Özellikle kullanıcı/oturum özel verileri içeriyorlarsa. Mümkünse çerez ayarlamaktan kaçının."
+  },
+  "optionsAdvancedCookiesInfoMessage": {
+    "message": "Bu cookies.set çağırır ve istek bir Geçici Konteynere aitse ve alan adı verilen desenle eşleşirse webRequest.onBeforeSendHeaders sırasında çerezi başlığa ekler (izin verilirse)."
+  },
+  "optionsAdvancedCookiesDomainPattern": {
+    "message": "Alan Adı Deseni (örn. *.example.com)"
+  },
+  "optionsAdvancedCookiesName": {
+    "message": "Ad"
+  },
+  "optionsAdvancedCookiesValue": {
+    "message": "Değer"
+  },
+  "optionsAdvancedCookiesDomain": {
+    "message": "Alan Adı"
+  },
+  "optionsAdvancedCookiesUrl": {
+    "message": "URL"
+  },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Gelişmiş Seçenekler"
+  },
+  "optionsAdvancedCookiesExpirationDate": {
+    "message": "Son Kullanma Tarihi"
+  },
+  "optionsAdvancedCookiesFirstPartyDomain": {
+    "message": "Birinci Taraf Alan Adı"
+  },
+  "optionsAdvancedCookiesHttpOnly": {
+    "message": "Yalnızca HTTP"
+  },
+  "optionsAdvancedCookiesPath": {
+    "message": "Yol"
+  },
+  "optionsAdvancedCookiesSameSite": {
+    "message": "Aynı Site"
+  },
+  "optionsAdvancedCookiesSecure": {
+    "message": "Güvenli"
+  },
+  "optionsAdvancedCookiesNotSet": {
+    "message": "Ayarlanmamış"
+  },
+  "optionsAdvancedCookiesAddCookie": {
+    "message": "Çerez Ekle"
+  },
+  "optionsAdvancedCookiesSaveCookie": {
+    "message": "Çerez Kaydet"
+  },
+  "optionsAdvancedCookiesCancel": {
+    "message": "İptal"
+  },
+  "optionsAdvancedCookiesConfiguredCookies": {
+    "message": "Yapılandırılmış Çerezler"
+  },
+  "optionsAdvancedCookiesNoCookies": {
+    "message": "Çerez yapılandırılmamış"
+  },
+  "optionsAdvancedCookiesEdit": {
+    "message": "Düzenle"
+  },
+  "optionsAdvancedCookiesRemove": {
+    "message": "Kaldır"
+  },
+  "optionsAdvancedCookiesRemoveConfirm": {
+    "message": "Bu çerez yapılandırmasını kaldır?"
+  },
+  "optionsAdvancedCookiesValidationError": {
+    "message": "Alan adı deseni, ad ve URL gereklidir"
   }
 }

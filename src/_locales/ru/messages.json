@@ -409,5 +409,80 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Не удалось сбросить настройки. Попробуйте еще раз."
+  },
+  "optionsAdvancedCookiesTitle": {
+    "message": "Настройка cookies для установки на определённых доменах во Временных контейнерах"
+  },
+  "optionsAdvancedCookiesWarning": {
+    "message": "Установка cookies может сделать вас более узнаваемыми. Особенно если они содержат пользовательские/сессионные данные. Избегайте установки cookies, если возможно."
+  },
+  "optionsAdvancedCookiesInfoMessage": {
+    "message": "Это вызовет cookies.set и добавит cookie в заголовок (если разрешено) во время webRequest.onBeforeSendHeaders, если запрос принадлежит Временному контейнеру и домен соответствует заданному шаблону."
+  },
+  "optionsAdvancedCookiesDomainPattern": {
+    "message": "Шаблон домена (например, *.example.com)"
+  },
+  "optionsAdvancedCookiesName": {
+    "message": "Название"
+  },
+  "optionsAdvancedCookiesValue": {
+    "message": "Значение"
+  },
+  "optionsAdvancedCookiesDomain": {
+    "message": "Домен"
+  },
+  "optionsAdvancedCookiesUrl": {
+    "message": "URL"
+  },
+  "optionsAdvancedCookiesAdvancedOptions": {
+    "message": "Расширенные опции"
+  },
+  "optionsAdvancedCookiesExpirationDate": {
+    "message": "Дата истечения"
+  },
+  "optionsAdvancedCookiesFirstPartyDomain": {
+    "message": "Основной домен"
+  },
+  "optionsAdvancedCookiesHttpOnly": {
+    "message": "Только HTTP"
+  },
+  "optionsAdvancedCookiesPath": {
+    "message": "Путь"
+  },
+  "optionsAdvancedCookiesSameSite": {
+    "message": "Same Site"
+  },
+  "optionsAdvancedCookiesSecure": {
+    "message": "Безопасный"
+  },
+  "optionsAdvancedCookiesNotSet": {
+    "message": "Не задано"
+  },
+  "optionsAdvancedCookiesAddCookie": {
+    "message": "Добавить Cookie"
+  },
+  "optionsAdvancedCookiesSaveCookie": {
+    "message": "Сохранить Cookie"
+  },
+  "optionsAdvancedCookiesCancel": {
+    "message": "Отмена"
+  },
+  "optionsAdvancedCookiesConfiguredCookies": {
+    "message": "Настроенные Cookies"
+  },
+  "optionsAdvancedCookiesNoCookies": {
+    "message": "Cookies не настроены"
+  },
+  "optionsAdvancedCookiesEdit": {
+    "message": "Изменить"
+  },
+  "optionsAdvancedCookiesRemove": {
+    "message": "Удалить"
+  },
+  "optionsAdvancedCookiesRemoveConfirm": {
+    "message": "Удалить эту настройку cookie?"
+  },
+  "optionsAdvancedCookiesValidationError": {
+    "message": "Шаблон домена, название и URL обязательны"
   }
 }
