@@ -56,108 +56,100 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         <div id="domainSettings" class="domain-settings" ${editState.domain.pattern ? '' : 'style="opacity: 0.3; pointer-events: none;"'}>
           
           <!-- Always Open In Settings -->
-          <details class="collapsible-section">
-            <summary data-i18n="optionsIsolationPerDomainAlwaysOpenIn">Always Open In</summary>
-            <div class="collapsible-content">
-              <div class="field">
-                <label for="alwaysAction">Action</label>
-                <select id="alwaysAction">
-                  <option value="disabled" ${editState.domain.always.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
-                  <option value="enabled" ${editState.domain.always.action === 'enabled' ? 'selected' : ''} data-i18n="optionsIsolationEnabled">Enabled</option>
-                </select>
+          <div class="section">
+            <h4 data-i18n="optionsIsolationPerDomainAlwaysOpenIn">Always Open In</h4>
+            <div class="field">
+              <label for="alwaysAction">Action</label>
+              <select id="alwaysAction">
+                <option value="disabled" ${editState.domain.always.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
+                <option value="enabled" ${editState.domain.always.action === 'enabled' ? 'selected' : ''} data-i18n="optionsIsolationEnabled">Enabled</option>
+              </select>
+            </div>
+            <div id="alwaysOptions" ${editState.domain.always.action === 'enabled' ? '' : 'style="display: none;"'}>
+              <div class="field checkbox-field">
+                <input type="checkbox" id="allowedInPermanent" ${editState.domain.always.allowedInPermanent ? 'checked' : ''} />
+                <label for="allowedInPermanent" data-i18n="optionsIsolationPerDomainDisableIfNavPermContainer">Disable if navigating from a Permanent Container</label>
               </div>
-              <div id="alwaysOptions" ${editState.domain.always.action === 'enabled' ? '' : 'style="display: none;"'}>
-                <div class="field checkbox-field">
-                  <input type="checkbox" id="allowedInPermanent" ${editState.domain.always.allowedInPermanent ? 'checked' : ''} />
-                  <label for="allowedInPermanent" data-i18n="optionsIsolationPerDomainDisableIfNavPermContainer">Disable if navigating from a Permanent Container</label>
-                </div>
-                <div class="field checkbox-field">
-                  <input type="checkbox" id="allowedInTemporary" ${editState.domain.always.allowedInTemporary ? 'checked' : ''} />
-                  <label for="allowedInTemporary" data-i18n="optionsIsolationPerDomainDisableIfNavTempContainer">Disable if navigating from a Temporary Container</label>
-                </div>
+              <div class="field checkbox-field">
+                <input type="checkbox" id="allowedInTemporary" ${editState.domain.always.allowedInTemporary ? 'checked' : ''} />
+                <label for="allowedInTemporary" data-i18n="optionsIsolationPerDomainDisableIfNavTempContainer">Disable if navigating from a Temporary Container</label>
               </div>
             </div>
-          </details>
+          </div>
 
           <!-- Navigation Settings -->
-          <details class="collapsible-section">
-            <summary data-i18n="optionsIsolationNavigation">URL Navigation</summary>
-            <div class="collapsible-content">
-              <div class="field">
-                <label for="navigationAction" data-i18n="optionsIsolationNavigationAction">Navigation Action</label>
-                <select id="navigationAction">
-                  <option value="global" ${editState.domain.navigation.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
-                  <option value="never" ${editState.domain.navigation.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
-                  <option value="notsamedomainexact" ${editState.domain.navigation.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
-                  <option value="notsamedomain" ${editState.domain.navigation.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-                  <option value="always" ${editState.domain.navigation.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
-                </select>
-              </div>
+          <div class="section">
+            <h4 data-i18n="optionsIsolationNavigation">URL Navigation</h4>
+            <div class="field">
+              <label for="navigationAction" data-i18n="optionsIsolationNavigationAction">Navigation Action</label>
+              <select id="navigationAction">
+                <option value="global" ${editState.domain.navigation.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
+                <option value="never" ${editState.domain.navigation.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" ${editState.domain.navigation.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
+                <option value="notsamedomain" ${editState.domain.navigation.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" ${editState.domain.navigation.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
             </div>
-          </details>
+          </div>
 
           <!-- Mouse Click Settings -->
-          <details class="collapsible-section">
-            <summary data-i18n="optionsIsolationMouseClick">Mouse Click Navigation</summary>
-            <div class="collapsible-content">
-              <div class="field">
-                <label for="middleClickAction" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
-                <select id="middleClickAction">
-                  <option value="global" ${editState.domain.mouseClick.middle.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
-                  <option value="never" ${editState.domain.mouseClick.middle.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
-                  <option value="notsamedomainexact" ${editState.domain.mouseClick.middle.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
-                  <option value="notsamedomain" ${editState.domain.mouseClick.middle.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-                  <option value="always" ${editState.domain.mouseClick.middle.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="ctrlLeftClickAction" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
-                <select id="ctrlLeftClickAction">
-                  <option value="global" ${editState.domain.mouseClick.ctrlleft.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
-                  <option value="never" ${editState.domain.mouseClick.ctrlleft.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
-                  <option value="notsamedomainexact" ${editState.domain.mouseClick.ctrlleft.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
-                  <option value="notsamedomain" ${editState.domain.mouseClick.ctrlleft.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-                  <option value="always" ${editState.domain.mouseClick.ctrlleft.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="leftClickAction" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
-                <select id="leftClickAction">
-                  <option value="global" ${editState.domain.mouseClick.left.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
-                  <option value="never" ${editState.domain.mouseClick.left.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
-                  <option value="notsamedomainexact" ${editState.domain.mouseClick.left.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
-                  <option value="notsamedomain" ${editState.domain.mouseClick.left.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-                  <option value="always" ${editState.domain.mouseClick.left.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
-                </select>
-              </div>
+          <div class="section">
+            <h4 data-i18n="optionsIsolationMouseClick">Mouse Click Navigation</h4>
+            <div class="field">
+              <label for="middleClickAction" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
+              <select id="middleClickAction">
+                <option value="global" ${editState.domain.mouseClick.middle.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
+                <option value="never" ${editState.domain.mouseClick.middle.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" ${editState.domain.mouseClick.middle.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
+                <option value="notsamedomain" ${editState.domain.mouseClick.middle.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" ${editState.domain.mouseClick.middle.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
             </div>
-          </details>
+            <div class="field">
+              <label for="ctrlLeftClickAction" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
+              <select id="ctrlLeftClickAction">
+                <option value="global" ${editState.domain.mouseClick.ctrlleft.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
+                <option value="never" ${editState.domain.mouseClick.ctrlleft.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" ${editState.domain.mouseClick.ctrlleft.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
+                <option value="notsamedomain" ${editState.domain.mouseClick.ctrlleft.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" ${editState.domain.mouseClick.ctrlleft.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="leftClickAction" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
+              <select id="leftClickAction">
+                <option value="global" ${editState.domain.mouseClick.left.action === 'global' ? 'selected' : ''} data-i18n="useGlobalSetting">Use Global Setting</option>
+                <option value="never" ${editState.domain.mouseClick.left.action === 'never' ? 'selected' : ''} data-i18n="optionsIsolationNever">Never Isolate</option>
+                <option value="notsamedomainexact" ${editState.domain.mouseClick.left.action === 'notsamedomainexact' ? 'selected' : ''} data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly</option>
+                <option value="notsamedomain" ${editState.domain.mouseClick.left.action === 'notsamedomain' ? 'selected' : ''} data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+                <option value="always" ${editState.domain.mouseClick.left.action === 'always' ? 'selected' : ''} data-i18n="optionsIsolationAlways">Always Isolate</option>
+              </select>
+            </div>
+          </div>
 
           <!-- Excluded Domains -->
-          <details class="collapsible-section">
-            <summary data-i18n="optionsIsolationExcludeTargetDomains">Exclude Target Domains</summary>
-            <div class="collapsible-content">
-              <div class="field">
-                <label for="excludeDomainInput" data-i18n="optionsIsolationAddExcludedDomain">Add Excluded Domain</label>
-                <div class="input-group">
-                  <input type="text" id="excludeDomainInput" placeholder="subdomain.example.com" data-i18n-placeholder="optionsIsolationPerDomainExcludedDomainPlaceholder" />
-                  <button type="button" id="addExcludedDomain" class="button-default" data-i18n="add">Add</button>
-                </div>
-                <div class="field-description" data-i18n="optionsIsolationExcludeDomainsDescription">Domains that should not trigger isolation for this rule.</div>
+          <div class="section">
+            <h4 data-i18n="optionsIsolationExcludeTargetDomains">Exclude Target Domains</h4>
+            <div class="field">
+              <label for="excludeDomainInput" data-i18n="optionsIsolationAddExcludedDomain">Add Excluded Domain</label>
+              <div class="input-group">
+                <input type="text" id="excludeDomainInput" placeholder="subdomain.example.com" data-i18n-placeholder="optionsIsolationPerDomainExcludedDomainPlaceholder" />
+                <button type="button" id="addExcludedDomain" class="button-default" data-i18n="add">Add</button>
               </div>
-              <div id="excludedDomainsList" class="excluded-domains-list">
-                ${editState.domain.excluded.length === 0 ? 
-                  '<p data-i18n="optionsIsolationNoExcludedDomains">No domains excluded.</p>' : 
-                  editState.domain.excluded.map(excludedDomain => 
-                    `<div class="excluded-domain-item">
-                      <span>${excludedDomain}</span>
-                      <button type="button" class="button-small button-danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
-                    </div>`
-                  ).join('')
-                }
-              </div>
+              <div class="field-description" data-i18n="optionsIsolationExcludeDomainsDescription">Domains that should not trigger isolation for this rule.</div>
             </div>
-          </details>
+            <div id="excludedDomainsList" class="excluded-domains-list">
+              ${editState.domain.excluded.length === 0 ? 
+                '<p data-i18n="optionsIsolationNoExcludedDomains">No domains excluded.</p>' : 
+                editState.domain.excluded.map(excludedDomain => 
+                  `<div class="excluded-domain-item">
+                    <span>${excludedDomain}</span>
+                    <button type="button" class="button-small button-danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
+                  </div>`
+                ).join('')
+              }
+            </div>
+          </div>
         </div>
 
         <div class="form-actions">

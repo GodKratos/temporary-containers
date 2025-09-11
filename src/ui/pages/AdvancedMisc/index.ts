@@ -15,114 +15,99 @@ export async function initAdvancedMiscPage(): Promise<void> {
     
     content.innerHTML = `
       <!-- Context Menu -->
-      <details class="collapsible-section">
-        <summary data-i18n="contextMenu">Context Menu</summary>
-        <div class="collapsible-content">
-          <div class="field checkbox-field">
-            <input type="checkbox" id="contextMenu" ${preferences.contextMenu ? 'checked' : ''} />
-            <label for="contextMenu" data-i18n="optionsAdvancedMiscContextMenuLinks">Show Temporary Container entry in the right click on links context menu</label>
-          </div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="contextMenuBookmarks" ${preferences.contextMenuBookmarks ? 'checked' : ''} />
-            <label for="contextMenuBookmarks" data-i18n="optionsAdvancedMiscContextMenuBookmarks">Show Temporary Container entry in the right click on bookmarks context menu</label>
-          </div>
+      <div class="section">
+        <h3 data-i18n="contextMenu">Context Menu</h3>
+        <div class="field checkbox-field">
+          <input type="checkbox" id="contextMenu" ${preferences.contextMenu ? 'checked' : ''} />
+          <label for="contextMenu" data-i18n="optionsAdvancedMiscContextMenuLinks">Show Temporary Container entry in the right click on links context menu</label>
         </div>
-      </details>
+        <div class="field checkbox-field">
+          <input type="checkbox" id="contextMenuBookmarks" ${preferences.contextMenuBookmarks ? 'checked' : ''} />
+          <label for="contextMenuBookmarks" data-i18n="optionsAdvancedMiscContextMenuBookmarks">Show Temporary Container entry in the right click on bookmarks context menu</label>
+        </div>
+      </div>
 
       <!-- Isolation Settings -->
-      <details class="collapsible-section">
-        <summary data-i18n="optionsAdvancedMiscIsolation">Isolation</summary>
-        <div class="collapsible-content">
-          <div class="field checkbox-field">
-            <input type="checkbox" id="replaceTabs" ${preferences.replaceTabs ? 'checked' : ''} />
-            <label for="replaceTabs" data-i18n="optionsAdvancedMiscReplaceTabs">Instead of creating a new tab replace the current tab in case of Isolation</label>
-          </div>
-          
-          <div class="field checkbox-field">
-            <input type="checkbox" id="closeRedirectorTabs" ${preferences.closeRedirectorTabs?.active ? 'checked' : ''} />
-            <label for="closeRedirectorTabs" data-i18n="optionsAdvancedMiscCloseRedirectorTabs">Automatically close leftover redirector tabs after 2 seconds</label>
-            <div class="field-description" data-i18n="optionsAdvancedMiscCloseRedirectorTabsDescription">Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)</div>
-          </div>
-          
-          <div class="field">
-            <label for="reactivateDelay" data-i18n="optionsAdvancedMiscReactivateDelay">Automatically re-enable Isolation after n seconds (0 = disabled)</label>
-            <input type="number" id="reactivateDelay" min="0" value="${preferences.isolation?.reactivateDelay || 0}" />
-          </div>
-          
-          <div class="field">
-            <label for="isolationMac" data-i18n="optionsAdvancedMiscIsolationMac">Multi-Account Containers</label>
-            <select id="isolationMac">
-              <option value="disabled" ${preferences.isolation?.mac?.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
-              <option value="enabled" ${preferences.isolation?.mac?.action === 'enabled' ? 'selected' : ''} data-i18n="optionsAdvancedMiscIsolationMacEnabled">Isolate Non-MAC</option>
-            </select>
-          </div>
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscIsolation">Isolation</h3>
+        <div class="field checkbox-field">
+          <input type="checkbox" id="replaceTabs" ${preferences.replaceTabs ? 'checked' : ''} />
+          <label for="replaceTabs" data-i18n="optionsAdvancedMiscReplaceTabs">Instead of creating a new tab replace the current tab in case of Isolation</label>
         </div>
-      </details>
+        
+        <div class="field checkbox-field">
+          <input type="checkbox" id="closeRedirectorTabs" ${preferences.closeRedirectorTabs?.active ? 'checked' : ''} />
+          <label for="closeRedirectorTabs" data-i18n="optionsAdvancedMiscCloseRedirectorTabs">Automatically close leftover redirector tabs after 2 seconds</label>
+          <div class="field-description" data-i18n="optionsAdvancedMiscCloseRedirectorTabsDescription">Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)</div>
+        </div>
+        
+        <div class="field">
+          <label for="reactivateDelay" data-i18n="optionsAdvancedMiscReactivateDelay">Automatically re-enable Isolation after n seconds (0 = disabled)</label>
+          <input type="number" id="reactivateDelay" min="0" value="${preferences.isolation?.reactivateDelay || 0}" />
+        </div>
+        
+        <div class="field">
+          <label for="isolationMac" data-i18n="optionsAdvancedMiscIsolationMac">Multi-Account Containers</label>
+          <select id="isolationMac">
+            <option value="disabled" ${preferences.isolation?.mac?.action === 'disabled' ? 'selected' : ''} data-i18n="optionsIsolationDisabled">Disabled</option>
+            <option value="enabled" ${preferences.isolation?.mac?.action === 'enabled' ? 'selected' : ''} data-i18n="optionsAdvancedMiscIsolationMacEnabled">Isolate Non-MAC</option>
+          </select>
+        </div>
+      </div>
 
       <!-- Ignoring Requests -->
-      <details class="collapsible-section">
-        <summary data-i18n="optionsAdvancedMiscIgnoringRequests">Ignoring Requests</summary>
-        <div class="collapsible-content">
-          <div class="field-description" data-i18n="optionsAdvancedMiscIgnoringRequestsDescription">Domains on the about:config extensions.webextensions.restrictedDomains list can't be unignored. You should never change that list.</div>
-          
-          <div class="field">
-            <label for="ignoreRequestsInput" data-i18n="optionsAdvancedMiscAddIgnoredDomain">Add Ignored Domain</label>
-            <div class="input-group">
-              <input type="text" id="ignoreRequestsInput" placeholder="example.com" data-i18n-placeholder="domainPatternExampleCom" />
-              <button type="button" id="addIgnoredDomain" class="button-default" data-i18n="add">Add</button>
-            </div>
-          </div>
-          
-          <div id="ignoredDomainsList" class="ignored-domains-list">
-            ${preferences.ignoreRequests?.length === 0 ? 
-              '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>' : 
-              (preferences.ignoreRequests || []).map(ignoredDomain => 
-                `<div class="ignored-domain-item">
-                  <span>${ignoredDomain}</span>
-                  <button type="button" class="button-small button-danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="remove">Remove</button>
-                </div>`
-              ).join('')
-            }
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscIgnoringRequests">Ignoring Requests</h3>
+        <div class="field-description" data-i18n="optionsAdvancedMiscIgnoringRequestsDescription">Domains on the about:config extensions.webextensions.restrictedDomains list can't be unignored. You should never change that list.</div>
+        
+        <div class="field">
+          <label for="ignoreRequestsInput" data-i18n="optionsAdvancedMiscAddIgnoredDomain">Add Ignored Domain</label>
+          <div class="input-group">
+            <input type="text" id="ignoreRequestsInput" placeholder="example.com" data-i18n-placeholder="domainPatternExampleCom" />
+            <button type="button" id="addIgnoredDomain" class="button-default" data-i18n="add">Add</button>
           </div>
         </div>
-      </details>
+        
+        <div id="ignoredDomainsList" class="ignored-domains-list">
+          ${preferences.ignoreRequests?.length === 0 ? 
+            '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>' : 
+            (preferences.ignoreRequests || []).map(ignoredDomain => 
+              `<div class="ignored-domain-item">
+                <span>${ignoredDomain}</span>
+                <button type="button" class="button-small button-danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="remove">Remove</button>
+              </div>`
+            ).join('')
+          }
+        </div>
+      </div>
 
       <!-- UI Settings -->
-      <details class="collapsible-section">
-        <summary data-i18n="optionsAdvancedMiscUI">User Interface</summary>
-        <div class="collapsible-content">
-          <div class="field checkbox-field">
-            <input type="checkbox" id="expandPreferences" ${preferences.ui?.expandPreferences ? 'checked' : ''} />
-            <label for="expandPreferences" data-i18n="optionsAdvancedMiscExpandPreferences">Expand all preferences by default</label>
-          </div>
-          
-          <div class="field checkbox-field">
-            <input type="checkbox" id="pageAction" ${preferences.pageAction ? 'checked' : ''} />
-            <label for="pageAction" data-i18n="optionsAdvancedMiscPageAction">Show icon in the address bar that reveals the popup</label>
-          </div>
-          
-          <div class="field">
-            <label for="popupDefaultTab" data-i18n="optionsAdvancedMiscPopupDefaultTab">Default Popup Tab</label>
-            <select id="popupDefaultTab">
-              <option value="isolation-global" ${preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''} data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>
-              <option value="isolation-per-domain" ${preferences.ui?.popupDefaultTab === 'isolation-per-domain' ? 'selected' : ''} data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</option>
-              <option value="actions" ${preferences.ui?.popupDefaultTab === 'actions' ? 'selected' : ''} data-i18n="optionsNavActions">Actions</option>
-              <option value="statistics" ${preferences.ui?.popupDefaultTab === 'statistics' ? 'selected' : ''} data-i18n="optionsNavStatistics">Statistics</option>
-            </select>
-          </div>
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscUI">User Interface</h3>
+        <div class="field checkbox-field">
+          <input type="checkbox" id="pageAction" ${preferences.pageAction ? 'checked' : ''} />
+          <label for="pageAction" data-i18n="optionsAdvancedMiscPageAction">Show icon in the address bar that reveals the popup</label>
         </div>
-      </details>
+        
+        <div class="field">
+          <label for="popupDefaultTab" data-i18n="optionsAdvancedMiscPopupDefaultTab">Default Popup Tab</label>
+          <select id="popupDefaultTab">
+            <option value="isolation-global" ${preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''} data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>
+            <option value="isolation-per-domain" ${preferences.ui?.popupDefaultTab === 'isolation-per-domain' ? 'selected' : ''} data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</option>
+            <option value="actions" ${preferences.ui?.popupDefaultTab === 'actions' ? 'selected' : ''} data-i18n="optionsNavActions">Actions</option>
+            <option value="statistics" ${preferences.ui?.popupDefaultTab === 'statistics' ? 'selected' : ''} data-i18n="optionsNavStatistics">Statistics</option>
+          </select>
+        </div>
+      </div>
 
       <!-- Reset Storage -->
-      <details class="collapsible-section">
-        <summary data-i18n="optionsAdvancedMiscResetStorage">Reset Storage</summary>
-        <div class="collapsible-content">
-          <div class="field">
-            <button type="button" id="resetStorage" class="button-danger" data-i18n="optionsAdvancedMiscResetStorageButton">Wipe local storage and reset it to default</button>
-            <div class="field-description" data-i18n="optionsAdvancedMiscResetStorageDescription">This action cannot be undone. All settings will be lost.</div>
-          </div>
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscResetStorage">Reset Storage</h3>
+        <div class="field">
+          <button type="button" id="resetStorage" class="button-danger" data-i18n="optionsAdvancedMiscResetStorageButton">Wipe local storage and reset it to default</button>
+          <div class="field-description" data-i18n="optionsAdvancedMiscResetStorageDescription">This action cannot be undone. All settings will be lost.</div>
         </div>
-      </details>
+      </div>
     `;
     
     if (!section.firstChild) section.appendChild(content);
@@ -194,16 +179,8 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   });
 
   // UI settings
-  const expandPreferencesCheckbox = content.querySelector('#expandPreferences') as HTMLInputElement;
   const pageActionCheckbox = content.querySelector('#pageAction') as HTMLInputElement;
   const popupDefaultTabSelect = content.querySelector('#popupDefaultTab') as HTMLSelectElement;
-  
-  expandPreferencesCheckbox?.addEventListener('change', async () => {
-    if (!preferences.ui) preferences.ui = {} as any;
-    preferences.ui.expandPreferences = expandPreferencesCheckbox.checked;
-    await savePreferences(preferences);
-    showSuccess(browser.i18n.getMessage('savedMessage'));
-  });
   
   pageActionCheckbox?.addEventListener('change', async () => {
     preferences.pageAction = pageActionCheckbox.checked;

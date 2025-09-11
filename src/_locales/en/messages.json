@@ -461,9 +461,6 @@
   "optionsAdvancedMiscUI": {
     "message": "User Interface"
   },
-  "optionsAdvancedMiscExpandPreferences": {
-    "message": "Expand all preferences by default"
-  },
   "optionsAdvancedMiscPageAction": {
     "message": "Show icon in the address bar that reveals the popup"
   },
