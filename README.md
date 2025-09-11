@@ -8,10 +8,26 @@ Detailed information about the Add-on [can be found in the wiki](https://github.
 
 ## Development
 
-### Requirements
+### Setup Development Environment
 
-- Clone the repository
-- `npm install --legacy-peer-deps`
+After cloning the repository:
+
+1. Install dependencies: `npm install --legacy-peer-deps`
+2. Install git hooks: `npm run prepare` (runs automatically after install)
+3. Build the project: `npm run build`
+4. Run in Firefox: `npm run dev:test`
+
+### Run in Firefox
+
+- `npm run dev:test`
+  - builds the dist directory by running `npm run build`
+  - then runs `npx web-ext run -s dist` which starts the default system Firefox with a temporary profile, loads the Add-on and watches for changes
+  - run `npx web-ext run -s dist` with `-p profilename` appended to start Firefox with a specific profile
+
+or
+
+- Open `about:debugging` and `Load Temporary Add-on` which is located in the `dist` directory
+- Check `about:debugging` and click `Inspect` to the right of Temporary Containers to see the console.
 
 ### Available Scripts
 
@@ -41,29 +57,14 @@ Detailed information about the Add-on [can be found in the wiki](https://github.
 - `npm run webext:build` - Build extension package
 - `npm run webext:lint` - Lint extension using web-ext
 
-### Run in Firefox
-
-- `npm run dev:test`
-  - builds the dist directory by running `npm run build`
-  - then runs `npx web-ext run -s dist` which starts the default system Firefox with a temporary profile, loads the Add-on and watches for changes
-  - run `npx web-ext run -s dist` with `-p profilename` appended to start Firefox with a specific profile
-
-or
-
-- Open `about:debugging` and `Load Temporary Add-on` which is located in the `dist` directory
-
-Check `about:debugging` and click `Inspect` to the right of Temporary Containers to see the console.
-
 ### Git Hooks and Pre-commit Process
 
 The project uses Husky for Git hooks with the following automated checks:
 
 #### Pre-commit Hook
 
-- Runs `lint-staged` which automatically:
-  - Runs ESLint with auto-fix on `.ts` and `.js` files
-  - Runs Prettier formatting on `.ts`, `.js`, `.html`, `.css`, `.json`, `.yml`, and `.md` files
-  - Only processes staged files for better performance
+- Runs ESLint with auto-fix on `.ts` and `.js` files
+- Runs Prettier formatting on `.ts`, `.js`, `.html`, `.css`, `.json`, `.yml`, and `.md` files
 
 #### Pre-push Hook
 
@@ -73,16 +74,19 @@ The project uses Husky for Git hooks with the following automated checks:
 
 #### Commit Message Hook
 
-- Validates commit messages using commitlint with conventional commit format
-
-### Setup Development Environment
-
-After cloning the repository:
-
-1. Install dependencies: `npm install --legacy-peer-deps`
-2. Install git hooks: `npm run prepare` (runs automatically after install)
-3. Build the project: `npm run build`
-4. Run in Firefox: `npm run dev:test`
+- Validates commit messages using commitlint with conventional commit format (subject: type)
+- subject can be one of the following:
+  - build: Changes that affect the build system or external dependencies.
+  - chore: Other changes that do not modify source or test files.
+  - ci: Changes to CI configuration files and scripts.
+  - docs: Changes are only to documentation.
+  - feat: A new feature is introduced.
+  - fix: A bug fix is implemented.
+  - perf: A code change that improves performance.
+  - refactor: A code change that neither fixes a bug nor adds a feature.
+  - revert: For when a change has been reverted.
+  - style: Code formatting, white-space, or other formatting changes that do not affect the meaning of the code.
+  - test: Adding missing tests or correcting existing tests.
 
 ### Release
 
@@ -101,7 +105,7 @@ The project uses automated GitHub Actions workflows for releases. All releases a
 4. Bump manifest version in `src/manifest.json` (version must be numbers only e.g. `1.0.0`)
 5. Commit and push:
    ```bash
-   git commit -am "Release v1.0.0"
+   git commit -am "chore: prepare release v1.0.0"
    git push origin main
    ```
 6. Create and push release tag:
@@ -126,7 +130,7 @@ The GitHub Actions workflow will automatically:
 4. Bump manifest version in `src/manifest.json` (version must be numbers only e.g. `1.0.0`)
 5. Commit and push:
    ```bash
-   git commit -am "Prepare beta v1.0.0"
+   git commit -am "chore: prepare beta v1.0.0"
    git push origin main
    ```
 6. Create and push beta tag:

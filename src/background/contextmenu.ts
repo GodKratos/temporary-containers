@@ -44,27 +44,31 @@ export class ContextMenu {
         break;
 
       case 'open-bookmark-in-new-temporary-container-tab': {
-        const bookmarks = await browser.bookmarks.get(info.bookmarkId);
-        if (bookmarks[0].url) {
-          this.container.createTabInTempContainer({
-            tab,
-            url: bookmarks[0].url,
-            active: false,
-            deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
-          });
+        if (info.bookmarkId) {
+          const bookmarks = await browser.bookmarks.get(info.bookmarkId);
+          if (bookmarks[0].url) {
+            this.container.createTabInTempContainer({
+              tab,
+              url: bookmarks[0].url,
+              active: false,
+              deletesHistory: this.pref.deletesHistory.automaticMode === 'automatic',
+            });
+          }
         }
         break;
       }
 
       case 'open-bookmark-in-new-deletes-history-temporary-container-tab': {
-        const bookmarks = await browser.bookmarks.get(info.bookmarkId);
-        if (bookmarks[0].url) {
-          this.container.createTabInTempContainer({
-            tab,
-            url: bookmarks[0].url,
-            active: false,
-            deletesHistory: true,
-          });
+        if (info.bookmarkId) {
+          const bookmarks = await browser.bookmarks.get(info.bookmarkId);
+          if (bookmarks[0].url) {
+            this.container.createTabInTempContainer({
+              tab,
+              url: bookmarks[0].url,
+              active: false,
+              deletesHistory: true,
+            });
+          }
         }
         break;
       }
