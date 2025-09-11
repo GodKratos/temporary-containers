@@ -14,6 +14,18 @@ export async function initAdvancedMiscPage(): Promise<void> {
     content.className = 'form';
     
     content.innerHTML = `
+      <!-- Automatic Mode Configuration -->
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscAutomaticMode">Automatic Mode</h3>
+        <div class="field">
+          <label for="automaticModeNewTab" data-i18n="optionsAdvancedMiscAutomaticModeNewTab">When to create Temporary Containers for new tabs:</label>
+          <select id="automaticModeNewTab">
+            <option value="created" data-i18n="optionsAdvancedMiscAutomaticModeNewTabCreated" ${preferences.automaticMode?.newTab === 'created' ? 'selected' : ''}>On Tab Creation (default - best cookie protection)</option>
+            <option value="navigation" data-i18n="optionsAdvancedMiscAutomaticModeNewTabNavigation" ${preferences.automaticMode?.newTab === 'navigation' ? 'selected' : ''}>On Tab Navigation (typed address protection)</option>
+          </select>
+        </div>
+      </div>
+
       <!-- Context Menu -->
       <div class="section">
         <h3 data-i18n="contextMenu">Context Menu</h3>
@@ -134,6 +146,16 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   
   contextMenuBookmarksCheckbox?.addEventListener('change', async () => {
     preferences.contextMenuBookmarks = contextMenuBookmarksCheckbox.checked;
+    await savePreferences(preferences);
+    showSuccess(browser.i18n.getMessage('savedMessage'));
+  });
+
+  // Automatic mode new tab behavior setting
+  const automaticModeNewTabSelect = content.querySelector('#automaticModeNewTab') as HTMLSelectElement;
+  
+  automaticModeNewTabSelect?.addEventListener('change', async () => {
+    if (!preferences.automaticMode) preferences.automaticMode = { active: false, newTab: 'created' };
+    preferences.automaticMode.newTab = automaticModeNewTabSelect.value as 'created' | 'navigation';
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });

@@ -332,6 +332,18 @@
   "useGlobalSetting": {
     "message": "Использовать глобальную настройку"
   },
+  "optionsAdvancedMiscAutomaticMode": {
+    "message": "Автоматический режим"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTab": {
+    "message": "Когда создавать Временные контейнеры для новых вкладок:"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabCreated": {
+    "message": "При создании вкладки (по умолчанию - лучшая защита от cookies)"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabNavigation": {
+    "message": "При навигации по вкладке (защита введённого адреса)"
+  },
   "optionsAdvancedMiscContextMenuLinks": {
     "message": "Показывать пункт Временного контейнера в контекстном меню ссылок"
   },

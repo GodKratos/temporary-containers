@@ -419,6 +419,18 @@
   "add": {
     "message": "Add"
   },
+  "optionsAdvancedMiscAutomaticMode": {
+    "message": "Automatic Mode"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTab": {
+    "message": "When to create Temporary Containers for new tabs:"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabCreated": {
+    "message": "On Tab Creation (default - best cookie protection)"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabNavigation": {
+    "message": "On Tab Navigation (typed address protection)"
+  },
   "optionsAdvancedMiscContextMenuLinks": {
     "message": "Show Temporary Container entry in the right click on links context menu"
   },

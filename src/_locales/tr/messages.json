@@ -332,6 +332,18 @@
   "useGlobalSetting": {
     "message": "Küresel Ayarı Kullan"
   },
+  "optionsAdvancedMiscAutomaticMode": {
+    "message": "Otomatik Mod"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTab": {
+    "message": "Yeni sekmeler için ne zaman Geçici Konteyner oluşturulacağı:"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabCreated": {
+    "message": "Sekme Oluşturulduğunda (varsayılan - en iyi çerez koruması)"
+  },
+  "optionsAdvancedMiscAutomaticModeNewTabNavigation": {
+    "message": "Sekme Navigasyonunda (yazılan adres koruması)"
+  },
   "optionsAdvancedMiscContextMenuLinks": {
     "message": "Bağlantılara sağ tıklandığında bağlam menüsünde Geçici Konteyner girişini göster"
   },
