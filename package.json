@@ -97,9 +97,6 @@
     ],
     "*.{html,css,json,yml,md}": [
       "prettier --write"
-    ],
-    "{src/ui/**/*.{html,ts},src/_locales/**/*.json,src/shared.ts}": [
-      "npm run lint:localization"
     ]
   },
   "private": true,

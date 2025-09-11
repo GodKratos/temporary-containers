@@ -3,3 +3,4 @@
 
 npm run test
 npm run webext:lint
+npm run lint:localization
