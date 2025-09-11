@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'beta-*'
+      - 'release-*'
+
+jobs:
+  build-and-sign:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Determine release type
+        id: release-type
+        run: |
+          if [[ "${{ github.ref_name }}" == beta-* ]]; then
+            echo "type=beta" >> $GITHUB_OUTPUT
+            echo "channel=unlisted" >> $GITHUB_OUTPUT
+            echo "prerelease=true" >> $GITHUB_OUTPUT
+            echo "name=Beta Release ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == release-* ]]; then
+            echo "type=release" >> $GITHUB_OUTPUT
+            echo "channel=listed" >> $GITHUB_OUTPUT
+            echo "prerelease=false" >> $GITHUB_OUTPUT
+            echo "name=Release ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid tag format. Use 'beta-*' or 'release-*'" >&2
+            exit 1
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Package extension
+        run: npm run webext:build
+
+      - name: Sign extension for AMO
+        run: |
+          npx web-ext sign \
+            --channel=${{ steps.release-type.outputs.channel }} \
+            --api-key=${{ secrets.AMO_API_KEY }} \
+            --api-secret=${{ secrets.AMO_SECRET }} \
+            --source-dir=./dist \
+            --artifacts-dir=./artifacts
+        env:
+          VERSION: ${{ github.ref_name }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: temporary-containers-${{ github.ref_name }}
+          path: |
+            ./artifacts/*.xpi
+            ./artifacts/*.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./artifacts/*.xpi
+            ./artifacts/*.zip
+          draft: false
+          prerelease: ${{ steps.release-type.outputs.prerelease }}
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

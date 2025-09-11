@@ -86,46 +86,77 @@ After cloning the repository:
 
 ### Release
 
+The project uses automated GitHub Actions workflows for releases. All releases are triggered by pushing tags with specific formats.
+
+#### Tag Format Requirements
+
+- **Beta releases**: `beta-X.Y.Z` (e.g., `beta-1.2.3`)
+- **Production releases**: `release-X.Y.Z` (e.g., `release-1.2.3`)
+
 #### Production Release Process
 
 1. Ensure all tests pass: `npm test`
 2. Ensure code is properly formatted: `npm run format`
 3. Ensure all linting checks pass: `npm run lint`
 4. Bump manifest version in `src/manifest.json` (version must be numbers only e.g. `1.0.0`)
-5. Commit and tag:
+5. Commit and push:
    ```bash
    git commit -am "Release v1.0.0"
-   git tag v1.0.0
-   git push origin main --tags
+   git push origin main
    ```
-6. Build the extension: `npm run build`
-7. Package the extension: `npm run webext:build`
+6. Create and push release tag:
+   ```bash
+   git tag release-1.0.0
+   git push origin release-1.0.0
+   ```
 
-#### AMO and GitHub
+The GitHub Actions workflow will automatically:
 
-- Upload zip web-ext-artifact to AMO
-- Download published AMO xpi
-- Create and publish GitHub release with AMO xpi
+- Run tests and linting checks
+- Build and package the extension
+- Sign the extension for **listed** distribution on AMO (becomes the latest public version)
+- Create a GitHub release marked as **latest**
+- Upload signed `.xpi` and source `.zip` files
 
-#### Pre-Release on GitHub
+#### Beta Release Process
 
-1. Bump manifest version in `src/manifest.json` (version must be numbers only e.g. `1.0.0`)
-2. Commit and push:
+1. Ensure all tests pass: `npm test`
+2. Ensure code is properly formatted: `npm run format`
+3. Ensure all linting checks pass: `npm run lint`
+4. Bump manifest version in `src/manifest.json` (version must be numbers only e.g. `1.0.0`)
+5. Commit and push:
    ```bash
    git commit -am "Prepare beta v1.0.0"
    git push origin main
    ```
-3. Create and push beta tag:
+6. Create and push beta tag:
    ```bash
    git tag beta-1.0.0
    git push origin beta-1.0.0
    ```
-   - This will trigger the release-beta.yml workflow to build and sign a beta version to add to the release
-4. Generate release notes:
-   ```bash
-   git log $(git tag --sort=-version:refname | sed -n 2p)..HEAD --pretty=format:%s
-   ```
-5. Add release notes and publish
+
+The GitHub Actions workflow will automatically:
+
+- Run tests and linting checks
+- Build and package the extension
+- Sign the extension for **unlisted** distribution on AMO (manual install only)
+- Create a GitHub release marked as **pre-release**
+- Upload signed `.xpi` and source `.zip` files
+
+#### Manual Release Steps (if needed)
+
+If you need to release manually or the automated workflow fails:
+
+1. Build the extension: `npm run build`
+2. Package the extension: `npm run webext:build`
+3. Sign manually: `npm run beta` (for beta) or manual web-ext signing
+
+#### Release Differences
+
+| Release Type   | AMO Channel | GitHub Release | Automatic Updates      | Tag Format      |
+| -------------- | ----------- | -------------- | ---------------------- | --------------- |
+| **Beta**       | Unlisted    | Pre-release    | ❌ Manual install only | `beta-X.Y.Z`    |
+| **Production** | Listed      | Latest         | ✅ Automatic updates   | `release-X.Y.Z` |
 
 ## License
 
