@@ -150,8 +150,8 @@ class LocalizationValidator {
         uiKeys.set(key, location);
       }
 
-      // Extract browser.i18n.getMessage keys
-      const i18nMessageMatches = line.matchAll(/browser\.i18n\.getMessage\(['"`]([^'"`]+)['"`]\)/g);
+      // Extract browser.i18n.getMessage keys (with or without parameters)
+      const i18nMessageMatches = line.matchAll(/browser\.i18n\.getMessage\(['"`]([^'"`]+)['"`][^)]*\)/g);
       for (const match of i18nMessageMatches) {
         const key = match[1];
         uiKeys.set(key, location);
