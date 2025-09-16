@@ -31,7 +31,7 @@ if (!process.listenerCount('unhandledRejection')) {
   });
 }
 
-import chai from 'chai';
+import * as chai from 'chai';
 import chaiDeepMatch from 'chai-deep-match';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -41,9 +41,11 @@ import { Helper } from './helper';
 import { createBrowserMock, enhanceBrowserMock, BrowserMock } from './browser-mock';
 
 const virtualConsole = new jsdom.VirtualConsole();
-virtualConsole.sendTo(console);
+virtualConsole.on('error', console.error);
+virtualConsole.on('warn', console.warn);
+virtualConsole.on('info', console.info);
+virtualConsole.on('log', console.log);
 virtualConsole.on('jsdomError', error => {
-  // eslint-disable-next-line no-console
   console.error(error);
 });
 
@@ -72,30 +74,32 @@ const fakeBrowser = (): {
 
   global.document = window.document;
   // FIXME
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
   // @ts-ignore
   global.window = window;
   global.AbortController = window.AbortController;
 
   browser.sinonSandbox.reset();
   // FIXME
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
   // @ts-ignore
   global.browser = browser;
 
   global.window._mochaTest = true;
 
-  global.browser.runtime.getManifest.returns({
+  // Setup default return values for stubs that need them
+  (global.browser.tabs.query as sinon.SinonStub).resolves([]);
+  (global.browser.runtime.getManifest as sinon.SinonStub).returns({
     version: '0.1',
   });
-  global.browser.runtime.getBrowserInfo.resolves({
+  (global.browser.runtime.getBrowserInfo as sinon.SinonStub).resolves({
     name: 'Firefox',
     version: 67,
   });
-  global.browser.permissions.getAll.resolves({
+  (global.browser.permissions.getAll as sinon.SinonStub).resolves({
     permissions: [],
   });
-  global.browser.management.getAll.resolves([
+  (global.browser.management.getAll as sinon.SinonStub).resolves([
     {
       id: '@testpilot-containers',
       enabled: true,

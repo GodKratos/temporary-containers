@@ -10,6 +10,11 @@ export interface BrowserMock {
       removeListener: sinon.SinonStub;
       hasListener: sinon.SinonStub;
     };
+    onMessageExternal: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
     sendMessage: sinon.SinonStub;
     onInstalled: {
       addListener: sinon.SinonStub;
@@ -120,6 +125,11 @@ export interface BrowserMock {
       removeListener: sinon.SinonStub;
       hasListener: sinon.SinonStub;
     };
+    onErrorOccurred: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
   };
   permissions: {
     contains: sinon.SinonStub;
@@ -175,6 +185,11 @@ export interface BrowserMock {
     remove: sinon.SinonStub;
     removeAll: sinon.SinonStub;
     onClicked: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
+    onShown: {
       addListener: sinon.SinonStub;
       removeListener: sinon.SinonStub;
       hasListener: sinon.SinonStub;
@@ -309,6 +324,11 @@ export function createBrowserMock(): BrowserMock {
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
       },
+      onMessageExternal: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
       sendMessage: sandbox.stub(),
       onInstalled: {
         addListener: sandbox.stub(),
@@ -428,6 +448,11 @@ export function createBrowserMock(): BrowserMock {
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
       },
+      onErrorOccurred: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
     },
 
     // Permissions API
@@ -491,6 +516,11 @@ export function createBrowserMock(): BrowserMock {
       remove: sandbox.stub(),
       removeAll: sandbox.stub(),
       onClicked: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
+      onShown: {
         addListener: sandbox.stub(),
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
@@ -634,7 +664,7 @@ export function addEventListenerSupport(stub: sinon.SinonStub): sinon.SinonStub 
     const callbacks = stub.getCalls().map((call: any) => call.args[0]);
     return callbacks.map((callback: any) => callback(...args));
   };
-  
+
   return stub;
 }
 
