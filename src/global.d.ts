@@ -4,7 +4,7 @@ import { Browser } from 'firefox-webext-browser';
 
 declare global {
   const browser: Browser;
-  
+
   interface Window {
     tmp?: TemporaryContainers;
     log: Log;

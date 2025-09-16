@@ -191,11 +191,11 @@ export async function initAdvancedCookiesPage(): Promise<void> {
             <div class="cookie-details">${cookieDetails}</div>
             <div class="cookie-actions">
               <button class="button-secondary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage(
-            'optionsAdvancedCookiesEdit'
-          )}</button>
+                'optionsAdvancedCookiesEdit'
+              )}</button>
               <button class="button-danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage(
-            'optionsAdvancedCookiesRemove'
-          )}</button>
+                'optionsAdvancedCookiesRemove'
+              )}</button>
             </div>
           `;
 

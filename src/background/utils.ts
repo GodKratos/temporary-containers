@@ -13,14 +13,13 @@ export class Utils {
   sameDomain(origin: string, target: string): boolean {
     const parsedOrigin = psl.parse(origin);
     const parsedTarget = psl.parse(target);
-    
+
     // Type guard to check if we have a valid ParsedDomain
     const isValidParsedDomain = (parsed: any): parsed is { domain: string | null } => {
       return parsed && typeof parsed === 'object' && 'domain' in parsed;
     };
-    
-    if (!isValidParsedDomain(parsedOrigin) || !isValidParsedDomain(parsedTarget) || 
-        !parsedOrigin.domain || !parsedTarget.domain) {
+
+    if (!isValidParsedDomain(parsedOrigin) || !isValidParsedDomain(parsedTarget) || !parsedOrigin.domain || !parsedTarget.domain) {
       return false;
     }
     return parsedOrigin.domain === parsedTarget.domain;

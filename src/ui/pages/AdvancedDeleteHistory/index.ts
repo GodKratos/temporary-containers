@@ -23,8 +23,8 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           <strong>
             <label class="checkbox-field">
               <input type="checkbox" id="deletesHistoryWarningRead" ${preferences.deletesHistory?.active ? 'checked' : ''} ${
-      preferences.deletesHistory?.active ? 'disabled' : ''
-    } />
+                preferences.deletesHistory?.active ? 'disabled' : ''
+              } />
               <span data-i18n="optionsAdvancedDeleteHistoryWarningAccept">I have read the Warning and understand the implications that come with using "Deletes History Temporary Containers". When ticking the checkbox Firefox will ask you for "Access browsing history" permissions.</span>
             </label>
           </strong>

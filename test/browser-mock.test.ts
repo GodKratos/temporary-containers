@@ -16,7 +16,7 @@ describe('Browser Mock', () => {
 
   it('should create stubs that can be configured', () => {
     browserMock.runtime.getManifest.returns({ version: '1.0.0' });
-    
+
     const result = browserMock.runtime.getManifest();
     expect(result).to.deep.equal({ version: '1.0.0' });
   });
@@ -24,7 +24,7 @@ describe('Browser Mock', () => {
   it('should support event listener yielding', () => {
     const callback = (data: any) => data;
     browserMock.runtime.onMessage.addListener(callback);
-    
+
     const results = (browserMock.runtime.onMessage.addListener as any).yield('test-data');
     expect(results).to.deep.equal(['test-data']);
   });
@@ -37,7 +37,7 @@ describe('Browser Mock', () => {
   it('should reset history correctly', () => {
     browserMock.runtime.getManifest();
     expect(browserMock.runtime.getManifest.called).to.be.true;
-    
+
     browserMock._resetHistory();
     expect(browserMock.runtime.getManifest.called).to.be.false;
   });

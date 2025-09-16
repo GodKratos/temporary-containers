@@ -36,8 +36,8 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <strong>
             <label class="checkbox-field">
               <input type="checkbox" id="scriptsWarningRead" ${preferences.scripts?.active ? 'checked' : ''} ${
-      preferences.scripts?.active ? 'disabled' : ''
-    } />
+                preferences.scripts?.active ? 'disabled' : ''
+              } />
               <span data-i18n="optionsAdvancedScriptsWarningAccept">I have read the warning and understand the implications that come with using "Scripts". When ticking the checkbox Firefox will ask you for "Access browser activity" permissions.</span>
             </label>
           </strong>
@@ -149,11 +149,11 @@ export async function initAdvancedScriptsPage(): Promise<void> {
             </div>
             <div class="script-actions">
               <button class="button-secondary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage(
-            'optionsAdvancedScriptsEdit'
-          )}</button>
+                'optionsAdvancedScriptsEdit'
+              )}</button>
               <button class="button-danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage(
-            'optionsAdvancedScriptsRemove'
-          )}</button>
+                'optionsAdvancedScriptsRemove'
+              )}</button>
             </div>
           `;
 
