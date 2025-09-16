@@ -1,4 +1,4 @@
-import { PreferencesSchema, StorageLocal, Permissions, Tab } from '../../types';
+import { PreferencesSchema, StorageLocal, Permissions } from '../../types';
 
 /**
  * Send a message to the background script

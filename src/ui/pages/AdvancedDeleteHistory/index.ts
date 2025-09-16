@@ -1,6 +1,5 @@
 // Advanced: Delete History page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
-import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedDeleteHistoryPage(): Promise<void> {
   try {
@@ -172,7 +171,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
@@ -190,7 +189,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
@@ -235,7 +234,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
     document.getElementById('deletesHistoryLeftClick')?.addEventListener('change', e => {
       savePref('isolation.global.mouseClick.left.container', (e.target as HTMLSelectElement).value);
     });
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedDeleteHistory'));
   }
 }

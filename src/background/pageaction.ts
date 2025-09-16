@@ -39,7 +39,7 @@ export class PageAction {
       try {
         const container = await browser.contextualIdentities.get(activatedTab.cookieStoreId);
         color = container.color;
-      } catch (error) {
+      } catch (_error) {
         color = 'gray';
       }
     }

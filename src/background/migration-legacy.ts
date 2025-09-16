@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // this is only needed once for upgrades from <1.0 and should be removed in the next major version
 // we now store the addon version in storage instead of waiting for onInstalled
 import { TemporaryContainers } from './tmp';
@@ -47,7 +46,7 @@ export class MigrationLegacy {
           migrationReady();
         });
         migration.previousVersion = updateDetails.previousVersion;
-      } catch (error) {
+      } catch (_error) {
         debug('[migration-legacy] waiting for onInstalled failed, assuming 0.103');
         migration.previousVersion = '0.103';
       }

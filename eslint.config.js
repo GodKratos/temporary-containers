@@ -14,13 +14,37 @@ export default [
         sourceType: 'module',
       },
       globals: {
-        browser: 'readonly',
-        console: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly',
-        global: 'readonly',
+        // Browser globals
         window: 'readonly',
         document: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        URL: 'readonly',
+        Blob: 'readonly',
+        confirm: 'readonly',
+
+        // DOM types
+        HTMLElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLSelectElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLFormElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
+        Document: 'readonly',
+        KeyboardEvent: 'readonly',
+        MouseEvent: 'readonly',
+
+        // WebExtensions
+        browser: 'readonly',
+
+        // Node.js globals (for background scripts)
+        global: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        AbortController: 'readonly',
       },
     },
     plugins: {
@@ -28,7 +52,14 @@ export default [
     },
     rules: {
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'no-inner-declarations': 'warn',
     },
   },
@@ -58,6 +89,7 @@ export default [
       'src/vendor/**',
       'src/ui/old-backup/**',
       'src/ui/vendor/**',
+      'commitlint.config.js',
     ],
   },
 ];

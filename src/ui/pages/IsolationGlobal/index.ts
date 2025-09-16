@@ -1,6 +1,5 @@
 // Shared IsolationGlobal page logic for both options and popup menus
 import { getPreferences, getStorage, savePreferences, showError, showSuccess } from '../../shared/utils';
-import { PreferencesSchema } from '../../../types';
 
 export async function initIsolationGlobalPage(): Promise<void> {
   try {
@@ -125,7 +124,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
       permanentContainers = allContainers
         .filter((container: any) => !tempContainers[container.cookieStoreId])
         .map((container: any) => ({ id: container.cookieStoreId, name: container.name }));
-    } catch (e) {
+    } catch (_error) {
       // fallback: empty list
       permanentContainers = [];
     }
@@ -205,7 +204,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         }
       }
     });
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
   }
 }

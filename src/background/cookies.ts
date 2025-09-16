@@ -99,11 +99,10 @@ export class Cookies {
 
             if (cookieAllowed) {
               cookieHeaderChanged = true;
-              // eslint-disable-next-line require-atomic-updates
               cookiesHeader[cookieAllowed.name] = cookieAllowed.value;
               this.debug('[maybeAddCookiesToHeader] cookie value changed', cookiesHeader);
             }
-          } catch (error) {
+          } catch (_error) {
             this.debug('[maybeAddCookiesToHeader] couldnt get cookie', cookie);
           }
         }

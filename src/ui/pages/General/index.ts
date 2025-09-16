@@ -1,7 +1,6 @@
 // General page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess, capitalize } from '../../shared/utils';
 import { CONTAINER_COLORS, CONTAINER_ICONS, TOOLBAR_ICON_COLORS, CONTAINER_REMOVAL_DEFAULT } from '~/shared';
-import { PreferencesSchema } from '../../../types';
 
 export async function initGeneralPage(): Promise<void> {
   try {
@@ -251,7 +250,7 @@ export async function initGeneralPage(): Promise<void> {
     (document.getElementById('iconColor') as HTMLSelectElement).addEventListener('change', e => {
       savePref('iconColor', (e.target as HTMLSelectElement).value);
     });
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadGeneral'));
   }
 }

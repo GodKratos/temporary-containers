@@ -8,7 +8,6 @@ function formatDate(date: Date): string {
 
 export async function initExportImportPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
     const section = document.getElementById('export-import');
     if (!section) return;
 

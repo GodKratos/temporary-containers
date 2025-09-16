@@ -1,6 +1,6 @@
 // Advanced: Cookies page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
-import { PreferencesSchema, Cookie } from '../../../types';
+import { Cookie } from '../../../types';
 
 interface CookieDefaults {
   domain: string;
@@ -183,7 +183,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           cookieItem.className = 'cookie-item';
 
           const cookieDetails = Object.entries(cookie)
-            .filter(([key, value]) => value !== '')
+            .filter(([_key, value]) => value !== '')
             .map(([key, value]) => `<span class="cookie-property"><strong>${key}:</strong> ${value}</span>`)
             .join('');
 
@@ -301,7 +301,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         await savePreferences(preferences);
         updateCookieDisplay();
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
@@ -357,7 +357,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         updateCookieDisplay();
         resetForm();
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
@@ -369,7 +369,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
 
     // Initial display update
     updateCookieDisplay();
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'));
   }
 }

@@ -1,6 +1,6 @@
 // Advanced: Scripts page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
-import { PreferencesSchema, Script } from '../../../types';
+import { Script } from '../../../types';
 
 interface ScriptDefaults {
   code: string;
@@ -103,7 +103,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
@@ -241,7 +241,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         await savePreferences(preferences);
         updateScriptDisplay();
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
@@ -290,7 +290,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         updateScriptDisplay();
         resetForm();
         showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (error) {
+      } catch (_error) {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     });
@@ -302,7 +302,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
 
     // Initial display update
     updateScriptDisplay();
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedScripts'));
   }
 }

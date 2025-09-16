@@ -13,7 +13,6 @@ export class Migration {
   private previousVersionBeta!: boolean;
 
   // migration-legacy
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   onInstalled: (...args: any) => void = () => {};
 
   constructor(background: TemporaryContainers) {
@@ -21,14 +20,7 @@ export class Migration {
     this.debug = background.debug;
   }
 
-  async migrate({
-    preferences,
-    previousVersion,
-  }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    preferences: any;
-    previousVersion: string;
-  }): Promise<void> {
+  async migrate({ preferences, previousVersion }: { preferences: any; previousVersion: string }): Promise<void> {
     this.storage = this.background.storage;
     this.utils = this.background.utils;
     this.previousVersion = previousVersion;
@@ -135,10 +127,8 @@ export class Migration {
 
     if (this.updatedFromVersionEqualToOrLessThan('1.9.1')) {
       this.debug('[migrate] updated from version <= 1.9.1, migrate isolation.automaticReactivate');
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.storage.local.isolation.reactivateTargetTime = this.storage.local.isolation.automaticReactivateTargetTime;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       delete this.storage.local.isolation.automaticReactivateTargetTime;
 

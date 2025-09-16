@@ -1,22 +1,14 @@
 import {
   sendMessage,
   getPreferences,
-  savePreferences,
   getPermissions,
   getStorage,
-  showMessage,
-  showError,
-  showSuccess,
   showInitializeLoader,
   hideInitializeLoader,
   showInitializeError,
-  createTabSystem,
   createGlossarySystem,
-  t,
-  capitalize,
   applyLocalization,
 } from './shared/utils';
-import { StorageLocal } from '../types';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
 import { initStatisticsPage } from './pages/Statistics';

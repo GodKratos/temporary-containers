@@ -200,7 +200,7 @@ export class Container {
             if (openerTab.discarded) {
               newTabOptions.openerTabId = tab.id;
             }
-          } catch (error) {
+          } catch (_error) {
             // opener tab does not exist
             newTabOptions.openerTabId = tab.id;
           }

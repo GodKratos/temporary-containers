@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { psl } from './lib';
 import { TemporaryContainers } from './tmp';
 import { Debug } from '~/types';
@@ -33,7 +32,7 @@ export class Utils {
       }
       try {
         return new RegExp(regexp[1], regexp[2]).test(url);
-      } catch (error) {
+      } catch (_error) {
         return false;
       }
     } else {

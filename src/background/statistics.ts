@@ -45,7 +45,7 @@ export class Statistics {
     let tab;
     try {
       tab = (await browser.tabs.get(request.tabId)) as Tab;
-    } catch (error) {
+    } catch (_error) {
       return;
     }
 

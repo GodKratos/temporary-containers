@@ -1,11 +1,8 @@
 // Actions page logic for popup menu
-import { getPreferences, getPermissions, getStorage, showError } from '../../shared/utils';
-import { PreferencesSchema } from '../../../types';
+import { getStorage, showError } from '../../shared/utils';
 
 export async function initActionsPage(): Promise<void> {
   try {
-    const preferences = await getPreferences();
-    const permissions = await getPermissions();
     const storage = await getStorage();
     const section = document.getElementById('actions');
     if (!section) return;
@@ -16,7 +13,7 @@ export async function initActionsPage(): Promise<void> {
     if (activeTab && activeTab.url) {
       try {
         parsedUrl = new URL(activeTab.url);
-      } catch (error) {
+      } catch (_error) {
         // Invalid URL, parsedUrl remains undefined
       }
     }
@@ -106,7 +103,7 @@ export async function initActionsPage(): Promise<void> {
       });
       btnConvertTemporary.setAttribute('data-listener', 'true');
     }
-  } catch (error) {
+  } catch (_error) {
     showError(browser.i18n.getMessage('errorFailedToLoadActions'));
   }
 }

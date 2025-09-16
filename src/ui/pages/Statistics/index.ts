@@ -1,6 +1,5 @@
 // Shared Statistics page logic for both options and popup menus
 import { getStorage, showError, showSuccess } from '../../shared/utils';
-import { StorageLocal } from '../../../types';
 import { formatBytes } from '../../../shared';
 
 export async function initStatisticsPage(): Promise<void> {

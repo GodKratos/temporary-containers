@@ -230,11 +230,9 @@ export interface ClickMessage {
 
 export interface RuntimeMessage {
   method: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: ClickMessage | any;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Debug = (...args: any[]) => Promise<void>;
 
 export interface WebRequestOnBeforeRequestDetails extends browser.webRequest._OnBeforeRequestDetails {

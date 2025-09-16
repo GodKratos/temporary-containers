@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TemporaryContainers } from './tmp';
 import { Debug } from '~/types';
 

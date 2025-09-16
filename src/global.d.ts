@@ -1,6 +1,7 @@
 import { TemporaryContainers } from './background/tmp';
 import { Log } from './background/log';
 import { Browser } from 'firefox-webext-browser';
+import './web-globals';
 
 declare global {
   const browser: Browser;
@@ -9,9 +10,7 @@ declare global {
     tmp?: TemporaryContainers;
     log: Log;
     _mochaTest?: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     debug: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     migrationLegacy: any;
   }
 }

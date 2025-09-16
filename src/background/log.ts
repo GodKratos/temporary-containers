@@ -1,7 +1,5 @@
 import { Debug } from '~/types';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export class Log {
   public DEBUG = false;
   public stringify = true;
