@@ -486,6 +486,7 @@ export interface Background {
   tmp: TemporaryContainers;
   clock: sinon.SinonFakeTimers;
   helper: Helper;
+  browseraction?: any;
 }
 
 const loadBackground = async ({
@@ -530,6 +531,7 @@ const loadBackground = async ({
     tmp: background,
     clock,
     helper: new Helper(browser, background),
+    browseraction: background.browseraction,
   };
 };
 
