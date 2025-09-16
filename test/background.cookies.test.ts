@@ -27,6 +27,21 @@ preferencesTestSet.map(preferences => {
         };
 
         const tab = await background.container.createTabInTempContainer({});
+
+        // Set up the _navigate mock to simulate the web request flow
+        browser.tabs._navigate.callsFake(async (tabId, url, options) => {
+          // Simulate the onBeforeSendHeaders event that would normally be triggered during navigation
+          const [promise] = browser.webRequest.onBeforeSendHeaders.addListener.yield({
+            tabId: tabId,
+            url: url,
+            requestHeaders: options.requestHeaders || [],
+          }) as unknown as any[];
+          const result = await promise;
+          return {
+            onBeforeSendHeaders: [result],
+          };
+        });
+
         const results = await browser.tabs._navigate(tab?.id, 'https://example.com', {
           requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo' }],
         });

@@ -229,6 +229,14 @@ export class Container {
           delete this.urlCreatedContainer[url];
         });
       }
+      // Propagate about:* url from original tab if we didn't specify one for the new temp tab
+      if (!newTab.url && tab && tab.url && tab.url.startsWith('about:')) {
+        try {
+          (newTab as any).url = tab.url;
+        } catch (_e) {
+          /* ignore */
+        }
+      }
       this.tabs.containerMap.set(newTab.id, contextualIdentity.cookieStoreId);
       if (macConfirmPage) {
         this.tabCreatedAsMacConfirmPage[newTab.id] = true;
@@ -286,14 +294,23 @@ export class Container {
     }
     let containerName = this.pref.container.namePrefix;
     if (url) {
-      const parsedUrl = new URL(url);
+      // Ignore about:* and similar scheme URLs for name token replacement
+      const parsedUrl = /^https?:/.test(url) ? new URL(url) : undefined;
       if (containerName.includes('%fulldomain%')) {
-        containerName = containerName.replace('%fulldomain%', parsedUrl.hostname);
+        if (parsedUrl) {
+          containerName = containerName.replace('%fulldomain%', parsedUrl.hostname);
+        } else {
+          containerName = containerName.replace('%fulldomain%', '');
+        }
       }
       if (containerName.includes('%domain%')) {
-        const domain = psl.isValid(parsedUrl.hostname) ? psl.get(parsedUrl.hostname) : parsedUrl.hostname;
-        if (domain) {
-          containerName = containerName.replace('%domain%', domain);
+        if (parsedUrl) {
+          const domain = psl.isValid(parsedUrl.hostname) ? psl.get(parsedUrl.hostname) : parsedUrl.hostname;
+          if (domain) {
+            containerName = containerName.replace('%domain%', domain);
+          }
+        } else {
+          containerName = containerName.replace('%domain%', '');
         }
       }
     } else {

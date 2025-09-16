@@ -2,7 +2,6 @@
   "name": "tmpcontainers",
   "version": "0.0.0",
   "description": "Temporary Containers Plus",
-  "type": "module",
   "scripts": {
     "prepare": "husky",
     "clean": "rimraf web-ext-artifacts .web-ext-artifacts dist",
@@ -18,7 +17,7 @@
     "lint:webext": "web-ext lint -s dist",
     "webext:build": "web-ext build -s dist",
     "format": "prettier --write \"./**/*.{html,css,json,yml,md,ts,js}\"",
-    "test": "nyc --reporter=html --reporter=text mocha --import=tsx test/*.test.ts",
+    "test": "nyc --reporter=html --reporter=text mocha --import=tsx --bail false test/*.test.ts",
     "test:functional": "ts-mocha ./test/functional/*.test.ts --timeout 10000",
     "dev": "webpack-dev-server --mode development",
     "dev:test": "npm run build && npx web-ext run -s dist",

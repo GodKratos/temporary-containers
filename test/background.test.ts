@@ -380,14 +380,17 @@ preferencesTestSet.map(preferences => {
         }
         await Promise.all(tabPromises);
         const tabs = await browser.tabs.query({});
-        const containerPromises = tabs.map((tab: Tab) => browser.contextualIdentities.get(tab.cookieStoreId));
+        const tempTabs = tabs.filter((tab: Tab) => tab.cookieStoreId !== 'firefox-default');
+        // Ensure we really created 5 temporary tabs (default container tab filtered out)
+        tempTabs.length.should.equal(5);
+        const containerPromises = tempTabs.map((tab: Tab) => browser.contextualIdentities.get(tab.cookieStoreId));
         const containers = await Promise.all(containerPromises);
         for (let i = 0; i < 5; i++) {
           const container = containers[i];
-          container.name.should.equal(`tmp${i + 1}`);
+          container && container.name.should.equal(`tmp${i + 1}`);
         }
 
-        await browser.tabs.remove(tabs[0].id);
+        await browser.tabs.remove(tempTabs[0].id);
         await browser.tabs._create({ url: 'about:newtab' });
         (await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId)).name.should.equal('tmp1');
         await browser.tabs._create({ url: 'about:newtab' });

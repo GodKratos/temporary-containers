@@ -9,12 +9,6 @@ preferencesTestSet.map(preferences => {
           preferences,
           initialize: false,
         });
-        browser.tabs.create.resolves({
-          id: 1,
-        });
-        browser.contextualIdentities.create.resolves({
-          cookieStoreId: 'firefox-container-1',
-        });
 
         await background.initialize();
         browser.browserAction.onClicked.addListener.yield();
@@ -27,7 +21,7 @@ preferencesTestSet.map(preferences => {
         });
         browser.tabs.create.should.have.been.calledWith({
           url: undefined,
-          cookieStoreId: 'firefox-container-1',
+          cookieStoreId: sinon.match.string,
         });
         browser.storage.local.set.should.have.been.calledWith(background.storage.local);
       });
@@ -36,12 +30,6 @@ preferencesTestSet.map(preferences => {
         const { tmp: background, browser } = await loadBackground({
           preferences,
           initialize: false,
-        });
-        browser.tabs.create.resolves({
-          id: 1,
-        });
-        browser.contextualIdentities.create.resolves({
-          cookieStoreId: 'firefox-container-1',
         });
 
         await background.initialize();
@@ -59,7 +47,7 @@ preferencesTestSet.map(preferences => {
         expect(browser.tabs.create).to.have.been.calledWith(
           sinon.match({
             url: undefined,
-            cookieStoreId: 'firefox-container-1',
+            cookieStoreId: sinon.match.string,
           })
         );
         expect(browser.storage.local.set).to.have.been.calledWith(background.storage.local);

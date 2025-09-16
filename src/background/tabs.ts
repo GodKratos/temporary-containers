@@ -13,6 +13,7 @@ export class Tabs {
   public creatingInSameContainer = false;
   public containerMap = new Map();
   public containerTabs: Map<CookieStoreId, Set<TabId>> = new Map();
+  private processedHomeTabs = new Set<number>();
 
   private background: TemporaryContainers;
   private debug: Debug;
@@ -125,6 +126,7 @@ export class Tabs {
   }
 
   async maybeReopenInTmpContainer(tab: Tab): Promise<void | boolean> {
+    this.debug('[maybeReopenInTmpContainer] invoked', tab, this.pref.automaticMode);
     if (this.creatingInSameContainer) {
       this.debug('[maybeReopenInTmpContainer] we are in the process of creating a tab in same container, ignore', tab);
       return;
@@ -132,6 +134,13 @@ export class Tabs {
 
     if (this.container.noContainerTabs[tab.id]) {
       this.debug('[maybeReopenInTmpContainer] nocontainer tab, ignore', tab);
+      return;
+    }
+
+    // Guard: sometimes test harness fires onCreated before a final url was set
+    // (we stage about:blank). If url is still undefined we wait for a later onUpdated.
+    if (!tab.url) {
+      this.debug('[maybeReopenInTmpContainer] tab has no url yet, wait for onUpdated', tab);
       return;
     }
 
@@ -161,9 +170,17 @@ export class Tabs {
       }
 
       if (this.pref.automaticMode.newTab === 'created' || deletesHistory) {
+        if (this.processedHomeTabs.has(tab.id)) {
+          this.debug('[maybeReopenInTmpContainer] home/newtab already processed for this tab id, skip', tab);
+          return;
+        }
         this.debug('[maybeReopenInTmpContainer] about:home/new tab in firefox-default container, reload in temp container', tab);
+        // Mark as processed BEFORE awaiting async reload to avoid race with onUpdated firing
+        this.processedHomeTabs.add(tab.id);
         await this.container.reloadTabInTempContainer({
           tab,
+          // Only pass url if it's a http(s) URL; about:* would throw in URL parser
+          url: /^https?:/.test(tab.url) ? tab.url : undefined,
           deletesHistory,
         });
         return true;

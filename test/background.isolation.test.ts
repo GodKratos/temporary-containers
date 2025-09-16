@@ -60,6 +60,7 @@ preferencesTestSet.map(preferences => {
             describe('Isolation', () => {
               beforeEach(async () => {
                 bg = await loadBackground({ preferences });
+
                 const url = 'https://example.com';
                 if (originContainerType === 'permanent') {
                   tab = await bg.browser.tabs._create({

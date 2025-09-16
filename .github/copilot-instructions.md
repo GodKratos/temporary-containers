@@ -11,12 +11,14 @@ This project is a Firefox extension for managing temporary containers. It allows
   - `options`: Code for the options/settings page.
   - `pages`: Settings pages accessed through options and popup interfaces.
   - `_locales`: Localization files for different languages.
+- `/test`: Contains test cases for the extension.
 
 ## Libraries and Frameworks
 
 - Typescript for type-safe JavaScript development.
 - Webpack for module bundling.
 - Fontello for iconography.
+- Sinon for mocking and stubbing in tests.
 
 # General Instructions
 
@@ -25,6 +27,7 @@ This project is a Firefox extension for managing temporary containers. It allows
 - Write clear and concise commit messages.
 - Include tests for new features and bug fixes.
 - Keep the codebase clean and well-organized.
+- If code is removed, do not replace it with comments that describe what was there before.
 
 # Localisation
 
