@@ -66,6 +66,18 @@ preferencesTestSet.map(preferences => {
           it('should remove the container', async () => {
             const bg = await loadBackground({ preferences });
             bg.tmp.storage.local.preferences.container.removal = 0;
+            // Set up mock for contextualIdentities.create
+            bg.browser.contextualIdentities.create.resolves({
+              cookieStoreId: 'firefox-container-1',
+              name: 'tmp1',
+              color: 'toolbar',
+              icon: 'fingerprint',
+            });
+            // Set up mock for tabs.create
+            bg.browser.tabs.create.resolves({
+              id: 1,
+              cookieStoreId: 'firefox-container-1',
+            });
             await bg.browser.tabs._create({});
             const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
             await bg.tmp.tabs.remove(tab);
@@ -78,6 +90,18 @@ preferencesTestSet.map(preferences => {
           it('should not remove the container', async () => {
             const bg = await loadBackground({ preferences });
             bg.tmp.storage.local.preferences.container.removal = 0;
+            // Set up mock for contextualIdentities.create
+            bg.browser.contextualIdentities.create.resolves({
+              cookieStoreId: 'firefox-container-1',
+              name: 'tmp1',
+              color: 'toolbar',
+              icon: 'fingerprint',
+            });
+            // Set up mock for tabs.create
+            bg.browser.tabs.create.resolves({
+              id: 1,
+              cookieStoreId: 'firefox-container-1',
+            });
             await bg.browser.tabs._create({});
             const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
             await bg.browser.tabs._create({ cookieStoreId: tab.cookieStoreId });
@@ -93,6 +117,18 @@ preferencesTestSet.map(preferences => {
         it('should wait a bit inbetween removing containers', async () => {
           const bg = await loadBackground({ preferences });
           bg.tmp.storage.local.preferences.container.removal = 0;
+          // Set up mock for contextualIdentities.create
+          bg.browser.contextualIdentities.create.resolves({
+            cookieStoreId: 'firefox-container-1',
+            name: 'tmp1',
+            color: 'toolbar',
+            icon: 'fingerprint',
+          });
+          // Set up mock for tabs.create
+          bg.browser.tabs.create.resolves({
+            id: 1,
+            cookieStoreId: 'firefox-container-1',
+          });
           await bg.browser.tabs._create({});
           const tab1 = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
           const tab2 = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
@@ -114,6 +150,18 @@ preferencesTestSet.map(preferences => {
         it('should not remove container if about:sessionrestore tab is open', async () => {
           const bg = await loadBackground({ preferences });
           bg.tmp.storage.local.preferences.container.removal = 0;
+          // Set up mock for contextualIdentities.create
+          bg.browser.contextualIdentities.create.resolves({
+            cookieStoreId: 'firefox-container-1',
+            name: 'tmp1',
+            color: 'toolbar',
+            icon: 'fingerprint',
+          });
+          // Set up mock for tabs.create
+          bg.browser.tabs.create.resolves({
+            id: 1,
+            cookieStoreId: 'firefox-container-1',
+          });
           await bg.browser.tabs._create({ url: 'about:sessionrestore' });
           const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
 

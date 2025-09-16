@@ -56,7 +56,11 @@ export interface BrowserMock {
       removeListener: sinon.SinonStub;
       hasListener: sinon.SinonStub;
     };
+    // Test helper methods
     _create: sinon.SinonStub;
+    _navigate: sinon.SinonStub;
+    _update: sinon.SinonStub;
+    _registerRedirects: sinon.SinonStub;
   };
   contextualIdentities: {
     create: sinon.SinonStub;
@@ -372,8 +376,11 @@ export function createBrowserMock(): BrowserMock {
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
       },
-      // Custom method for simulating tab creation in tests
+      // Test helper methods
       _create: sandbox.stub(),
+      _navigate: sandbox.stub(),
+      _update: sandbox.stub(),
+      _registerRedirects: sandbox.stub(),
     },
 
     // Contextual Identities API (Container tabs)

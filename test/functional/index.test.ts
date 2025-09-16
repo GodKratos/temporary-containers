@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
 import { expect } from 'chai';
 import webExtensionsGeckoDriver from 'webextensions-geckodriver';
 const webdriver = webExtensionsGeckoDriver.webdriver;
 const until = webdriver.until;
 const By = webdriver.By;
-const manifestPath = path.resolve(path.join(__dirname, './../../dist/manifest.json'));
+const manifestPath = path.resolve(path.join(process.cwd(), 'dist/manifest.json'));
 
 describe('Temporary Containers', () => {
   let helper: any;

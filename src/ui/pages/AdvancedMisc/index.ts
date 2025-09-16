@@ -152,7 +152,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
   }
 }
 
-function setupEventListeners(content: HTMLElement, preferences: PreferencesSchema, permissions: any): void {
+function setupEventListeners(content: HTMLElement, preferences: PreferencesSchema, _permissions: any): void {
   // Context Menu settings
   const contextMenuCheckbox = content.querySelector('#contextMenu') as HTMLInputElement;
   const contextMenuBookmarksCheckbox = content.querySelector('#contextMenuBookmarks') as HTMLInputElement;

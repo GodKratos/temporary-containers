@@ -47,7 +47,6 @@ preferencesTestSet.map(preferences => {
                     macWasFaster,
                     resetHistory: true,
                   };
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   const promises: any[] = [];
                   switch (confirmPage) {
                     case 'first':
@@ -89,7 +88,6 @@ preferencesTestSet.map(preferences => {
                 describe('follow up requests', () => {
                   ['current', 'target'].map(macConfirmChoice => {
                     describe(`variant: macConfirmChoice ${macConfirmChoice}`, () => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       let results: any[];
                       beforeEach(async () => {
                         let tabId, originContainer;
@@ -168,7 +166,6 @@ preferencesTestSet.map(preferences => {
                     macWasFaster,
                     resetHistory: true,
                   };
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   const promises: any[] = [];
                   switch (confirmPage) {
                     case 'first':
@@ -293,7 +290,6 @@ preferencesTestSet.map(preferences => {
                           targetContainer: 'firefox-container-1',
                           url: 'http://notexample.com',
                         };
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         const promises: any[] = [];
                         switch (confirmPage) {
                           case 'first':

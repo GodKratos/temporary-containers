@@ -82,7 +82,6 @@ preferencesTestSet.map(preferences => {
           tabId: 1,
           url: 'https://example.com',
           requestHeaders: [{ name: 'Cookie', value: 'foo=bar; moo=foo' }],
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }) as unknown as any[];
         const result = await promise;
         browser.cookies.set.should.have.been.called;
@@ -117,7 +116,6 @@ preferencesTestSet.map(preferences => {
         };
         const [response] = browser.webRequest.onBeforeSendHeaders.addListener.yield({
           url: 'https://example.com',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }) as unknown as any[];
         expect(await response).to.be.undefined;
       });

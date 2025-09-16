@@ -283,7 +283,7 @@ preferencesTestSet.map(preferences => {
 
       describe('New No Container Tab', () => {
         it('should open a new no container tab', async () => {
-          const { tmp: background, browser } = await loadBackground({
+          const { tmp: _background, browser } = await loadBackground({
             preferences,
           });
           browser.commands.onCommand.addListener.yield('new_no_container_tab');
@@ -296,7 +296,7 @@ preferencesTestSet.map(preferences => {
 
       describe('New No Container Window Tab', () => {
         it('should open a new no container window', async () => {
-          const { tmp: background, browser } = await loadBackground({
+          const { tmp: _background, browser } = await loadBackground({
             preferences,
           });
           browser.commands.onCommand.addListener.yield('new_no_container_window_tab');
@@ -324,7 +324,7 @@ preferencesTestSet.map(preferences => {
 
       describe('New Same Container Tab', () => {
         it('should open a new same container tab', async () => {
-          const { tmp: background, browser } = await loadBackground({
+          const { tmp: _background, browser } = await loadBackground({
             preferences,
           });
           const container = await browser.contextualIdentities.create({});

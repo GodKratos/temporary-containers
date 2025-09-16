@@ -76,7 +76,6 @@ export class Helper {
     });
     const [promise] = this.browser.browserAction.onClicked.addListener.yield({
       id: tabId,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as unknown as any[];
     await promise;
     if (resetHistory) {
@@ -158,14 +157,7 @@ export class Helper {
     return this.background.request.webRequestOnBeforeRequest(fakeRequest);
   }
 
-  async mouseClickOnLink({
-    originTabId = 1,
-    clickType = 'left',
-    domainCombination = '',
-    senderUrl = '',
-    targetUrl = '',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }): Promise<any> {
+  async mouseClickOnLink({ originTabId = 1, clickType = 'left', domainCombination = '', senderUrl = '', targetUrl = '' }): Promise<any> {
     switch (domainCombination) {
       case 'notsameexact':
         senderUrl = 'https://notexample.com';

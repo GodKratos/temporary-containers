@@ -14,10 +14,8 @@ describe('storage', () => {
       ...background.storage.defaults,
       version: '0.1',
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (background.preferences.defaults as any).newPreference = true;
     await background.initialize();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((background.storage.local.preferences as any).newPreference).to.be.true;
   });
 });

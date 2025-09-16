@@ -1,7 +1,9 @@
 /// <reference types="sinon-chai" />
+/// <reference types="chai" />
 
 import jsdom from 'jsdom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { SinonStub } from 'sinon';
 import { BrowserMock } from './browser-mock';
 
 declare global {
@@ -28,5 +30,23 @@ declare global {
         prototype: AbortController;
       };
     }
+  }
+}
+
+// Extend SinonStub with should interface
+declare module 'sinon' {
+  interface SinonStub {
+    should: import('chai').Assertion;
+  }
+}
+
+// Extend primitive types with should interface for chai
+declare global {
+  interface Object {
+    should: import('chai').Assertion;
+  }
+
+  interface Function {
+    should: import('chai').Assertion;
   }
 }
