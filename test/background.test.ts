@@ -369,32 +369,42 @@ preferencesTestSet.map(preferences => {
       }
 
       it('should work when multiple tabs are opened', async () => {
-        const { tmp: background, browser } = await loadBackground({
-          preferences,
-        });
+        const { tmp: background, browser } = await loadBackground({ preferences });
         background.storage.local.preferences.container.removal = 0;
         background.storage.local.preferences.container.numberMode = 'reuse';
-        const tabPromises = [];
-        for (let i = 0; i < 5; i++) {
-          tabPromises.push(browser.tabs._create({ url: 'about:newtab' }));
-        }
-        await Promise.all(tabPromises);
+
+        // Create 5 about:newtab tabs (parallel is fine; we'll wait for containers)
+        await Promise.all(Array.from({ length: 5 }).map(() => browser.tabs._create({ url: 'about:newtab' })));
+
+        // Wait until 5 temp containers are registered in storage
+        const { waitForTempContainers } = await import('./wait');
+        await waitForTempContainers(background, 5);
+
         const tabs = await browser.tabs.query({});
         const tempTabs = tabs.filter((tab: Tab) => tab.cookieStoreId !== 'firefox-default');
-        // Ensure we really created 5 temporary tabs (default container tab filtered out)
         tempTabs.length.should.equal(5);
-        const containerPromises = tempTabs.map((tab: Tab) => browser.contextualIdentities.get(tab.cookieStoreId));
-        const containers = await Promise.all(containerPromises);
-        for (let i = 0; i < 5; i++) {
-          const container = containers[i];
-          container && container.name.should.equal(`tmp${i + 1}`);
-        }
 
-        await browser.tabs.remove(tempTabs[0].id);
+        const identities = (await Promise.all(tempTabs.map((t: Tab) => browser.contextualIdentities.get(t.cookieStoreId)))).filter(
+          Boolean
+        ) as any[];
+        identities.length.should.equal(5);
+        // Sort by numeric suffix of the tmp name to make ordering deterministic
+        const sorted = identities.sort((a, b) => Number(a.name.replace('tmp', '')) - Number(b.name.replace('tmp', '')));
+        sorted.forEach((ci, idx) => ci.name.should.equal(`tmp${idx + 1}`));
+
+        // Remove the first (tmp1) and create a new one -> should reuse 1
+        const tmp1Tab = tempTabs.find((t: Tab) => /firefox-container-1$/.test(t.cookieStoreId)) || tempTabs[0];
+        await browser.tabs.remove(tmp1Tab.id);
         await browser.tabs._create({ url: 'about:newtab' });
-        (await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId)).name.should.equal('tmp1');
+        await waitForTempContainers(background, 5); // still 5 after reuse
+        const reused = await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId);
+        reused!.name.should.equal('tmp1');
+
+        // Next new tab should allocate tmp6
         await browser.tabs._create({ url: 'about:newtab' });
-        (await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId)).name.should.equal('tmp6');
+        await waitForTempContainers(background, 6);
+        const sixth = await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId);
+        sixth!.name.should.equal('tmp6');
       });
     });
   });

@@ -165,7 +165,6 @@ const fakeBrowser = (): {
   (global.browser.contextualIdentities.get as sinon.SinonStub).callsFake((cookieStoreId: string) => {
     let identity = containerRegistry.get(cookieStoreId);
     if (!identity && (global as any).window?.tmp?.storage?.local?.tempContainers) {
-      // Attempt to reconstruct identity from extension storage for temp containers
       const stored = (global as any).window.tmp.storage.local.tempContainers[cookieStoreId];
       if (stored) {
         identity = {
@@ -175,31 +174,6 @@ const fakeBrowser = (): {
           icon: stored.icon || 'fingerprint',
         };
         containerRegistry.set(cookieStoreId, identity);
-      }
-    }
-    if (!identity) {
-      // As a last resort, synthesize an identity for temporary containers if storage knows about it
-      if ((global as any).window?.tmp?.storage?.local?.tempContainers?.[cookieStoreId]) {
-        const stored = (global as any).window.tmp.storage.local.tempContainers[cookieStoreId];
-        identity = {
-          cookieStoreId,
-          name: stored.name,
-          color: stored.color || 'toolbar',
-          icon: stored.icon || 'fingerprint',
-        };
-        containerRegistry.set(cookieStoreId, identity);
-      } else if (/^firefox-container-\d+$/.test(cookieStoreId)) {
-        // Synthetic fallback: derive tmp name from numeric suffix to allow assertions
-        const match = cookieStoreId.match(/(\d+)$/);
-        if (match) {
-          identity = {
-            cookieStoreId,
-            name: `tmp${match[1]}`,
-            color: 'toolbar',
-            icon: 'fingerprint',
-          };
-          containerRegistry.set(cookieStoreId, identity);
-        }
       }
     }
     return Promise.resolve(identity);
