@@ -35,10 +35,10 @@ import chai from 'chai';
 import chaiDeepMatch from 'chai-deep-match';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { BrowserFake, WebExtensionsApiFake } from 'webextensions-api-fake';
 import jsdom from 'jsdom';
 import { TemporaryContainers } from '~/background/tmp';
 import { Helper } from './helper';
+import { createBrowserMock, enhanceBrowserMock, BrowserMock } from './browser-mock';
 
 const virtualConsole = new jsdom.VirtualConsole();
 virtualConsole.sendTo(console);
@@ -47,10 +47,10 @@ virtualConsole.on('jsdomError', error => {
   console.error(error);
 });
 
-const browser = new WebExtensionsApiFake().createBrowser() as BrowserFake;
+const browser = enhanceBrowserMock(createBrowserMock());
 
 const fakeBrowser = (): {
-  browser: BrowserFake;
+  browser: BrowserMock;
   clock: sinon.SinonFakeTimers;
 } => {
   // Restore any existing fake timers before creating new ones
@@ -78,7 +78,6 @@ const fakeBrowser = (): {
   global.AbortController = window.AbortController;
 
   browser.sinonSandbox.reset();
-  new WebExtensionsApiFake().fakeApi(browser);
   // FIXME
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -119,7 +118,7 @@ const nextTick = (): Promise<void> => {
 };
 
 export interface Background {
-  browser: BrowserFake;
+  browser: BrowserMock;
   tmp: TemporaryContainers;
   clock: sinon.SinonFakeTimers;
   helper: Helper;
@@ -132,7 +131,7 @@ const loadBackground = async ({
 }: {
   initialize?: boolean;
   preferences?: false | Record<string, unknown>;
-  beforeCtor?: false | ((browser: BrowserFake, clock: sinon.SinonFakeTimers) => Promise<void> | void);
+  beforeCtor?: false | ((browser: BrowserMock, clock: sinon.SinonFakeTimers) => Promise<void> | void);
 } = {}): Promise<Background> => {
   const { browser, clock } = fakeBrowser();
 
@@ -163,4 +162,4 @@ const loadBackground = async ({
   };
 };
 
-export { preferencesTestSet, sinon, expect, nextTick, loadBackground, BrowserFake };
+export { preferencesTestSet, sinon, expect, nextTick, loadBackground, BrowserMock };

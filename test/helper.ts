@@ -1,12 +1,12 @@
-import { BrowserFake } from './setup';
+import { BrowserMock } from './browser-mock';
 import { TemporaryContainers } from '~/background/tmp';
 import { Tab, OnBeforeRequestResult, ClickEvent, TmpTabOptions } from '~/types';
 
 export class Helper {
-  private browser: BrowserFake;
+  private browser: BrowserMock;
   private background: TemporaryContainers;
 
-  constructor(browser: BrowserFake, background: TemporaryContainers) {
+  constructor(browser: BrowserMock, background: TemporaryContainers) {
     this.browser = browser;
     this.background = background;
   }

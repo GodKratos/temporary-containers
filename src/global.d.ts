@@ -1,7 +1,10 @@
 import { TemporaryContainers } from './background/tmp';
 import { Log } from './background/log';
+import { Browser } from 'firefox-webext-browser';
 
 declare global {
+  const browser: Browser;
+  
   interface Window {
     tmp?: TemporaryContainers;
     log: Log;
