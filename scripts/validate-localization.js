@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/* eslint-env node */
+/* global require, module, __dirname */
+// (Keep console output: this is a CLI utility)
 
 const fs = require('fs');
 const path = require('path');
@@ -16,6 +19,7 @@ class LocalizationValidator {
     this.supportedLocales = ['en', 'ru', 'tr'];
     this.errors = [];
     this.warnings = [];
+    this.summary = [];
   }
 
   /**
@@ -34,9 +38,12 @@ class LocalizationValidator {
       // Validate consistency
       this.validateKeyConsistency(messages, uiKeys);
       this.validateLocaleCompleteness(messages);
-      this.validateKeyUsage(messages, uiKeys);
+      this.validateKeyUsage(messages);
       this.validateHardcodedStrings();
       this.validateMissingLocalization();
+
+      // Build summary (placed after validations so it reflects any changes/errors discovered)
+      this.buildSummary(messages, uiKeys);
 
       // Report results
       this.reportResults();
@@ -241,7 +248,7 @@ class LocalizationValidator {
   /**
    * Validate key usage patterns
    */
-  validateKeyUsage(messages, uiKeys) {
+  validateKeyUsage(messages) {
     // Check for keys with empty messages
     for (const locale of this.supportedLocales) {
       if (!messages[locale]) continue;
@@ -327,6 +334,66 @@ class LocalizationValidator {
   }
 
   /**
+   * Build a human-readable summary of localization coverage
+   */
+  buildSummary(messages, uiKeys) {
+    try {
+      const enMessages = messages.en || {};
+      const enKeys = new Set(Object.keys(enMessages));
+      const usedKeys = new Set([...uiKeys.keys()]);
+
+      const unusedEnglishKeys = [...enKeys].filter(k => !usedKeys.has(k));
+      const usedButMissingInEnglish = [...usedKeys].filter(k => !enKeys.has(k));
+
+      this.summary.push('Localization Summary:');
+      this.summary.push(`  UI keys used: ${usedKeys.size}`);
+      this.summary.push(`  English keys: ${enKeys.size}`);
+      if (unusedEnglishKeys.length) {
+        this.summary.push(`    Unused English keys: ${unusedEnglishKeys.length}`);
+      } else {
+        this.summary.push('    Unused English keys: 0');
+      }
+      if (usedButMissingInEnglish.length) {
+        this.summary.push(`    Keys used but missing in English: ${usedButMissingInEnglish.length}`);
+      } else {
+        this.summary.push('    Keys used but missing in English: 0');
+      }
+
+      // Per-locale stats relative to English
+      this.summary.push('  Per-locale key counts:');
+      for (const locale of this.supportedLocales) {
+        const localeMessages = messages[locale] || {};
+        const localeKeyCount = Object.keys(localeMessages).length;
+        if (locale === 'en') {
+          this.summary.push(`    en: ${localeKeyCount} (reference)`);
+          continue;
+        }
+        const localeKeys = new Set(Object.keys(localeMessages));
+        const missing = [...enKeys].filter(k => !localeKeys.has(k));
+        const extra = [...localeKeys].filter(k => !enKeys.has(k));
+        let line = `    ${locale}: ${localeKeyCount}`;
+        const annotations = [];
+        if (missing.length) annotations.push(`missing ${missing.length}`);
+        if (extra.length) annotations.push(`extra ${extra.length}`);
+        if (annotations.length) line += ` (${annotations.join(', ')})`;
+        this.summary.push(line);
+      }
+
+      // Provide a refined coverage overview
+      // Intersection of used keys that actually exist in English
+      const validUsedCount = [...usedKeys].filter(k => enKeys.has(k)).length;
+      const englishCoveragePercent = enKeys.size ? ((validUsedCount / enKeys.size) * 100).toFixed(1) : '0.0';
+      const uiValidityPercent = usedKeys.size ? ((validUsedCount / usedKeys.size) * 100).toFixed(1) : '0.0';
+
+      this.summary.push('  Coverage:');
+      this.summary.push(`    English localization coverage: ${validUsedCount}/${enKeys.size} (${englishCoveragePercent}%)`);
+      this.summary.push(`    UI codebase coverage (english): ${validUsedCount}/${usedKeys.size} (${uiValidityPercent}%)`);
+    } catch (e) {
+      this.summary.push(`  (Failed to build summary: ${e.message})`);
+    }
+  }
+
+  /**
    * Scan directory for missing localization
    */
   scanDirectoryForMissingLocalization(dir) {
@@ -368,7 +435,7 @@ class LocalizationValidator {
       const elementMatches = line.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>([^<]+)<\/\1>/g);
 
       for (const match of elementMatches) {
-        const [fullMatch, tagName, textContent] = match;
+        const [fullMatch, _tagName, textContent] = match;
         const trimmedText = textContent.trim();
 
         // Skip if:
@@ -447,7 +514,7 @@ class LocalizationValidator {
       const htmlElementMatches = line.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)[^>]*>([^<]+)<\/\1>/g);
 
       for (const match of htmlElementMatches) {
-        const [fullMatch, tagName, textContent] = match;
+        const [fullMatch, _tagName, textContent] = match;
         const trimmedText = textContent.trim();
 
         // Skip if text is too short or doesn't contain meaningful content
@@ -541,10 +608,15 @@ class LocalizationValidator {
    * Report validation results
    */
   reportResults() {
-    console.log('\n📊 Validation Results:');
+    //console.log('\n📊 Validation Results:');
+
+    if (this.summary.length) {
+      console.log('\nℹ️  ' + this.summary.shift());
+      this.summary.forEach(line => console.log(line));
+    }
 
     if (this.errors.length === 0 && this.warnings.length === 0) {
-      console.log('✅ All localization checks passed!');
+      console.log('\n✅ All localization checks passed!');
       return;
     }
 
