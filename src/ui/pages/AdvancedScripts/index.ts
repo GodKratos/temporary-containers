@@ -51,9 +51,8 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         <div id="scriptsFormSection" ${!preferences.scripts?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
           <form id="scriptForm">
             <div class="field">
-              <label for="scriptDomainPattern" data-i18n="optionsAdvancedScriptsDomainPattern">Domain Pattern (e.g., *.example.com)</label>
-              <small data-i18n="optionsAdvancedScriptsDomainPatternDescription">Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs</small>
-              <input type="text" id="scriptDomainPattern" data-i18n-placeholder="optionsAdvancedScriptsDomainPatternPlaceholder" placeholder="example.com or *.example.com" required />
+              <label for="scriptDomainPattern" data-i18n="optionsDomainPattern">Domain Pattern (e.g., *.example.com)</label>
+              <input type="text" id="scriptDomainPattern" data-i18n-placeholder="optionsDomainPatternPlaceholder" placeholder="example.com or *.example.com" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" required />
             </div>
             
             <div class="field">
@@ -148,10 +147,10 @@ export async function initAdvancedScriptsPage(): Promise<void> {
               <pre class="script-code">${codePreview}</pre>
             </div>
             <div class="script-actions">
-              <button class="button-secondary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage(
+              <button class="button-primary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage(
                 'optionsAdvancedScriptsEdit'
               )}</button>
-              <button class="button-danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage(
+              <button class="danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage(
                 'optionsAdvancedScriptsRemove'
               )}</button>
             </div>

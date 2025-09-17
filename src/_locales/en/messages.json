@@ -26,9 +26,6 @@
   "openPreferences": {
     "message": "Open Preferences/Options"
   },
-  "addDomainAndPressEnter": {
-    "message": "Add domain and press Enter"
-  },
   "containersActive": {
     "message": "Containers Active"
   },
@@ -40,9 +37,6 @@
   },
   "default": {
     "message": "Default"
-  },
-  "domainPatternExampleCom": {
-    "message": "Domain pattern (e.g. *.example.com)"
   },
   "exportSettings": {
     "message": "Export Settings"
@@ -89,6 +83,9 @@
   "optionsAdvancedDeletesHistory": {
     "message": "Deletes History Containers"
   },
+  "optionsGeneralGlobalSettings": {
+    "message": "Global Settings"
+  },
   "optionsGeneralAutomaticMode": {
     "message": "Automatic Mode"
   },
@@ -106,6 +103,9 @@
   },
   "optionsGeneralContainerIconRandomExcluded": {
     "message": "Excluded Icons for Random Container Icon"
+  },
+  "optionsGeneralContainerSettings": {
+    "message": "Container Settings"
   },
   "optionsGeneralContainerNamePrefix": {
     "message": "Container Name Prefix"
@@ -129,7 +129,7 @@
     "message": "Random Container Color"
   },
   "optionsGeneralContainerRemoval": {
-    "message": "Delete no longer needed Temporary Containers"
+    "message": "Delete Unused Temporary Containers"
   },
   "optionsGeneralContainerRemoval15Minutes": {
     "message": "15 minutes after the last tab in it closes (default)"
@@ -164,6 +164,9 @@
   "optionsIsolationAddContainer": {
     "message": "Add Container"
   },
+  "optionsIsolationGlobalExclusions": {
+    "message": "Exclusions"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Exclude Permanent Containers"
   },
@@ -180,10 +183,13 @@
     "message": "Middle Click"
   },
   "optionsIsolationGlobalMouseDescription": {
-    "message": "Global isolation rule for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced."
+    "message": "Isolation rules for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced."
   },
   "optionsIsolationGlobalMouseNavigation": {
     "message": "Mouse Navigation"
+  },
+  "optionsIsolationGlobalGlobalIsolation": {
+    "message": "Global Isolation"
   },
   "optionsIsolationGlobalUrlNavigation": {
     "message": "URL Navigation"
@@ -192,7 +198,7 @@
     "message": "Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks."
   },
   "optionsIsolationIgnoredDomains": {
-    "message": "Ignored Domains"
+    "message": "Ignored Target Domains"
   },
   "optionsIsolationIgnoredDomainsDescription": {
     "message": "Ignored domains will not be isolated."
@@ -269,14 +275,14 @@
   "savedMessage": {
     "message": "Saved"
   },
-  "optionsIsolationPerDomainPattern": {
-    "message": "Domain Pattern"
+  "optionsIsolationPerDomainDomainSettings": {
+    "message": "Domain Settings"
   },
   "optionsIsolationPerDomainPatternDescription": {
     "message": "Enter a domain pattern to configure isolation rules for specific domains."
   },
   "optionsIsolationPerDomainAlwaysOpenIn": {
-    "message": "Always Open In"
+    "message": "Always Open In Temporary Container"
   },
   "optionsIsolationEnabled": {
     "message": "Enabled"
@@ -308,11 +314,14 @@
   "optionsIsolationAddExcludedDomain": {
     "message": "Add Excluded Domain"
   },
+  "optionsIsolationAddExclusion": {
+    "message": "Add Exclusion"
+  },
   "optionsIsolationNoExcludedDomains": {
     "message": "No domains excluded."
   },
   "optionsIsolationPerDomainSaveChanges": {
-    "message": "Save Changes to $1"
+    "message": "Save changes to $1"
   },
   "optionsIsolationPerDomainAddRule": {
     "message": "Add Domain Rule"
@@ -347,14 +356,14 @@
   "optionsIsolationPerDomainPatternExists": {
     "message": "A rule for this domain pattern already exists"
   },
-  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
-    "message": "subdomain.example.com"
-  },
   "remove": {
     "message": "Remove"
   },
   "add": {
     "message": "Add"
+  },
+  "x": {
+    "message": "×"
   },
   "optionsAdvancedMiscAutomaticMode": {
     "message": "Automatic Mode"
@@ -442,15 +451,6 @@
   },
   "optionsAdvancedCookiesInfoMessage": {
     "message": "This will call the cookie API and add the cookie to the header (if allowed) during request processing if the request belongs to a Temporary Container and the domain matches the given pattern."
-  },
-  "optionsAdvancedCookiesDomainPattern": {
-    "message": "Domain Pattern"
-  },
-  "optionsAdvancedCookiesDomainPatternPlaceholder": {
-    "message": "example.com or *.example.com"
-  },
-  "optionsAdvancedCookiesDomainPatternDescription": {
-    "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
   },
   "optionsAdvancedCookiesName": {
     "message": "Name"
@@ -605,6 +605,15 @@
   "optionsExportImportImportSuccess": {
     "message": "Settings imported successfully"
   },
+  "optionsDomainPattern": {
+    "message": "Domain Pattern"
+  },
+  "optionsDomainPatternPlaceholder": {
+    "message": "example.com or *.example.com"
+  },
+  "optionsDomainPatternDescription": {
+    "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Configure scripts to execute for certain domains in Temporary Containers"
   },
@@ -613,15 +622,6 @@
   },
   "optionsAdvancedScriptsWarning": {
     "message": "Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. Only add scripts from trusted sources."
-  },
-  "optionsAdvancedScriptsDomainPattern": {
-    "message": "Domain Pattern"
-  },
-  "optionsAdvancedScriptsDomainPatternPlaceholder": {
-    "message": "example.com or *.example.com"
-  },
-  "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Code"

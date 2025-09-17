@@ -115,9 +115,18 @@ body {
   max-width: 800px;
 }
 
+.section {
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--section-divider);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
 .field {
   padding: 10px;
-  border-bottom: 1px solid var(--section-divider);
 }
 
 .field-description {
@@ -136,20 +145,18 @@ body {
   margin-top: 3px;
 }
 
-.sub-field {
-  margin-top: 12px;
-  margin-left: 24px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
 .checkbox-field label {
   margin-bottom: 0;
   font-weight: normal;
+}
+
+.domain-settings {
+  padding: var(--space-sm) var(--space-md) 0;
+  background-color: var(--domain-rule-background);
+}
+
+.domain-pattern-form {
+  margin-bottom: var(--space-md);
 }
 
 input[type='text'],
@@ -189,7 +196,13 @@ button:hover {
 
 button.small {
   padding: 4px 8px;
+  margin: var(--space-xs) 0;
   font-size: 12px;
+}
+
+button.small.tag-remove {
+  margin: 0;
+  margin-left: var(--space-sm);
 }
 
 button.danger {
@@ -248,29 +261,19 @@ button.danger:hover {
 }
 
 /* Domain Rules Styles */
-.domain-rules-container {
-  margin-top: 12px;
-}
-
-.domain-rule-add {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.domain-rule-add input {
-  flex-grow: 1;
-}
-
 .domain-rules-list {
   border: 1px solid var(--domain-rule-border);
   border-radius: 4px;
   max-height: 300px;
   overflow-y: auto;
+  background-color: var(--domain-rule-background);
+  box-shadow: var(--box-shadow);
+  padding: var(--space-sm);
 }
 
-.domain-rule {
+.domain-rule-item {
   display: flex;
+  gap: var(--space-sm);
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
@@ -279,19 +282,8 @@ button.danger:hover {
   color: var(--domain-rule-text);
 }
 
-.domain-rule:last-child {
+.domain-rule-item:last-child {
   border-bottom: none;
-}
-
-.domain-rule-domain {
-  font-weight: 500;
-  margin-right: 16px;
-  flex-grow: 1;
-}
-
-.domain-rule-action {
-  margin-right: 16px;
-  color: var(--text-color);
 }
 
 .domain-rule-buttons {

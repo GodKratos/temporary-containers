@@ -1,7 +1,4 @@
 {
-  "addDomainAndPressEnter": {
-    "message": "Добавьте домен и нажмите Enter"
-  },
   "containersActive": {
     "message": "Активные контейнеры"
   },
@@ -16,9 +13,6 @@
   },
   "disableIsolation": {
     "message": "Отключить изоляцию"
-  },
-  "domainPatternExampleCom": {
-    "message": "Шаблон домена (например *.example.com)"
   },
   "enableIsolation": {
     "message": "Включить изоляцию"
@@ -125,6 +119,9 @@
   "optionsAdvancedDeletesHistory": {
     "message": "Контейнеры с удалением истории"
   },
+  "optionsGeneralGlobalSettings": {
+    "message": "Глобальные настройки"
+  },
   "optionsGeneralAutomaticMode": {
     "message": "Автоматический режим"
   },
@@ -142,6 +139,9 @@
   },
   "optionsGeneralContainerIconRandomExcluded": {
     "message": "Исключенные иконки для случайной иконки контейнера"
+  },
+  "optionsGeneralContainerSettings": {
+    "message": "Настройки контейнера"
   },
   "optionsGeneralContainerNamePrefix": {
     "message": "Префикс имени контейнера"
@@ -200,6 +200,9 @@
   "optionsIsolationAddContainer": {
     "message": "Добавить контейнер"
   },
+  "optionsIsolationGlobalExclusions": {
+    "message": "Исключения"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Исключить постоянные контейнеры"
   },
@@ -216,10 +219,13 @@
     "message": "Средний клик"
   },
   "optionsIsolationGlobalMouseDescription": {
-    "message": "Глобальное правило изоляции для активности мыши. При использовании с включенной глобальной или доменной изоляцией, любая настройка, которая включает изоляцию, будет применена."
+    "message": "Правила изоляции для активности мыши. При использовании с включённой глобальной или доменной изоляцией будут применяться любые настройки, включающие изоляцию."
   },
   "optionsIsolationGlobalMouseNavigation": {
     "message": "Навигация мышью"
+  },
+  "optionsIsolationGlobalGlobalIsolation": {
+    "message": "Глобальная изоляция"
   },
   "optionsIsolationGlobalUrlNavigation": {
     "message": "URL-навигация"
@@ -228,7 +234,7 @@
     "message": "Глобальное правило изоляции для всей URL-навигации в существующих вкладках, новых вкладках, адресной строке и кликах мыши."
   },
   "optionsIsolationIgnoredDomains": {
-    "message": "Игнорируемые домены"
+    "message": "Игнорируемые целевые домены"
   },
   "optionsIsolationIgnoredDomainsDescription": {
     "message": "Игнорируемые домены не будут изолированы."
@@ -263,8 +269,8 @@
   "savedMessage": {
     "message": "Сохранено"
   },
-  "optionsIsolationPerDomainPattern": {
-    "message": "Шаблон домена"
+  "optionsIsolationPerDomainDomainSettings": {
+    "message": "Настройки домена"
   },
   "optionsIsolationPerDomainPatternDescription": {
     "message": "Введите шаблон домена для настройки правил изоляции для конкретных доменов."
@@ -301,6 +307,9 @@
   },
   "optionsIsolationAddExcludedDomain": {
     "message": "Добавить исключенный домен"
+  },
+  "optionsIsolationAddExclusion": {
+    "message": "Добавить исключение"
   },
   "optionsIsolationNoExcludedDomains": {
     "message": "Нет исключенных доменов."
@@ -341,14 +350,14 @@
   "optionsIsolationPerDomainPatternExists": {
     "message": "Правило для этого шаблона домена уже существует"
   },
-  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
-    "message": "subdomain.example.com"
-  },
   "remove": {
     "message": "Удалить"
   },
   "add": {
     "message": "Добавить"
+  },
+  "x": {
+    "message": "×"
   },
   "toggleIsolation": {
     "message": "Переключить изоляцию"
@@ -442,15 +451,6 @@
   },
   "optionsAdvancedCookiesInfoMessage": {
     "message": "Это будет вызывать API cookies и добавлять cookie в заголовок (если разрешено) во время обработки запроса, если запрос принадлежит временному контейнеру и домен соответствует заданному шаблону."
-  },
-  "optionsAdvancedCookiesDomainPattern": {
-    "message": "Шаблон домена"
-  },
-  "optionsAdvancedCookiesDomainPatternPlaceholder": {
-    "message": "example.com или *.example.com"
-  },
-  "optionsAdvancedCookiesDomainPatternDescription": {
-    "message": "Используйте точные домены (example.com), поддомены (sub.example.com) или подстановочные знаки (*.example.com) для сопоставления URL-адресов"
   },
   "optionsAdvancedCookiesName": {
     "message": "Название"
@@ -605,6 +605,15 @@
   "optionsExportImportImportSuccess": {
     "message": "Настройки успешно импортированы"
   },
+  "optionsDomainPattern": {
+    "message": "Шаблон домена"
+  },
+  "optionsDomainPatternPlaceholder": {
+    "message": "example.com или *.example.com"
+  },
+  "optionsDomainPatternDescription": {
+    "message": "Используйте точные домены (example.com), поддомены (sub.example.com) или подстановочные знаки (*.example.com) для сопоставления URL-адресов"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Настройка скриптов для выполнения на определенных доменах во временных контейнерах"
   },
@@ -613,15 +622,6 @@
   },
   "optionsAdvancedScriptsWarning": {
     "message": "Скрипты имеют полный доступ к веб-странице и могут читать конфиденциальные данные, изменять содержимое или выполнять действия от вашего имени. Добавляйте только скрипты из надежных источников."
-  },
-  "optionsAdvancedScriptsDomainPattern": {
-    "message": "Шаблон домена"
-  },
-  "optionsAdvancedScriptsDomainPatternPlaceholder": {
-    "message": "example.com или *.example.com"
-  },
-  "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "Используйте точные домены (example.com), поддомены (sub.example.com) или подстановочные знаки (*.example.com) для сопоставления URL-адресов"
   },
   "optionsAdvancedScriptsCode": {
     "message": "Код JavaScript"

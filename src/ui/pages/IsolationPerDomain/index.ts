@@ -47,19 +47,22 @@ export async function initIsolationPerDomainPage(): Promise<void> {
 
     content.innerHTML = `
       <div class="domain-pattern-form">
-        <div class="field">
-          <label for="domainPatternInput" data-i18n="optionsIsolationPerDomainPattern">Domain Pattern</label>
-          <input type="text" id="domainPatternInput" placeholder="example.com or *.example.com" value="${
-            editState.domain.pattern
-          }" data-i18n-placeholder="domainPatternExampleCom" />
-          <div class="field-description" data-i18n="optionsIsolationPerDomainPatternDescription">Enter a domain pattern to configure isolation rules for specific domains.</div>
+        <!-- Domain Settings -->
+        <div class="section">
+          <h3 data-i18n="optionsIsolationPerDomainDomainSettings">Domain Settings</h3>
+          <div class="field">
+            <label for="domainPatternInput" data-i18n="optionsDomainPattern">Domain Pattern</label>
+            <div class="field-description" data-i18n="optionsIsolationPerDomainPatternDescription">Enter a domain pattern to configure isolation rules for specific domains.</div>
+            <input type="text" id="domainPatternInput" placeholder="example.com or *.example.com" value="${
+              editState.domain.pattern
+            }" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+          </div>
         </div>
         
         <div id="domainSettings" class="domain-settings" ${editState.domain.pattern ? '' : 'style="opacity: 0.3; pointer-events: none;"'}>
-          
           <!-- Always Open In Settings -->
           <div class="section">
-            <h4 data-i18n="optionsIsolationPerDomainAlwaysOpenIn">Always Open In</h4>
+            <h4 data-i18n="optionsIsolationPerDomainAlwaysOpenIn">Always Open In Temporary Container</h4>
             <div class="field">
               <label for="alwaysAction" data-i18n="optionsIsolationPerDomainAction">Action</label>
               <select id="alwaysAction">
@@ -178,11 +181,11 @@ export async function initIsolationPerDomainPage(): Promise<void> {
             <h4 data-i18n="optionsIsolationExcludeTargetDomains">Exclude Target Domains</h4>
             <div class="field">
               <label for="excludeDomainInput" data-i18n="optionsIsolationAddExcludedDomain">Add Excluded Domain</label>
-              <div class="input-group">
-                <input type="text" id="excludeDomainInput" placeholder="subdomain.example.com" data-i18n-placeholder="optionsIsolationPerDomainExcludedDomainPlaceholder" />
-                <button type="button" id="addExcludedDomain" class="button-default" data-i18n="add">Add</button>
-              </div>
               <div class="field-description" data-i18n="optionsIsolationExcludeDomainsDescription">Domains that should not trigger isolation for this rule.</div>
+              <div class="input-group">
+                <input type="text" id="excludeDomainInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+                <button type="button" id="addExcludedDomain" class="small" data-i18n="optionsIsolationAddExclusion">Add Exclusion</button>
+              </div>
             </div>
             <div id="excludedDomainsList" class="excluded-domains-list">
               ${
@@ -193,7 +196,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
                         excludedDomain =>
                           `<div class="excluded-domain-item">
                     <span>${excludedDomain}</span>
-                    <button type="button" class="button-small button-danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
+                    <button type="button" class="small danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
                   </div>`
                       )
                       .join('')
@@ -240,14 +243,14 @@ export async function initIsolationPerDomainPage(): Promise<void> {
           domainItem.innerHTML = `
             <div class="domain-rule-header">
               <strong>${domain.pattern}</strong>
-              <div class="domain-rule-actions">
-                <button type="button" class="button-small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
-                <button type="button" class="button-small button-danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
+              <div class="domain-rule-buttons">
+                <button type="button" class="small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
+                <button type="button" class="small danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
               </div>
             </div>
             <div class="domain-rule-summary">
-              Navigation: ${domain.navigation.action} | 
               Always: ${domain.always.action} | 
+              Navigation: ${domain.navigation.action} | 
               Excluded: ${domain.excluded.length} domains
             </div>
           `;
@@ -384,7 +387,7 @@ function updateExcludedDomainsList(content: HTMLElement): void {
         excludedDomain =>
           `<div class="excluded-domain-item">
         <span>${excludedDomain}</span>
-        <button type="button" class="button-small button-danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
+        <button type="button" class="small danger remove-excluded-domain" data-domain="${excludedDomain}" data-i18n="remove">Remove</button>
       </div>`
       )
       .join('');

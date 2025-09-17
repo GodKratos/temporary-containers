@@ -12,59 +12,77 @@ export async function initIsolationGlobalPage(): Promise<void> {
     content.className = 'form';
     const isolationGlobal = preferences.isolation.global;
     content.innerHTML = `
-      <div class="field">
-        <label for="isolationGlobalUrlNavigation" data-i18n="optionsIsolationGlobalUrlNavigation">URL Navigation</label>
-        <select id="isolationGlobalUrlNavigation" name="isolationGlobalUrlNavigation">
-          <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
-          <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
-          <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-          <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
-        </select>
-        <div class="field-description" data-i18n="optionsIsolationGlobalUrlNavigationDescription">Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks.</div>
-      </div>
-      <div class="field">
-        <label for="isolationGlobalMouseNavigation" data-i18n="optionsIsolationGlobalMouseNavigation">Mouse Navigation</label>
-        <div class="field-description" data-i18n="optionsIsolationGlobalMouseDescription">Global isolation rule for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced.</div>
-        <label for="isolationGlobalLeftClick" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
-        <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick">
-          <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
-          <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
-          <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-          <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
-        </select>
-        <label for="isolationGlobalMiddleClick" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
-        <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick">
-          <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
-          <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
-          <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-          <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
-        </select>
-        <label for="isolationGlobalCtrlLeftClick" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
-        <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick">
-          <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
-          <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
-          <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
-          <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="excludedContainers" data-i18n="optionsIsolationExcludeContainers">Exclude Permanent Containers</label>
-        <div class="tag-input-container">
-          <select id="excludedContainersSelect" class="permanent-container-select">
-            <option value="" data-i18n="optionsIsolationSelectContainer">Select a container...</option>
+      <!-- Global Isolation -->
+      <div class="section">
+        <h3 data-i18n="optionsIsolationGlobalGlobalIsolation">Global Isolation</h3>
+        <div class="field">
+          <label for="isolationGlobalUrlNavigation" data-i18n="optionsIsolationGlobalUrlNavigation">URL Navigation</label>
+          <div class="field-description" data-i18n="optionsIsolationGlobalUrlNavigationDescription">Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks.</div>
+          <select id="isolationGlobalUrlNavigation" name="isolationGlobalUrlNavigation">
+            <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+            <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+            <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+            <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
           </select>
-          <button id="addExcludedContainer" class="small" data-i18n="optionsIsolationAddContainer">Add Container</button>
-          <div id="excludedContainers" class="tag-list"></div>
         </div>
-        <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Disables isolation events for the selected containers.</div>
       </div>
-      <div class="field">
-        <label for="ignoredDomains" data-i18n="optionsIsolationIgnoredDomains">Ignored Domains</label>
-        <div class="tag-input-container">
-          <input type="text" id="ignoredDomainsInput" placeholder="Add domain and press Enter" data-i18n-placeholder="addDomainAndPressEnter" />
-          <div id="ignoredDomains" class="tag-list"></div>
+
+      <!-- Mouse Navigation -->
+      <div class="section">
+        <h3 data-i18n="optionsIsolationGlobalMouseNavigation">Mouse Navigation</h3>
+        <div class="field-description" data-i18n="optionsIsolationGlobalMouseDescription">Isolation rules for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced.</div>
+        <div class="field">
+          <label for="isolationGlobalLeftClick" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
+          <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick">
+            <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+            <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+            <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+            <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+          </select>
         </div>
-        <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
+        <div class="field">
+          <label for="isolationGlobalMiddleClick" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
+          <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick">
+            <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+            <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+            <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+            <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="isolationGlobalCtrlLeftClick" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
+          <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick">
+            <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
+            <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
+            <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
+            <option value="always" data-i18n="optionsIsolationAlways">Always Isolate</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Exclusions -->
+      <div class="section">
+        <h3 data-i18n="optionsIsolationGlobalExclusions">Exclusions</h3>
+        <div class="field">
+          <label for="excludedContainers" data-i18n="optionsIsolationExcludeContainers">Exclude Permanent Containers</label>
+          <div class="field-description" data-i18n="optionsIsolationExcludeContainersDescription">Disables isolation events for the selected containers.</div>
+          <div class="tag-input-container">
+            <select id="excludedContainersSelect" class="permanent-container-select">
+              <option value="" data-i18n="optionsIsolationSelectContainer">Select a container...</option>
+            </select>
+            <button id="addExcludedContainer" class="small" data-i18n="optionsIsolationAddContainer">Add Container</button>
+            <div id="excludedContainers" class="tag-list"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ignoredDomains" data-i18n="optionsIsolationIgnoredDomains">Ignored Target Domains</label>
+          <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
+          <div class="tag-input-container">
+            <input type="text" id="ignoredDomainsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+            <button type="button" id="addIgnoredDomain" class="small" data-i18n="add">Add</button>
+            <div id="ignoredDomains" class="tag-list"></div>
+          </div>
+        </div>
       </div>
     `;
     if (!section.firstChild) section.appendChild(content);
@@ -142,7 +160,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         tag.className = 'tag';
         tag.textContent = permanentContainers.find(c => c.id === id)?.name || id;
         const remove = document.createElement('button');
-        remove.className = 'tag-remove';
+        remove.className = 'tag-remove danger small';
         remove.textContent = '×';
         remove.addEventListener('click', async () => {
           preferences.isolation.global.excludedContainers = preferences.isolation.global.excludedContainers.filter(
@@ -170,6 +188,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
 
     // Ignored Domains logic
     const ignoredDomainsInput = content.querySelector('#ignoredDomainsInput') as HTMLInputElement;
+    const addIgnoredDomainButton = content.querySelector('#addIgnoredDomain') as HTMLButtonElement;
     const ignoredDomainsDiv = content.querySelector('#ignoredDomains') as HTMLElement;
     function renderIgnoredDomains() {
       ignoredDomainsDiv.innerHTML = '';
@@ -178,7 +197,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         tag.className = 'tag';
         tag.textContent = domain;
         const remove = document.createElement('button');
-        remove.className = 'tag-remove';
+        remove.className = 'tag-remove danger small';
         remove.textContent = '×';
         remove.addEventListener('click', async () => {
           preferences.ignoreRequests = preferences.ignoreRequests.filter((d: string) => d !== domain);
@@ -191,17 +210,16 @@ export async function initIsolationGlobalPage(): Promise<void> {
       });
     }
     renderIgnoredDomains();
-    ignoredDomainsInput?.addEventListener('keydown', async (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const value = ignoredDomainsInput.value.trim();
-        if (value && !preferences.ignoreRequests.includes(value)) {
-          preferences.ignoreRequests.push(value);
-          await savePreferences(preferences);
-          renderIgnoredDomains();
-          ignoredDomainsInput.value = '';
-          showSuccess(browser.i18n.getMessage('savedMessage'));
-        }
+
+    addIgnoredDomainButton?.addEventListener('click', async () => {
+      const domain = ignoredDomainsInput.value.trim();
+      if (domain && !preferences.ignoreRequests?.includes(domain)) {
+        if (!preferences.ignoreRequests) preferences.ignoreRequests = [];
+        preferences.ignoreRequests.push(domain);
+        await savePreferences(preferences);
+        ignoredDomainsInput.value = '';
+        renderIgnoredDomains();
+        showSuccess(browser.i18n.getMessage('savedMessage'));
       }
     });
   } catch (_error) {

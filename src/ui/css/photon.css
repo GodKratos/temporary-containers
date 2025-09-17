@@ -6,6 +6,7 @@
   --blue-60: #0060df;
   --blue-70: #003eaa;
   --blue-80: #002275;
+  --blue-90: #000a66;
   --grey-10: #f9f9fa;
   --grey-20: #ededf0;
   --grey-30: #d7d7db;
@@ -61,7 +62,7 @@
   --domain-rule-background: white;
   --domain-rule-text: var(--grey-90);
   --domain-rule-border: var(--grey-30);
-  --field-description-color: rgba(12, 12, 13, 0.8);
+  --field-description-color: var(--grey-90);
 
   /* Spacing */
   --space-xs: 4px;
@@ -118,7 +119,7 @@
     --domain-rule-background: var(--grey-70);
     --domain-rule-text: var(--grey-10);
     --domain-rule-border: var(--grey-60);
-    --field-description-color: rgba(249, 249, 250, 0.8);
+    --field-description-color: var(--grey-10);
 
     /* Shadows for dark mode */
     --shadow-1: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -224,6 +225,18 @@ button {
 
 .button-primary:active {
   background-color: var(--blue-80);
+}
+
+.button-secondary {
+  background-color: var(--blue-70);
+}
+
+.button-secondary:hover {
+  background-color: var(--blue-80);
+}
+
+.button-secondary:active {
+  background-color: var(--blue-90);
 }
 
 .button-ghost {

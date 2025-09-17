@@ -56,9 +56,8 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         
         <form id="cookieForm">
           <div class="field">
-            <label for="cookieDomainPattern" data-i18n="optionsAdvancedCookiesDomainPattern">Domain Pattern</label>
-            <small data-i18n="optionsAdvancedCookiesDomainPatternDescription">Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs</small>
-            <input type="text" id="cookieDomainPattern" data-i18n-placeholder="optionsAdvancedCookiesDomainPatternPlaceholder" placeholder="Domain pattern" required />
+            <label for="cookieDomainPattern" data-i18n="optionsDomainPattern">Domain Pattern</label>
+            <input type="text" id="cookieDomainPattern" data-i18n-placeholder="optionsDomainPatternPlaceholder" placeholder="example.com or *.example.com" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" required />
           </div>
           
           <div class="field">
@@ -190,10 +189,10 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           cookieItem.innerHTML = `
             <div class="cookie-details">${cookieDetails}</div>
             <div class="cookie-actions">
-              <button class="button-secondary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage(
+              <button class="button-primary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage(
                 'optionsAdvancedCookiesEdit'
               )}</button>
-              <button class="button-danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage(
+              <button class="danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage(
                 'optionsAdvancedCookiesRemove'
               )}</button>
             </div>

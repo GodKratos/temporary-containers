@@ -1,7 +1,4 @@
 {
-  "addDomainAndPressEnter": {
-    "message": "Alan adı ekleyip Enter tuşuna basın"
-  },
   "containersActive": {
     "message": "Aktif Konteynerler"
   },
@@ -16,9 +13,6 @@
   },
   "disableIsolation": {
     "message": "İzolasyonu Devre Dışı Bırak"
-  },
-  "domainPatternExampleCom": {
-    "message": "Alan adı deseni (örn. *.example.com)"
   },
   "enableIsolation": {
     "message": "İzolasyonu Etkinleştir"
@@ -125,6 +119,9 @@
   "optionsAdvancedDeletesHistory": {
     "message": "Geçmişi Silen Konteynerler"
   },
+  "optionsGeneralGlobalSettings": {
+    "message": "Küresel Ayarlar"
+  },
   "optionsGeneralAutomaticMode": {
     "message": "Otomatik Mod"
   },
@@ -142,6 +139,9 @@
   },
   "optionsGeneralContainerIconRandomExcluded": {
     "message": "Rastgele konteyner simgesi için hariç tutulan simgeler"
+  },
+  "optionsGeneralContainerSettings": {
+    "message": "Konteyner Ayarları"
   },
   "optionsGeneralContainerNamePrefix": {
     "message": "Konteyner Adı Ön Eki"
@@ -165,7 +165,7 @@
     "message": "Rastgele Konteyner Rengi"
   },
   "optionsGeneralContainerRemoval": {
-    "message": "Artık gerekli olmayan geçici konteynerleri sil"
+    "message": "Kullanılmayan Geçici Kapsayıcıları Sil"
   },
   "optionsGeneralContainerRemoval15Minutes": {
     "message": "İçindeki son sekme kapandıktan 15 dakika sonra (öntanımlı)"
@@ -200,6 +200,9 @@
   "optionsIsolationAddContainer": {
     "message": "Konteyner Ekle"
   },
+  "optionsIsolationGlobalExclusions": {
+    "message": "Hariç Tutmalar"
+  },
   "optionsIsolationExcludeContainers": {
     "message": "Kalıcı Konteynerleri Hariç Tut"
   },
@@ -216,10 +219,13 @@
     "message": "Orta Tık"
   },
   "optionsIsolationGlobalMouseDescription": {
-    "message": "Fare tıklama etkinlikleri için küresel izolasyon kuralı. Küresel veya alan adı izolasyonu etkinken kullanıldığında, izolasyonu etkinleştiren herhangi bir ayar uygulanacaktır."
+    "message": "Fare tıklama olayları için izolasyon kuralları. Genel veya etki alanı izolasyonu etkinleştirildiğinde, izolasyonu etkinleştiren tüm ayarlar uygulanır."
   },
   "optionsIsolationGlobalMouseNavigation": {
     "message": "Fare Navigasyonu"
+  },
+  "optionsIsolationGlobalGlobalIsolation": {
+    "message": "Küresel İzolasyon"
   },
   "optionsIsolationGlobalUrlNavigation": {
     "message": "URL Navigasyonu"
@@ -228,7 +234,7 @@
     "message": "Mevcut sekmeler, yeni sekmeler, adres çubuğu ve fare tıklamaları için tüm URL navigasyonu için küresel izolasyon kuralı."
   },
   "optionsIsolationIgnoredDomains": {
-    "message": "Yoksayılan Alan Adları"
+    "message": "Yoksayılan Hedef Alan Adları"
   },
   "optionsIsolationIgnoredDomainsDescription": {
     "message": "Yoksayılan alan adları izole edilmeyecektir."
@@ -263,8 +269,8 @@
   "savedMessage": {
     "message": "Kaydedildi"
   },
-  "optionsIsolationPerDomainPattern": {
-    "message": "Alan Adı Deseni"
+  "optionsIsolationPerDomainDomainSettings": {
+    "message": "Alan Adı Ayarları"
   },
   "optionsIsolationPerDomainPatternDescription": {
     "message": "Belirli alan adları için izolasyon kuralları yapılandırmak üzere bir alan adı deseni girin."
@@ -301,6 +307,9 @@
   },
   "optionsIsolationAddExcludedDomain": {
     "message": "Hariç Tutulan Alan Adı Ekle"
+  },
+  "optionsIsolationAddExclusion": {
+    "message": "Hariç Tutma Ekle"
   },
   "optionsIsolationNoExcludedDomains": {
     "message": "Hariç tutulan alan adı yok."
@@ -341,14 +350,14 @@
   "optionsIsolationPerDomainPatternExists": {
     "message": "Bu alan adı deseni için bir kural zaten mevcut"
   },
-  "optionsIsolationPerDomainExcludedDomainPlaceholder": {
-    "message": "subdomain.example.com"
-  },
   "remove": {
     "message": "Kaldır"
   },
   "add": {
     "message": "Ekle"
+  },
+  "x": {
+    "message": "×"
   },
   "toggleIsolation": {
     "message": "İzolasyonu Değiştir"
@@ -442,15 +451,6 @@
   },
   "optionsAdvancedCookiesInfoMessage": {
     "message": "Bu çerez API'sini çağırır ve istek bir geçici konteynere aitse ve alan adı verilen desenle eşleşirse istek işleme sırasında çerezi başlığa ekler (izin verilirse)."
-  },
-  "optionsAdvancedCookiesDomainPattern": {
-    "message": "Alan Adı Deseni"
-  },
-  "optionsAdvancedCookiesDomainPatternPlaceholder": {
-    "message": "example.com veya *.example.com"
-  },
-  "optionsAdvancedCookiesDomainPatternDescription": {
-    "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
   },
   "optionsAdvancedCookiesName": {
     "message": "Ad"
@@ -605,6 +605,15 @@
   "optionsExportImportImportSuccess": {
     "message": "Ayarlar başarıyla içe aktarıldı"
   },
+  "optionsDomainPattern": {
+    "message": "Alan Adı Deseni"
+  },
+  "optionsDomainPatternPlaceholder": {
+    "message": "example.com veya *.example.com"
+  },
+  "optionsDomainPatternDescription": {
+    "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Geçici konteynerlerde belirli alan adları için çalıştırılacak betikleri yapılandır"
   },
@@ -613,15 +622,6 @@
   },
   "optionsAdvancedScriptsWarning": {
     "message": "Betikler web sayfasına tam erişime sahiptir ve hassas verileri okuyabilir, içeriği değiştirebilir veya sizin adınıza eylemler gerçekleştirebilir. Yalnızca güvenilir kaynaklardan betikler ekleyin."
-  },
-  "optionsAdvancedScriptsDomainPattern": {
-    "message": "Alan Adı Deseni"
-  },
-  "optionsAdvancedScriptsDomainPatternPlaceholder": {
-    "message": "example.com veya *.example.com"
-  },
-  "optionsAdvancedScriptsDomainPatternDescription": {
-    "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Kodu"

@@ -50,11 +50,10 @@ export async function initAdvancedMiscPage(): Promise<void> {
           <input type="checkbox" id="replaceTabs" ${preferences.replaceTabs ? 'checked' : ''} />
           <label for="replaceTabs" data-i18n="optionsAdvancedMiscReplaceTabs">Instead of creating a new tab replace the current tab in case of Isolation</label>
         </div>
-        
-        <div class="field checkbox-field">
+
+        <div class="field checkbox-field" data-i18n-title="optionsAdvancedMiscCloseRedirectorTabsDescription" title="Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)">
           <input type="checkbox" id="closeRedirectorTabs" ${preferences.closeRedirectorTabs?.active ? 'checked' : ''} />
           <label for="closeRedirectorTabs" data-i18n="optionsAdvancedMiscCloseRedirectorTabs">Automatically close leftover redirector tabs after 2 seconds</label>
-          <div class="field-description" data-i18n="optionsAdvancedMiscCloseRedirectorTabsDescription">Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)</div>
         </div>
         
         <div class="field">
@@ -83,12 +82,12 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <div class="field">
           <label for="ignoreRequestsInput" data-i18n="optionsAdvancedMiscAddIgnoredDomain">Add Ignored Domain</label>
           <div class="input-group">
-            <input type="text" id="ignoreRequestsInput" placeholder="example.com" data-i18n-placeholder="domainPatternExampleCom" />
-            <button type="button" id="addIgnoredDomain" class="button-default" data-i18n="add">Add</button>
+            <input type="text" id="ignoreRequestsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+            <button type="button" id="addIgnoredDomain" class="small" data-i18n="add">Add</button>
           </div>
         </div>
         
-        <div id="ignoredDomainsList" class="ignored-domains-list">
+        <div id="ignoredDomainsList" class="tag-list">
           ${
             preferences.ignoreRequests?.length === 0
               ? '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>'
@@ -96,8 +95,10 @@ export async function initAdvancedMiscPage(): Promise<void> {
                   .map(
                     ignoredDomain =>
                       `<div class="ignored-domain-item">
-                <span>${ignoredDomain}</span>
-                <button type="button" class="button-small button-danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="remove">Remove</button>
+                <span class="tag">
+                  ${ignoredDomain}
+                  <button type="button" class="tag-remove small danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="x">x</button>
+                </span>
               </div>`
                   )
                   .join('')
@@ -136,7 +137,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscResetStorage">Reset Storage</h3>
         <div class="field">
-          <button type="button" id="resetStorage" class="button-danger" data-i18n="optionsAdvancedMiscResetStorageButton">Wipe local storage and reset it to default</button>
+          <button type="button" id="resetStorage" class="danger" data-i18n="optionsAdvancedMiscResetStorageButton">Wipe local storage and reset it to default</button>
           <div class="field-description" data-i18n="optionsAdvancedMiscResetStorageDescription">This action cannot be undone. All settings will be lost.</div>
         </div>
       </div>
