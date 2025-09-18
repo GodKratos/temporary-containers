@@ -420,7 +420,7 @@
     "message": "Пользовательский интерфейс"
   },
   "optionsAdvancedMiscPageAction": {
-    "message": "Показывать иконку в адресной строке для вызова всплывающего окна"
+    "message": "Показывать иконку всплывающего меню в адресной строке"
   },
   "optionsAdvancedMiscPopupDefaultTab": {
     "message": "Вкладка по умолчанию во всплывающем окне"
@@ -453,25 +453,25 @@
     "message": "Это будет вызывать API cookies и добавлять cookie в заголовок (если разрешено) во время обработки запроса, если запрос принадлежит временному контейнеру и домен соответствует заданному шаблону."
   },
   "optionsAdvancedCookiesName": {
-    "message": "Название"
+    "message": "Название cookie"
   },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
-    "message": "Значение"
+    "message": "Значение cookie"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
-    "message": "Домен"
+    "message": "Домены cookie"
   },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
-    "message": "URL"
+    "message": "URL cookie"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"

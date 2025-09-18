@@ -420,7 +420,7 @@
     "message": "Kullanıcı Arayüzü"
   },
   "optionsAdvancedMiscPageAction": {
-    "message": "Adres çubuğunda açılır pencereyi gösteren simgeyi göster"
+    "message": "Adres çubuğunda açılır menü simgesini göster"
   },
   "optionsAdvancedMiscPopupDefaultTab": {
     "message": "Varsayılan Açılır Pencere Sekmesi"
@@ -453,25 +453,25 @@
     "message": "Bu çerez API'sini çağırır ve istek bir geçici konteynere aitse ve alan adı verilen desenle eşleşirse istek işleme sırasında çerezi başlığa ekler (izin verilirse)."
   },
   "optionsAdvancedCookiesName": {
-    "message": "Ad"
+    "message": "Adı cookie"
   },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
-    "message": "Değer"
+    "message": "Değeri cookie"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
-    "message": "Alan Adı"
+    "message": "Alan Adı cookie"
   },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
-    "message": "URL"
+    "message": "URL cookie"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"

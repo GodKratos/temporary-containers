@@ -61,27 +61,27 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           </div>
           
           <div class="field">
-            <label for="cookieName" data-i18n="optionsAdvancedCookiesName">Name</label>
+            <label for="cookieName" data-i18n="optionsAdvancedCookiesName">Cookie Name</label>
             <input type="text" id="cookieName" data-i18n-placeholder="optionsAdvancedCookiesNamePlaceholder" placeholder="Cookie name" required />
           </div>
           
           <div class="field">
-            <label for="cookieValue" data-i18n="optionsAdvancedCookiesValue">Value</label>
+            <label for="cookieValue" data-i18n="optionsAdvancedCookiesValue">Cookie Value</label>
             <input type="text" id="cookieValue" data-i18n-placeholder="optionsAdvancedCookiesValuePlaceholder" placeholder="Cookie value" required />
           </div>
           
           <div class="field">
-            <label for="cookieDomain" data-i18n="optionsAdvancedCookiesDomain">Domain</label>
+            <label for="cookieDomain" data-i18n="optionsAdvancedCookiesDomain">Cookie Domain</label>
             <input type="text" id="cookieDomain" data-i18n-placeholder="optionsAdvancedCookiesDomainPlaceholder" placeholder="Cookie domain" />
           </div>
           
           <div class="field">
-            <label for="cookieUrl" data-i18n="optionsAdvancedCookiesUrl">URL</label>
+            <label for="cookieUrl" data-i18n="optionsAdvancedCookiesUrl">Cookie URL</label>
             <input type="text" id="cookieUrl" data-i18n-placeholder="optionsAdvancedCookiesUrlPlaceholder" placeholder="Cookie URL" required />
           </div>
           
           <div class="collapsible-section">
-            <h4 class="collapsible-header" data-i18n="optionsAdvancedCookiesAdvancedOptions">▶ Advanced Options</h4>
+            <h4 class="collapsible-header" data-i18n="optionsAdvancedCookiesAdvancedOptions1">▶ Advanced Options</h4>
             <div class="collapsible-content" style="display: none;">
               <div class="field">
                 <label for="cookieExpirationDate" data-i18n="optionsAdvancedCookiesExpirationDate">Expiration Date</label>

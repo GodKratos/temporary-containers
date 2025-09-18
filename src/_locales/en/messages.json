@@ -420,7 +420,7 @@
     "message": "User Interface"
   },
   "optionsAdvancedMiscPageAction": {
-    "message": "Show icon in the address bar that reveals the popup"
+    "message": "Show popup menu icon in the address bar"
   },
   "optionsAdvancedMiscPopupDefaultTab": {
     "message": "Default Popup Tab"
@@ -453,25 +453,25 @@
     "message": "This will call the cookie API and add the cookie to the header (if allowed) during request processing if the request belongs to a Temporary Container and the domain matches the given pattern."
   },
   "optionsAdvancedCookiesName": {
-    "message": "Name"
+    "message": "Cookie Name"
   },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
-    "message": "Value"
+    "message": "Cookie Value"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
   },
   "optionsAdvancedCookiesDomain": {
-    "message": "Domain"
+    "message": "Cookie Domain"
   },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
-    "message": "URL"
+    "message": "Cookie URL"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"

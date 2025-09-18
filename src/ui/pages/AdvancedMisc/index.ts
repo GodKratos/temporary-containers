@@ -79,7 +79,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <h3 data-i18n="optionsAdvancedMiscUI">User Interface</h3>
         <div class="field checkbox-field">
           <input type="checkbox" id="pageAction" ${preferences.pageAction ? 'checked' : ''} />
-          <label for="pageAction" data-i18n="optionsAdvancedMiscPageAction">Show icon in the address bar that reveals the popup</label>
+          <label for="pageAction" data-i18n="optionsAdvancedMiscPageAction">Show popup menu icon in the address bar</label>
         </div>
         
         <div class="field">
