@@ -37,6 +37,7 @@ body {
 
 /* Popup content */
 .popup-content {
+  width: calc(100% / 0.9); /* Adjust for scaling of .tab-content */
   display: flex;
   flex: 1;
   overflow: hidden;
@@ -110,6 +111,8 @@ body {
 
 /* Tab content */
 .tab-content {
+  transform: scale(0.9);
+  transform-origin: top left;
   flex: 1;
   padding: var(--space-sm);
   overflow-y: auto;
