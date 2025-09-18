@@ -40,6 +40,29 @@ export async function initIsolationPerDomainPage(): Promise<void> {
     const preferences = await getPreferences();
     const section = document.getElementById('isolation-domain');
     if (!section) return;
+
+    // If opened from popup (popup.html) prepopulate the domain pattern with the active tab's hostname when it's an http(s) URL.
+    if (!editState.editing && !editState.domain.pattern) {
+      const isPopupContext = /\/popup\.html$/i.test(window.location.pathname);
+      if (isPopupContext && typeof browser !== 'undefined' && browser.tabs && browser.tabs.query) {
+        try {
+          const [activeTab] = await browser.tabs.query({ currentWindow: true, active: true });
+          const url = activeTab && typeof activeTab.url === 'string' ? activeTab.url : '';
+          if (/^https?:/i.test(url)) {
+            try {
+              const parsed = new URL(url);
+              if (parsed.hostname) {
+                editState.domain.pattern = parsed.hostname;
+              }
+            } catch (_e) {
+              // ignore invalid URL
+            }
+          }
+        } catch (_e) {
+          // ignore tab query errors (e.g., missing permissions in tests)
+        }
+      }
+    }
     section.innerHTML = '';
 
     const content = document.createElement('div');
