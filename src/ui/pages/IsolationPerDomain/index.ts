@@ -221,42 +221,54 @@ export async function initIsolationPerDomainPage(): Promise<void> {
         </div>
       </div>
 
-      <div class="domain-rules-list">
+      <div class="config-list">
         <h3 data-i18n="optionsIsolationPerDomainConfiguredRules">Configured Domain Rules</h3>
-        ${
-          preferences.isolation.domain.length === 0
-            ? '<p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>'
-            : '<div id="domainRulesList" class="domain-rules"></div>'
-        }
+        <div id="domainsDisplay"></div>
       </div>
     `;
 
     if (!section.firstChild) section.appendChild(content);
 
+    /*
+        ${
+          preferences.isolation.domain.length === 0
+            ? '<p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>'
+            : '<div id="domainRulesList" class="config-rules"></div>'
+        }
+    */
+
     // Populate domain rules list
+    const domainsDisplay = document.getElementById('domainsDisplay') as HTMLElement;
+
+    domainsDisplay.innerHTML = '';
+
     if (preferences.isolation.domain.length > 0) {
-      const domainRulesList = content.querySelector('#domainRulesList');
-      if (domainRulesList) {
-        preferences.isolation.domain.forEach((domain, index) => {
-          const domainItem = document.createElement('div');
-          domainItem.className = 'domain-rule-item';
-          domainItem.innerHTML = `
-            <div class="domain-rule-header">
-              <strong>${domain.pattern}</strong>
-              <div class="domain-rule-buttons">
-                <button type="button" class="small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
-                <button type="button" class="small danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
-              </div>
-            </div>
-            <div class="domain-rule-summary">
-              Always: ${domain.always.action} | 
-              Navigation: ${domain.navigation.action} | 
-              Excluded: ${domain.excluded.length} domains
-            </div>
-          `;
-          domainRulesList.appendChild(domainItem);
-        });
-      }
+      preferences.isolation.domain.forEach((domain, index) => {
+        const domainSection = document.createElement('div');
+        domainSection.className = 'config-group';
+        domainSection.innerHTML = `
+          <h4>${domain.pattern}</h4>
+        `;
+
+        const domainItem = document.createElement('div');
+        domainItem.className = 'config-item';
+        domainItem.innerHTML = `
+          <div class="config-item-details">
+            <div><strong data-i18n="optionsIsolationPerDomainAlways">Always Open:</strong> ${domain.always.action}</div>
+            <div><strong data-i18n="optionsIsolationPerDomainNavigation">URL Navigation:</strong> ${domain.navigation.action}</div>
+            <div><strong data-i18n="optionsIsolationPerDomainExclude">Excluded Domains:</strong> ${domain.excluded.length} domains</div>
+          </div>
+          <div class="config-item-actions">
+            <button type="button" class="small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
+            <button type="button" class="small danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
+          </div>
+        `;
+
+        domainSection.appendChild(domainItem);
+        domainsDisplay.appendChild(domainSection);
+      });
+    } else {
+      domainsDisplay.innerHTML = '<p data-i18n="optionsIsolationNoRulesConfigured">No domain isolation rules configured.</p>';
     }
 
     // Set up event listeners

@@ -28,6 +28,7 @@ This project is a Firefox extension for managing temporary containers. It allows
 - Include tests for new features and bug fixes.
 - Keep the codebase clean and well-organized.
 - If code is removed, do not replace it with comments that describe what was there before.
+- Apply consistent styling and formatting across the UI components, reusing CSS classes where applicable.
 
 # Localisation
 

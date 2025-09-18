@@ -56,9 +56,6 @@
   "importSettingsDescription": {
     "message": "Import settings from a file."
   },
-  "noDomainIsolationRulesConfigured": {
-    "message": "No domain isolation rules configured."
-  },
   "optionsActionsConvertPermanent": {
     "message": "Convert Temporary Container to Permanent"
   },
@@ -332,6 +329,15 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Configured Domain Rules"
   },
+  "optionsIsolationPerDomainAlways": {
+    "message": "Always Open:"
+  },
+  "optionsIsolationPerDomainNavigation": {
+    "message": "URL Navigation:"
+  },
+  "optionsIsolationPerDomainExclude": {
+    "message": "Excluded Domains:"
+  },
   "optionsIsolationPerDomainEdit": {
     "message": "Edit"
   },
@@ -355,6 +361,9 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "A rule for this domain pattern already exists"
+  },
+  "optionsIsolationNoRulesConfigured": {
+    "message": "No domain isolation rules configured."
   },
   "remove": {
     "message": "Remove"
@@ -630,7 +639,7 @@
     "message": "Firefox Sync is limited to 100KB total. Large scripts may prevent preference syncing across devices. Local Storage is limited to 5MB maximum. Exceeding this limit may cause the add-on to malfunction."
   },
   "optionsAdvancedScriptsCode": {
-    "message": "JavaScript Code"
+    "message": "JavaScript Code:"
   },
   "optionsAdvancedScriptsCodePlaceholder": {
     "message": "console.log('Hello from temporary container!');"
@@ -639,7 +648,7 @@
     "message": "Enter the JavaScript code to execute when the domain pattern matches"
   },
   "optionsAdvancedScriptsRunAt": {
-    "message": "Execute At"
+    "message": "Execute At:"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Add Script"

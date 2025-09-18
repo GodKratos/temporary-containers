@@ -63,6 +63,8 @@
   --domain-rule-text: var(--grey-90);
   --domain-rule-border: var(--grey-30);
   --field-description-color: var(--grey-90);
+  --section-background: var(--grey-20);
+  --field-background: white;
 
   /* Spacing */
   --space-xs: 4px;
@@ -120,6 +122,8 @@
     --domain-rule-text: var(--grey-10);
     --domain-rule-border: var(--grey-60);
     --field-description-color: var(--grey-10);
+    --section-background: var(--grey-70);
+    --field-background: var(--grey-90);
 
     /* Shadows for dark mode */
     --shadow-1: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -486,4 +490,93 @@ button {
   margin-bottom: var(--space-md);
   font-weight: 500;
   color: var(--text-color);
+}
+
+/* Configured items lists */
+.config-list {
+  border: 1px solid var(--domain-rule-border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--domain-rule-background);
+  padding: var(--space-sm);
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-1);
+}
+
+.config-list h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+
+.config-group {
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--section-background);
+  overflow: hidden;
+}
+
+.config-group > h4 {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--sidebar-background);
+  border-bottom: 1px solid var(--border-color);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.config-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.config-item:last-child {
+  margin-bottom: 0;
+}
+
+.config-item-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.config-item-details {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Code preview inside scripts list */
+.script-code {
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--input-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  max-height: 120px;
+  overflow: auto;
+  font-size: var(--font-size-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+}
+
+.excluded-domain-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--tag-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.excluded-domains-list p {
+  margin: 0;
 }

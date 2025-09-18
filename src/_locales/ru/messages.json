@@ -83,9 +83,6 @@
   "initializingLabel": {
     "message": "Инициализация..."
   },
-  "noDomainIsolationRulesConfigured": {
-    "message": "Правила изоляции доменов не настроены."
-  },
   "openNewDeletesHistoryContainer": {
     "message": "Открыть новый \"Временный контейнер с удалением истории\""
   },
@@ -326,6 +323,15 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Настроенные правила доменов"
   },
+  "optionsIsolationPerDomainAlways": {
+    "message": "Всегда открывать:"
+  },
+  "optionsIsolationPerDomainNavigation": {
+    "message": "Навигация по URL:"
+  },
+  "optionsIsolationPerDomainExclude": {
+    "message": "Исключённые домены:"
+  },
   "optionsIsolationPerDomainEdit": {
     "message": "Изменить"
   },
@@ -349,6 +355,9 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Правило для этого шаблона домена уже существует"
+  },
+  "optionsIsolationNoRulesConfigured": {
+    "message": "Правила изоляции доменов не настроены."
   },
   "remove": {
     "message": "Удалить"
@@ -630,7 +639,7 @@
     "message": "Firefox Sync ограничен общим объёмом 100 КБ. Крупные скрипты могут помешать синхронизации настроек между устройствами. Локальное хранилище ограничено 5 МБ. Превышение лимита может привести к некорректной работе дополнения."
   },
   "optionsAdvancedScriptsCode": {
-    "message": "Код JavaScript"
+    "message": "Код JavaScript:"
   },
   "optionsAdvancedScriptsCodePlaceholder": {
     "message": "console.log('Привет из временного контейнера!');"
@@ -639,7 +648,7 @@
     "message": "Введите JavaScript код для выполнения при совпадении шаблона домена"
   },
   "optionsAdvancedScriptsRunAt": {
-    "message": "Выполнить в"
+    "message": "Выполнить в:"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Добавить скрипт"

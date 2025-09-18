@@ -83,9 +83,6 @@
   "initializingLabel": {
     "message": "Başlatılıyor..."
   },
-  "noDomainIsolationRulesConfigured": {
-    "message": "Alan adı izolasyon kuralları yapılandırılmamış."
-  },
   "openNewDeletesHistoryContainer": {
     "message": "Yeni \"Geçmişi Silen Geçici Konteyner\" aç"
   },
@@ -326,6 +323,15 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Yapılandırılmış Alan Adı Kuralları"
   },
+  "optionsIsolationPerDomainAlways": {
+    "message": "Her Zaman Aç:"
+  },
+  "optionsIsolationPerDomainNavigation": {
+    "message": "URL Gezinme:"
+  },
+  "optionsIsolationPerDomainExclude": {
+    "message": "Hariç Tutulan Alan Adları:"
+  },
   "optionsIsolationPerDomainEdit": {
     "message": "Düzenle"
   },
@@ -349,6 +355,9 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Bu alan adı deseni için bir kural zaten mevcut"
+  },
+  "optionsIsolationNoRulesConfigured": {
+    "message": "Alan adı izolasyon kuralları yapılandırılmamış."
   },
   "remove": {
     "message": "Kaldır"
@@ -630,7 +639,7 @@
     "message": "Firefox Sync toplamda 100KB ile sınırlıdır. Büyük betikler tercihlerin cihazlar arasında senkronize edilmesini engelleyebilir. Yerel Depolama en fazla 5MB ile sınırlıdır. Bu sınırın aşılması eklentinin düzgün çalışmamasına neden olabilir."
   },
   "optionsAdvancedScriptsCode": {
-    "message": "JavaScript Kodu"
+    "message": "JavaScript Kodu:"
   },
   "optionsAdvancedScriptsCodePlaceholder": {
     "message": "console.log('Geçici konteynerden merhaba!');"
@@ -639,7 +648,7 @@
     "message": "Alan adı deseni eşleştiğinde çalıştırılacak JavaScript kodunu girin"
   },
   "optionsAdvancedScriptsRunAt": {
-    "message": "Çalıştırma Zamanı"
+    "message": "Çalıştırma Zamanı:"
   },
   "optionsAdvancedScriptsAdd": {
     "message": "Betik Ekle"

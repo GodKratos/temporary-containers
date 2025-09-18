@@ -135,13 +135,13 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         </form>
       </div>
       
-      <div class="section" id="cookiesList">
+      <div class="config-list" id="cookiesList">
         <h3 data-i18n="optionsAdvancedCookiesConfiguredCookies">Configured Cookies</h3>
         <div id="cookiesDisplay"></div>
       </div>
     `;
 
-    section.appendChild(content);
+    if (!section.firstChild) section.appendChild(content);
 
     // Setup collapsible advanced options
     const collapsibleHeader = content.querySelector('.collapsible-header') as HTMLElement;
@@ -159,9 +159,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       const cookiesDomain = preferences.cookies?.domain || {};
 
       if (Object.keys(cookiesDomain).length === 0) {
-        cookiesDisplay.innerHTML = `<p data-i18n="optionsAdvancedCookiesNoCookies">${browser.i18n.getMessage(
-          'optionsAdvancedCookiesNoCookies'
-        )}</p>`;
+        cookiesDisplay.innerHTML = `<p data-i18n="optionsAdvancedCookiesNoCookies">No cookies configured</p>`;
         return;
       }
 
@@ -169,36 +167,29 @@ export async function initAdvancedCookiesPage(): Promise<void> {
 
       for (const [domainPattern, cookies] of Object.entries(cookiesDomain)) {
         const domainSection = document.createElement('div');
-        domainSection.className = 'cookie-domain-section';
+        domainSection.className = 'config-group';
         domainSection.innerHTML = `
           <h4>${domainPattern}</h4>
-          <div class="cookie-list"></div>
         `;
-
-        const cookieList = domainSection.querySelector('.cookie-list') as HTMLElement;
 
         cookies.forEach((cookie: Cookie, index: number) => {
           const cookieItem = document.createElement('div');
-          cookieItem.className = 'cookie-item';
+          cookieItem.className = 'config-item';
 
           const cookieDetails = Object.entries(cookie)
             .filter(([_key, value]) => value !== '')
-            .map(([key, value]) => `<span class="cookie-property"><strong>${key}:</strong> ${value}</span>`)
+            .map(([key, value]) => `<div><strong>${key}:</strong> ${value}</div>`)
             .join('');
 
           cookieItem.innerHTML = `
-            <div class="cookie-details">${cookieDetails}</div>
-            <div class="cookie-actions">
-              <button class="button-primary cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">${browser.i18n.getMessage(
-                'optionsAdvancedCookiesEdit'
-              )}</button>
-              <button class="danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">${browser.i18n.getMessage(
-                'optionsAdvancedCookiesRemove'
-              )}</button>
+            <div class="config-item-details">${cookieDetails}</div>
+            <div class="config-item-actions">
+              <button class="small cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">Edit</button>
+              <button class="small danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">Remove</button>
             </div>
           `;
 
-          cookieList.appendChild(cookieItem);
+          domainSection.appendChild(cookieItem);
         });
 
         cookiesDisplay.appendChild(domainSection);

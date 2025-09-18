@@ -86,13 +86,13 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         </div>
       </div>
       
-      <div class="section" id="scriptsList" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+      <div class="config-list" id="scriptsList" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
         <h3 data-i18n="optionsAdvancedScriptsConfiguredScripts">Configured Scripts</h3>
         <div id="scriptsDisplay"></div>
       </div>
     `;
 
-    section.appendChild(content);
+    if (!section.firstChild) section.appendChild(content);
 
     // Scripts warning checkbox handler
     const scriptsWarningCheckbox = document.getElementById('scriptsWarningRead') as HTMLInputElement;
@@ -138,9 +138,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
       const scriptsDomain = preferences.scripts?.domain || {};
 
       if (Object.keys(scriptsDomain).length === 0) {
-        scriptsDisplay.innerHTML = `<p data-i18n="optionsAdvancedScriptsNoScripts">${browser.i18n.getMessage(
-          'optionsAdvancedScriptsNoScripts'
-        )}</p>`;
+        scriptsDisplay.innerHTML = `<p data-i18n="optionsAdvancedScriptsNoScripts">No scripts configured</p>`;
         return;
       }
 
@@ -148,41 +146,30 @@ export async function initAdvancedScriptsPage(): Promise<void> {
 
       for (const [domainPattern, scripts] of Object.entries(scriptsDomain)) {
         const domainSection = document.createElement('div');
-        domainSection.className = 'script-domain-section';
+        domainSection.className = 'config-group';
         domainSection.innerHTML = `
           <h4>${domainPattern}</h4>
-          <div class="script-list"></div>
         `;
-
-        const scriptList = domainSection.querySelector('.script-list') as HTMLElement;
 
         scripts.forEach((script: Script, index: number) => {
           const scriptItem = document.createElement('div');
-          scriptItem.className = 'script-item';
+          scriptItem.className = 'config-item';
 
           const codePreview = script.code.length > 100 ? script.code.substring(0, 100) + '...' : script.code;
 
           scriptItem.innerHTML = `
-            <div class="script-details">
-              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsRunAt">${browser.i18n.getMessage(
-                'optionsAdvancedScriptsRunAt'
-              )}:</strong> ${script.runAt}</div>
-              <div class="script-property"><strong data-i18n="optionsAdvancedScriptsCode">${browser.i18n.getMessage(
-                'optionsAdvancedScriptsCode'
-              )}:</strong></div>
+            <div class="config-item-details">
+              <div><strong data-i18n="optionsAdvancedScriptsRunAt">Execute At:</strong> ${script.runAt}</div>
+              <div><strong data-i18n="optionsAdvancedScriptsCode">JavaScript Code:</strong></div>
               <pre class="script-code">${codePreview}</pre>
             </div>
-            <div class="script-actions">
-              <button class="button-primary script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">${browser.i18n.getMessage(
-                'optionsAdvancedScriptsEdit'
-              )}</button>
-              <button class="danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">${browser.i18n.getMessage(
-                'optionsAdvancedScriptsRemove'
-              )}</button>
+            <div class="config-item-actions">
+              <button class="small script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">Edit Script</button>
+              <button class="small danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">Remove</button>
             </div>
           `;
 
-          scriptList.appendChild(scriptItem);
+          domainSection.appendChild(scriptItem);
         });
 
         scriptsDisplay.appendChild(domainSection);
