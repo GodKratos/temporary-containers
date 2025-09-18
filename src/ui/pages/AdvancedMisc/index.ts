@@ -74,38 +74,6 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
 
-      <!-- Ignoring Requests -->
-      <div class="section">
-        <h3 data-i18n="optionsAdvancedMiscIgnoringRequests">Ignoring Requests</h3>
-        <div class="field-description" data-i18n="optionsAdvancedMiscIgnoringRequestsDescription">Domains on the about:config extensions.webextensions.restrictedDomains list can't be unignored. You should never change that list.</div>
-        
-        <div class="field">
-          <label for="ignoreRequestsInput" data-i18n="optionsAdvancedMiscAddIgnoredDomain">Add Ignored Domain</label>
-          <div class="input-group">
-            <input type="text" id="ignoreRequestsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
-            <button type="button" id="addIgnoredDomain" class="small" data-i18n="add">Add</button>
-          </div>
-        </div>
-        
-        <div id="ignoredDomainsList" class="tag-list">
-          ${
-            preferences.ignoreRequests?.length === 0
-              ? '<p data-i18n="optionsAdvancedMiscNoIgnoredDomains">No domains ignored.</p>'
-              : (preferences.ignoreRequests || [])
-                  .map(
-                    ignoredDomain =>
-                      `<div class="ignored-domain-item">
-                <span class="tag">
-                  ${ignoredDomain}
-                  <button type="button" class="tag-remove small danger remove-ignored-domain" data-domain="${ignoredDomain}" data-i18n="x">x</button>
-                </span>
-              </div>`
-                  )
-                  .join('')
-          }
-        </div>
-      </div>
-
       <!-- UI Settings -->
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscUI">User Interface</h3>
@@ -237,25 +205,6 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
     showSuccess(browser.i18n.getMessage('savedMessage'));
   });
 
-  // Ignored domains
-  const ignoreRequestsInput = content.querySelector('#ignoreRequestsInput') as HTMLInputElement;
-  const addIgnoredDomainButton = content.querySelector('#addIgnoredDomain') as HTMLButtonElement;
-
-  addIgnoredDomainButton?.addEventListener('click', async () => {
-    const domain = ignoreRequestsInput.value.trim();
-    if (domain && !preferences.ignoreRequests?.includes(domain)) {
-      if (!preferences.ignoreRequests) preferences.ignoreRequests = [];
-      preferences.ignoreRequests.push(domain);
-      await savePreferences(preferences);
-      ignoreRequestsInput.value = '';
-      await initAdvancedMiscPage(); // Refresh to show the new domain
-      showSuccess(browser.i18n.getMessage('savedMessage'));
-    }
-  });
-
-  // Set up ignored domain removal
-  setupIgnoredDomainRemoval(content, preferences);
-
   // Reset storage
   const resetStorageButton = content.querySelector('#resetStorage') as HTMLButtonElement;
   resetStorageButton?.addEventListener('click', async () => {
@@ -279,23 +228,5 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
       console.error('Error resetting storage:', error);
       showError(browser.i18n.getMessage('optionsAdvancedMiscResetStorageFailed'));
     }
-  });
-}
-
-function setupIgnoredDomainRemoval(content: HTMLElement, preferences: PreferencesSchema): void {
-  const removeButtons = content.querySelectorAll('.remove-ignored-domain');
-  removeButtons.forEach(button => {
-    button.addEventListener('click', async () => {
-      const domain = (button as HTMLElement).dataset.domain;
-      if (domain && preferences.ignoreRequests) {
-        const index = preferences.ignoreRequests.indexOf(domain);
-        if (index > -1) {
-          preferences.ignoreRequests.splice(index, 1);
-          await savePreferences(preferences);
-          await initAdvancedMiscPage(); // Refresh to remove the domain from display
-          showSuccess(browser.i18n.getMessage('savedMessage'));
-        }
-      }
-    });
   });
 }
