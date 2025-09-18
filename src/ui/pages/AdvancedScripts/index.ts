@@ -1,5 +1,5 @@
 // Advanced: Scripts page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
 import { Script } from '../../../types';
 
 interface ScriptDefaults {
@@ -15,6 +15,7 @@ const scriptDefaults: ScriptDefaults = {
 export async function initAdvancedScriptsPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
+    const permissions = await getPermissions();
     const section = document.getElementById('advanced-scripts');
     if (!section) return;
     section.innerHTML = '';
@@ -26,19 +27,26 @@ export async function initAdvancedScriptsPage(): Promise<void> {
 
     const content = document.createElement('div');
     content.className = 'form';
+
+    // Determine effective active state (preference + granted permission)
+    const scriptsInitiallyActive = Boolean(preferences.scripts?.active && permissions.webNavigation);
+
     content.innerHTML = `
       <div class="section">
         <h3 data-i18n="optionsAdvancedScriptsTitle">Configure scripts to execute for certain domains in Temporary Containers</h3>
         <div class="warning-message">
-          <strong data-i18n="optionsAdvancedScriptsWarningTitle">Warning: Never add scripts from untrusted sources!</strong>
-          <span data-i18n="optionsAdvancedScriptsWarning">Also keep in mind that Firefox Sync storage is limited to 100KB, so adding huge scripts here will prevent you from exporting preferences to Firefox Sync since the scripts are stored as preferences. The local storage limit is 5MB, so adding scripts exceeding that might prevent the Add-on from working at all.</span>
+          <strong data-i18n="optionsAdvancedScriptsWarningTitle">Security Warning</strong>
+          <br/>
+          <span data-i18n="optionsAdvancedScriptsWarning">Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. ONLY ADD SCRIPTS FROM TRUSTED SOURCES!</span>
+          <br/><br/>
+          <strong data-i18n="optionsAdvancedScriptsWarningTitle2">Storage Limits & Sync Considerations</strong>
+          <br/>
+          <span data-i18n="optionsAdvancedScriptsWarning2">Firefox Sync is limited to 100KB total. Large scripts may prevent preference syncing across devices. Local Storage is limited to 5MB maximum. Exceeding this limit may cause the add-on to malfunction.</span>
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="scriptsWarningRead" ${preferences.scripts?.active ? 'checked' : ''} ${
-                preferences.scripts?.active ? 'disabled' : ''
-              } />
-              <span data-i18n="optionsAdvancedScriptsWarningAccept">I have read the warning and understand the implications that come with using "Scripts". When ticking the checkbox Firefox will ask you for "Access browser activity" permissions.</span>
+              <input type="checkbox" id="scriptsWarningRead" ${scriptsInitiallyActive ? 'checked' : ''} />
+              <span data-i18n="optionsAdvancedScriptsWarningAccept">I understand and want to enable script injection (requires "Access browser activity" permission)</span>
             </label>
           </strong>
         </div>
@@ -48,7 +56,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <small>Technical details: Uses <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/executeScript" target="_blank" data-i18n="optionsAdvancedScriptsAPITabsExecuteScript">tabs.executeScript</a> API. Pro-tip: Use <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Xray_vision#Waiving_Xray_vision" target="_blank" data-i18n="optionsAdvancedScriptsAPIWindowWrappedJSObject">window.wrappedJSObject</a> to access the original window.</small>
         </div>
         
-        <div id="scriptsFormSection" ${!preferences.scripts?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+        <div id="scriptsFormSection" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
           <form id="scriptForm">
             <div class="field">
               <label for="scriptDomainPattern" data-i18n="optionsDomainPattern">Domain Pattern (e.g., *.example.com)</label>
@@ -78,7 +86,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         </div>
       </div>
       
-      <div class="section" id="scriptsList" ${!preferences.scripts?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+      <div class="section" id="scriptsList" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
         <h3 data-i18n="optionsAdvancedScriptsConfiguredScripts">Configured Scripts</h3>
         <div id="scriptsDisplay"></div>
       </div>
@@ -90,9 +98,27 @@ export async function initAdvancedScriptsPage(): Promise<void> {
     const scriptsWarningCheckbox = document.getElementById('scriptsWarningRead') as HTMLInputElement;
     scriptsWarningCheckbox.addEventListener('change', async () => {
       if (!preferences.scripts) preferences.scripts = { active: false, domain: {} };
+
+      if (scriptsWarningCheckbox.checked) {
+        // Request permission if not already granted
+        try {
+          const granted = await browser.permissions.request({ permissions: ['webNavigation'] });
+          if (!granted) {
+            scriptsWarningCheckbox.checked = false; // Revert UI
+            showError(browser.i18n.getMessage('errorFailedToSave'));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to request webNavigation permission', e);
+          scriptsWarningCheckbox.checked = false;
+          showError(browser.i18n.getMessage('errorFailedToSave'));
+          return;
+        }
+      }
+
       preferences.scripts.active = scriptsWarningCheckbox.checked;
 
-      // Update form sections visibility
+      // Update form/list sections visibility
       const formSection = document.getElementById('scriptsFormSection') as HTMLElement;
       const listSection = document.getElementById('scriptsList') as HTMLElement;
       const opacity = scriptsWarningCheckbox.checked ? '' : 'opacity: 0.3; pointer-events: none;';

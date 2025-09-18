@@ -621,7 +621,13 @@
     "message": "Security Warning"
   },
   "optionsAdvancedScriptsWarning": {
-    "message": "Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. Only add scripts from trusted sources."
+    "message": "Scripts have full access to the web page and can read sensitive data, modify content, or perform actions on your behalf. ONLY ADD SCRIPTS FROM TRUSTED SOURCES!"
+  },
+  "optionsAdvancedScriptsWarningTitle2": {
+    "message": "Storage Limits & Sync Considerations"
+  },
+  "optionsAdvancedScriptsWarning2": {
+    "message": "Firefox Sync is limited to 100KB total. Large scripts may prevent preference syncing across devices. Local Storage is limited to 5MB maximum. Exceeding this limit may cause the add-on to malfunction."
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Code"
@@ -657,7 +663,7 @@
     "message": "Domain pattern and code are required"
   },
   "optionsAdvancedScriptsWarningAccept": {
-    "message": "I understand and want to enable script injection"
+    "message": "I understand and want to enable script injection (requires \"Access browser activity\" permission)"
   },
   "optionsAdvancedScriptsInfoMessage": {
     "message": "This will call the script API if the tab url being loaded belongs to a Temporary Container and its domain matches the given pattern."

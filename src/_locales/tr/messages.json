@@ -621,7 +621,13 @@
     "message": "Güvenlik Uyarısı"
   },
   "optionsAdvancedScriptsWarning": {
-    "message": "Betikler web sayfasına tam erişime sahiptir ve hassas verileri okuyabilir, içeriği değiştirebilir veya sizin adınıza eylemler gerçekleştirebilir. Yalnızca güvenilir kaynaklardan betikler ekleyin."
+    "message": "Betikler web sayfasına tam erişime sahiptir ve hassas verileri okuyabilir, içeriği değiştirebilir veya sizin adınıza işlemler gerçekleştirebilir. YALNIZCA GÜVENİLEN KAYNAKLARDAN BETİK EKLEYİN!"
+  },
+  "optionsAdvancedScriptsWarningTitle2": {
+    "message": "Depolama Sınırları ve Senkronizasyon Hususları"
+  },
+  "optionsAdvancedScriptsWarning2": {
+    "message": "Firefox Sync toplamda 100KB ile sınırlıdır. Büyük betikler tercihlerin cihazlar arasında senkronize edilmesini engelleyebilir. Yerel Depolama en fazla 5MB ile sınırlıdır. Bu sınırın aşılması eklentinin düzgün çalışmamasına neden olabilir."
   },
   "optionsAdvancedScriptsCode": {
     "message": "JavaScript Kodu"
@@ -657,7 +663,7 @@
     "message": "Alan adı deseni ve kod gereklidir"
   },
   "optionsAdvancedScriptsWarningAccept": {
-    "message": "Anlıyorum ve betik enjeksiyonunu etkinleştirmek istiyorum"
+    "message": "Anlıyorum ve betik enjeksiyonunu etkinleştirmek istiyorum (\"Tarayıcı etkinliğine erişim\" izni gereklidir)"
   },
   "optionsAdvancedScriptsInfoMessage": {
     "message": "Bu, istek geçici bir konteynere aitse ve alan adı verilen desenle eşleşiyorsa, sayfa yükleme sırasında tabs.executeScript çağırır ve window.wrappedJSObject'e erişir."
