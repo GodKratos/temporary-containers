@@ -1,15 +1,19 @@
 // Advanced: Delete History page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
 
 export async function initAdvancedDeleteHistoryPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
+    const permissions = await getPermissions();
     const section = document.getElementById('advanced-delete-history');
     if (!section) return;
     section.innerHTML = '';
 
     const content = document.createElement('div');
     content.className = 'form';
+    // Determine effective active state (preference + granted permission)
+    const deletesHistoryInitiallyActive = Boolean(preferences.deletesHistory?.active && permissions.history);
+
     content.innerHTML = `
       <div class="section">
         <h3 data-i18n="optionsAdvancedDeleteHistoryTitle">"Deletes History Temporary Containers"</h3>
@@ -21,9 +25,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="deletesHistoryWarningRead" ${preferences.deletesHistory?.active ? 'checked' : ''} ${
-                preferences.deletesHistory?.active ? 'disabled' : ''
-              } />
+              <input type="checkbox" id="deletesHistoryWarningRead" ${deletesHistoryInitiallyActive ? 'checked' : ''} />
               <span data-i18n="optionsAdvancedDeleteHistoryWarningAccept">I have read the Warning and understand the implications that come with using "Deletes History Temporary Containers". When ticking the checkbox Firefox will ask you for "Access browsing history" permissions.</span>
             </label>
           </strong>
@@ -36,7 +38,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       </div>
       
       <div class="section" id="deletesHistoryOptions" ${
-        !preferences.deletesHistory?.active ? 'style="opacity: 0.3; pointer-events: none;"' : ''
+        !deletesHistoryInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''
       }>
         <div class="field">
           <label for="deletesHistoryAutomaticMode" data-i18n="optionsAdvancedDeleteHistoryAutomaticMode">Automatically create "Deletes History Temporary Containers"</label>
@@ -146,7 +148,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         preferences.isolation.global.mouseClick.left?.container || 'default';
     }
 
-    // Warning checkbox handler
+    // Warning checkbox handler (requests history permission when enabling)
     const warningCheckbox = document.getElementById('deletesHistoryWarningRead') as HTMLInputElement;
     warningCheckbox.addEventListener('change', async () => {
       if (!preferences.deletesHistory) {
@@ -162,6 +164,23 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           statistics: true,
         };
       }
+
+      if (warningCheckbox.checked) {
+        try {
+          const granted = await browser.permissions.request({ permissions: ['history'] });
+          if (!granted) {
+            warningCheckbox.checked = false; // revert UI
+            showError(browser.i18n.getMessage('errorFailedToSave'));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to request history permission', e);
+          warningCheckbox.checked = false;
+          showError(browser.i18n.getMessage('errorFailedToSave'));
+          return;
+        }
+      }
+
       preferences.deletesHistory.active = warningCheckbox.checked;
 
       // Update options section visibility
