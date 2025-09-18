@@ -229,14 +229,6 @@ export async function initIsolationPerDomainPage(): Promise<void> {
 
     if (!section.firstChild) section.appendChild(content);
 
-    /*
-        ${
-          preferences.isolation.domain.length === 0
-            ? '<p data-i18n="noDomainIsolationRulesConfigured">No domain isolation rules configured.</p>'
-            : '<div id="domainRulesList" class="config-rules"></div>'
-        }
-    */
-
     // Populate domain rules list
     const domainsDisplay = document.getElementById('domainsDisplay') as HTMLElement;
 

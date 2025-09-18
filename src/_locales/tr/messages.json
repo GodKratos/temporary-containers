@@ -365,9 +365,6 @@
   "add": {
     "message": "Ekle"
   },
-  "x": {
-    "message": "×"
-  },
   "toggleIsolation": {
     "message": "İzolasyonu Değiştir"
   },
@@ -412,18 +409,6 @@
   },
   "optionsAdvancedMiscIsolationMacEnabled": {
     "message": "MAC Olmayan İzole Et"
-  },
-  "optionsAdvancedMiscIgnoringRequests": {
-    "message": "İstekleri Yoksayma"
-  },
-  "optionsAdvancedMiscIgnoringRequestsDescription": {
-    "message": "about:config extensions.webextensions.restrictedDomains listesindeki alan adları yoksayılmayi kaldırılamaz. Bu listeyi asla değiştirmemelisiniz."
-  },
-  "optionsAdvancedMiscAddIgnoredDomain": {
-    "message": "Yoksayılan Alan Adı Ekle"
-  },
-  "optionsAdvancedMiscNoIgnoredDomains": {
-    "message": "Yoksayılan alan adı yok."
   },
   "optionsAdvancedMiscUI": {
     "message": "Kullanıcı Arayüzü"
@@ -547,9 +532,6 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Alan adı deseni, ad ve URL gereklidir"
-  },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Gelişmiş Seçenekler"
   },
   "optionsAdvancedCookiesWarningTitle": {
     "message": "Uyarı:"

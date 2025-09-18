@@ -371,9 +371,6 @@
   "add": {
     "message": "Add"
   },
-  "x": {
-    "message": "×"
-  },
   "optionsAdvancedMiscAutomaticMode": {
     "message": "Automatic Mode"
   },
@@ -412,18 +409,6 @@
   },
   "optionsAdvancedMiscIsolationMacEnabled": {
     "message": "Isolate Non-MAC"
-  },
-  "optionsAdvancedMiscIgnoringRequests": {
-    "message": "Ignoring Requests"
-  },
-  "optionsAdvancedMiscIgnoringRequestsDescription": {
-    "message": "Domains on the about:config extensions.webextensions.restrictedDomains list can't be unignored. You should never change that list."
-  },
-  "optionsAdvancedMiscAddIgnoredDomain": {
-    "message": "Add Ignored Domain"
-  },
-  "optionsAdvancedMiscNoIgnoredDomains": {
-    "message": "No domains ignored."
   },
   "optionsAdvancedMiscUI": {
     "message": "User Interface"
@@ -547,9 +532,6 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Domain pattern, name, and URL are required"
-  },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Advanced Options"
   },
   "optionsAdvancedCookiesWarningTitle": {
     "message": "Warning:"

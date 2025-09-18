@@ -365,9 +365,6 @@
   "add": {
     "message": "Добавить"
   },
-  "x": {
-    "message": "×"
-  },
   "toggleIsolation": {
     "message": "Переключить изоляцию"
   },
@@ -412,18 +409,6 @@
   },
   "optionsAdvancedMiscIsolationMacEnabled": {
     "message": "Изолировать Не-MAC"
-  },
-  "optionsAdvancedMiscIgnoringRequests": {
-    "message": "Игнорирование запросов"
-  },
-  "optionsAdvancedMiscIgnoringRequestsDescription": {
-    "message": "Домены из списка about:config extensions.webextensions.restrictedDomains нельзя разигнорировать. Никогда не изменяйте этот список."
-  },
-  "optionsAdvancedMiscAddIgnoredDomain": {
-    "message": "Добавить игнорируемый домен"
-  },
-  "optionsAdvancedMiscNoIgnoredDomains": {
-    "message": "Игнорируемые домены отсутствуют."
   },
   "optionsAdvancedMiscUI": {
     "message": "Пользовательский интерфейс"
@@ -547,9 +532,6 @@
   },
   "optionsAdvancedCookiesValidationError": {
     "message": "Шаблон домена, название и URL обязательны"
-  },
-  "optionsAdvancedCookiesAdvancedOptions": {
-    "message": "Дополнительные опции"
   },
   "optionsAdvancedCookiesWarningTitle": {
     "message": "Предупреждение:"
