@@ -86,6 +86,9 @@
   "optionsGeneralAutomaticMode": {
     "message": "Automatic Mode"
   },
+  "optionsGeneralAutomaticModeTitle": {
+    "message": "Automatically open new tabs and websites in Temporary Containers when no container is assigned."
+  },
   "optionsGeneralContainerColor": {
     "message": "Container Color"
   },

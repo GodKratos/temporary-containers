@@ -14,7 +14,7 @@ export async function initGeneralPage(): Promise<void> {
       <!-- Global Settings -->
       <div class="section">
         <h3 data-i18n="optionsGeneralGlobalSettings">Global Settings</h3>
-        <div class="field checkbox-field">
+        <div class="field checkbox-field" data-i18n-title="optionsGeneralAutomaticModeTitle" title="Automatically open new tabs and websites in Temporary Containers when no container is assigned.">
           <input type="checkbox" id="automaticMode" name="automaticMode" />
           <label for="automaticMode" data-i18n="optionsGeneralAutomaticMode">Enable Automatic Mode</label>
         </div>

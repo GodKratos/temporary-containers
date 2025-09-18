@@ -122,6 +122,9 @@
   "optionsGeneralAutomaticMode": {
     "message": "Otomatik Mod"
   },
+  "optionsGeneralAutomaticModeTitle": {
+    "message": "Yeni sekmeler ve web sitelerini, hiçbir konteyner atanmadığında Geçici Konteynerlerde otomatik olarak açın."
+  },
   "optionsGeneralContainerColor": {
     "message": "Konteyner Rengi"
   },

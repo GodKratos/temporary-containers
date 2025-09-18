@@ -122,6 +122,9 @@
   "optionsGeneralAutomaticMode": {
     "message": "Автоматический режим"
   },
+  "optionsGeneralAutomaticModeTitle": {
+    "message": "Автоматически открывать новые вкладки и веб-сайты в временных контейнерах, когда контейнер не назначен."
+  },
   "optionsGeneralContainerColor": {
     "message": "Цвет контейнера"
   },
