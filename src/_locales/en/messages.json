@@ -569,23 +569,32 @@
   "optionsIsolationPerDomainAction": {
     "message": "Action"
   },
+  "optionsStatisticsTemporaryContainerStatistics": {
+    "message": "Temporary Container Statistics"
+  },
   "optionsStatisticsCookiesDeleted": {
     "message": "Cookies Deleted"
   },
   "optionsStatisticsCacheDeleted": {
     "message": "Cache Deleted"
   },
+  "optionsStatisticsCollectTemporaryContainerStats": {
+    "message": "Collect local statistics for Temporary Containers"
+  },
   "optionsStatisticsDeletesHistoryStatistics": {
     "message": "Deletes History Statistics"
   },
   "optionsStatisticsDeletesHistoryContainers": {
-    "message": "Deletes History Containers"
+    "message": "Deletes History Containers Removed"
   },
   "optionsStatisticsDeletesHistoryCookies": {
-    "message": "Deletes History Cookies"
+    "message": "Deletes History Cookies Deleted"
   },
   "optionsStatisticsUrlsDeletedFromHistory": {
     "message": "URLs Deleted from History"
+  },
+  "optionsStatisticsCollectDeletesHistoryStats": {
+    "message": "Collect local statistics for Deletes History containers"
   },
   "optionsStatisticsResetSuccess": {
     "message": "Statistics have been reset."

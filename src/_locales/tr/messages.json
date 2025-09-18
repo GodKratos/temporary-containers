@@ -569,23 +569,32 @@
   "optionsIsolationPerDomainAction": {
     "message": "Eylem"
   },
+  "optionsStatisticsTemporaryContainerStatistics": {
+    "message": "Geçici Konteyner İstatistikleri"
+  },
   "optionsStatisticsCookiesDeleted": {
     "message": "Silinen Çerezler"
   },
   "optionsStatisticsCacheDeleted": {
     "message": "Silinen Önbellek"
   },
+  "optionsStatisticsCollectTemporaryContainerStats": {
+    "message": "Geçici Konteynerler için yerel istatistikleri topla"
+  },
   "optionsStatisticsDeletesHistoryStatistics": {
     "message": "Geçmiş Silme İstatistikleri"
   },
   "optionsStatisticsDeletesHistoryContainers": {
-    "message": "Geçmişi Silen Konteynerler"
+    "message": "Geçmişi Silen Konteynerler Kaldırıldı"
   },
   "optionsStatisticsDeletesHistoryCookies": {
-    "message": "Geçmiş Silme Çerezleri"
+    "message": "Geçmiş Silme Çerezleri Silindi"
   },
   "optionsStatisticsUrlsDeletedFromHistory": {
     "message": "Geçmişten Silinen URL'ler"
+  },
+  "optionsStatisticsCollectDeletesHistoryStats": {
+    "message": "Geçmişi Temizle kapsayıcıları için yerel istatistikleri toplayın"
   },
   "optionsStatisticsResetSuccess": {
     "message": "İstatistikler sıfırlandı."

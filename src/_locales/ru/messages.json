@@ -569,23 +569,32 @@
   "optionsIsolationPerDomainAction": {
     "message": "Действие"
   },
+  "optionsStatisticsTemporaryContainerStatistics": {
+    "message": "Статистика временных контейнеров"
+  },
   "optionsStatisticsCookiesDeleted": {
     "message": "Удаленные cookies"
   },
   "optionsStatisticsCacheDeleted": {
     "message": "Очищенный кэш"
   },
+  "optionsStatisticsCollectTemporaryContainerStats": {
+    "message": "Собирать локальную статистику для временных контейнеров"
+  },
   "optionsStatisticsDeletesHistoryStatistics": {
     "message": "Статистика удаления истории"
   },
   "optionsStatisticsDeletesHistoryContainers": {
-    "message": "Контейнеры с удалением истории"
+    "message": "Удаленные контейнеры с удалением истории"
   },
   "optionsStatisticsDeletesHistoryCookies": {
-    "message": "Cookies удаления истории"
+    "message": "Удаленные cookies удаления истории"
   },
   "optionsStatisticsUrlsDeletedFromHistory": {
     "message": "URL удаленные из истории"
+  },
+  "optionsStatisticsCollectDeletesHistoryStats": {
+    "message": "Собирать локальную статистику для контейнеров с удалением истории"
   },
   "optionsStatisticsResetSuccess": {
     "message": "Статистика была сброшена."
