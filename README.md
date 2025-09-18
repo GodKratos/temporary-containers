@@ -68,9 +68,9 @@ The project uses Husky for Git hooks with the following automated checks:
 
 #### Pre-push Hook
 
-- Runs the full test suite (`npm test`)
-- Validates the extension build (`npm run webext:lint`)
-- Validates localization files (`npm run lint:localization`)
+- Runs the full test suite (`npm run test`)
+- Runs a test build (`npm run build`)
+- Runs all linting checks (ESLint, TypeScript, localization) (`npm run lint`)
 
 #### Commit Message Hook
 
