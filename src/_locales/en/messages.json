@@ -39,10 +39,46 @@
     "message": "Default"
   },
   "exportSettings": {
-    "message": "Export Settings"
+    "message": "Export to File"
   },
-  "exportSettingsDescription": {
-    "message": "Export settings to a file."
+  "exportToFirefoxSync": {
+    "message": "Export to Firefox Sync"
+  },
+  "importFromFirefoxSync": {
+    "message": "Import from Firefox Sync"
+  },
+  "wipeFirefoxSyncExport": {
+    "message": "Wipe Firefox Sync Export"
+  },
+  "exportToFirefoxSyncSuccess": {
+    "message": "Settings exported to Firefox Sync successfully"
+  },
+  "importFromFirefoxSyncSuccess": {
+    "message": "Settings imported from Firefox Sync successfully"
+  },
+  "wipeFirefoxSyncSuccess": {
+    "message": "Firefox Sync export wiped successfully"
+  },
+  "noSyncExportFound": {
+    "message": "No preferences found in Firefox Sync"
+  },
+  "confirmSyncOverwrite": {
+    "message": "There's already an export in Firefox Sync. Overwrite?"
+  },
+  "confirmSyncImport": {
+    "message": "Import preferences from Firefox Sync?"
+  },
+  "confirmSyncWipe": {
+    "message": "Wipe Firefox Sync export? This can't be undone."
+  },
+  "lastSyncExport": {
+    "message": "Last Firefox Sync Export"
+  },
+  "syncExportDate": {
+    "message": "Date"
+  },
+  "syncExportVersion": {
+    "message": "Version"
   },
   "glossary": {
     "message": "Glossary"
@@ -51,10 +87,7 @@
     "message": "Glossary"
   },
   "importSettings": {
-    "message": "Import Settings"
-  },
-  "importSettingsDescription": {
-    "message": "Import settings from a file."
+    "message": "Import from File"
   },
   "optionsActionsConvertPermanent": {
     "message": "Convert Temporary Container to Permanent"

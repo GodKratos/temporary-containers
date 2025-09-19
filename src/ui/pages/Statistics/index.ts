@@ -15,7 +15,7 @@ export async function initStatisticsPage(): Promise<void> {
 
     content.innerHTML = `
       <div class="section">
-        <h4 data-i18n="optionsStatisticsTemporaryContainerStatistics">Temporary Container Statistics</h4>
+        <h3 data-i18n="optionsStatisticsTemporaryContainerStatistics">Temporary Container Statistics</h3>
         <div class="statistics-grid">
           <div class="statistic-item">
             <div class="statistic-label" data-i18n="containersRemoved">Containers Removed</div>

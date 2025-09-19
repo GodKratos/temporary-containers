@@ -45,10 +45,46 @@
     "message": "İçe aktarma hatası: Dosya bulunamadı"
   },
   "exportSettings": {
-    "message": "Ayarları Dışa Aktar"
+    "message": "Dosyaya Aktar"
   },
-  "exportSettingsDescription": {
-    "message": "Ayarları bir dosyaya aktarın."
+  "exportToFirefoxSync": {
+    "message": "Firefox Sync'e Aktar"
+  },
+  "importFromFirefoxSync": {
+    "message": "Firefox Sync'ten İçe Aktar"
+  },
+  "wipeFirefoxSyncExport": {
+    "message": "Firefox Sync Aktarımını Sil"
+  },
+  "exportToFirefoxSyncSuccess": {
+    "message": "Ayarlar Firefox Sync'e başarıyla aktarıldı"
+  },
+  "importFromFirefoxSyncSuccess": {
+    "message": "Ayarlar Firefox Sync'ten başarıyla içe aktarıldı"
+  },
+  "wipeFirefoxSyncSuccess": {
+    "message": "Firefox Sync aktarımı başarıyla silindi"
+  },
+  "noSyncExportFound": {
+    "message": "Firefox Sync'te ayarlar bulunamadı"
+  },
+  "confirmSyncOverwrite": {
+    "message": "Firefox Sync'te zaten bir aktarım var. Üzerine yaz?"
+  },
+  "confirmSyncImport": {
+    "message": "Firefox Sync'ten ayarları içe aktar?"
+  },
+  "confirmSyncWipe": {
+    "message": "Firefox Sync aktarımını sil? Bu işlem geri alınamaz."
+  },
+  "lastSyncExport": {
+    "message": "Son Firefox Sync Aktarımı"
+  },
+  "syncExportDate": {
+    "message": "Tarih"
+  },
+  "syncExportVersion": {
+    "message": "Sürüm"
   },
   "extensionName": {
     "message": "Temporary Containers Plus"
@@ -72,10 +108,7 @@
     "message": "Sözlük"
   },
   "importSettings": {
-    "message": "Ayarları İçe Aktar"
-  },
-  "importSettingsDescription": {
-    "message": "Ayarları bir dosyadan içe aktarın."
+    "message": "Dosyadan İçe Aktar"
   },
   "initializeErrorText": {
     "message": "Başlatılamadı. Lütfen sayfayı yeniden yüklemeyi deneyin."

@@ -45,10 +45,46 @@
     "message": "Ошибка импорта: Файл не найден"
   },
   "exportSettings": {
-    "message": "Экспорт настроек"
+    "message": "Экспорт в файл"
   },
-  "exportSettingsDescription": {
-    "message": "Экспортировать настройки в файл."
+  "exportToFirefoxSync": {
+    "message": "Экспорт в Firefox Sync"
+  },
+  "importFromFirefoxSync": {
+    "message": "Импорт из Firefox Sync"
+  },
+  "wipeFirefoxSyncExport": {
+    "message": "Очистить экспорт Firefox Sync"
+  },
+  "exportToFirefoxSyncSuccess": {
+    "message": "Настройки успешно экспортированы в Firefox Sync"
+  },
+  "importFromFirefoxSyncSuccess": {
+    "message": "Настройки успешно импортированы из Firefox Sync"
+  },
+  "wipeFirefoxSyncSuccess": {
+    "message": "Экспорт Firefox Sync успешно очищен"
+  },
+  "noSyncExportFound": {
+    "message": "Настройки в Firefox Sync не найдены"
+  },
+  "confirmSyncOverwrite": {
+    "message": "В Firefox Sync уже есть экспорт. Перезаписать?"
+  },
+  "confirmSyncImport": {
+    "message": "Импортировать настройки из Firefox Sync?"
+  },
+  "confirmSyncWipe": {
+    "message": "Очистить экспорт Firefox Sync? Это действие нельзя отменить."
+  },
+  "lastSyncExport": {
+    "message": "Последний экспорт Firefox Sync"
+  },
+  "syncExportDate": {
+    "message": "Дата"
+  },
+  "syncExportVersion": {
+    "message": "Версия"
   },
   "extensionName": {
     "message": "Temporary Containers Plus"
@@ -72,10 +108,7 @@
     "message": "Глоссарий"
   },
   "importSettings": {
-    "message": "Импорт настроек"
-  },
-  "importSettingsDescription": {
-    "message": "Импортировать настройки из файла."
+    "message": "Импорт из файла"
   },
   "initializeErrorText": {
     "message": "Не удалось инициализировать. Попробуйте перезагрузить страницу."
