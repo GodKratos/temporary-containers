@@ -28,9 +28,6 @@ export async function initAdvancedScriptsPage(): Promise<void> {
     const content = document.createElement('div');
     content.className = 'form';
 
-    // Determine effective active state (preference + granted permission)
-    const scriptsInitiallyActive = Boolean(preferences.scripts?.active && permissions.webNavigation);
-
     content.innerHTML = `
       <div class="section">
         <h3 data-i18n="optionsAdvancedScriptsTitle">Configure scripts to execute for certain domains in Temporary Containers</h3>
@@ -45,7 +42,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="scriptsWarningRead" ${scriptsInitiallyActive ? 'checked' : ''} />
+              <input type="checkbox" id="scriptsWarningRead" ${permissions.webNavigation ? 'checked' : ''} ${permissions.webNavigation ? 'disabled' : ''} />
               <span data-i18n="optionsAdvancedScriptsWarningAccept">I understand and want to enable script injection (requires "Access browser activity" permission)</span>
             </label>
           </strong>
@@ -56,7 +53,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <small>Technical details: Uses <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/executeScript" target="_blank" data-i18n="optionsAdvancedScriptsAPITabsExecuteScript">tabs.executeScript</a> API. Pro-tip: Use <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Xray_vision#Waiving_Xray_vision" target="_blank" data-i18n="optionsAdvancedScriptsAPIWindowWrappedJSObject">window.wrappedJSObject</a> to access the original window.</small>
         </div>
         
-        <div id="scriptsFormSection" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+        <div id="scriptsFormSection" ${!permissions.webNavigation ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
           <form id="scriptForm">
             <div class="field">
               <label for="scriptDomainPattern" data-i18n="optionsDomainPattern">Domain Pattern (e.g., *.example.com)</label>
@@ -86,7 +83,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
         </div>
       </div>
       
-      <div class="config-list" id="scriptsList" ${!scriptsInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
+      <div class="config-list" id="scriptsList" ${!permissions.webNavigation ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
         <h3 data-i18n="optionsAdvancedScriptsConfiguredScripts">Configured Scripts</h3>
         <div id="scriptsDisplay"></div>
       </div>
@@ -117,6 +114,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
       }
 
       preferences.scripts.active = scriptsWarningCheckbox.checked;
+      scriptsWarningCheckbox.disabled = scriptsWarningCheckbox.checked;
 
       // Update form/list sections visibility
       const formSection = document.getElementById('scriptsFormSection') as HTMLElement;

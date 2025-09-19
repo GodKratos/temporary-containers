@@ -11,8 +11,6 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
 
     const content = document.createElement('div');
     content.className = 'form';
-    // Determine effective active state (preference + granted permission)
-    const deletesHistoryInitiallyActive = Boolean(preferences.deletesHistory?.active && permissions.history);
 
     content.innerHTML = `
       <div class="section">
@@ -25,7 +23,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="deletesHistoryWarningRead" ${deletesHistoryInitiallyActive ? 'checked' : ''} />
+              <input type="checkbox" id="deletesHistoryWarningRead" ${permissions.history ? 'checked' : ''} ${permissions.history ? 'disabled' : ''}  />
               <span data-i18n="optionsAdvancedDeleteHistoryWarningAccept">I have read the Warning and understand the implications that come with using "Deletes History Temporary Containers". When ticking the checkbox Firefox will ask you for "Access browsing history" permissions.</span>
             </label>
           </strong>
@@ -37,9 +35,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         </div>
       </div>
       
-      <div class="section" id="deletesHistoryOptions" ${
-        !deletesHistoryInitiallyActive ? 'style="opacity: 0.3; pointer-events: none;"' : ''
-      }>
+      <div class="section" id="deletesHistoryOptions" ${!permissions.history ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
         <div class="field">
           <label for="deletesHistoryAutomaticMode" data-i18n="optionsAdvancedDeleteHistoryAutomaticMode">Automatically create "Deletes History Temporary Containers"</label>
           <select id="deletesHistoryAutomaticMode">
@@ -182,6 +178,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       }
 
       preferences.deletesHistory.active = warningCheckbox.checked;
+      warningCheckbox.disabled = warningCheckbox.checked;
 
       // Update options section visibility
       const optionsSection = document.getElementById('deletesHistoryOptions') as HTMLElement;

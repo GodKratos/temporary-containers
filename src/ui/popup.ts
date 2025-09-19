@@ -151,7 +151,12 @@ function setupHeaderActions() {
   }
   if (elements.createDeletesHistoryContainer) {
     elements.createDeletesHistoryContainer = replaceWithClone(elements.createDeletesHistoryContainer) as HTMLElement;
-    elements.createDeletesHistoryContainer.classList.remove('hidden');
+    // Visibility: only show if deletesHistory feature is active
+    if (app.preferences?.deletesHistory?.active) {
+      elements.createDeletesHistoryContainer.classList.remove('hidden');
+    } else {
+      elements.createDeletesHistoryContainer.classList.add('hidden');
+    }
     elements.createDeletesHistoryContainer.addEventListener('click', () => {
       sendMessage('createTabInTempContainer', { deletesHistory: true });
       window.close();

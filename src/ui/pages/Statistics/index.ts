@@ -99,7 +99,7 @@ export async function initStatisticsPage(): Promise<void> {
       deletesHistoryStatsCheckbox.addEventListener('change', async () => {
         try {
           preferences.deletesHistory = {
-            ...preferences.deletesHistory,
+            ...(preferences.deletesHistory || {}),
             statistics: deletesHistoryStatsCheckbox.checked,
           };
           await savePreferences(preferences);
