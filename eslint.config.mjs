@@ -87,7 +87,6 @@ export default [
       'node_modules/**',
       '*.min.js',
       'src/vendor/**',
-      'src/ui/old-backup/**',
       'src/ui/vendor/**',
       'commitlint.config.js',
     ],

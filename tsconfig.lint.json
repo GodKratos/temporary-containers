@@ -4,5 +4,5 @@
     "noEmit": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
-  "exclude": ["src/ui/old-backup"]
+  "exclude": []
 }

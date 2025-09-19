@@ -127,8 +127,7 @@ class LocalizationValidator {
       const stat = fs.statSync(itemPath);
 
       if (stat.isDirectory()) {
-        // Skip old-backup directory
-        if (item !== 'old-backup') {
+        if (item !== 'vendor') {
           this.processDirectory(itemPath, uiKeys);
         }
       } else if (item.endsWith('.html') || item.endsWith('.ts')) {
@@ -281,7 +280,7 @@ class LocalizationValidator {
       const stat = fs.statSync(itemPath);
 
       if (stat.isDirectory()) {
-        if (item !== 'old-backup' && item !== 'vendor') {
+        if (item !== 'vendor') {
           this.scanForHardcodedStrings(itemPath);
         }
       } else if (item.endsWith('.ts')) {
@@ -406,7 +405,7 @@ class LocalizationValidator {
       const stat = fs.statSync(itemPath);
 
       if (stat.isDirectory()) {
-        if (item !== 'old-backup' && item !== 'vendor') {
+        if (item !== 'vendor') {
           this.scanDirectoryForMissingLocalization(itemPath);
         }
       } else if (item.endsWith('.html')) {
