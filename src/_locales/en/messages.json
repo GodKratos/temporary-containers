@@ -321,10 +321,10 @@
     "message": "Import error: File not found"
   },
   "errorFailedToLoadAdvancedMisc": {
-    "message": "Failed to load Advanced: Misc settings"
+    "message": "Failed to load Advanced Settings"
   },
   "errorFailedToLoadAdvancedCookies": {
-    "message": "Failed to load Advanced: Cookies settings"
+    "message": "Failed to load Cookie Injection settings"
   },
   "errorFailedToLoadActions": {
     "message": "Failed to load Actions"
@@ -839,10 +839,10 @@
     "message": "Open new \"Deletes History Temporary Containers\" with Left Mouse clicks instead of Temporary Containers"
   },
   "errorFailedToLoadAdvancedScripts": {
-    "message": "Failed to load advanced scripts settings"
+    "message": "Failed to load Script Injection settings"
   },
   "errorFailedToLoadAdvancedDeleteHistory": {
-    "message": "Failed to load advanced delete history settings"
+    "message": "Failed to load Deletes History Containers settings"
   },
   "managedStorageNoticeTitle": {
     "message": "Settings Managed by Policy"
