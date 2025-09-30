@@ -18,7 +18,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         <div class="field">
           <label for="isolationGlobalUrlNavigation" data-i18n="optionsIsolationGlobalUrlNavigation">URL Navigation</label>
           <div class="field-description" data-i18n="optionsIsolationGlobalUrlNavigationDescription">Global isolation rule for all URL navigation in existing tabs, new tabs, address bar and mouse clicks.</div>
-          <select id="isolationGlobalUrlNavigation" name="isolationGlobalUrlNavigation">
+          <select id="isolationGlobalUrlNavigation" name="isolationGlobalUrlNavigation" data-setting="isolation.global.navigation.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -33,7 +33,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         <div class="field-description" data-i18n="optionsIsolationGlobalMouseDescription">Isolation rules for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced.</div>
         <div class="field">
           <label for="isolationGlobalLeftClick" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
-          <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick">
+          <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick" data-setting="isolation.global.mouseClicks.left.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -42,7 +42,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         </div>
         <div class="field">
           <label for="isolationGlobalMiddleClick" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
-          <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick">
+          <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick" data-setting="isolation.global.mouseClicks.middle.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -51,7 +51,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         </div>
         <div class="field">
           <label for="isolationGlobalCtrlLeftClick" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
-          <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick">
+          <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick" data-setting="isolation.global.mouseClicks.ctrlleft.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>

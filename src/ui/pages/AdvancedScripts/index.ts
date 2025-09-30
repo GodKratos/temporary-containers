@@ -42,7 +42,7 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="scriptsWarningRead" ${permissions.webNavigation ? 'checked' : ''} ${permissions.webNavigation ? 'disabled' : ''} />
+              <input type="checkbox" id="scriptsWarningRead" data-setting="scripts.active" ${permissions.webNavigation ? 'checked' : ''} ${permissions.webNavigation ? 'disabled' : ''} />
               <span data-i18n="optionsAdvancedScriptsWarningAccept">I understand and want to enable script injection (requires "Access browser activity" permission)</span>
             </label>
           </strong>

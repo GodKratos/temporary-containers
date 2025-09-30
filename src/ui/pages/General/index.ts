@@ -15,15 +15,15 @@ export async function initGeneralPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="optionsGeneralGlobalSettings">Global Settings</h3>
         <div class="field checkbox-field" data-i18n-title="optionsGeneralAutomaticModeTitle" title="Automatically open new tabs and websites in Temporary Containers when no container is assigned.">
-          <input type="checkbox" id="automaticMode" name="automaticMode" />
+          <input type="checkbox" id="automaticMode" name="automaticMode" data-setting="automaticMode.active" />
           <label for="automaticMode" data-i18n="optionsGeneralAutomaticMode">Enable Automatic Mode</label>
         </div>
         <div class="field checkbox-field">
-          <input type="checkbox" id="browserActionPopup" name="browserActionPopup" />
+          <input type="checkbox" id="browserActionPopup" name="browserActionPopup" data-setting="browserActionPopup" />
           <label for="browserActionPopup" data-i18n="optionsGeneralToolbarPopup">Show popup when clicking the toolbar icon</label>
         </div>
         <div class="field checkbox-field">
-          <input type="checkbox" id="notificationsCheckbox" name="notifications" />
+          <input type="checkbox" id="notificationsCheckbox" name="notifications" data-setting="notifications" />
           <label for="notificationsCheckbox" data-i18n="optionsGeneralNotifications">Notifications when deleting Temporary Containers</label>
         </div>
       </div>
@@ -33,43 +33,43 @@ export async function initGeneralPage(): Promise<void> {
         <h3 data-i18n="optionsGeneralContainerSettings">Container Settings</h3>
         <div class="field">
           <label for="containerNamePrefix" data-i18n="optionsGeneralContainerNamePrefix">Container Name Prefix</label>
-          <input type="text" id="containerNamePrefix" name="containerNamePrefix" />
+          <input type="text" id="containerNamePrefix" name="containerNamePrefix" data-setting="container.namePrefix" />
         </div>
         <div class="field">
           <div class="checkbox-field">
-            <input type="checkbox" id="containerColorRandom" name="containerColorRandom" />
+            <input type="checkbox" id="containerColorRandom" name="containerColorRandom" data-setting="container.colorRandom" />
             <label for="containerColorRandom" data-i18n="optionsGeneralContainerRandomColor">Random Container Color</label>
           </div>
           <div id="containerColorSection" class="sub-field">
             <label for="containerColor" data-i18n="optionsGeneralContainerColor">Container Color</label>
-            <select id="containerColor" name="containerColor"></select>
+            <select id="containerColor" name="containerColor" data-setting="container.color"></select>
           </div>
           <div id="containerColorRandomExcludedSection" class="sub-field hidden">
             <label for="containerColorRandomExcluded" data-i18n="optionsGeneralContainerColorRandomExcluded">Excluded Colors for Random Container Color</label>
             <div class="multi-select-container">
-              <select id="containerColorRandomExcluded" name="containerColorRandomExcluded" multiple></select>
+              <select id="containerColorRandomExcluded" name="containerColorRandomExcluded" data-setting="container.colorRandomExcluded" multiple></select>
             </div>
           </div>
         </div>
         <div class="field">
           <div class="checkbox-field">
-            <input type="checkbox" id="containerIconRandom" name="containerIconRandom" />
+            <input type="checkbox" id="containerIconRandom" name="containerIconRandom" data-setting="container.iconRandom" />
             <label for="containerIconRandom" data-i18n="optionsGeneralContainerIconRandom">Random Container Icon</label>
           </div>
           <div id="containerIconSection" class="sub-field">
             <label for="containerIcon" data-i18n="optionsGeneralContainerIcon">Container Icon</label>
-            <select id="containerIcon" name="containerIcon"></select>
+            <select id="containerIcon" name="containerIcon" data-setting="container.icon"></select>
           </div>
           <div id="containerIconRandomExcludedSection" class="sub-field hidden">
             <label for="containerIconRandomExcluded" data-i18n="optionsGeneralContainerIconRandomExcluded">Excluded Icons for Random Container Icon</label>
             <div class="multi-select-container">
-              <select id="containerIconRandomExcluded" name="containerIconRandomExcluded" multiple></select>
+              <select id="containerIconRandomExcluded" name="containerIconRandomExcluded" data-setting="container.iconRandomExcluded" multiple></select>
             </div>
           </div>
         </div>
         <div class="field">
           <label for="containerNumberMode" data-i18n="optionsGeneralContainerNumber">Container Number Mode</label>
-          <select id="containerNumberMode" name="containerNumberMode">
+          <select id="containerNumberMode" name="containerNumberMode" data-setting="container.numberMode">
             <option value="keep" data-i18n="optionsGeneralContainerNumberKeepCounting">Keep counting (default)</option>
             <option value="keepuntilrestart" data-i18n="optionsGeneralContainerNumberKeepCountingUntilRestart">Keep counting until browser restart</option>
             <option value="reuse" data-i18n="optionsGeneralContainerNumberReuseNumbers">Reuse available numbers</option>
@@ -78,11 +78,11 @@ export async function initGeneralPage(): Promise<void> {
         </div>
         <div class="field">
           <label for="containerRemoval" data-i18n="optionsGeneralContainerRemoval">Delete Unused Temporary Containers</label>
-          <select id="containerRemoval" name="containerRemoval"></select>
+          <select id="containerRemoval" name="containerRemoval" data-setting="container.removal"></select>
         </div>
         <div class="field">
           <label for="iconColor" data-i18n="optionsGeneralToolbarIconColor">Icon Color</label>
-          <select id="iconColor" name="iconColor"></select>
+          <select id="iconColor" name="iconColor" data-setting="iconColor"></select>
         </div>
       </div>
     `;

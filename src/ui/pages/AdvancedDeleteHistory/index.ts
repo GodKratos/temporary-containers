@@ -23,7 +23,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
           <br/><br/>
           <strong>
             <label class="checkbox-field">
-              <input type="checkbox" id="deletesHistoryWarningRead" ${permissions.history ? 'checked' : ''} ${permissions.history ? 'disabled' : ''}  />
+              <input type="checkbox" id="deletesHistoryWarningRead" data-setting="deletesHistory.active" ${permissions.history ? 'checked' : ''} ${permissions.history ? 'disabled' : ''}  />
               <span data-i18n="optionsAdvancedDeleteHistoryWarningAccept">I have read the Warning and understand the implications that come with using "Deletes History Temporary Containers". When ticking the checkbox Firefox will ask you for "Access browsing history" permissions.</span>
             </label>
           </strong>
@@ -38,7 +38,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       <div class="section" id="deletesHistoryOptions" ${!permissions.history ? 'style="opacity: 0.3; pointer-events: none;"' : ''}>
         <div class="field">
           <label for="deletesHistoryAutomaticMode" data-i18n="optionsAdvancedDeleteHistoryAutomaticMode">Automatically create "Deletes History Temporary Containers"</label>
-          <select id="deletesHistoryAutomaticMode">
+          <select id="deletesHistoryAutomaticMode" data-setting="deletesHistory.automaticMode">
             <option value="never" data-i18n="optionsAdvancedDeleteHistoryAutomaticModeNever">Don't automatically create "Deletes History Temporary Containers" instead of normal Temporary Containers (default)</option>
             <option value="automatic" data-i18n="optionsAdvancedDeleteHistoryAutomaticModeAlways">Automatically create "Deletes History Temporary Containers" instead of normal Temporary Containers</option>
           </select>
@@ -46,18 +46,18 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         </div>
         
         <div class="field checkbox-field">
-          <input type="checkbox" id="deletesHistoryContextMenu" />
+          <input type="checkbox" id="deletesHistoryContextMenu" data-setting="deletesHistory.contextMenu" />
           <label for="deletesHistoryContextMenu" data-i18n="optionsAdvancedDeleteHistoryContextMenu">Show additional "Deletes History Temporary Containers" entry in the right click on links context menu</label>
         </div>
         
         <div class="field checkbox-field">
-          <input type="checkbox" id="deletesHistoryContextMenuBookmarks" />
+          <input type="checkbox" id="deletesHistoryContextMenuBookmarks" data-setting="deletesHistory.contextMenuBookmarks" />
           <label for="deletesHistoryContextMenuBookmarks" data-i18n="optionsAdvancedDeleteHistoryContextMenuBookmarks">Show additional "Deletes History Temporary Containers" entry in the right click on bookmarks context menu</label>
         </div>
         
         <div class="field">
           <label for="deletesHistoryContainerRemoval" data-i18n="optionsAdvancedDeleteHistoryContainerRemoval">Delete no longer needed "Deletes History Temporary Containers"</label>
-          <select id="deletesHistoryContainerRemoval">
+          <select id="deletesHistoryContainerRemoval" data-setting="deletesHistory.containerRemoval">
             <option value="900000" data-i18n="optionsAdvancedDeleteHistoryContainerRemoval15min">15 minutes after the last tab in it closes</option>
             <option value="0" data-i18n="optionsAdvancedDeleteHistoryContainerRemovalImmediate">After the last tab in it closes (default)</option>
           </select>
@@ -66,7 +66,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryAlwaysPerDomain" data-i18n="optionsAdvancedDeleteHistoryAlwaysPerDomain">Isolation - Always per domain</label>
-          <select id="deletesHistoryAlwaysPerDomain">
+          <select id="deletesHistoryAlwaysPerDomain" data-setting="deletesHistory.alwaysPerDomain">
             <option value="never" data-i18n="default">Default</option>
             <option value="automatic" data-i18n="optionsAdvancedDeleteHistoryAlwaysPerDomainAutomatic">Open new "Deletes History Temporary Containers" for Domains configured "Isolation Always" instead of normal Temporary Containers</option>
           </select>
@@ -74,7 +74,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryContainerIsolation" data-i18n="optionsAdvancedDeleteHistoryContainerIsolation">Isolation - Navigating in tabs</label>
-          <select id="deletesHistoryContainerIsolation">
+          <select id="deletesHistoryContainerIsolation" data-setting="deletesHistory.containerIsolation">
             <option value="never" data-i18n="default">Default</option>
             <option value="automatic" data-i18n="optionsAdvancedDeleteHistoryContainerIsolationAutomatic">Open new "Deletes History Temporary Containers" when "Navigating in tabs Isolation" takes place instead of normal Temporary Containers</option>
           </select>
@@ -82,7 +82,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryMouseClicks" data-i18n="optionsAdvancedDeleteHistoryMouseClicks">Isolation - Mouse clicks in "Deletes History Temporary Containers"</label>
-          <select id="deletesHistoryMouseClicks">
+          <select id="deletesHistoryMouseClicks" data-setting="deletesHistory.mouseClicks">
             <option value="never" data-i18n="default">Default</option>
             <option value="automatic" data-i18n="optionsAdvancedDeleteHistoryMouseClicksAutomatic">Open new "Deletes History Temporary Containers" with Mouse clicks on links in "Deletes History Temporary Containers" instead of normal Temporary Containers</option>
           </select>
@@ -90,7 +90,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryMiddleClick" data-i18n="optionsAdvancedDeleteHistoryMiddleClick">Isolation - Middle Mouse Click in Temporary Containers</label>
-          <select id="deletesHistoryMiddleClick">
+          <select id="deletesHistoryMiddleClick" data-setting="deletesHistory.middleClick">
             <option value="default" data-i18n="default">Default</option>
             <option value="deleteshistory" data-i18n="optionsAdvancedDeleteHistoryMiddleClickDeletesHistory">Open new "Deletes History Temporary Containers" with Middle Mouse clicks instead of Temporary Containers</option>
           </select>
@@ -98,7 +98,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryCtrlLeftClick" data-i18n="optionsAdvancedDeleteHistoryCtrlLeftClick">Isolation - Ctrl/Cmd+Left Mouse Click in Temporary Containers</label>
-          <select id="deletesHistoryCtrlLeftClick">
+          <select id="deletesHistoryCtrlLeftClick" data-setting="deletesHistory.ctrlLeftClick">
             <option value="default" data-i18n="default">Default</option>
             <option value="deleteshistory" data-i18n="optionsAdvancedDeleteHistoryCtrlLeftClickDeletesHistory">Open new "Deletes History Temporary Containers" with Ctrl/Cmd+Left Mouse clicks instead of Temporary Containers</option>
           </select>
@@ -106,7 +106,7 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
         
         <div class="field">
           <label for="deletesHistoryLeftClick" data-i18n="optionsAdvancedDeleteHistoryLeftClick">Isolation - Left Mouse Click in Temporary Containers</label>
-          <select id="deletesHistoryLeftClick">
+          <select id="deletesHistoryLeftClick" data-setting="deletesHistory.leftClick">
             <option value="default" data-i18n="default">Default</option>
             <option value="deleteshistory" data-i18n="optionsAdvancedDeleteHistoryLeftClickDeletesHistory">Open new "Deletes History Temporary Containers" with Left Mouse clicks instead of Temporary Containers</option>
           </select>
