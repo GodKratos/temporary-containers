@@ -531,16 +531,21 @@ button.danger:hover {
 
 /* Managed Storage Styles */
 .managed-setting {
+  background-color: var(--disabled-background) !important;
+  color: var(--disabled-color) !important;
+  cursor: not-allowed !important;
   opacity: 0.6;
   pointer-events: none;
   position: relative;
 }
 
 .managed-indicator {
-  margin-left: 8px;
-  color: var(--warning-color, #ff8c00);
-  font-size: 12px;
+  margin-left: var(--space-sm);
+  color: var(--orange-60);
+  font-size: var(--font-size-xs);
   cursor: help;
+  display: inline-block;
+  opacity: 0.9;
 }
 
 .managed-notice {

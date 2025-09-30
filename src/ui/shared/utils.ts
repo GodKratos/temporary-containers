@@ -130,6 +130,91 @@ export function addManagedSettingIndicator(element: HTMLElement, isLocked: boole
 }
 
 /**
+ * Apply managed storage indicators to all form elements in the current page
+ */
+export async function applyManagedStorageIndicators(): Promise<void> {
+  try {
+    const managedInfo = await getManagedStorageInfo();
+
+    if (managedInfo.isManaged) {
+      // Find all form elements with data-setting attributes
+      const formElements = document.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-setting]');
+
+      formElements.forEach(element => {
+        const setting = element.getAttribute('data-setting');
+        if (setting && isSettingLocked(managedInfo, setting)) {
+          const policyName = getManagedPolicyName(setting, managedInfo);
+          addManagedSettingIndicator(element, true, policyName);
+        }
+      });
+
+      // Also check elements by ID that match common setting patterns
+      const settingMappings = {
+        automaticModeCheckbox: 'automaticMode.active',
+        browserActionPopup: 'browserActionPopup',
+        notificationsCheckbox: 'notifications',
+        containerNamePrefix: 'container.namePrefix',
+        containerColorRandom: 'container.colorRandom',
+        containerColor: 'container.color',
+        containerIconRandom: 'container.iconRandom',
+        containerIcon: 'container.icon',
+        containerNumberMode: 'container.numberMode',
+        containerRemoval: 'container.removal',
+        iconColor: 'iconColor',
+      };
+
+      Object.entries(settingMappings).forEach(([elementId, settingPath]) => {
+        const element = document.getElementById(elementId) as HTMLInputElement | HTMLSelectElement | null;
+        if (element && isSettingLocked(managedInfo, settingPath)) {
+          const policyName = getManagedPolicyName(settingPath, managedInfo);
+          addManagedSettingIndicator(element, true, policyName);
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Failed to apply managed storage indicators:', error);
+  }
+}
+
+/**
+ * Get the policy name that manages a specific setting
+ */
+function getManagedPolicyName(settingPath: string, managedState: import('../../types').ManagedStorageState): string | undefined {
+  // Check if this setting is in the locked settings
+  if (managedState.lockedSettings.includes(settingPath)) {
+    return 'Enterprise Policy';
+  }
+
+  // Check if the setting has an override value (which means it's managed)
+  const pathParts = settingPath.split('.');
+  let current: any = managedState.overrides;
+
+  for (const part of pathParts) {
+    if (current && typeof current === 'object' && part in current) {
+      current = current[part];
+    } else {
+      return undefined;
+    }
+  }
+
+  // If we found an override value, it's managed
+  return current !== undefined ? 'Enterprise Policy' : undefined;
+}
+
+/**
+ * Wrapper function to enhance page initializers with managed storage support
+ */
+export function withManagedStorage<T extends (...args: any[]) => Promise<void>>(initFunction: T): T {
+  return (async (...args: Parameters<T>) => {
+    // Call the original initialization function
+    await initFunction(...args);
+
+    // Apply managed storage indicators after page is loaded
+    await applyManagedStorageIndicators();
+  }) as T;
+}
+
+/**
  * Format bytes to human readable string
  * @param bytes - The number of bytes
  * @param decimals - Number of decimal places
