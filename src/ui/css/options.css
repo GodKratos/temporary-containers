@@ -535,7 +535,6 @@ button.danger:hover {
   color: var(--disabled-color) !important;
   cursor: not-allowed !important;
   opacity: 0.6;
-  pointer-events: none;
   position: relative;
 }
 

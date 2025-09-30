@@ -112,6 +112,12 @@ export function isSettingLocked(managedStorage: import('../../types').ManagedSto
  * Add visual indicators for managed settings in the UI
  */
 export function addManagedSettingIndicator(element: HTMLElement, isLocked: boolean, policyName?: string): void {
+  // Remove any existing indicator first
+  const existingIndicator = element.parentElement?.querySelector('.managed-indicator');
+  if (existingIndicator) {
+    existingIndicator.remove();
+  }
+
   if (isLocked) {
     element.classList.add('managed-setting');
     element.setAttribute('disabled', 'true');
@@ -126,6 +132,11 @@ export function addManagedSettingIndicator(element: HTMLElement, isLocked: boole
     indicator.textContent = '🔒';
     indicator.title = browser.i18n.getMessage('managedStorageSettingLocked');
     element.parentElement?.appendChild(indicator);
+  } else {
+    // Reset element state when not locked
+    element.classList.remove('managed-setting');
+    element.removeAttribute('disabled');
+    element.removeAttribute('title');
   }
 }
 
@@ -150,7 +161,7 @@ export async function applyManagedStorageIndicators(): Promise<void> {
 
       // Also check elements by ID that match common setting patterns
       const settingMappings = {
-        automaticModeCheckbox: 'automaticMode.active',
+        automaticMode: 'automaticMode.active',
         browserActionPopup: 'browserActionPopup',
         notificationsCheckbox: 'notifications',
         containerNamePrefix: 'container.namePrefix',
