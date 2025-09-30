@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "policy_name": "High Security Policy",
+  "policy_description": "Maximum isolation and security for sensitive environments",
+  "locked_settings": ["automaticMode", "isolation", "deletesHistory", "contextMenu", "statistics", "notifications", "container.removal"],
+  "preferences": {
+    "automaticMode": {
+      "active": true,
+      "newTab": "created"
+    },
+    "container": {
+      "namePrefix": "secure-tmp",
+      "color": "red",
+      "colorRandom": false,
+      "removal": 60000
+    },
+    "isolation": {
+      "reactivateDelay": 0,
+      "global": {
+        "navigation": {
+          "action": "always"
+        },
+        "mouseClick": {
+          "middle": {
+            "action": "always",
+            "container": "new"
+          },
+          "ctrlleft": {
+            "action": "always",
+            "container": "new"
+          },
+          "left": {
+            "action": "never",
+            "container": "default"
+          }
+        }
+      },
+      "mac": {
+        "action": "disabled"
+      }
+    },
+    "deletesHistory": {
+      "active": true,
+      "automaticMode": "automatic",
+      "containerIsolation": "automatic",
+      "containerMouseClicks": "automatic",
+      "containerRemoval": 0
+    },
+    "contextMenu": false,
+    "contextMenuBookmarks": false,
+    "statistics": false,
+    "notifications": false,
+    "browserActionPopup": false,
+    "pageAction": false
+  }
+}

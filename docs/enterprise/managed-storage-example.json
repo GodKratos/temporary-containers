@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "policy_name": "Corporate Temporary Containers Policy",
+  "policy_description": "Enterprise policy configuration for Temporary Containers extension",
+  "locked_settings": ["automaticMode.active", "isolation.global.navigation.action", "deletesHistory.active", "statistics"],
+  "preferences": {
+    "automaticMode": {
+      "active": true,
+      "newTab": "created"
+    },
+    "notifications": false,
+    "container": {
+      "namePrefix": "corp-tmp",
+      "color": "blue",
+      "colorRandom": false,
+      "icon": "briefcase",
+      "iconRandom": false,
+      "numberMode": "reuse",
+      "removal": 300000
+    },
+    "iconColor": "blue",
+    "isolation": {
+      "reactivateDelay": 5,
+      "global": {
+        "navigation": {
+          "action": "always"
+        },
+        "mouseClick": {
+          "middle": {
+            "action": "always",
+            "container": "new"
+          },
+          "ctrlleft": {
+            "action": "always",
+            "container": "new"
+          },
+          "left": {
+            "action": "never",
+            "container": "default"
+          }
+        }
+      },
+      "mac": {
+        "action": "disabled"
+      }
+    },
+    "browserActionPopup": true,
+    "pageAction": false,
+    "contextMenu": true,
+    "contextMenuBookmarks": false,
+    "replaceTabs": false,
+    "closeRedirectorTabs": {
+      "active": true,
+      "delay": 2000
+    },
+    "deletesHistory": {
+      "active": true,
+      "automaticMode": "automatic",
+      "contextMenu": false,
+      "contextMenuBookmarks": false,
+      "containerAlwaysPerDomain": "never",
+      "containerIsolation": "automatic",
+      "containerRemoval": 0,
+      "containerMouseClicks": "automatic",
+      "statistics": true
+    },
+    "statistics": true
+  }
+}

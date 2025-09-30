@@ -1,0 +1,269 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Version of the managed storage configuration"
+    },
+    "policy_name": {
+      "type": "string",
+      "description": "Name of the policy for identification"
+    },
+    "policy_description": {
+      "type": "string",
+      "description": "Description of what this policy configures"
+    },
+    "locked_settings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of setting paths that should be locked and prevent user modification"
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "automaticMode": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean",
+              "description": "Enable automatic mode for temporary containers"
+            },
+            "newTab": {
+              "type": "string",
+              "enum": ["created", "navigation"],
+              "description": "When to create temporary containers for new tabs"
+            }
+          }
+        },
+        "notifications": {
+          "type": "boolean",
+          "description": "Enable notifications"
+        },
+        "container": {
+          "type": "object",
+          "properties": {
+            "namePrefix": {
+              "type": "string",
+              "description": "Prefix for temporary container names"
+            },
+            "color": {
+              "type": "string",
+              "enum": ["blue", "turquoise", "green", "yellow", "orange", "red", "pink", "purple", "toolbar"],
+              "description": "Default container color"
+            },
+            "colorRandom": {
+              "type": "boolean",
+              "description": "Use random colors for containers"
+            },
+            "icon": {
+              "type": "string",
+              "enum": [
+                "fingerprint",
+                "briefcase",
+                "dollar",
+                "cart",
+                "circle",
+                "gift",
+                "vacation",
+                "food",
+                "fruit",
+                "pet",
+                "tree",
+                "chill",
+                "fence"
+              ],
+              "description": "Default container icon"
+            },
+            "iconRandom": {
+              "type": "boolean",
+              "description": "Use random icons for containers"
+            },
+            "numberMode": {
+              "type": "string",
+              "enum": ["keep", "keepuntilrestart", "reuse", "hide"],
+              "description": "How to handle container numbering"
+            },
+            "removal": {
+              "type": "number",
+              "description": "Container removal delay in milliseconds"
+            }
+          }
+        },
+        "iconColor": {
+          "type": "string",
+          "enum": ["default", "blue", "red", "green", "yellow"],
+          "description": "Toolbar icon color"
+        },
+        "isolation": {
+          "type": "object",
+          "properties": {
+            "reactivateDelay": {
+              "type": "number",
+              "description": "Delay before reactivating isolation in seconds"
+            },
+            "global": {
+              "type": "object",
+              "properties": {
+                "navigation": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": ["never", "notsamedomain", "notsamedomainexact", "always"],
+                      "description": "Navigation isolation action"
+                    }
+                  }
+                },
+                "mouseClick": {
+                  "type": "object",
+                  "properties": {
+                    "middle": {
+                      "type": "object",
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "enum": ["never", "notsamedomain", "notsamedomainexact", "always"],
+                          "description": "Middle click action"
+                        },
+                        "container": {
+                          "type": "string",
+                          "enum": ["default", "new"],
+                          "description": "Container to use for middle clicks"
+                        }
+                      }
+                    },
+                    "ctrlleft": {
+                      "type": "object",
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "enum": ["never", "notsamedomain", "notsamedomainexact", "always"],
+                          "description": "Ctrl+left click action"
+                        },
+                        "container": {
+                          "type": "string",
+                          "enum": ["default", "new"],
+                          "description": "Container to use for Ctrl+left clicks"
+                        }
+                      }
+                    },
+                    "left": {
+                      "type": "object",
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "enum": ["never", "notsamedomain", "notsamedomainexact", "always"],
+                          "description": "Left click action"
+                        },
+                        "container": {
+                          "type": "string",
+                          "enum": ["default", "new"],
+                          "description": "Container to use for left clicks"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "mac": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string",
+                  "enum": ["enabled", "disabled"],
+                  "description": "Multi-Account Containers integration"
+                }
+              }
+            }
+          }
+        },
+        "browserActionPopup": {
+          "type": "boolean",
+          "description": "Enable browser action popup"
+        },
+        "pageAction": {
+          "type": "boolean",
+          "description": "Show page action in address bar"
+        },
+        "contextMenu": {
+          "type": "boolean",
+          "description": "Enable context menu entries"
+        },
+        "contextMenuBookmarks": {
+          "type": "boolean",
+          "description": "Enable context menu for bookmarks"
+        },
+        "replaceTabs": {
+          "type": "boolean",
+          "description": "Replace tabs instead of creating new ones"
+        },
+        "closeRedirectorTabs": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean",
+              "description": "Enable automatic closing of redirector tabs"
+            },
+            "delay": {
+              "type": "number",
+              "description": "Delay before closing redirector tabs in milliseconds"
+            }
+          }
+        },
+        "deletesHistory": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean",
+              "description": "Enable history deletion for temporary containers"
+            },
+            "automaticMode": {
+              "type": "string",
+              "enum": ["never", "automatic"],
+              "description": "When to automatically enable history deletion"
+            },
+            "contextMenu": {
+              "type": "boolean",
+              "description": "Show history deletion options in context menu"
+            },
+            "contextMenuBookmarks": {
+              "type": "boolean",
+              "description": "Show history deletion options in bookmark context menu"
+            },
+            "containerAlwaysPerDomain": {
+              "type": "string",
+              "enum": ["never", "automatic"],
+              "description": "Automatically enable per-domain containers with history deletion"
+            },
+            "containerIsolation": {
+              "type": "string",
+              "enum": ["never", "automatic"],
+              "description": "Automatically enable container isolation with history deletion"
+            },
+            "containerRemoval": {
+              "type": "number",
+              "description": "Container removal delay for history-deleting containers in milliseconds"
+            },
+            "containerMouseClicks": {
+              "type": "string",
+              "enum": ["never", "automatic"],
+              "description": "Automatically enable mouse click handling with history deletion"
+            },
+            "statistics": {
+              "type": "boolean",
+              "description": "Collect statistics for history deletion"
+            }
+          }
+        },
+        "statistics": {
+          "type": "boolean",
+          "description": "Enable statistics collection"
+        }
+      },
+      "description": "Extension preferences that can be managed by policy"
+    }
+  }
+}
