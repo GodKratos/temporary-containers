@@ -845,16 +845,16 @@
     "message": "Failed to load advanced delete history settings"
   },
   "managedStorageNoticeTitle": {
-    "message": "Settings Managed by Policy"
+    "message": "Settings Locked by Policy"
   },
   "managedStorageNoticeDescription": {
-    "message": "Some settings are managed by your organization and cannot be changed."
+    "message": "Some settings are locked by your organization and cannot be changed."
   },
   "managedStorageSettingLocked": {
-    "message": "This setting is managed by policy"
+    "message": "This setting is locked by policy"
   },
   "managedStorageSettingLockedTooltip": {
-    "message": "This setting is managed by your organization policy and cannot be changed"
+    "message": "This setting is locked by your organization policy and cannot be changed"
   },
   "managedStoragePolicyName": {
     "message": "Policy: $1"
