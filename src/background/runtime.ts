@@ -66,13 +66,32 @@ export class Runtime {
         this.isolation.setActiveState(message.payload.isolation.active);
         return true;
 
-      case 'savePreferences':
+      case 'savePreferences': {
         this.debug('[onMessage] savePreferences');
+
+        // Validate changes against managed storage policies
+        const validationErrors: string[] = [];
+        const newPrefs = message.payload.preferences;
+
+        // Check for locked settings (simplified flat check for now)
+        if (this.storage.managedStorage.isManaged) {
+          for (const lockedSetting of this.storage.managedStorage.lockedSettings) {
+            // Simple path check - could be enhanced for nested objects
+            if (this.hasSettingChanged(this.pref, newPrefs, lockedSetting)) {
+              validationErrors.push(`Setting "${lockedSetting}" is managed by policy and cannot be changed.`);
+            }
+          }
+        }
+
+        if (validationErrors.length > 0) {
+          throw new Error(`Policy validation failed: ${validationErrors.join('; ')}`);
+        }
+
         await this.preferences.handleChanges({
           oldPreferences: this.pref,
-          newPreferences: message.payload.preferences,
+          newPreferences: newPrefs,
         });
-        this.storage.local.preferences = message.payload.preferences;
+        this.storage.local.preferences = newPrefs;
         await this.storage.persist();
 
         if (
@@ -88,6 +107,7 @@ export class Runtime {
           });
         }
         return true;
+      }
 
       case 'importPreferences': {
         const oldPreferences = this.utils.clone(this.storage.local.preferences);
@@ -186,6 +206,16 @@ export class Runtime {
         };
         return permissions as any;
       }
+
+      case 'getManagedStorageInfo':
+        return this.storage.getManagedStorageInfo() as any;
+
+      case 'validatePreferenceChange':
+        return this.storage.validatePreferenceChange(message.payload.settingPath, message.payload.newValue) as any;
+
+      case 'refreshManagedStorage':
+        return this.storage.refreshManagedStorage() as any;
+
       default:
         return false;
     }
@@ -222,5 +252,22 @@ export class Runtime {
       this.storage.local.tempContainerCounter = 0;
       this.storage.persist();
     }
+  }
+
+  /**
+   * Check if a setting has changed between two preference objects
+   */
+  private hasSettingChanged(oldPrefs: any, newPrefs: any, settingPath: string): boolean {
+    const pathParts = settingPath.split('.');
+
+    let oldValue = oldPrefs;
+    let newValue = newPrefs;
+
+    for (const part of pathParts) {
+      oldValue = oldValue?.[part];
+      newValue = newValue?.[part];
+    }
+
+    return JSON.stringify(oldValue) !== JSON.stringify(newValue);
   }
 }

@@ -76,6 +76,60 @@ export async function getPermissions(): Promise<Permissions> {
 }
 
 /**
+ * Get managed storage information
+ */
+export async function getManagedStorageInfo(): Promise<import('../../types').ManagedStorageState> {
+  try {
+    const managedInfo = (await sendMessage('getManagedStorageInfo')) as import('../../types').ManagedStorageState;
+    return managedInfo;
+  } catch (error) {
+    console.error('Failed to get managed storage info:', error);
+    throw error;
+  }
+}
+
+/**
+ * Validate if a preference change is allowed by policy
+ */
+export async function validatePreferenceChange(settingPath: string, newValue: any): Promise<{ allowed: boolean; reason?: string }> {
+  try {
+    const result = (await sendMessage('validatePreferenceChange', { settingPath, newValue })) as { allowed: boolean; reason?: string };
+    return result;
+  } catch (error) {
+    console.error('Failed to validate preference change:', error);
+    return { allowed: false, reason: 'Failed to validate against policy' };
+  }
+}
+
+/**
+ * Check if a setting is locked by managed storage policy
+ */
+export function isSettingLocked(managedStorage: import('../../types').ManagedStorageState, settingPath: string): boolean {
+  return managedStorage.isManaged && managedStorage.lockedSettings.includes(settingPath);
+}
+
+/**
+ * Add visual indicators for managed settings in the UI
+ */
+export function addManagedSettingIndicator(element: HTMLElement, isLocked: boolean, policyName?: string): void {
+  if (isLocked) {
+    element.classList.add('managed-setting');
+    element.setAttribute('disabled', 'true');
+    element.setAttribute(
+      'title',
+      policyName ? `This setting is managed by policy: ${policyName}` : 'This setting is managed by your organization and cannot be changed'
+    );
+
+    // Add a visual indicator
+    const indicator = document.createElement('span');
+    indicator.className = 'managed-indicator';
+    indicator.textContent = '🔒';
+    indicator.title = browser.i18n.getMessage('managedStorageSettingLocked');
+    element.parentElement?.appendChild(indicator);
+  }
+}
+
+/**
  * Format bytes to human readable string
  * @param bytes - The number of bytes
  * @param decimals - Number of decimal places

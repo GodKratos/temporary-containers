@@ -843,5 +843,32 @@
   },
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "Failed to load advanced delete history settings"
+  },
+  "managedStorageNoticeTitle": {
+    "message": "Settings Managed by Policy"
+  },
+  "managedStorageNoticeDescription": {
+    "message": "Some settings are managed by your organization and cannot be changed."
+  },
+  "managedStorageSettingLocked": {
+    "message": "This setting is managed by policy"
+  },
+  "managedStorageSettingLockedTooltip": {
+    "message": "This setting is managed by your organization policy and cannot be changed"
+  },
+  "managedStoragePolicyName": {
+    "message": "Policy: $1"
+  },
+  "managedStoragePolicyVersion": {
+    "message": "Version: $1"
+  },
+  "managedStoragePolicyLastChecked": {
+    "message": "Last checked: $1"
+  },
+  "managedStorageValidationError": {
+    "message": "Policy validation failed: $1"
+  },
+  "managedStorageRefreshError": {
+    "message": "Failed to refresh managed storage configuration"
   }
 }

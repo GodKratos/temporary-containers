@@ -843,5 +843,32 @@
   },
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "Gelişmiş geçmiş silme ayarları yüklenemedi"
+  },
+  "managedStorageNoticeTitle": {
+    "message": "Ayarlar Politika ile Yönetiliyor"
+  },
+  "managedStorageNoticeDescription": {
+    "message": "Bazı ayarlar kuruluşunuz tarafından yönetiliyor ve değiştirilemez."
+  },
+  "managedStorageSettingLocked": {
+    "message": "Bu ayar politika ile yönetiliyor"
+  },
+  "managedStorageSettingLockedTooltip": {
+    "message": "Bu ayar kuruluşunuz politikası tarafından yönetiliyor ve değiştirilemez"
+  },
+  "managedStoragePolicyName": {
+    "message": "Politika: $1"
+  },
+  "managedStoragePolicyVersion": {
+    "message": "Sürüm: $1"
+  },
+  "managedStoragePolicyLastChecked": {
+    "message": "Son kontrol: $1"
+  },
+  "managedStorageValidationError": {
+    "message": "Politika doğrulama hatası: $1"
+  },
+  "managedStorageRefreshError": {
+    "message": "Yönetilen depolama yapılandırması yenilenemedi"
   }
 }

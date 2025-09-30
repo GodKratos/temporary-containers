@@ -843,5 +843,32 @@
   },
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "Не удалось загрузить дополнительные настройки удаления истории"
+  },
+  "managedStorageNoticeTitle": {
+    "message": "Настройки управляются политикой"
+  },
+  "managedStorageNoticeDescription": {
+    "message": "Некоторые настройки управляются вашей организацией и не могут быть изменены."
+  },
+  "managedStorageSettingLocked": {
+    "message": "Эта настройка управляется политикой"
+  },
+  "managedStorageSettingLockedTooltip": {
+    "message": "Эта настройка управляется политикой вашей организации и не может быть изменена"
+  },
+  "managedStoragePolicyName": {
+    "message": "Политика: $1"
+  },
+  "managedStoragePolicyVersion": {
+    "message": "Версия: $1"
+  },
+  "managedStoragePolicyLastChecked": {
+    "message": "Последняя проверка: $1"
+  },
+  "managedStorageValidationError": {
+    "message": "Ошибка проверки политики: $1"
+  },
+  "managedStorageRefreshError": {
+    "message": "Не удалось обновить конфигурацию управляемого хранилища"
   }
 }
