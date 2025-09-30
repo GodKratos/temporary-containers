@@ -2,6 +2,30 @@
   "extensionName": {
     "message": "Temporary Containers Plus"
   },
+  "extensionDescription": {
+    "message": "Open tabs, websites, and links in automatically managed disposable containers. Containers isolate the data websites store (cookies, cache, and more) from each other, further enhancing your privacy while you browse."
+  },
+  "actionNewTemporaryContainerTab": {
+    "message": "Open a new tab in a new Temporary Container"
+  },
+  "actionNewSameContainerTab": {
+    "message": "Open a new tab in the same container as the current tab"
+  },
+  "actionNewNoContainerTab": {
+    "message": "Open a new tab without a container"
+  },
+  "actionNewNoContainerWindowTab": {
+    "message": "Open a new tab without a container in a new window"
+  },
+  "actionNewTemporaryContainerTabCurrentUrl": {
+    "message": "Open current tab URL in a new Temporary Container tab"
+  },
+  "actionNewNoHistoryTab": {
+    "message": "Open a new tab in a new 'Deletes History Temporary Container'"
+  },
+  "actionToggleIsolation": {
+    "message": "Toggle Isolation ON/OFF"
+  },
   "initializingLabel": {
     "message": "Initializing..."
   },

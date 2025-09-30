@@ -89,6 +89,9 @@ class LocalizationValidator {
     // Process UI directory
     this.processDirectory(this.uiDir, uiKeys);
 
+    // Process manifest.json for __MSG_keyName__ references
+    this.processManifest(uiKeys);
+
     // Process shared.ts for constants
     if (fs.existsSync(this.sharedFile)) {
       const content = fs.readFileSync(this.sharedFile, 'utf8');
@@ -172,6 +175,29 @@ class LocalizationValidator {
           uiKeys.set(key, location);
         }
       }
+    }
+  }
+
+  /**
+   * Process manifest.json for __MSG_keyName__ references
+   */
+  processManifest(uiKeys) {
+    const manifestPath = path.join(__dirname, '..', 'src', 'manifest.json');
+    if (!fs.existsSync(manifestPath)) return;
+
+    const content = fs.readFileSync(manifestPath, 'utf8');
+    const relativePath = path.relative(process.cwd(), manifestPath);
+
+    try {
+      // Find all __MSG_keyName__ patterns in the manifest
+      const msgMatches = content.matchAll(/__MSG_([a-zA-Z][a-zA-Z0-9_]*)__/g);
+      for (const match of msgMatches) {
+        const key = match[1];
+        const location = `${relativePath}`;
+        uiKeys.set(key, location);
+      }
+    } catch (error) {
+      this.warnings.push(`Failed to parse manifest.json: ${error.message}`);
     }
   }
 

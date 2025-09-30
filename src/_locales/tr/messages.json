@@ -89,6 +89,30 @@
   "extensionName": {
     "message": "Temporary Containers Plus"
   },
+  "extensionDescription": {
+    "message": "Sekmeleri, web sitelerini ve bağlantıları otomatik olarak yönetilen tek kullanımlık kapsayıcılarda açın. Kapsayıcılar, web sitelerinin depoladığı verileri (çerezler, önbellek ve daha fazlası) birbirinden izole ederek göz atarken gizliliğinizi daha da artırır."
+  },
+  "actionNewTemporaryContainerTab": {
+    "message": "Yeni bir Geçici Kapsayıcıda yeni sekme aç"
+  },
+  "actionNewSameContainerTab": {
+    "message": "Mevcut sekmeyle aynı kapsayıcıda yeni sekme aç"
+  },
+  "actionNewNoContainerTab": {
+    "message": "Kapsayıcı olmadan yeni sekme aç"
+  },
+  "actionNewNoContainerWindowTab": {
+    "message": "Yeni pencerede kapsayıcı olmadan yeni sekme aç"
+  },
+  "actionNewTemporaryContainerTabCurrentUrl": {
+    "message": "Mevcut sekme URL'sini yeni Geçici Kapsayıcı sekmesinde aç"
+  },
+  "actionNewNoHistoryTab": {
+    "message": "Yeni bir 'Geçmiş Silen Geçici Kapsayıcı'da yeni sekme aç"
+  },
+  "actionToggleIsolation": {
+    "message": "İzolasyonu AÇIK/KAPALI Değiştir"
+  },
   "glossary": {
     "message": "Sözlük"
   },

@@ -89,6 +89,30 @@
   "extensionName": {
     "message": "Temporary Containers Plus"
   },
+  "extensionDescription": {
+    "message": "Открывайте вкладки, веб-сайты и ссылки в автоматически управляемых одноразовых контейнерах. Контейнеры изолируют данные, которые веб-сайты хранят (файлы cookie, кэш и другие), друг от друга, еще больше повышая вашу конфиденциальность во время просмотра."
+  },
+  "actionNewTemporaryContainerTab": {
+    "message": "Открыть новую вкладку в новом временном контейнере"
+  },
+  "actionNewSameContainerTab": {
+    "message": "Открыть новую вкладку в том же контейнере, что и текущая вкладка"
+  },
+  "actionNewNoContainerTab": {
+    "message": "Открыть новую вкладку без контейнера"
+  },
+  "actionNewNoContainerWindowTab": {
+    "message": "Открыть новую вкладку без контейнера в новом окне"
+  },
+  "actionNewTemporaryContainerTabCurrentUrl": {
+    "message": "Открыть URL текущей вкладки в новой вкладке временного контейнера"
+  },
+  "actionNewNoHistoryTab": {
+    "message": "Открыть новую вкладку в новом 'временном контейнере с удалением истории'"
+  },
+  "actionToggleIsolation": {
+    "message": "Переключить изоляцию ВКЛ/ВЫКЛ"
+  },
   "glossary": {
     "message": "Глоссарий"
   },
