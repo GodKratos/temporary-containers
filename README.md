@@ -115,7 +115,7 @@ The project uses automated GitHub Actions workflows for releases. All releases a
    ```
 7. Generate release notes:
    ```bash
-   git log $(git tag --sort=-creatordate | grep release | sed -n 2p)..HEAD --pretty=format:%s | grep -E "(fix|feat|perf):"
+   git log $(git tag --sort=-creatordate | grep release | sed -n 2p)..HEAD --reverse --pretty=format:%s | grep -E "(fix|feat|perf):"
    ```
 8. Update release notes on github after workflow completes
 
@@ -145,7 +145,7 @@ The GitHub Actions workflow will automatically:
    ```
 7. Generate release notes:
    ```bash
-   git log $(git tag --sort=-creatordate | sed -n 2p)..HEAD --pretty=format:%s | grep -E "(fix|feat|perf):"
+   git log $(git tag --sort=-creatordate | sed -n 2p)..HEAD --reverse --pretty=format:%s | grep -E "(fix|feat|perf):"
    ```
 8. Update release notes on github after workflow completes
 
