@@ -41,8 +41,8 @@ async function initializeOptionsUI() {
       // Apply localization after tab/page change
       applyLocalization();
     });
-    // Initialize the default tab (General)
-    await initGeneralPage();
+    // Initialize the default tab (General) with managed storage support
+    await pageInitializers['general']();
     applyLocalization();
     hideInitializeLoader();
   } catch (error) {

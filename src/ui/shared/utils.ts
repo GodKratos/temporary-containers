@@ -161,6 +161,7 @@ export async function applyManagedStorageIndicators(): Promise<void> {
 
       // Also check elements by ID that match common setting patterns
       const settingMappings = {
+        // General Page
         automaticMode: 'automaticMode.active',
         browserActionPopup: 'browserActionPopup',
         notificationsCheckbox: 'notifications',
@@ -169,9 +170,33 @@ export async function applyManagedStorageIndicators(): Promise<void> {
         containerColor: 'container.color',
         containerIconRandom: 'container.iconRandom',
         containerIcon: 'container.icon',
+        containerColorRandomExcluded: 'container.colorRandomExcluded',
+        containerIconRandomExcluded: 'container.iconRandomExcluded',
         containerNumberMode: 'container.numberMode',
         containerRemoval: 'container.removal',
         iconColor: 'iconColor',
+
+        // Isolation Global Page
+        isolationGlobalUrlNavigation: 'isolation.global.navigation.action',
+        isolationGlobalLeftClick: 'isolation.global.mouseClicks.left.action',
+        isolationGlobalMiddleClick: 'isolation.global.mouseClicks.middle.action',
+        isolationGlobalCtrlLeftClick: 'isolation.global.mouseClicks.ctrlleft.action',
+        excludedContainersSelect: 'isolation.global.excludedContainers',
+        ignoredDomainsInput: 'ignoreRequests',
+
+        // Isolation Per Domain Page
+        domainPatternInput: 'isolation.domain',
+        alwaysAction: 'isolation.domain.always.action',
+        allowedInPermanent: 'isolation.domain.always.allowedInPermanent',
+        allowedInTemporary: 'isolation.domain.always.allowedInTemporary',
+        navigationAction: 'isolation.domain.navigation.action',
+        middleClickAction: 'isolation.domain.mouseClicks.middle.action',
+        ctrlLeftClickAction: 'isolation.domain.mouseClicks.ctrlleft.action',
+        leftClickAction: 'isolation.domain.mouseClicks.left.action',
+
+        // Statistics Page
+        collectTemporaryContainerStats: 'statistics',
+        collectDeletesHistoryStats: 'deletesHistory.statistics',
       };
 
       Object.entries(settingMappings).forEach(([elementId, settingPath]) => {
