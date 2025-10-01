@@ -75,14 +75,15 @@ export async function initIsolationGlobalPage(): Promise<void> {
           </div>
         </div>
         <div class="field">
-          <label for="ignoredDomains" data-i18n="optionsIsolationIgnoredDomains">Ignored Target Domains</label>
-          <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
+          <label for="excludedDomains" data-i18n="optionsIsolationExcludeTargetDomains">Exclude Target Domains</label>
+          <div class="field-description" data-i18n="optionsIsolationExcludeDomainsDescription">Domains that should not trigger isolation for this rule.</div>
           <div class="tag-input-container">
-            <input type="text" id="ignoredDomainsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
-            <button type="button" id="addIgnoredDomain" class="small" data-i18n="add">Add</button>
-            <div id="ignoredDomains" class="tag-list"></div>
+            <input type="text" id="excludedDomainsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+            <button type="button" id="addExcludedDomain" class="small" data-i18n="optionsIsolationAddExclusion">Add Exclusion</button>
+            <div id="excludedDomains" class="tag-list"></div>
           </div>
         </div>
+
       </div>
     `;
     if (!section.firstChild) section.appendChild(content);
@@ -186,13 +187,18 @@ export async function initIsolationGlobalPage(): Promise<void> {
       }
     });
 
-    // Ignored Domains logic
-    const ignoredDomainsInput = content.querySelector('#ignoredDomainsInput') as HTMLInputElement;
-    const addIgnoredDomainButton = content.querySelector('#addIgnoredDomain') as HTMLButtonElement;
-    const ignoredDomainsDiv = content.querySelector('#ignoredDomains') as HTMLElement;
-    function renderIgnoredDomains() {
-      ignoredDomainsDiv.innerHTML = '';
-      (preferences.ignoreRequests || []).forEach((domain: string) => {
+    // Excluded Domains logic
+    const excludedDomainsInput = content.querySelector('#excludedDomainsInput') as HTMLInputElement;
+    const addExcludedDomainButton = content.querySelector('#addExcludedDomain') as HTMLButtonElement;
+    const excludedDomainsDiv = content.querySelector('#excludedDomains') as HTMLElement;
+
+    function renderExcludedDomains() {
+      excludedDomainsDiv.innerHTML = '';
+      if (!preferences.isolation.global.excluded) {
+        preferences.isolation.global.excluded = [];
+      }
+
+      preferences.isolation.global.excluded.forEach((domain: string) => {
         const tag = document.createElement('span');
         tag.className = 'tag';
         tag.textContent = domain;
@@ -200,25 +206,27 @@ export async function initIsolationGlobalPage(): Promise<void> {
         remove.className = 'tag-remove danger small';
         remove.textContent = '×';
         remove.addEventListener('click', async () => {
-          preferences.ignoreRequests = preferences.ignoreRequests.filter((d: string) => d !== domain);
+          preferences.isolation.global.excluded = preferences.isolation.global.excluded.filter((d: string) => d !== domain);
           await savePreferences(preferences);
-          renderIgnoredDomains();
+          renderExcludedDomains();
           showSuccess(browser.i18n.getMessage('savedMessage'));
         });
         tag.appendChild(remove);
-        ignoredDomainsDiv.appendChild(tag);
+        excludedDomainsDiv.appendChild(tag);
       });
     }
-    renderIgnoredDomains();
+    renderExcludedDomains();
 
-    addIgnoredDomainButton?.addEventListener('click', async () => {
-      const domain = ignoredDomainsInput.value.trim();
-      if (domain && !preferences.ignoreRequests?.includes(domain)) {
-        if (!preferences.ignoreRequests) preferences.ignoreRequests = [];
-        preferences.ignoreRequests.push(domain);
+    addExcludedDomainButton?.addEventListener('click', async () => {
+      const domain = excludedDomainsInput.value.trim();
+      if (!preferences.isolation.global.excluded) {
+        preferences.isolation.global.excluded = [];
+      }
+      if (domain && !preferences.isolation.global.excluded.includes(domain)) {
+        preferences.isolation.global.excluded.push(domain);
         await savePreferences(preferences);
-        ignoredDomainsInput.value = '';
-        renderIgnoredDomains();
+        excludedDomainsInput.value = '';
+        renderExcludedDomains();
         showSuccess(browser.i18n.getMessage('savedMessage'));
       }
     });

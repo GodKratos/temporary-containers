@@ -63,14 +63,20 @@ export class Migration {
       this.debug('updated from version <= 0.103, migrate per domain isolation to array');
       const perDomainIsolation: IsolationDomain[] = [];
       Object.keys(preferences.isolation.domain).map(domainPattern => {
-        perDomainIsolation.push(
-          Object.assign(
-            {
-              pattern: domainPattern,
-            },
-            preferences.isolation.domain[domainPattern]
-          )
+        const domain = Object.assign(
+          {
+            pattern: domainPattern,
+          },
+          preferences.isolation.domain[domainPattern]
         );
+
+        // Migrate excluded domains from object to array format
+        if (domain.excluded && typeof domain.excluded === 'object' && !Array.isArray(domain.excluded)) {
+          domain.excluded = Object.keys(domain.excluded);
+          this.debug('migrated excluded domains from object to array for pattern:', domainPattern, domain.excluded);
+        }
+
+        perDomainIsolation.push(domain);
       });
       preferences.isolation.domain = perDomainIsolation;
     }
@@ -141,6 +147,58 @@ export class Migration {
 
       if (preferences.ui.popupDefaultTab === 'isolation-mac') {
         preferences.ui.popupDefaultTab = 'isolation-global';
+      }
+    }
+
+    // Migration for excluded domains format from object to array
+    // This handles users who might still have excluded domains stored as objects
+    if (preferences.isolation && preferences.isolation.domain && Array.isArray(preferences.isolation.domain)) {
+      let migratedAnyExcludedDomains = false;
+      preferences.isolation.domain.forEach((domain: any, index: number) => {
+        if (domain.excluded && typeof domain.excluded === 'object' && !Array.isArray(domain.excluded)) {
+          domain.excluded = Object.keys(domain.excluded);
+          migratedAnyExcludedDomains = true;
+          this.debug(
+            '[migrate] converted excluded domains from object to array format for domain pattern:',
+            domain.pattern,
+            domain.excluded
+          );
+        }
+        // Ensure excluded is always an array (fallback for undefined/null)
+        if (!domain.excluded || !Array.isArray(domain.excluded)) {
+          domain.excluded = [];
+        }
+      });
+      if (migratedAnyExcludedDomains) {
+        this.debug('[migrate] migrated excluded domains format for domain isolation rules');
+      }
+    }
+
+    // Also migrate global excluded domains and containers if they exist in object format
+    if (preferences.isolation && preferences.isolation.global) {
+      if (
+        preferences.isolation.global.excluded &&
+        typeof preferences.isolation.global.excluded === 'object' &&
+        !Array.isArray(preferences.isolation.global.excluded)
+      ) {
+        preferences.isolation.global.excluded = Object.keys(preferences.isolation.global.excluded);
+        this.debug('[migrate] converted global excluded domains from object to array format:', preferences.isolation.global.excluded);
+      } else if (!preferences.isolation.global.excluded) {
+        preferences.isolation.global.excluded = [];
+      }
+
+      if (
+        preferences.isolation.global.excludedContainers &&
+        typeof preferences.isolation.global.excludedContainers === 'object' &&
+        !Array.isArray(preferences.isolation.global.excludedContainers)
+      ) {
+        preferences.isolation.global.excludedContainers = Object.keys(preferences.isolation.global.excludedContainers);
+        this.debug(
+          '[migrate] converted global excluded containers from object to array format:',
+          preferences.isolation.global.excludedContainers
+        );
+      } else if (!preferences.isolation.global.excludedContainers) {
+        preferences.isolation.global.excludedContainers = [];
       }
     }
 
