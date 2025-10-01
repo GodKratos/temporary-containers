@@ -72,6 +72,16 @@ export async function initAdvancedMiscPage(): Promise<void> {
             } data-i18n="optionsAdvancedMiscIsolationMacEnabled">Isolate Non-MAC</option>
           </select>
         </div>
+        
+        <div class="field">
+          <label for="ignoredDomains" data-i18n="optionsIsolationIgnoredDomains">Ignored Target Domains</label>
+          <div class="field-description" data-i18n="optionsIsolationIgnoredDomainsDescription">Ignored domains will not be isolated.</div>
+          <div class="tag-input-container">
+            <input type="text" id="ignoredDomainsInput" placeholder="example.com or *.example.com" data-i18n-placeholder="optionsDomainPatternPlaceholder" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" />
+            <button type="button" id="addIgnoredDomain" class="small" data-i18n="add">Add</button>
+            <div id="ignoredDomains" class="tag-list"></div>
+          </div>
+        </div>
       </div>
 
       <!-- UI Settings -->
@@ -203,6 +213,44 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
     preferences.ui.popupDefaultTab = popupDefaultTabSelect.value as any;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
+  });
+
+  // Ignored Domains logic
+  const ignoredDomainsInput = content.querySelector('#ignoredDomainsInput') as HTMLInputElement;
+  const addIgnoredDomainButton = content.querySelector('#addIgnoredDomain') as HTMLButtonElement;
+  const ignoredDomainsDiv = content.querySelector('#ignoredDomains') as HTMLElement;
+
+  function renderIgnoredDomains() {
+    ignoredDomainsDiv.innerHTML = '';
+    (preferences.ignoreRequests || []).forEach((domain: string) => {
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = domain;
+      const remove = document.createElement('button');
+      remove.className = 'tag-remove danger small';
+      remove.textContent = '×';
+      remove.addEventListener('click', async () => {
+        preferences.ignoreRequests = preferences.ignoreRequests.filter((d: string) => d !== domain);
+        await savePreferences(preferences);
+        renderIgnoredDomains();
+        showSuccess(browser.i18n.getMessage('savedMessage'));
+      });
+      tag.appendChild(remove);
+      ignoredDomainsDiv.appendChild(tag);
+    });
+  }
+  renderIgnoredDomains();
+
+  addIgnoredDomainButton?.addEventListener('click', async () => {
+    const domain = ignoredDomainsInput.value.trim();
+    if (domain && !preferences.ignoreRequests?.includes(domain)) {
+      if (!preferences.ignoreRequests) preferences.ignoreRequests = [];
+      preferences.ignoreRequests.push(domain);
+      await savePreferences(preferences);
+      ignoredDomainsInput.value = '';
+      renderIgnoredDomains();
+      showSuccess(browser.i18n.getMessage('savedMessage'));
+    }
   });
 
   // Reset storage
