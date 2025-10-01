@@ -844,14 +844,8 @@
   "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
     "message": "Sol fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
   },
-  "managedStorageNoticeTitle": {
-    "message": "Ayarlar Politika ile Yönetiliyor"
-  },
-  "managedStorageNoticeDescription": {
-    "message": "Bazı ayarlar kuruluşunuz tarafından yönetiliyor ve değiştirilemez."
-  },
   "managedStorageSettingLocked": {
-    "message": "Bu ayar politika ile yönetiliyor"
+    "message": "Ayar \"$1\" politika tarafından yönetiliyor ve değiştirilemez"
   },
   "managedStorageSettingLockedTooltip": {
     "message": "Bu ayar kuruluşunuz politikası tarafından yönetiliyor ve değiştirilemez"
@@ -859,16 +853,7 @@
   "managedStoragePolicyName": {
     "message": "Politika: $1"
   },
-  "managedStoragePolicyVersion": {
-    "message": "Sürüm: $1"
-  },
-  "managedStoragePolicyLastChecked": {
-    "message": "Son kontrol: $1"
-  },
   "managedStorageValidationError": {
     "message": "Politika doğrulama hatası: $1"
-  },
-  "managedStorageRefreshError": {
-    "message": "Yönetilen depolama yapılandırması yenilenemedi"
   }
 }

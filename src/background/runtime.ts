@@ -78,13 +78,13 @@ export class Runtime {
           for (const lockedSetting of this.storage.managedStorage.lockedSettings) {
             // Simple path check - could be enhanced for nested objects
             if (this.hasSettingChanged(this.pref, newPrefs, lockedSetting)) {
-              validationErrors.push(`Setting "${lockedSetting}" is managed by policy and cannot be changed.`);
+              validationErrors.push(browser.i18n.getMessage('managedStorageSettingLocked', [lockedSetting]));
             }
           }
         }
 
         if (validationErrors.length > 0) {
-          throw new Error(`Policy validation failed: ${validationErrors.join('; ')}`);
+          throw new Error(browser.i18n.getMessage('managedStorageValidationError', [validationErrors.join('; ')]));
         }
 
         await this.preferences.handleChanges({

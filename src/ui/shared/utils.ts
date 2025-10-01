@@ -123,14 +123,16 @@ export function addManagedSettingIndicator(element: HTMLElement, isLocked: boole
     element.setAttribute('disabled', 'true');
     element.setAttribute(
       'title',
-      policyName ? `This setting is managed by policy: ${policyName}` : 'This setting is managed by your organization and cannot be changed'
+      policyName
+        ? browser.i18n.getMessage('managedStoragePolicyName', [policyName])
+        : browser.i18n.getMessage('managedStorageSettingLockedTooltip')
     );
 
     // Add a visual indicator
     const indicator = document.createElement('span');
     indicator.className = 'managed-indicator';
     indicator.textContent = '🔒';
-    indicator.title = browser.i18n.getMessage('managedStorageSettingLocked');
+    indicator.title = browser.i18n.getMessage('managedStorageSettingLockedTooltip');
     element.parentElement?.appendChild(indicator);
   } else {
     // Reset element state when not locked

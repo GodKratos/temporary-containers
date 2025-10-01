@@ -47,7 +47,12 @@ describe('Managed Storage', () => {
   });
 
   it('should validate preference changes against locked settings', async () => {
-    const { tmp: background } = await loadBackground();
+    const { tmp: background, browser } = await loadBackground();
+
+    // Configure i18n mock to return the expected message
+    (browser.i18n.getMessage as any)
+      .withArgs('managedStorageSettingLockedTooltip')
+      .returns('This setting is managed by your organization policy and cannot be changed');
 
     // Set up managed storage state
     background.storage.managedStorage = {
@@ -66,7 +71,7 @@ describe('Managed Storage', () => {
     // Test validation method
     const lockedValidation = background.storage.validatePreferenceChange('automaticMode.active', false);
     expect(lockedValidation.allowed).to.be.false;
-    expect(lockedValidation.reason).to.contain('managed by your organization policy');
+    expect(lockedValidation.reason).to.equal('This setting is managed by your organization policy and cannot be changed');
 
     const allowedValidation = background.storage.validatePreferenceChange('notifications', true);
     expect(allowedValidation.allowed).to.be.true;

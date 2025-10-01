@@ -194,7 +194,7 @@ export class Storage {
     if (this.isSettingLocked(settingPath)) {
       return {
         allowed: false,
-        reason: 'This setting is managed by your organization policy and cannot be changed.',
+        reason: browser.i18n.getMessage('managedStorageSettingLockedTooltip'),
       };
     }
     return { allowed: true };
