@@ -40,6 +40,35 @@
           }
         }
       },
+      "domain": [
+        {
+          "pattern": "example.org",
+          "always": {
+            "action": "disabled",
+            "allowedInPermanent": false,
+            "allowedInTemporary": false
+          },
+          "navigation": {
+            "action": "global"
+          },
+          "mouseClick": {
+            "middle": {
+              "action": "global",
+              "container": "default"
+            },
+            "ctrlleft": {
+              "action": "global",
+              "container": "default"
+            },
+            "left": {
+              "action": "global",
+              "container": "default"
+            }
+          },
+          "excluded": ["www.iana.org"],
+          "excludedContainers": []
+        }
+      ],
       "mac": {
         "action": "disabled"
       }

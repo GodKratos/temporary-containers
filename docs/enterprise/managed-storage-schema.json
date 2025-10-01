@@ -168,6 +168,113 @@
                 }
               }
             },
+            "domain": {
+              "type": "array",
+              "description": "Per-domain isolation rules (order matters; first match wins)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "pattern": {
+                    "type": "string",
+                    "description": "Domain pattern (exact, subdomain or wildcard e.g. example.org, sub.example.org, *.example.org)"
+                  },
+                  "always": {
+                    "type": "object",
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "enum": ["enabled", "disabled"],
+                        "description": "Whether 'Always open in' isolation is enabled for this domain"
+                      },
+                      "allowedInPermanent": {
+                        "type": "boolean",
+                        "description": "Allow isolation in permanent containers"
+                      },
+                      "allowedInTemporary": {
+                        "type": "boolean",
+                        "description": "Allow isolation in temporary containers"
+                      }
+                    },
+                    "required": ["action", "allowedInPermanent", "allowedInTemporary"]
+                  },
+                  "navigation": {
+                    "type": "object",
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "enum": ["global", "never", "notsamedomain", "notsamedomainexact", "always"],
+                        "description": "Navigation isolation action for this domain or 'global' to inherit"
+                      }
+                    },
+                    "required": ["action"]
+                  },
+                  "mouseClick": {
+                    "type": "object",
+                    "properties": {
+                      "middle": {
+                        "type": "object",
+                        "properties": {
+                          "action": {
+                            "type": "string",
+                            "enum": ["global", "never", "notsamedomain", "notsamedomainexact", "always"],
+                            "description": "Middle click action or 'global' to inherit"
+                          },
+                          "container": {
+                            "type": "string",
+                            "enum": ["default", "deleteshistory"],
+                            "description": "Container behavior for middle clicks"
+                          }
+                        },
+                        "required": ["action", "container"]
+                      },
+                      "ctrlleft": {
+                        "type": "object",
+                        "properties": {
+                          "action": {
+                            "type": "string",
+                            "enum": ["global", "never", "notsamedomain", "notsamedomainexact", "always"],
+                            "description": "Ctrl+left click action or 'global' to inherit"
+                          },
+                          "container": {
+                            "type": "string",
+                            "enum": ["default", "deleteshistory"],
+                            "description": "Container behavior for Ctrl+left clicks"
+                          }
+                        },
+                        "required": ["action", "container"]
+                      },
+                      "left": {
+                        "type": "object",
+                        "properties": {
+                          "action": {
+                            "type": "string",
+                            "enum": ["global", "never", "notsamedomain", "notsamedomainexact", "always"],
+                            "description": "Left click action or 'global' to inherit"
+                          },
+                          "container": {
+                            "type": "string",
+                            "enum": ["default", "deleteshistory"],
+                            "description": "Container behavior for left clicks"
+                          }
+                        },
+                        "required": ["action", "container"]
+                      }
+                    }
+                  },
+                  "excluded": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "List of domain patterns excluded from isolation for this rule"
+                  },
+                  "excludedContainers": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "List of permanent container IDs excluded from this isolation rule"
+                  }
+                },
+                "required": ["pattern", "always", "navigation", "mouseClick", "excluded", "excludedContainers"]
+              }
+            },
             "mac": {
               "type": "object",
               "properties": {
