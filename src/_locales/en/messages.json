@@ -850,9 +850,6 @@
   "managedStorageSettingLockedTooltip": {
     "message": "This setting is enforced by your organization policy and cannot be changed"
   },
-  "managedStoragePolicyName": {
-    "message": "Policy: $1"
-  },
   "managedStorageValidationError": {
     "message": "Policy validation failed: $1"
   }

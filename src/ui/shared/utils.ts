@@ -121,12 +121,7 @@ export function addManagedSettingIndicator(element: HTMLElement, isLocked: boole
   if (isLocked) {
     element.classList.add('managed-setting');
     element.setAttribute('disabled', 'true');
-    element.setAttribute(
-      'title',
-      policyName
-        ? browser.i18n.getMessage('managedStoragePolicyName', [policyName])
-        : browser.i18n.getMessage('managedStorageSettingLockedTooltip')
-    );
+    element.setAttribute('title', browser.i18n.getMessage('managedStorageSettingLockedTooltip'));
 
     // Add a visual indicator
     const indicator = document.createElement('span');

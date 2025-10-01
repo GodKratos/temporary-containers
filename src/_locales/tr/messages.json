@@ -845,13 +845,10 @@
     "message": "Sol fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
   },
   "managedStorageSettingLocked": {
-    "message": "Ayar \"$1\" politika tarafından yönetiliyor ve değiştirilemez"
+    "message": "Ayar \"$1\" politika tarafından zorunlu kılınmış ve değiştirilemez"
   },
   "managedStorageSettingLockedTooltip": {
-    "message": "Bu ayar kuruluşunuz politikası tarafından yönetiliyor ve değiştirilemez"
-  },
-  "managedStoragePolicyName": {
-    "message": "Politika: $1"
+    "message": "Bu ayar kuruluşunuzun politikası tarafından zorunlu kılınmış ve değiştirilemez"
   },
   "managedStorageValidationError": {
     "message": "Politika doğrulama hatası: $1"
