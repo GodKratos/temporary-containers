@@ -174,16 +174,32 @@ export class Migration {
       }
     }
 
-    // Also migrate global excluded domains if they exist in object format
-    if (
-      preferences.isolation &&
-      preferences.isolation.global &&
-      preferences.isolation.global.excluded &&
-      typeof preferences.isolation.global.excluded === 'object' &&
-      !Array.isArray(preferences.isolation.global.excluded)
-    ) {
-      preferences.isolation.global.excluded = Object.keys(preferences.isolation.global.excluded);
-      this.debug('[migrate] converted global excluded domains from object to array format:', preferences.isolation.global.excluded);
+    // Also migrate global excluded domains and containers if they exist in object format
+    if (preferences.isolation && preferences.isolation.global) {
+      if (
+        preferences.isolation.global.excluded &&
+        typeof preferences.isolation.global.excluded === 'object' &&
+        !Array.isArray(preferences.isolation.global.excluded)
+      ) {
+        preferences.isolation.global.excluded = Object.keys(preferences.isolation.global.excluded);
+        this.debug('[migrate] converted global excluded domains from object to array format:', preferences.isolation.global.excluded);
+      } else if (!preferences.isolation.global.excluded) {
+        preferences.isolation.global.excluded = [];
+      }
+
+      if (
+        preferences.isolation.global.excludedContainers &&
+        typeof preferences.isolation.global.excludedContainers === 'object' &&
+        !Array.isArray(preferences.isolation.global.excludedContainers)
+      ) {
+        preferences.isolation.global.excludedContainers = Object.keys(preferences.isolation.global.excludedContainers);
+        this.debug(
+          '[migrate] converted global excluded containers from object to array format:',
+          preferences.isolation.global.excludedContainers
+        );
+      } else if (!preferences.isolation.global.excludedContainers) {
+        preferences.isolation.global.excludedContainers = [];
+      }
     }
 
     // hint: don't use preferences/storage-defaults here, ^
