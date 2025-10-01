@@ -1,5 +1,6 @@
 // Advanced: Misc page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 import { PreferencesSchema } from '../../../types';
 
 export async function initAdvancedMiscPage(): Promise<void> {
@@ -117,7 +118,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
     setupEventListeners(content, preferences, permissions);
   } catch (error) {
     console.error('Error initializing advanced misc page:', error);
-    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedMisc'));
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedMisc'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }
 

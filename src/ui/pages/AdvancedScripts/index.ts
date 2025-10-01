@@ -1,5 +1,6 @@
 // Advanced: Scripts page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 import { Script } from '../../../types';
 
 interface ScriptDefaults {
@@ -313,6 +314,6 @@ export async function initAdvancedScriptsPage(): Promise<void> {
     // Initial display update
     updateScriptDisplay();
   } catch (_error) {
-    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedScripts'));
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedScripts'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }

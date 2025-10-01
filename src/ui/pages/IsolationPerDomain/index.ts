@@ -1,5 +1,6 @@
 // Shared IsolationPerDomain page logic for both options and popup menus
 import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 import { PreferencesSchema, IsolationDomain } from '../../../types';
 
 interface DomainEditState {
@@ -290,7 +291,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
     setupEventListeners(content, preferences);
   } catch (error) {
     console.error('Error initializing isolation per domain page:', error);
-    showError(browser.i18n.getMessage('errorFailedToLoadIsolationPerDomain'));
+    showError(browser.i18n.getMessage('errorFailedToLoadIsolationPerDomain'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }
 

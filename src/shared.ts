@@ -14,6 +14,8 @@ export const getPermissions = async (): Promise<Permissions> => {
   };
 };
 
+export const FAILED_TO_LOAD_SETTINGS_ERROR_DURATION = 10000; /* 10 sec */
+
 export const CONTAINER_COLORS = [
   'blue', // #37ADFF
   'turquoise', // #00C79A

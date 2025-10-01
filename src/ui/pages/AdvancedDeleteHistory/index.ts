@@ -1,5 +1,6 @@
 // Advanced: Delete History page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 
 export async function initAdvancedDeleteHistoryPage(): Promise<void> {
   try {
@@ -251,6 +252,6 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       savePref('isolation.global.mouseClick.left.container', (e.target as HTMLSelectElement).value);
     });
   } catch (_error) {
-    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedDeleteHistory'));
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedDeleteHistory'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }

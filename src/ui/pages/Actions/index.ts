@@ -1,5 +1,6 @@
 // Actions page logic for popup menu
 import { getStorage, showError } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 
 export async function initActionsPage(): Promise<void> {
   try {
@@ -104,6 +105,6 @@ export async function initActionsPage(): Promise<void> {
       btnConvertTemporary.setAttribute('data-listener', 'true');
     }
   } catch (_error) {
-    showError(browser.i18n.getMessage('errorFailedToLoadActions'));
+    showError(browser.i18n.getMessage('errorFailedToLoadActions'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }
