@@ -662,6 +662,9 @@
   "optionsExportImportExportSuccess": {
     "message": "Ayarlar başarıyla dışa aktarıldı"
   },
+  "optionsExportImportExportPermissionDenied": {
+    "message": "Dışa aktarma başarısız: indirme izni reddedildi"
+  },
   "optionsExportImportImportSuccess": {
     "message": "Ayarlar başarıyla içe aktarıldı"
   },

@@ -119,30 +119,95 @@ export async function initExportImportPage(): Promise<void> {
   }
 }
 
-async function handleExport(): Promise<void> {
+function handleExport(): void {
+  browser.permissions
+    .request({ permissions: ['downloads'] })
+    .catch(err => {
+      console.warn('downloads permission request error', err);
+      return false as const;
+    })
+    .then(async granted => {
+      // If API returned false (denied) attempt contains to see if already granted previously
+      if (granted === false) {
+        try {
+          const already = await browser.permissions.contains({ permissions: ['downloads'] });
+          if (!already) {
+            showError(browser.i18n.getMessage('optionsExportImportExportPermissionDenied'));
+            return;
+          }
+        } catch (_e) {
+          showError(browser.i18n.getMessage('optionsExportImportExportPermissionDenied'));
+          return;
+        }
+      }
+      await performExportWithDownloads();
+    });
+}
+
+async function performExportWithDownloads(): Promise<void> {
   try {
     const [preferences, { domainRules }, { statistics }] = await Promise.all([
       getPreferences(),
       browser.runtime.sendMessage({ method: 'getDomainRules' }) as Promise<{ domainRules: any[] }>,
       browser.storage.local.get('statistics') as Promise<{ statistics: any }>,
     ]);
-
-    const settings = {
-      preferences,
-      domainRules,
-      statistics,
-    };
-
+    const settings = { preferences, domainRules, statistics };
+    const filename = `temporary-containers-settings-${formatDate(new Date())}.json`;
     const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
+    if (browser.downloads?.download) {
+      try {
+        const downloadId = await browser.downloads.download({ url, filename, saveAs: true, conflictAction: 'uniquify' });
+
+        const cleanup = () => {
+          try {
+            URL.revokeObjectURL(url);
+          } catch (_e) {
+            /* noop */
+          }
+        };
+
+        const listener = (delta: browser.downloads._OnChangedDownloadDelta) => {
+          if (delta.id !== downloadId || !delta.state) return;
+
+          const state = delta.state.current;
+          if (state === 'complete') {
+            browser.downloads.onChanged.removeListener(listener);
+            cleanup();
+            showSuccess(browser.i18n.getMessage('optionsExportImportExportSuccess'));
+          } else if (state === 'interrupted') {
+            browser.downloads.onChanged.removeListener(listener);
+            // USER_CANCELED -> silent
+            if (delta.error?.current && delta.error.current !== 'USER_CANCELED') {
+              console.warn('Download interrupted:', delta.error.current);
+            }
+            cleanup();
+          }
+        };
+        browser.downloads.onChanged.addListener(listener);
+
+        // Safety timeout: if nothing happens (edge case), cleanup after 60s
+        setTimeout(() => {
+          if (browser.downloads.onChanged.hasListener(listener)) {
+            browser.downloads.onChanged.removeListener(listener);
+            cleanup();
+          }
+        }, 60000);
+        return;
+      } catch (err) {
+        console.error('downloads.download threw before listener setup', err);
+        URL.revokeObjectURL(url);
+        return;
+      }
+    }
+
+    // downloads API not available: fallback to anchor method
     const a = document.createElement('a');
     a.href = url;
-    a.download = `temporary-containers-settings-${formatDate(new Date())}.json`;
+    a.download = filename;
     a.click();
-
     URL.revokeObjectURL(url);
-
     showSuccess(browser.i18n.getMessage('optionsExportImportExportSuccess'));
   } catch (error) {
     console.error('Error exporting settings:', error);

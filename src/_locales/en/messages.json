@@ -662,6 +662,9 @@
   "optionsExportImportExportSuccess": {
     "message": "Settings exported successfully"
   },
+  "optionsExportImportExportPermissionDenied": {
+    "message": "Export failed: downloads permission was denied"
+  },
   "optionsExportImportImportSuccess": {
     "message": "Settings imported successfully"
   },

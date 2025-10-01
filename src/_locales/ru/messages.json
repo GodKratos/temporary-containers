@@ -662,6 +662,9 @@
   "optionsExportImportExportSuccess": {
     "message": "Настройки успешно экспортированы"
   },
+  "optionsExportImportExportPermissionDenied": {
+    "message": "Не удалось экспортировать: разрешение на загрузки отклонено"
+  },
   "optionsExportImportImportSuccess": {
     "message": "Настройки успешно импортированы"
   },
