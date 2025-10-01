@@ -17,33 +17,6 @@
   "enableIsolation": {
     "message": "Включить изоляцию"
   },
-  "errorFailedToLoadActions": {
-    "message": "Не удалось загрузить действия"
-  },
-  "errorFailedToLoadAdvancedCookies": {
-    "message": "Не удалось загрузить дополнительные настройки cookies"
-  },
-  "errorFailedToLoadAdvancedMisc": {
-    "message": "Не удалось загрузить дополнительные разные настройки"
-  },
-  "errorFailedToLoadGeneral": {
-    "message": "Не удалось загрузить общие настройки"
-  },
-  "errorFailedToLoadIsolationGlobal": {
-    "message": "Не удалось загрузить настройки глобальной изоляции"
-  },
-  "errorFailedToLoadIsolationPerDomain": {
-    "message": "Не удалось загрузить настройки изоляции по доменам"
-  },
-  "errorFailedToLoadStatistics": {
-    "message": "Не удалось загрузить статистику"
-  },
-  "errorFailedToSave": {
-    "message": "Не удалось сохранить"
-  },
-  "errorImportFileNotFound": {
-    "message": "Ошибка импорта: Файл не найден"
-  },
   "exportSettings": {
     "message": "Экспорт в файл"
   },
@@ -124,6 +97,39 @@
   },
   "glossaryIsolationFeature2": {
     "message": "Предотвращать обмен данными между веб-сайтами в разных контейнерах"
+  },
+  "errorFailedToLoadStatistics": {
+    "message": "Не удалось загрузить статистику"
+  },
+  "errorFailedToLoadIsolationPerDomain": {
+    "message": "Не удалось загрузить настройки \"Изоляция: По доменам\""
+  },
+  "errorFailedToLoadIsolationGlobal": {
+    "message": "Не удалось загрузить настройки \"Изоляция: Глобальная\""
+  },
+  "errorFailedToLoadGeneral": {
+    "message": "Не удалось загрузить настройки \"Общие\""
+  },
+  "errorFailedToLoadAdvancedMisc": {
+    "message": "Не удалось загрузить \"Расширенные настройки\""
+  },
+  "errorFailedToLoadAdvancedCookies": {
+    "message": "Не удалось загрузить настройки \"Внедрение файлов cookie\""
+  },
+  "errorFailedToLoadActions": {
+    "message": "Не удалось загрузить \"Действия\""
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Не удалось загрузить настройки \"Внедрение скриптов\""
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Не удалось загрузить настройки \"Контейнеры с удалением истории\""
+  },
+  "errorFailedToSave": {
+    "message": "Не удалось сохранить"
+  },
+  "errorImportFileNotFound": {
+    "message": "Ошибка импорта: Файл не найден"
   },
   "glossaryIsolationWhenEnabled": {
     "message": "При включении Temporary Containers будет:"
@@ -837,12 +843,6 @@
   },
   "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
     "message": "Открывать новые \"Временные контейнеры с удалением истории\" при левых кликах мыши вместо временных контейнеров"
-  },
-  "errorFailedToLoadAdvancedScripts": {
-    "message": "Не удалось загрузить дополнительные настройки скриптов"
-  },
-  "errorFailedToLoadAdvancedDeleteHistory": {
-    "message": "Не удалось загрузить дополнительные настройки удаления истории"
   },
   "managedStorageNoticeTitle": {
     "message": "Настройки управляются политикой"

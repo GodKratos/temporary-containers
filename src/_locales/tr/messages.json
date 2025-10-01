@@ -17,33 +17,6 @@
   "enableIsolation": {
     "message": "İzolasyonu Etkinleştir"
   },
-  "errorFailedToLoadActions": {
-    "message": "Eylemler yüklenemedi"
-  },
-  "errorFailedToLoadAdvancedCookies": {
-    "message": "Gelişmiş Çerez ayarları yüklenemedi"
-  },
-  "errorFailedToLoadAdvancedMisc": {
-    "message": "Gelişmiş Çeşitli ayarları yüklenemedi"
-  },
-  "errorFailedToLoadGeneral": {
-    "message": "Genel ayarlar yüklenemedi"
-  },
-  "errorFailedToLoadIsolationGlobal": {
-    "message": "Küresel İzolasyon ayarları yüklenemedi"
-  },
-  "errorFailedToLoadIsolationPerDomain": {
-    "message": "Alan Adı Başına İzolasyon ayarları yüklenemedi"
-  },
-  "errorFailedToLoadStatistics": {
-    "message": "İstatistikler yüklenemedi"
-  },
-  "errorFailedToSave": {
-    "message": "Kaydedilemedi"
-  },
-  "errorImportFileNotFound": {
-    "message": "İçe aktarma hatası: Dosya bulunamadı"
-  },
   "exportSettings": {
     "message": "Dosyaya Aktar"
   },
@@ -124,6 +97,39 @@
   },
   "glossaryIsolationFeature2": {
     "message": "Web sitelerinin konteynerler arasında veri paylaşımını önler"
+  },
+  "errorFailedToLoadStatistics": {
+    "message": "İstatistikler yüklenemedi"
+  },
+  "errorFailedToLoadIsolationPerDomain": {
+    "message": "\"İzolasyon: Alan Adı Başına\" ayarları yüklenemedi"
+  },
+  "errorFailedToLoadIsolationGlobal": {
+    "message": "\"İzolasyon: Küresel\" ayarları yüklenemedi"
+  },
+  "errorFailedToLoadGeneral": {
+    "message": "\"Genel\" ayarlar yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedMisc": {
+    "message": "\"Gelişmiş Ayarlar\" yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedCookies": {
+    "message": "\"Çerez Enjeksiyonu\" ayarları yüklenemedi"
+  },
+  "errorFailedToLoadActions": {
+    "message": "\"Eylemler\" yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "\"Betik Enjeksiyonu\" ayarları yüklenemedi"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "\"Geçmişi Silen Konteynerler\" ayarları yüklenemedi"
+  },
+  "errorFailedToSave": {
+    "message": "Kaydedilemedi"
+  },
+  "errorImportFileNotFound": {
+    "message": "İçe aktarma hatası: Dosya bulunamadı"
   },
   "glossaryIsolationWhenEnabled": {
     "message": "Etkinleştirildiğinde, Temporary Containers şunları yapacaktır:"
@@ -837,12 +843,6 @@
   },
   "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
     "message": "Sol fare tıklamalarıyla geçici konteynerler yerine yeni \"Geçmişi Silen Geçici Konteynerler\" aç"
-  },
-  "errorFailedToLoadAdvancedScripts": {
-    "message": "Gelişmiş betik ayarları yüklenemedi"
-  },
-  "errorFailedToLoadAdvancedDeleteHistory": {
-    "message": "Gelişmiş geçmiş silme ayarları yüklenemedi"
   },
   "managedStorageNoticeTitle": {
     "message": "Ayarlar Politika ile Yönetiliyor"

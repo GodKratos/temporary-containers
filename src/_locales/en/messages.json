@@ -311,14 +311,8 @@
   "errorFailedToLoadIsolationGlobal": {
     "message": "Failed to load \"Isolation: Global\" settings"
   },
-  "errorFailedToSave": {
-    "message": "Failed to save"
-  },
   "errorFailedToLoadGeneral": {
     "message": "Failed to load \"General\" settings"
-  },
-  "errorImportFileNotFound": {
-    "message": "Import error: File not found"
   },
   "errorFailedToLoadAdvancedMisc": {
     "message": "Failed to load \"Advanced Settings\""
@@ -328,6 +322,18 @@
   },
   "errorFailedToLoadActions": {
     "message": "Failed to load \"Actions\""
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Failed to load \"Script Injection\" settings"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Failed to load \"Deletes History Containers\" settings"
+  },
+  "errorFailedToSave": {
+    "message": "Failed to save"
+  },
+  "errorImportFileNotFound": {
+    "message": "Import error: File not found"
   },
   "savedMessage": {
     "message": "Saved"
@@ -837,12 +843,6 @@
   },
   "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
     "message": "Open new \"Deletes History Temporary Containers\" with Left Mouse clicks instead of Temporary Containers"
-  },
-  "errorFailedToLoadAdvancedScripts": {
-    "message": "Failed to load \"Script Injection\" settings"
-  },
-  "errorFailedToLoadAdvancedDeleteHistory": {
-    "message": "Failed to load \"Deletes History Containers\" settings"
   },
   "managedStorageNoticeTitle": {
     "message": "Settings Managed by Policy"
