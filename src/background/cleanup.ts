@@ -130,6 +130,13 @@ export class Cleanup {
     }
 
     this.debug('[maybeShowNotification] showing notification');
+
+    // Guard against missing optional permission (notifications is optional in manifest).
+    if (!browser.notifications || typeof browser.notifications.create !== 'function') {
+      this.debug('[maybeShowNotification] notifications API unavailable - permission likely not granted');
+      return;
+    }
+
     browser.notifications.create({
       type: 'basic',
       title: 'Temporary Containers',

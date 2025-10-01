@@ -1,10 +1,11 @@
 // General page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess, capitalize } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, capitalize, getPermissions } from '../../shared/utils';
 import { CONTAINER_COLORS, CONTAINER_ICONS, TOOLBAR_ICON_COLORS, CONTAINER_REMOVAL_DEFAULT } from '~/shared';
 
 export async function initGeneralPage(): Promise<void> {
   try {
     const preferences = await getPreferences();
+    const permissions = await getPermissions();
     const section = document.getElementById('general');
     if (!section) return;
     section.innerHTML = '';
@@ -222,8 +223,26 @@ export async function initGeneralPage(): Promise<void> {
     (document.getElementById('browserActionPopup') as HTMLInputElement).addEventListener('change', e => {
       savePref('browserActionPopup', (e.target as HTMLInputElement).checked);
     });
-    (document.getElementById('notificationsCheckbox') as HTMLInputElement).addEventListener('change', e => {
-      savePref('notifications', (e.target as HTMLInputElement).checked);
+    (document.getElementById('notificationsCheckbox') as HTMLInputElement).addEventListener('change', async e => {
+      const checkbox = e.target as HTMLInputElement;
+
+      if (checkbox.checked) {
+        try {
+          // Check if permission already granted
+          const granted = await browser.permissions.request({ permissions: ['notifications'] });
+          if (!granted) {
+            checkbox.checked = false; // revert UI
+            showError(browser.i18n.getMessage('errorFailedToSave'));
+            return;
+          }
+        } catch (err) {
+          checkbox.checked = false;
+          showError(browser.i18n.getMessage('errorFailedToSave'));
+          return;
+        }
+      }
+
+      savePref('notifications', checkbox.checked);
     });
     (document.getElementById('containerNamePrefix') as HTMLInputElement).addEventListener('change', e => {
       savePref('container.namePrefix', (e.target as HTMLInputElement).value);
