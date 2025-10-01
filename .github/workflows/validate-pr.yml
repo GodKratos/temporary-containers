@@ -1,0 +1,44 @@
+name: Validate Pull Request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Validate commit messages
+        run: |
+          # Get the range of commits in the PR
+          BASE_SHA=${{ github.event.pull_request.base.sha }}
+          HEAD_SHA=${{ github.event.pull_request.head.sha }}
+
+          # Validate each commit message in the PR
+          git log --format="%H %s" ${BASE_SHA}..${HEAD_SHA} | while read commit_hash commit_message; do
+            echo "Validating commit: $commit_hash - $commit_message"
+            echo "$commit_message" | npx commitlint --from=stdin
+          done
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Test build
+        run: npm run build

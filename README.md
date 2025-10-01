@@ -59,34 +59,51 @@ or
 
 ### Git Hooks and Pre-commit Process
 
-The project uses Husky for Git hooks with the following automated checks:
+The project uses Husky for Git hooks with the following automated checks for local development:
 
-#### Pre-commit Hook
+#### For Local Development (Husky Hooks)
+
+**Pre-commit Hook:**
 
 - Runs ESLint with auto-fix on `.ts` and `.js` files
 - Runs Prettier formatting on `.ts`, `.js`, `.html`, `.css`, `.json`, `.yml`, and `.md` files
 
-#### Pre-push Hook
+**Pre-push Hook:**
 
 - Runs the full test suite (`npm run test`)
 - Runs a test build (`npm run build`)
 - Runs all linting checks (ESLint, TypeScript, localization) (`npm run lint`)
 
-#### Commit Message Hook
+**Commit Message Hook:**
 
-- Validates commit messages using commitlint with conventional commit format (subject: type)
-- subject can be one of the following:
-  - build: Changes that affect the build system or external dependencies.
-  - chore: Other changes that do not modify source or test files.
-  - ci: Changes to CI configuration files and scripts.
-  - docs: Changes are only to documentation.
-  - feat: A new feature is introduced.
-  - fix: A bug fix is implemented.
-  - perf: A code change that improves performance.
-  - refactor: A code change that neither fixes a bug nor adds a feature.
-  - revert: For when a change has been reverted.
-  - style: Code formatting, white-space, or other formatting changes that do not affect the meaning of the code.
-  - test: Adding missing tests or correcting existing tests.
+- Validates commit messages using commitlint with conventional commit format (type: description)
+
+#### For Pull Requests (GitHub Actions)
+
+Pull requests from forks are automatically validated using GitHub Actions, which enforces the same standards:
+
+- Commit message validation using commitlint
+- Full test suite execution
+- Linting and formatting checks
+- Successful build verification
+
+**Note:** Contributors working on forks should run `npm install` to set up local git hooks, but PR validation will catch any issues regardless.
+
+#### Conventional Commit Types
+
+Valid commit types for both local hooks and PR validation:
+
+- **build**: Changes that affect the build system or external dependencies
+- **chore**: Other changes that do not modify source or test files
+- **ci**: Changes to CI configuration files and scripts
+- **docs**: Changes are only to documentation
+- **feat**: A new feature is introduced
+- **fix**: A bug fix is implemented
+- **perf**: A code change that improves performance
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **revert**: For when a change has been reverted
+- **style**: Code formatting, white-space, or other formatting changes
+- **test**: Adding missing tests or correcting existing tests
 
 ### Release
 
