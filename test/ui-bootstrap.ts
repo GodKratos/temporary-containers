@@ -51,6 +51,16 @@ export async function bootstrapOptionsUI(providedBackground?: Awaited<ReturnType
         await background.tmp.storage.persist();
         return true;
       }
+      if (msg && msg.method === 'getPermissions') {
+        // Return mock permissions for testing
+        return {
+          bookmarks: false,
+          downloads: false,
+          history: false,
+          notifications: false,
+          webNavigation: false,
+        };
+      }
       return originalSend(msg);
     };
   }

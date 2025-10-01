@@ -82,13 +82,32 @@ describe('UI General: form interactions', () => {
     expect(popupArg).to.deep.equal({ popup: 'popup.html' });
   });
 
-  it('notifications checkbox toggles preference', async () => {
+  it('notifications checkbox enables preference when permission is granted', async () => {
+    // Mock permission request to succeed
+    (browser.permissions.request as sinon.SinonStub).resolves(true);
+
     await setupGeneral();
     const cb = document.getElementById('notificationsCheckbox') as HTMLInputElement;
     cb.checked = true;
     cb.dispatchEvent(new (window as any).Event('change', { bubbles: true }));
     await flushMicrotasks(10);
+
+    expect(cb.checked).to.equal(true);
     expect(background.tmp.pref.notifications).to.equal(true);
+  });
+
+  it('notifications checkbox remains unchecked when permission is denied', async () => {
+    // Mock permission request to fail
+    (browser.permissions.request as sinon.SinonStub).resolves(false);
+
+    await setupGeneral();
+    const cb = document.getElementById('notificationsCheckbox') as HTMLInputElement;
+    cb.checked = true;
+    cb.dispatchEvent(new (window as any).Event('change', { bubbles: true }));
+    await flushMicrotasks(10);
+
+    expect(cb.checked).to.equal(false);
+    expect(background.tmp.pref.notifications).to.equal(false);
   });
 
   it('containerNamePrefix text input saves value', async () => {
