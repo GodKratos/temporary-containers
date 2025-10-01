@@ -1,6 +1,6 @@
 // Shared Statistics page logic for both options and popup menus
 import { getPreferences, getStorage, savePreferences, showError, showSuccess } from '../../shared/utils';
-import { formatBytes } from '../../../shared';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION, formatBytes } from '../../../shared';
 
 export async function initStatisticsPage(): Promise<void> {
   try {
@@ -136,6 +136,6 @@ export async function initStatisticsPage(): Promise<void> {
     }
   } catch (error) {
     console.error('Error initializing statistics page:', error);
-    showError(browser.i18n.getMessage('errorFailedToLoadStatistics'));
+    showError(browser.i18n.getMessage('errorFailedToLoadStatistics'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }
