@@ -220,11 +220,16 @@ export function formatBytes(bytes: number, decimals = 2): string {
 }
 
 /**
- * Show a message to the user
+ * Show a message to the user.
+ *
+ * If the duration is negative, then the message is shown indefinitely until
+ * overwritten by another message.
+ *
  * @param message - The message to show
  * @param type - The type of message (error, success, warning)
+ * @param duration - Time in milliseconds to show the message
  */
-export function showMessage(message: string, type = ''): void {
+export function showMessage(message: string, type = '', duration = 3000): void {
   const container = document.getElementById('message-container');
   const messageEl = document.getElementById('message');
 
@@ -236,17 +241,24 @@ export function showMessage(message: string, type = ''): void {
   container.className = `message-container ${type}`;
   container.classList.remove('hidden');
 
-  setTimeout(() => {
-    container.classList.add('hidden');
-  }, 3000);
+  if (duration >= 0) {
+    setTimeout(() => {
+      container.classList.add('hidden');
+    }, duration);
+  }
 }
 
 /**
  * Show an error message
+ *
+ * If the duration is negative, then the message is shown indefinitely until
+ * overwritten by another message.
+ *
  * @param message - The error message
+ * @param duration - Time in milliseconds to show the error
  */
-export function showError(message: string): void {
-  showMessage(message, 'error');
+export function showError(message: string, duration = 5000): void {
+  showMessage(message, 'error', duration);
 }
 
 /**
