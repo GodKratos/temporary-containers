@@ -51,6 +51,10 @@ export async function bootstrapOptionsUI(providedBackground?: Awaited<ReturnType
         await background.tmp.storage.persist();
         return true;
       }
+      if (msg && msg.method === 'getStorage') {
+        // Return complete storage.local snapshot similar to background runtime handler
+        return background.tmp.storage.local;
+      }
       if (msg && msg.method === 'getPermissions') {
         // Return mock permissions for testing
         return {

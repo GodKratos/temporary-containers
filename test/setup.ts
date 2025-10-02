@@ -80,6 +80,7 @@ const fakeBrowser = (): {
 
   // @ts-ignore
   global.window = window;
+  global.HTMLElement = window.HTMLElement;
   global.AbortController = window.AbortController;
 
   browser.sinonSandbox.reset();
@@ -136,6 +137,15 @@ const fakeBrowser = (): {
     name: 'Firefox',
     version: 67,
   });
+  // Ensure storage.sync.get always returns an object (API contract) so code using result.export doesn't throw
+  if (!(global.browser.storage.sync.get as any)._defaultImplemented) {
+    const originalSyncGet = global.browser.storage.sync.get as sinon.SinonStub;
+    originalSyncGet.callsFake(async (arg?: any) => {
+      // If arg is an array or object of keys, mimic returning empty object for unknown keys
+      return {};
+    });
+    (global.browser.storage.sync.get as any)._defaultImplemented = true;
+  }
   (global.browser.permissions.getAll as sinon.SinonStub).resolves({
     permissions: [],
   });
@@ -146,6 +156,13 @@ const fakeBrowser = (): {
       version: '6.0.0',
     },
   ]);
+
+  // Polyfill scrollIntoView for jsdom (used in some option pages)
+  if (window.HTMLElement && !window.HTMLElement.prototype.scrollIntoView) {
+    window.HTMLElement.prototype.scrollIntoView = function () {
+      // no-op polyfill
+    } as any;
+  }
 
   // Setup default container creation mocks with an internal registry so that
   // browser.contextualIdentities.get returns previously created identities.

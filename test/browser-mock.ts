@@ -431,6 +431,11 @@ export function createBrowserMock(): BrowserMock {
           hasListener: sandbox.stub(),
         },
       },
+      onChanged: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
     },
 
     // Web Request API
