@@ -6,6 +6,17 @@ This document explains how to configure Temporary Containers extension using man
 
 Managed storage allows system administrators to configure Firefox extensions through policies, enabling centralized management of extension settings across an organization.
 
+> **⚠️ IMPORTANT WARNING**
+>
+> **No Setting Validation**: The extension currently does not validate managed storage configurations. Invalid setting names, incorrect data types, or malformed values in your policy configuration will cause runtime errors and may prevent the extension from functioning properly.
+>
+> **Always verify your configuration** by:
+>
+> - Testing policies in a development environment first
+> - Checking the browser console for errors after policy deployment
+> - Ensuring all setting names match the schema exactly
+> - Validating JSON syntax before deployment
+
 ## Setup Instructions
 
 ### 1. Firefox Policy Configuration
