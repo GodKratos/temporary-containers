@@ -1,10 +1,11 @@
 import { TemporaryContainers } from './tmp';
-import { StorageLocal, Debug } from '~/types';
+import { StorageLocal, Debug, ManagedStorageManifest, ManagedStorageState, PreferencesSchema } from '~/types';
 
 export class Storage {
   public local!: StorageLocal;
   public installed: boolean;
   public defaults: StorageLocal;
+  public managedStorage!: ManagedStorageState;
 
   private background: TemporaryContainers;
   private debug: Debug;
@@ -37,6 +38,19 @@ export class Storage {
       preferences: background.preferences.defaults,
       lastFileExport: false,
       version: false,
+      managedStorage: {
+        isManaged: false,
+        lastChecked: 0,
+        overrides: {},
+        lockedSettings: [],
+      },
+    };
+
+    this.managedStorage = {
+      isManaged: false,
+      lastChecked: 0,
+      overrides: {},
+      lockedSettings: [],
     };
   }
 
@@ -49,16 +63,7 @@ export class Storage {
     }
 
     // check for managed preferences
-    try {
-      const managed = await browser.storage.managed.get();
-      if (managed && Object.keys(managed).length) {
-        this.local.version = managed.version;
-        this.local.preferences = managed.preferences;
-        await this.persist();
-      }
-    } catch (error) {
-      this.debug('[initialize] accessing managed storage failed:', (error as Error).toString());
-    }
+    await this.checkManagedStorage();
 
     this.debug('[initialize] storage initialized', this.local);
     if (
@@ -81,6 +86,9 @@ export class Storage {
         this.debug('[initialize] migration failed', (error as Error).toString());
       }
     }
+
+    // Initialize managed storage monitoring
+    this.initializeManagedStorageMonitoring();
 
     return true;
   }
@@ -106,11 +114,130 @@ export class Storage {
     this.local = this.background.utils.clone(this.defaults);
     this.local.version = this.background.version;
 
+    // Check for managed storage even during initial install
+    await this.checkManagedStorage();
+
     if (!(await this.persist())) {
       throw new Error('[install] something went wrong while installing');
     }
     this.debug('[install] storage installed', this.local);
     this.installed = true;
     return true;
+  }
+
+  /**
+   * Check for and apply managed storage policies
+   */
+  async checkManagedStorage(): Promise<void> {
+    try {
+      const managed = (await browser.storage.managed.get()) as ManagedStorageManifest;
+
+      if (!managed || !Object.keys(managed).length) {
+        this.debug('[checkManagedStorage] no managed storage configuration found');
+        this.managedStorage.isManaged = false;
+        return;
+      }
+
+      this.debug('[checkManagedStorage] found managed storage configuration', managed);
+
+      // Update managed storage state
+      this.managedStorage = {
+        isManaged: true,
+        version: managed.version,
+        lastChecked: Date.now(),
+        overrides: managed.preferences || {},
+        lockedSettings: managed.locked_settings || [],
+      };
+
+      // Apply managed preferences
+      if (managed.preferences) {
+        this.applyManagedPreferences(managed.preferences);
+      }
+
+      // Store managed state in local storage
+      this.local.managedStorage = this.managedStorage;
+      await this.persist();
+    } catch (error) {
+      this.debug('[checkManagedStorage] accessing managed storage failed:', (error as Error).toString());
+      this.managedStorage.isManaged = false;
+    }
+  }
+
+  /**
+   * Apply managed preferences to current preferences
+   */
+  private applyManagedPreferences(managedPreferences: Partial<PreferencesSchema>): void {
+    this.debug('[applyManagedPreferences] applying managed preferences', managedPreferences);
+
+    // Deep merge managed preferences into current preferences
+    this.local.preferences = this.background.utils.deepMerge(this.local.preferences, managedPreferences) as PreferencesSchema;
+  }
+
+  /**
+   * Check if a specific preference setting is locked by policy
+   */
+  isSettingLocked(settingPath: string): boolean {
+    return this.managedStorage.isManaged && this.managedStorage.lockedSettings.includes(settingPath);
+  }
+
+  /**
+   * Get managed storage information for UI display
+   */
+  getManagedStorageInfo(): ManagedStorageState {
+    return { ...this.managedStorage };
+  }
+
+  /**
+   * Validate preference changes against managed storage policies
+   */
+  validatePreferenceChange(settingPath: string, _newValue: any): { allowed: boolean; reason?: string } {
+    if (this.isSettingLocked(settingPath)) {
+      return {
+        allowed: false,
+        reason: browser.i18n.getMessage('managedStorageSettingLockedTooltip'),
+      };
+    }
+    return { allowed: true };
+  }
+
+  /**
+   * Refresh managed storage configuration (call periodically)
+   */
+  async refreshManagedStorage(): Promise<boolean> {
+    const oldManagedState = { ...this.managedStorage };
+    await this.checkManagedStorage();
+
+    // Check if managed storage configuration changed
+    const hasChanged = JSON.stringify(oldManagedState) !== JSON.stringify(this.managedStorage);
+
+    if (hasChanged) {
+      this.debug('[refreshManagedStorage] managed storage configuration changed');
+      // Notify UI about policy changes if needed
+      try {
+        browser.runtime.sendMessage({
+          method: 'managedStorageChanged',
+          payload: this.managedStorage,
+        });
+      } catch (_error) {
+        // Ignore if no listeners
+      }
+    }
+
+    return hasChanged;
+  }
+
+  /**
+   * Initialize periodic managed storage checks
+   */
+  initializeManagedStorageMonitoring(): void {
+    // Check for managed storage changes every 5 minutes
+    setInterval(
+      () => {
+        this.refreshManagedStorage().catch(error => {
+          this.debug('[managedStorageMonitoring] error refreshing managed storage:', error);
+        });
+      },
+      5 * 60 * 1000
+    );
   }
 }

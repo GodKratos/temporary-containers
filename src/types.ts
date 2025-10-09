@@ -121,6 +121,23 @@ export interface StorageLocal {
   preferences: PreferencesSchema;
   lastFileExport: false;
   version: false | string;
+  managedStorage?: ManagedStorageState;
+}
+
+export interface ManagedStorageState {
+  isManaged: boolean;
+  version?: string;
+  lastChecked: number;
+  overrides: Partial<PreferencesSchema>;
+  lockedSettings: string[];
+}
+
+export interface ManagedStorageManifest {
+  version?: string;
+  preferences?: Partial<PreferencesSchema>;
+  locked_settings?: string[];
+  policy_name?: string;
+  policy_description?: string;
 }
 
 export interface PreferencesSchema {

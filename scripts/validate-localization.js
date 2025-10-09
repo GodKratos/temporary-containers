@@ -15,6 +15,7 @@ class LocalizationValidator {
   constructor() {
     this.localesDir = path.join(__dirname, '..', 'src', '_locales');
     this.uiDir = path.join(__dirname, '..', 'src', 'ui');
+    this.backgroundDir = path.join(__dirname, '..', 'src', 'background');
     this.sharedFile = path.join(__dirname, '..', 'src', 'shared.ts');
     this.supportedLocales = ['en', 'ru', 'tr'];
     this.errors = [];
@@ -81,13 +82,16 @@ class LocalizationValidator {
   }
 
   /**
-   * Extract all localization keys used in UI code
+   * Extract all localization keys used in UI code and background scripts
    */
   extractUIKeys() {
     const uiKeys = new Map(); // Change to Map to track file locations
 
     // Process UI directory
     this.processDirectory(this.uiDir, uiKeys);
+
+    // Process background directory
+    this.processDirectory(this.backgroundDir, uiKeys);
 
     // Process manifest.json for __MSG_keyName__ references
     this.processManifest(uiKeys);

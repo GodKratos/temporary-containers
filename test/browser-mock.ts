@@ -107,6 +107,9 @@ export interface BrowserMock {
         hasListener: sinon.SinonStub;
       };
     };
+    managed: {
+      get: sinon.SinonStub;
+    };
   };
   webRequest: {
     onBeforeRequest: {
@@ -435,6 +438,9 @@ export function createBrowserMock(): BrowserMock {
         addListener: sandbox.stub(),
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
+      },
+      managed: {
+        get: sandbox.stub(),
       },
     },
 

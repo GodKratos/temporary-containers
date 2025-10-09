@@ -6,6 +6,24 @@ This is a continuation of the amazing addon [originally created and maintained b
 
 Detailed information about the Add-on [can be found in the wiki](https://github.com/GodKratos/temporary-containers/wiki). There's also [this long-form article](https://medium.com/@stoically/enhance-your-privacy-in-firefox-with-temporary-containers-33925cd6cd21) from the orignal developer, explain its features and how it works.
 
+## Enterprise Support
+
+This extension includes comprehensive managed storage support for enterprise environments, allowing administrators to configure and lock settings through Firefox policies.
+
+**Key Features:**
+
+- Policy-based configuration management
+- Setting locking to prevent user modification
+- Centralized deployment through Firefox Enterprise Policy
+- Real-time policy updates and validation
+
+For detailed configuration instructions, see [Enterprise Setup Guide](docs/enterprise/MANAGED_STORAGE.md).
+
+**Quick Setup:**
+
+- Schema reference: [`docs/enterprise/managed-storage-schema.json`](docs/enterprise/managed-storage-schema.json)
+- Example configuration: [`docs/enterprise/managed-storage-example.json`](docs/enterprise/managed-storage-example.json)
+
 ## Development
 
 ### Setup Development Environment

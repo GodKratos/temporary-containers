@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "policy_name": "Basic Security Policy",
+  "policy_description": "Minimal security configuration for corporate environments",
+  "locked_settings": ["automaticMode.active", "statistics"],
+  "preferences": {
+    "automaticMode": {
+      "active": true,
+      "newTab": "created"
+    },
+    "statistics": false,
+    "notifications": false
+  }
+}

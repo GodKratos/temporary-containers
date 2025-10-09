@@ -528,3 +528,72 @@ button.danger:hover {
   margin: 4px 0;
   color: var(--text-color);
 }
+
+/* Managed Storage Styles */
+.managed-setting {
+  background-color: var(--disabled-background) !important;
+  color: var(--disabled-color) !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  position: relative;
+}
+
+.managed-indicator {
+  margin-left: var(--space-sm);
+  color: var(--orange-60);
+  font-size: var(--font-size-xs);
+  cursor: help;
+  display: inline-block;
+  opacity: 0.9;
+}
+
+.managed-notice {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 16px;
+  background-color: var(--message-info-background);
+  border: 1px solid var(--message-info-border);
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+.managed-notice .icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.managed-notice .content {
+  flex-grow: 1;
+}
+
+.managed-notice .title {
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.managed-notice .description {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.managed-setting-group {
+  border: 1px solid var(--warning-color, #ff8c00);
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 140, 0, 0.05);
+}
+
+.managed-setting-group .managed-group-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--warning-color, #ff8c00);
+}
+
+.managed-setting-group .managed-group-header .icon {
+  margin-right: 8px;
+}

@@ -168,4 +168,32 @@ export class Utils {
     }
     return 0;
   }
+
+  /**
+   * Deep merge two objects, with the source object values taking precedence
+   * @param target The target object
+   * @param source The source object
+   * @returns The merged object
+   */
+  deepMerge(target: any, source: any): any {
+    if (!source || typeof source !== 'object') {
+      return target;
+    }
+
+    const result = this.clone(target);
+
+    for (const key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          // Recursively merge nested objects
+          result[key] = this.deepMerge(result[key] || {}, source[key]);
+        } else {
+          // Override with source value (including arrays and primitives)
+          result[key] = source[key];
+        }
+      }
+    }
+
+    return result;
+  }
 }

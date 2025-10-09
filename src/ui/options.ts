@@ -8,19 +8,26 @@ import { initAdvancedScriptsPage } from './pages/AdvancedScripts';
 import { initAdvancedDeleteHistoryPage } from './pages/AdvancedDeleteHistory';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
-import { createTabSystem, showInitializeLoader, showInitializeError, hideInitializeLoader, applyLocalization } from './shared/utils';
+import {
+  createTabSystem,
+  showInitializeLoader,
+  showInitializeError,
+  hideInitializeLoader,
+  applyLocalization,
+  withManagedStorage,
+} from './shared/utils';
 
-// Map tab IDs to page initializers
+// Map tab IDs to page initializers (wrapped with managed storage support)
 const pageInitializers: Record<string, () => Promise<void>> = {
-  general: initGeneralPage,
-  'isolation-global': initIsolationGlobalPage,
-  'isolation-domain': initIsolationPerDomainPage,
-  'advanced-misc': initAdvancedMiscPage,
-  'advanced-cookies': initAdvancedCookiesPage,
-  'advanced-scripts': initAdvancedScriptsPage,
-  'advanced-delete-history': initAdvancedDeleteHistoryPage,
-  statistics: initStatisticsPage,
-  'export-import': initExportImportPage,
+  general: withManagedStorage(initGeneralPage),
+  'isolation-global': withManagedStorage(initIsolationGlobalPage),
+  'isolation-domain': withManagedStorage(initIsolationPerDomainPage),
+  'advanced-misc': withManagedStorage(initAdvancedMiscPage),
+  'advanced-cookies': withManagedStorage(initAdvancedCookiesPage),
+  'advanced-scripts': withManagedStorage(initAdvancedScriptsPage),
+  'advanced-delete-history': withManagedStorage(initAdvancedDeleteHistoryPage),
+  statistics: withManagedStorage(initStatisticsPage),
+  'export-import': withManagedStorage(initExportImportPage),
 };
 
 async function initializeOptionsUI() {
@@ -34,8 +41,8 @@ async function initializeOptionsUI() {
       // Apply localization after tab/page change
       applyLocalization();
     });
-    // Initialize the default tab (General)
-    await initGeneralPage();
+    // Initialize the default tab (General) with managed storage support
+    await pageInitializers['general']();
     applyLocalization();
     hideInitializeLoader();
   } catch (error) {

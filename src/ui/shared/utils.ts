@@ -76,6 +76,130 @@ export async function getPermissions(): Promise<Permissions> {
 }
 
 /**
+ * Get managed storage information
+ */
+export async function getManagedStorageInfo(): Promise<import('../../types').ManagedStorageState> {
+  try {
+    const managedInfo = (await sendMessage('getManagedStorageInfo')) as import('../../types').ManagedStorageState;
+    return managedInfo;
+  } catch (error) {
+    console.error('Failed to get managed storage info:', error);
+    throw error;
+  }
+}
+
+/**
+ * Validate if a preference change is allowed by policy
+ */
+export async function validatePreferenceChange(settingPath: string, newValue: any): Promise<{ allowed: boolean; reason?: string }> {
+  try {
+    const result = (await sendMessage('validatePreferenceChange', { settingPath, newValue })) as { allowed: boolean; reason?: string };
+    return result;
+  } catch (error) {
+    console.error('Failed to validate preference change:', error);
+    return { allowed: false, reason: 'Failed to validate against policy' };
+  }
+}
+
+/**
+ * Check if a setting is locked by managed storage policy
+ */
+export function isSettingLocked(managedStorage: import('../../types').ManagedStorageState, settingPath: string): boolean {
+  return managedStorage.isManaged && managedStorage.lockedSettings.includes(settingPath);
+}
+
+/**
+ * Add visual indicators for managed settings in the UI
+ */
+export function addManagedSettingIndicator(element: HTMLElement, isLocked: boolean, policyName?: string): void {
+  // Remove any existing indicator first
+  const existingIndicator = element.parentElement?.querySelector('.managed-indicator');
+  if (existingIndicator) {
+    existingIndicator.remove();
+  }
+
+  if (isLocked) {
+    element.classList.add('managed-setting');
+    element.setAttribute('disabled', 'true');
+    element.setAttribute('title', browser.i18n.getMessage('managedStorageSettingLockedTooltip'));
+
+    // Add a visual indicator
+    const indicator = document.createElement('span');
+    indicator.className = 'managed-indicator';
+    indicator.textContent = '🔒';
+    indicator.title = browser.i18n.getMessage('managedStorageSettingLockedTooltip');
+    element.parentElement?.appendChild(indicator);
+  } else {
+    // Reset element state when not locked
+    element.classList.remove('managed-setting');
+    element.removeAttribute('disabled');
+    element.removeAttribute('title');
+  }
+}
+
+/**
+ * Apply managed storage indicators to all form elements in the current page
+ */
+export async function applyManagedStorageIndicators(): Promise<void> {
+  try {
+    const managedInfo = await getManagedStorageInfo();
+
+    if (managedInfo.isManaged) {
+      // Find all form elements with data-setting attributes
+      const formElements = document.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-setting]');
+
+      formElements.forEach(element => {
+        const setting = element.getAttribute('data-setting');
+        if (setting && isSettingLocked(managedInfo, setting)) {
+          const policyName = getManagedPolicyName(setting, managedInfo);
+          addManagedSettingIndicator(element, true, policyName);
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Failed to apply managed storage indicators:', error);
+  }
+}
+
+/**
+ * Get the policy name that manages a specific setting
+ */
+function getManagedPolicyName(settingPath: string, managedState: import('../../types').ManagedStorageState): string | undefined {
+  // Check if this setting is in the locked settings
+  if (managedState.lockedSettings.includes(settingPath)) {
+    return 'Enterprise Policy';
+  }
+
+  // Check if the setting has an override value (which means it's managed)
+  const pathParts = settingPath.split('.');
+  let current: any = managedState.overrides;
+
+  for (const part of pathParts) {
+    if (current && typeof current === 'object' && part in current) {
+      current = current[part];
+    } else {
+      return undefined;
+    }
+  }
+
+  // If we found an override value, it's managed
+  return current !== undefined ? 'Enterprise Policy' : undefined;
+}
+
+/**
+ * Wrapper function to enhance page initializers with managed storage support
+ */
+export function withManagedStorage<T extends (...args: any[]) => Promise<void>>(initFunction: T): T {
+  return (async (...args: Parameters<T>) => {
+    // Call the original initialization function
+    await initFunction(...args);
+
+    // Apply managed storage indicators after page is loaded
+    await applyManagedStorageIndicators();
+  }) as T;
+}
+
+/**
  * Format bytes to human readable string
  * @param bytes - The number of bytes
  * @param decimals - Number of decimal places

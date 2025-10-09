@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                           revision="1.0" 
+                           schemaVersion="1.0" 
+                           xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  
+  <displayName>Temporary Containers Policy Definitions</displayName>
+  <description>Policy definitions for managing Temporary Containers Firefox extension</description>
+  
+  <resources>
+    <stringTable>
+      <string id="TemporaryContainers">Temporary Containers</string>
+      
+      <string id="TemporaryContainersManagedStorage_DisplayName">Configure Temporary Containers Settings</string>
+      
+      <string id="TemporaryContainersManagedStorage_Explain">
+        This policy allows you to configure settings for the Temporary Containers Firefox extension.
+        
+        Enter a JSON configuration that defines which settings should be managed and their values.
+        
+        Example configuration:
+        {
+          "version": "1.0.0",
+          "policy_name": "Corporate Policy",
+          "locked_settings": ["automaticMode.active", "statistics"],
+          "preferences": {
+            "automaticMode": {
+              "active": true
+            },
+            "statistics": false
+          }
+        }
+        
+        If you enable this policy, the specified settings will be enforced and users will not be able to change them.
+        
+        If you disable or do not configure this policy, users will have full control over all extension settings.
+      </string>
+    </stringTable>
+  </resources>
+  
+</policyDefinitionResources>

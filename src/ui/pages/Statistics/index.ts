@@ -35,7 +35,7 @@ export async function initStatisticsPage(): Promise<void> {
           </div>
         </div>
         <div class="field checkbox-field">
-          <input type="checkbox" id="collectTemporaryContainerStats" name="collectTemporaryContainerStats" />
+          <input type="checkbox" id="collectTemporaryContainerStats" name="collectTemporaryContainerStats" data-setting="statistics" />
           <label for="collectTemporaryContainerStats" data-i18n="optionsStatisticsCollectTemporaryContainerStats">Collect local statistics for Temporary Containers</label>
         </div>
       </div>
@@ -59,7 +59,7 @@ export async function initStatisticsPage(): Promise<void> {
           </div>
         </div>
         <div class="field checkbox-field">
-          <input type="checkbox" id="collectDeletesHistoryStats" name="collectDeletesHistoryStats" />
+          <input type="checkbox" id="collectDeletesHistoryStats" name="collectDeletesHistoryStats" data-setting="deletesHistory.statistics" />
           <label for="collectDeletesHistoryStats" data-i18n="optionsStatisticsCollectDeletesHistoryStats">Collect local statistics for Deletes History containers</label>
         </div>
       </div>

@@ -8,6 +8,7 @@ import {
   showInitializeError,
   createGlossarySystem,
   applyLocalization,
+  withManagedStorage,
 } from './shared/utils';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
@@ -37,22 +38,22 @@ const elements = {
 };
 
 const pageInitializers: Record<string, () => Promise<void>> = {
-  'isolation-global': async () => {
+  'isolation-global': withManagedStorage(async () => {
     const tab = document.getElementById('isolation-global');
     if (tab) await initIsolationGlobalPage();
-  },
-  'isolation-domain': async () => {
+  }),
+  'isolation-domain': withManagedStorage(async () => {
     const tab = document.getElementById('isolation-domain');
     if (tab) await initIsolationPerDomainPage();
-  },
-  statistics: async () => {
+  }),
+  statistics: withManagedStorage(async () => {
     const tab = document.getElementById('statistics');
     if (tab) await initStatisticsPage();
-  },
-  actions: async () => {
+  }),
+  actions: withManagedStorage(async () => {
     const tab = document.getElementById('actions');
     if (tab) await initActionsPage();
-  },
+  }),
 };
 
 function getGlossaryData() {

@@ -19,7 +19,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
         <h3 data-i18n="optionsAdvancedMiscAutomaticMode">Automatic Mode</h3>
         <div class="field">
           <label for="automaticModeNewTab" data-i18n="optionsAdvancedMiscAutomaticModeNewTab">When to create Temporary Containers for new tabs:</label>
-          <select id="automaticModeNewTab">
+          <select id="automaticModeNewTab" data-setting="automaticMode.newTab">
             <option value="created" data-i18n="optionsAdvancedMiscAutomaticModeNewTabCreated" ${
               preferences.automaticMode?.newTab === 'created' ? 'selected' : ''
             }>On Tab Creation (default - best cookie protection)</option>
@@ -34,11 +34,11 @@ export async function initAdvancedMiscPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="contextMenu">Context Menu</h3>
         <div class="field checkbox-field">
-          <input type="checkbox" id="contextMenu" ${preferences.contextMenu ? 'checked' : ''} />
+          <input type="checkbox" id="contextMenu" data-setting="contextMenu" ${preferences.contextMenu ? 'checked' : ''} />
           <label for="contextMenu" data-i18n="optionsAdvancedMiscContextMenuLinks">Show Temporary Container entry in the right click on links context menu</label>
         </div>
         <div class="field checkbox-field">
-          <input type="checkbox" id="contextMenuBookmarks" ${preferences.contextMenuBookmarks ? 'checked' : ''} />
+          <input type="checkbox" id="contextMenuBookmarks" data-setting="contextMenuBookmarks" ${preferences.contextMenuBookmarks ? 'checked' : ''} />
           <label for="contextMenuBookmarks" data-i18n="optionsAdvancedMiscContextMenuBookmarks">Show Temporary Container entry in the right click on bookmarks context menu</label>
         </div>
       </div>
@@ -47,23 +47,23 @@ export async function initAdvancedMiscPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscIsolation">Isolation</h3>
         <div class="field checkbox-field">
-          <input type="checkbox" id="replaceTabs" ${preferences.replaceTabs ? 'checked' : ''} />
+          <input type="checkbox" id="replaceTabs" data-setting="replaceTabs" ${preferences.replaceTabs ? 'checked' : ''} />
           <label for="replaceTabs" data-i18n="optionsAdvancedMiscReplaceTabs">Instead of creating a new tab replace the current tab in case of Isolation</label>
         </div>
 
         <div class="field checkbox-field" data-i18n-title="optionsAdvancedMiscCloseRedirectorTabsDescription" title="Closes tabs from: t.co (Twitter), outgoing.prod.mozaws.net (AMO), slack-redir.net (Slack), away.vk.com (VK)">
-          <input type="checkbox" id="closeRedirectorTabs" ${preferences.closeRedirectorTabs?.active ? 'checked' : ''} />
+          <input type="checkbox" id="closeRedirectorTabs" data-setting="closeRedirectorTabs.active" ${preferences.closeRedirectorTabs?.active ? 'checked' : ''} />
           <label for="closeRedirectorTabs" data-i18n="optionsAdvancedMiscCloseRedirectorTabs">Automatically close leftover redirector tabs after 2 seconds</label>
         </div>
         
         <div class="field">
           <label for="reactivateDelay" data-i18n="optionsAdvancedMiscReactivateDelay">Automatically re-enable Isolation after n seconds (0 = disabled)</label>
-          <input type="number" id="reactivateDelay" min="0" value="${preferences.isolation?.reactivateDelay || 0}" />
+          <input type="number" id="reactivateDelay" data-setting="isolation.reactivateDelay" min="0" value="${preferences.isolation?.reactivateDelay || 0}" />
         </div>
         
         <div class="field">
           <label for="isolationMac" data-i18n="optionsAdvancedMiscIsolationMac">Multi-Account Containers</label>
-          <select id="isolationMac">
+          <select id="isolationMac" data-setting="isolation.mac.action">
             <option value="disabled" ${
               preferences.isolation?.mac?.action === 'disabled' ? 'selected' : ''
             } data-i18n="optionsIsolationDisabled">Disabled</option>
@@ -88,13 +88,13 @@ export async function initAdvancedMiscPage(): Promise<void> {
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscUI">User Interface</h3>
         <div class="field checkbox-field">
-          <input type="checkbox" id="pageAction" ${preferences.pageAction ? 'checked' : ''} />
+          <input type="checkbox" id="pageAction" data-setting="pageAction" ${preferences.pageAction ? 'checked' : ''} />
           <label for="pageAction" data-i18n="optionsAdvancedMiscPageAction">Show popup menu icon in the address bar</label>
         </div>
         
         <div class="field">
           <label for="popupDefaultTab" data-i18n="optionsAdvancedMiscPopupDefaultTab">Default Popup Tab</label>
-          <select id="popupDefaultTab">
+          <select id="popupDefaultTab" data-setting="ui.popupDefaultTab">
             <option value="isolation-global" ${
               preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''
             } data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>

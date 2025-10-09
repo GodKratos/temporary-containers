@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "policy_name": "Development Environment Policy",
+  "policy_description": "Flexible settings for development teams with minimal restrictions",
+  "locked_settings": ["container.namePrefix"],
+  "preferences": {
+    "container": {
+      "namePrefix": "dev-tmp",
+      "colorRandom": true,
+      "iconRandom": true,
+      "removal": 1800000
+    },
+    "automaticMode": {
+      "active": false
+    },
+    "browserActionPopup": true,
+    "contextMenu": true,
+    "contextMenuBookmarks": true,
+    "statistics": true,
+    "notifications": true
+  }
+}

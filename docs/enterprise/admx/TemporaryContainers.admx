@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   revision="1.0" 
+                   schemaVersion="1.0" 
+                   xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  
+  <policyNamespaces>
+    <target prefix="TemporaryContainers" namespace="TemporaryContainers.Policies.TemporaryContainers" />
+    <using prefix="Firefox" namespace="Mozilla.Policies.Firefox" />
+  </policyNamespaces>
+
+  <resources minRequiredRevision="1.0" />
+
+  <categories>
+    <category name="TemporaryContainers" displayName="$(string.TemporaryContainers)">
+      <parentCategory ref="Firefox:Firefox" />
+    </category>
+  </categories>
+
+  <policies>
+    <policy name="TemporaryContainersManagedStorage" 
+            class="Machine" 
+            displayName="$(string.TemporaryContainersManagedStorage_DisplayName)" 
+            explainText="$(string.TemporaryContainersManagedStorage_Explain)" 
+            key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\{1ea2fa75-677e-4702-b06a-50fc7d06fe7e}" 
+            valueName="*">
+      
+      <parentCategory ref="TemporaryContainers" />
+      
+      <supportedOn ref="Firefox:SUPPORTED_FF68" />
+      
+      <elements>
+        <text id="TemporaryContainersPolicyJSON" 
+              valueName="*" 
+              required="true" 
+              maxLength="65535" />
+      </elements>
+    </policy>
+  </policies>
+  
+</policyDefinitions>

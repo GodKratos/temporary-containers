@@ -306,28 +306,34 @@
     "message": "Failed to load statistics"
   },
   "errorFailedToLoadIsolationPerDomain": {
-    "message": "Failed to load Isolation: Per Domain settings"
+    "message": "Failed to load \"Isolation: Per Domain\" settings"
   },
   "errorFailedToLoadIsolationGlobal": {
-    "message": "Failed to load Isolation: Global settings"
+    "message": "Failed to load \"Isolation: Global\" settings"
+  },
+  "errorFailedToLoadGeneral": {
+    "message": "Failed to load \"General\" settings"
+  },
+  "errorFailedToLoadAdvancedMisc": {
+    "message": "Failed to load \"Advanced Settings\""
+  },
+  "errorFailedToLoadAdvancedCookies": {
+    "message": "Failed to load \"Cookie Injection\" settings"
+  },
+  "errorFailedToLoadActions": {
+    "message": "Failed to load \"Actions\""
+  },
+  "errorFailedToLoadAdvancedScripts": {
+    "message": "Failed to load \"Script Injection\" settings"
+  },
+  "errorFailedToLoadAdvancedDeleteHistory": {
+    "message": "Failed to load \"Deletes History Containers\" settings"
   },
   "errorFailedToSave": {
     "message": "Failed to save"
   },
-  "errorFailedToLoadGeneral": {
-    "message": "Failed to load General settings"
-  },
   "errorImportFileNotFound": {
     "message": "Import error: File not found"
-  },
-  "errorFailedToLoadAdvancedMisc": {
-    "message": "Failed to load Advanced: Misc settings"
-  },
-  "errorFailedToLoadAdvancedCookies": {
-    "message": "Failed to load Advanced: Cookies settings"
-  },
-  "errorFailedToLoadActions": {
-    "message": "Failed to load Actions"
   },
   "savedMessage": {
     "message": "Saved"
@@ -841,10 +847,13 @@
   "optionsAdvancedDeleteHistoryLeftClickDeletesHistory": {
     "message": "Open new \"Deletes History Temporary Containers\" with Left Mouse clicks instead of Temporary Containers"
   },
-  "errorFailedToLoadAdvancedScripts": {
-    "message": "Failed to load advanced scripts settings"
+  "managedStorageSettingLocked": {
+    "message": "Setting \"$1\" is enforced by policy and cannot be changed"
   },
-  "errorFailedToLoadAdvancedDeleteHistory": {
-    "message": "Failed to load advanced delete history settings"
+  "managedStorageSettingLockedTooltip": {
+    "message": "This setting is enforced by your organization policy and cannot be changed"
+  },
+  "managedStorageValidationError": {
+    "message": "Policy validation failed: $1"
   }
 }
