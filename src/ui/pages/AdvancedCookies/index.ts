@@ -1,5 +1,6 @@
 // Advanced: Cookies page logic for options menu
 import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 import { Cookie } from '../../../types';
 
 interface CookieDefaults {
@@ -360,6 +361,6 @@ export async function initAdvancedCookiesPage(): Promise<void> {
     // Initial display update
     updateCookieDisplay();
   } catch (_error) {
-    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'));
+    showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }

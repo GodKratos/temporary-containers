@@ -1,5 +1,6 @@
 // Shared IsolationGlobal page logic for both options and popup menus
 import { getPreferences, getStorage, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { FAILED_TO_LOAD_SETTINGS_ERROR_DURATION } from '../../../shared';
 
 export async function initIsolationGlobalPage(): Promise<void> {
   try {
@@ -223,6 +224,6 @@ export async function initIsolationGlobalPage(): Promise<void> {
       }
     });
   } catch (_error) {
-    showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
+    showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'), FAILED_TO_LOAD_SETTINGS_ERROR_DURATION);
   }
 }
