@@ -29,6 +29,21 @@ This project is a Firefox extension for managing temporary containers. It allows
 - Keep the codebase clean and well-organized.
 - If code is removed, do not replace it with comments that describe what was there before.
 - Apply consistent styling and formatting across the UI components, reusing CSS classes where applicable.
+- When making updates, write documentation and comments to reflect the current state only - do not reference previous versions or what has changed.
+
+## Documentation Management
+
+The project uses a hybrid documentation approach:
+
+- **Repository (`docs/`)**: Technical documentation that needs version control with code (enterprise guides, developer docs, API references, schemas)
+- **Wiki**: User-facing documentation for community contribution (installation guides, tutorials, troubleshooting, FAQ)
+
+When making changes:
+
+- Update technical docs in `docs/` during feature development
+- Update corresponding wiki pages for user-facing changes
+- Maintain cross-references between repository docs and wiki
+- Use `docs/WIKI_SYNC.md` for synchronization guidance
 
 # Localisation
 
