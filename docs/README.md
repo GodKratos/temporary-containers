@@ -17,9 +17,9 @@ This directory contains **technical and enterprise documentation** for the Tempo
 
 **User-facing documentation for end users:**
 
-- [Installation and setup guides](https://github.com/GodKratos/temporary-containers/wiki)
-- [Feature explanations and tutorials](https://github.com/GodKratos/temporary-containers/wiki)
-- [Troubleshooting and FAQ](https://github.com/GodKratos/temporary-containers/wiki)
+- [Installation and setup guides](https://github.com/GodKratos/temporary-containers/wiki/Installation-Guide)
+- [Feature explanations and tutorials](https://github.com/GodKratos/temporary-containers/wiki/Basic-Usage)
+- [Troubleshooting and FAQ](https://github.com/GodKratos/temporary-containers/wiki/Troubleshooting)
 
 ## Enterprise Documentation
 
