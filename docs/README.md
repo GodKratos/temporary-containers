@@ -8,18 +8,24 @@ This directory contains **technical and enterprise documentation** for the Tempo
 
 **Technical documentation that belongs with the source code:**
 
-- **[Development Guide](DEVELOPMENT.md)** - Complete developer setup, workflows, and contribution guidelines
+- [Development Guide](DEVELOPMENT.md) - Complete developer setup, workflows, and contribution guidelines
 - Enterprise deployment guides and policies
 - API references and schemas
 - Build and release documentation
+- [Addon Description](ADDON_DESCIPTION.md) - Description used on mozilla addon site for the product page
 
 ### Wiki Documentation
 
 **User-facing documentation for end users:**
 
-- [Installation and setup guides](https://github.com/GodKratos/temporary-containers/wiki/Installation-Guide)
-- [Feature explanations and tutorials](https://github.com/GodKratos/temporary-containers/wiki/Basic-Usage)
-- [Troubleshooting and FAQ](https://github.com/GodKratos/temporary-containers/wiki/Troubleshooting)
+- [Getting Started](https://github.com/GodKratos/temporary-containers/wiki/Getting-Started)
+- [Automatic Mode](https://github.com/GodKratos/temporary-containers/wiki/General-Settings#automatic-mode)
+- [Global Isolation](https://github.com/GodKratos/temporary-containers/wiki/Global-Isolation)
+- [Per-Domain Rules](https://github.com/GodKratos/temporary-containers/wiki/Per-Domain-Rules)
+- [Advanced Features (Cookies, Scripts, History Deletion)](https://github.com/GodKratos/temporary-containers/wiki/Advanced)
+- [Export & Import](https://github.com/GodKratos/temporary-containers/wiki/Export-Import)
+- [Statistics](https://github.com/GodKratos/temporary-containers/wiki/Statistics)
+- [Troubleshooting](https://github.com/GodKratos/temporary-containers/wiki/Troubleshooting)
 
 ## Enterprise Documentation
 

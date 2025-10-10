@@ -15,6 +15,16 @@ This is a continuation of the amazing addon [originally created and maintained b
 - **[Enterprise Documentation](docs/enterprise/)** - Technical documentation for enterprise deployments and managed storage
 - **[Original Developer Article](https://medium.com/@stoically/enhance-your-privacy-in-firefox-with-temporary-containers-33925cd6cd21)** - In-depth explanation of features and privacy concepts
 
+### Quick Wiki Entry Points
+
+- Getting Started: https://github.com/GodKratos/temporary-containers/wiki/Getting-Started
+- Automatic Mode: https://github.com/GodKratos/temporary-containers/wiki/General-Settings#automatic-mode
+- Global Isolation: https://github.com/GodKratos/temporary-containers/wiki/Global-Isolation
+- Per-Domain Rules: https://github.com/GodKratos/temporary-containers/wiki/Per-Domain-Rules
+- Advanced Features (Cookies, Scripts, History Deletion): https://github.com/GodKratos/temporary-containers/wiki/Advanced
+- Export & Import: https://github.com/GodKratos/temporary-containers/wiki/Export-Import
+- Statistics: https://github.com/GodKratos/temporary-containers/wiki/Statistics
+
 ## Development
 
 For complete development setup, build instructions, testing guidelines, and contribution processes, see the **[Developer Guide](docs/DEVELOPMENT.md)**.
