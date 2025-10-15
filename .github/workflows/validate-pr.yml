@@ -31,7 +31,9 @@ jobs:
           # Validate each commit message in the PR
           git log --format="%H" ${BASE_SHA}..${HEAD_SHA} | while read commit_hash; do
             echo "Validating commit: $commit_hash"
-            git log --format="%B" -n 1 $commit_hash | npx commitlint --from=stdin
+            # Write commit message to temp file and validate it
+            git log --format="%B" -n 1 $commit_hash > /tmp/commit_msg.txt
+            npx commitlint --edit /tmp/commit_msg.txt
           done
 
       - name: Run tests
