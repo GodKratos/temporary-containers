@@ -10,18 +10,73 @@ export class Utils {
   }
 
   sameDomain(origin: string, target: string): boolean {
-    const parsedOrigin = psl.parse(origin);
-    const parsedTarget = psl.parse(target);
-
-    // Type guard to check if we have a valid ParsedDomain
-    const isValidParsedDomain = (parsed: any): parsed is { domain: string | null } => {
-      return parsed && typeof parsed === 'object' && 'domain' in parsed;
+    // Helper function to extract hostname and port from a string
+    const extractHostnameAndPort = (input: string): { hostname: string; port: string | null } => {
+      try {
+        // If it looks like a URL, use the URL constructor
+        if (input.includes('://')) {
+          const url = new URL(input);
+          return { hostname: url.hostname, port: url.port || null };
+        }
+        // Otherwise, manually split on colon to extract port
+        const colonIndex = input.lastIndexOf(':');
+        if (colonIndex > 0 && /^\d+$/.test(input.slice(colonIndex + 1))) {
+          return {
+            hostname: input.slice(0, colonIndex),
+            port: input.slice(colonIndex + 1),
+          };
+        }
+        return { hostname: input, port: null };
+      } catch {
+        // If URL parsing fails, try manual parsing
+        const colonIndex = input.lastIndexOf(':');
+        if (colonIndex > 0 && /^\d+$/.test(input.slice(colonIndex + 1))) {
+          return {
+            hostname: input.slice(0, colonIndex),
+            port: input.slice(colonIndex + 1),
+          };
+        }
+        return { hostname: input, port: null };
+      }
     };
 
-    if (!isValidParsedDomain(parsedOrigin) || !isValidParsedDomain(parsedTarget) || !parsedOrigin.domain || !parsedTarget.domain) {
+    const originInfo = extractHostnameAndPort(origin);
+    const targetInfo = extractHostnameAndPort(target);
+
+    // Different ports mean different services, so they're different "domains" for our purposes
+    if (originInfo.port !== targetInfo.port) {
       return false;
     }
-    return parsedOrigin.domain === parsedTarget.domain;
+
+    const parsedOrigin = psl.parse(originInfo.hostname);
+    const parsedTarget = psl.parse(targetInfo.hostname);
+
+    // Type guard to check if we have a valid ParsedDomain (no error)
+    const isValidParsedDomain = (parsed: any): parsed is { domain: string | null; input: string; error?: undefined } => {
+      return parsed && typeof parsed === 'object' && 'domain' in parsed && 'input' in parsed && !parsed.error;
+    };
+
+    if (!isValidParsedDomain(parsedOrigin) || !isValidParsedDomain(parsedTarget)) {
+      return false;
+    }
+
+    // If both domains are valid PSL domains, compare them
+    if (parsedOrigin.domain && parsedTarget.domain) {
+      return parsedOrigin.domain === parsedTarget.domain;
+    }
+
+    // Handle special cases where PSL returns null domains:
+    // - localhost
+    // - IP addresses
+    // - Other non-PSL domains
+    if (!parsedOrigin.domain && !parsedTarget.domain) {
+      // Both have null domains, compare the hostname directly
+      // This handles localhost, IP addresses, and other special cases
+      return originInfo.hostname === targetInfo.hostname;
+    }
+
+    // One has a domain, the other doesn't - they're different domains
+    return false;
   }
 
   matchDomainPattern(url: string, domainPattern: string): boolean {

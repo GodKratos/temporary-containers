@@ -16,11 +16,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: Validate commit messages
         run: |
@@ -29,16 +29,18 @@ jobs:
           HEAD_SHA=${{ github.event.pull_request.head.sha }}
 
           # Validate each commit message in the PR
-          git log --format="%H %s" ${BASE_SHA}..${HEAD_SHA} | while read commit_hash commit_message; do
-            echo "Validating commit: $commit_hash - $commit_message"
-            echo "$commit_message" | npx commitlint --from=stdin
+          git log --format="%H" ${BASE_SHA}..${HEAD_SHA} | while read commit_hash; do
+            echo "Validating commit: $commit_hash"
+            # Write commit message to temp file and validate it
+            git log --format="%B" -n 1 $commit_hash > /tmp/commit_msg.txt
+            npx commitlint --edit /tmp/commit_msg.txt
           done
 
       - name: Run tests
         run: npm test
 
-      - name: Run linting
-        run: npm run lint
-
       - name: Test build
         run: npm run build
+
+      - name: Run linting
+        run: npm run lint
