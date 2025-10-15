@@ -41,8 +41,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run tests
+        run: npm test
+
       - name: Build extension
         run: npm run build
+
+      - name: Run linting
+        run: npm run lint
 
       - name: Package extension
         run: npm run webext:build
