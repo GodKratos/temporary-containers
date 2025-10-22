@@ -149,7 +149,7 @@ export class Preferences {
       oldPreferences.deletesHistory.contextMenuBookmarks !== newPreferences.deletesHistory.contextMenuBookmarks
     ) {
       await this.contextmenu.remove();
-      this.contextmenu.add();
+      await this.contextmenu.add();
     }
   }
 }

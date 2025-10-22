@@ -87,11 +87,15 @@ export class Runtime {
           throw new Error(browser.i18n.getMessage('managedStorageValidationError', [validationErrors.join('; ')]));
         }
 
+        // Store old preferences before updating
+        const oldPrefs = this.utils.clone(this.pref);
+        // Update storage first so that handleChanges can read the new values via this.pref proxy
+        this.storage.local.preferences = newPrefs;
+
         await this.preferences.handleChanges({
-          oldPreferences: this.pref,
+          oldPreferences: oldPrefs,
           newPreferences: newPrefs,
         });
-        this.storage.local.preferences = newPrefs;
         await this.storage.persist();
 
         if (
@@ -140,7 +144,7 @@ export class Runtime {
       case 'resetStorage':
         this.debug('[onMessage] resetting storage', message, sender);
         this.browseraction.unsetPopup();
-        this.contextmenu.remove();
+        await this.contextmenu.remove();
         this.browseraction.setIcon('default');
         await browser.storage.local.clear();
         return this.storage.install();

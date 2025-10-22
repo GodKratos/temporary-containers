@@ -111,50 +111,70 @@ export class ContextMenu {
   }
 
   async add(): Promise<void> {
+    const menuCreations: Promise<string | number>[] = [];
+
     if (this.pref.contextMenu) {
-      browser.contextMenus.create({
-        id: 'open-link-in-new-temporary-container-tab',
-        title: 'Open link in new Temporary Container tab',
-        contexts: ['link'],
-        icons: {
-          '16': 'icons/page-w-16.svg',
-          '32': 'icons/page-w-32.svg',
-        },
-      });
+      menuCreations.push(
+        Promise.resolve(
+          browser.contextMenus.create({
+            id: 'open-link-in-new-temporary-container-tab',
+            title: 'Open link in new Temporary Container tab',
+            contexts: ['link'],
+            icons: {
+              '16': 'icons/page-w-16.svg',
+              '32': 'icons/page-w-32.svg',
+            },
+          })
+        )
+      );
     }
     if (this.pref.deletesHistory.contextMenu && this.background.permissions.history) {
-      browser.contextMenus.create({
-        id: 'open-link-in-new-deletes-history-temporary-container-tab',
-        title: 'Open link in new "Deletes History Temporary Container" tab',
-        contexts: ['link'],
-        icons: {
-          '16': 'icons/page-w-16.svg',
-          '32': 'icons/page-w-32.svg',
-        },
-      });
+      menuCreations.push(
+        Promise.resolve(
+          browser.contextMenus.create({
+            id: 'open-link-in-new-deletes-history-temporary-container-tab',
+            title: 'Open link in new "Deletes History Temporary Container" tab',
+            contexts: ['link'],
+            icons: {
+              '16': 'icons/page-w-16.svg',
+              '32': 'icons/page-w-32.svg',
+            },
+          })
+        )
+      );
     }
     if (this.pref.contextMenuBookmarks && this.background.permissions.bookmarks) {
-      browser.contextMenus.create({
-        id: 'open-bookmark-in-new-temporary-container-tab',
-        title: 'Open Bookmark in new Temporary Container tab',
-        contexts: ['bookmark'],
-        icons: {
-          '16': 'icons/page-w-16.svg',
-          '32': 'icons/page-w-32.svg',
-        },
-      });
+      menuCreations.push(
+        Promise.resolve(
+          browser.contextMenus.create({
+            id: 'open-bookmark-in-new-temporary-container-tab',
+            title: 'Open Bookmark in new Temporary Container tab',
+            contexts: ['bookmark'],
+            icons: {
+              '16': 'icons/page-w-16.svg',
+              '32': 'icons/page-w-32.svg',
+            },
+          })
+        )
+      );
     }
     if (this.pref.deletesHistory.contextMenuBookmarks && this.background.permissions.history && this.background.permissions.bookmarks) {
-      browser.contextMenus.create({
-        id: 'open-bookmark-in-new-deletes-history-temporary-container-tab',
-        title: 'Open Bookmark in new "Deletes History Temporary Container" tab',
-        contexts: ['bookmark'],
-        icons: {
-          '16': 'icons/page-w-16.svg',
-          '32': 'icons/page-w-32.svg',
-        },
-      });
+      menuCreations.push(
+        Promise.resolve(
+          browser.contextMenus.create({
+            id: 'open-bookmark-in-new-deletes-history-temporary-container-tab',
+            title: 'Open Bookmark in new "Deletes History Temporary Container" tab',
+            contexts: ['bookmark'],
+            icons: {
+              '16': 'icons/page-w-16.svg',
+              '32': 'icons/page-w-32.svg',
+            },
+          })
+        )
+      );
     }
+
+    await Promise.all(menuCreations);
   }
 
   remove(): Promise<void> {
@@ -166,6 +186,6 @@ export class ContextMenu {
       return;
     }
     await this.remove();
-    this.add();
+    await this.add();
   }
 }
