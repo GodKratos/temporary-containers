@@ -219,8 +219,24 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
       savePref('deletesHistory.contextMenu', (e.target as HTMLInputElement).checked);
     });
 
-    document.getElementById('deletesHistoryContextMenuBookmarks')?.addEventListener('change', e => {
-      savePref('deletesHistory.contextMenuBookmarks', (e.target as HTMLInputElement).checked);
+    document.getElementById('deletesHistoryContextMenuBookmarks')?.addEventListener('change', async e => {
+      const checkbox = e.target as HTMLInputElement;
+      if (checkbox.checked) {
+        try {
+          const granted = await browser.permissions.request({ permissions: ['bookmarks'] });
+          if (!granted) {
+            checkbox.checked = false;
+            showError(browser.i18n.getMessage('errorFailedToSave'));
+            return;
+          }
+        } catch (error) {
+          console.error('Failed to request bookmarks permission', error);
+          checkbox.checked = false;
+          showError(browser.i18n.getMessage('errorFailedToSave'));
+          return;
+        }
+      }
+      savePref('deletesHistory.contextMenuBookmarks', checkbox.checked);
     });
 
     document.getElementById('deletesHistoryContainerRemoval')?.addEventListener('change', e => {

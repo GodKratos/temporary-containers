@@ -129,16 +129,16 @@ export class Preferences {
       this.pageaction.showOrHide();
     }
     if (!this.permissions.notifications && newPreferences.notifications) {
-      this.permissions.notifications = true;
+      this.permissions.notifications = await browser.permissions.contains({ permissions: ['notifications'] });
     }
     if (!this.permissions.history && newPreferences.deletesHistory.active) {
-      this.permissions.history = true;
+      this.permissions.history = await browser.permissions.contains({ permissions: ['history'] });
     }
-    if (newPreferences.contextMenuBookmarks || newPreferences.deletesHistory.contextMenuBookmarks) {
-      this.permissions.bookmarks = true;
+    if ((newPreferences.contextMenuBookmarks || newPreferences.deletesHistory.contextMenuBookmarks) && !this.permissions.bookmarks) {
+      this.permissions.bookmarks = await browser.permissions.contains({ permissions: ['bookmarks'] });
     }
     if (!this.permissions.webNavigation && newPreferences.scripts.active) {
-      this.permissions.webNavigation = true;
+      this.permissions.webNavigation = await browser.permissions.contains({ permissions: ['webNavigation'] });
       this.eventlisteners.registerPermissionedListener();
     }
 

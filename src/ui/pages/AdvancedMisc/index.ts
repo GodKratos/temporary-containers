@@ -143,6 +143,21 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
   });
 
   contextMenuBookmarksCheckbox?.addEventListener('change', async () => {
+    if (contextMenuBookmarksCheckbox.checked) {
+      try {
+        const granted = await browser.permissions.request({ permissions: ['bookmarks'] });
+        if (!granted) {
+          contextMenuBookmarksCheckbox.checked = false;
+          showError(browser.i18n.getMessage('errorFailedToSave'));
+          return;
+        }
+      } catch (e) {
+        console.error('Failed to request bookmarks permission', e);
+        contextMenuBookmarksCheckbox.checked = false;
+        showError(browser.i18n.getMessage('errorFailedToSave'));
+        return;
+      }
+    }
     preferences.contextMenuBookmarks = contextMenuBookmarksCheckbox.checked;
     await savePreferences(preferences);
     showSuccess(browser.i18n.getMessage('savedMessage'));
