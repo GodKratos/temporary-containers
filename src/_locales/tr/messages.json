@@ -125,6 +125,9 @@
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "\"Geçmişi Silen Konteynerler\" ayarları yüklenemedi"
   },
+  "errorFailedToLoadExportImport": {
+    "message": "\"Dışa/İçe\" ayarları yüklenemedi"
+  },
   "errorFailedToSave": {
     "message": "Kaydedilemedi"
   },

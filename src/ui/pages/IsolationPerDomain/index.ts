@@ -289,7 +289,7 @@ export async function initIsolationPerDomainPage(): Promise<void> {
     // Set up event listeners
     setupEventListeners(content, preferences);
   } catch (error) {
-    console.error('Error initializing isolation per domain page:', error);
+    console.error('[IsolationPerDomain] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadIsolationPerDomain'));
   }
 }

@@ -230,7 +230,8 @@ export async function initIsolationGlobalPage(): Promise<void> {
         showSuccess(browser.i18n.getMessage('savedMessage'));
       }
     });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[IsolationGlobal] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
   }
 }

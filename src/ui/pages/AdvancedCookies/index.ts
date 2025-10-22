@@ -359,7 +359,8 @@ export async function initAdvancedCookiesPage(): Promise<void> {
 
     // Initial display update
     updateCookieDisplay();
-  } catch (_error) {
+  } catch (error) {
+    console.error('[AdvancedCookies] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedCookies'));
   }
 }

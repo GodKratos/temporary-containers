@@ -312,7 +312,8 @@ export async function initAdvancedScriptsPage(): Promise<void> {
 
     // Initial display update
     updateScriptDisplay();
-  } catch (_error) {
+  } catch (error) {
+    console.error('[AdvancedScripts] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedScripts'));
   }
 }

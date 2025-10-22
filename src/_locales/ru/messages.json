@@ -125,6 +125,9 @@
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "Не удалось загрузить настройки \"Контейнеры с удалением истории\""
   },
+  "errorFailedToLoadExportImport": {
+    "message": "Не удалось загрузить настройки \"Экспорт/Импорт\""
+  },
   "errorFailedToSave": {
     "message": "Не удалось сохранить"
   },
