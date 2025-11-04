@@ -855,5 +855,8 @@
   },
   "managedStorageValidationError": {
     "message": "Policy validation failed: $1"
+  },
+  "errorEmptyPrefixWithHideMode": {
+    "message": "Container Name Prefix cannot be empty when \"Hide number\" mode is enabled. Please provide a prefix or choose a different number mode."
   }
 }

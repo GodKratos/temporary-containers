@@ -855,5 +855,8 @@
   },
   "managedStorageValidationError": {
     "message": "Politika doğrulama hatası: $1"
+  },
+  "errorEmptyPrefixWithHideMode": {
+    "message": "\"Numarayı gizle\" modu etkinken Konteyner Adı Öneki boş olamaz. Lütfen bir önek girin veya farklı bir numara modu seçin."
   }
 }

@@ -293,6 +293,12 @@ export class Container {
       tempContainerNumber = this.getReusedContainerNumber();
     }
     let containerName = this.pref.container.namePrefix;
+    // Safety check: if namePrefix is empty/whitespace and hide mode is enabled,
+    // fall back to default prefix to prevent blank container names
+    if (containerName.trim() === '' && this.pref.container.numberMode === 'hide') {
+      this.debug('[generateContainerNameIconColor] Invalid configuration: empty namePrefix with hide mode, using default "tmp"');
+      containerName = 'tmp';
+    }
     if (url) {
       // Ignore about:* and similar scheme URLs for name token replacement
       const parsedUrl = /^https?:/.test(url) ? new URL(url) : undefined;

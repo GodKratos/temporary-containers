@@ -245,7 +245,16 @@ export async function initGeneralPage(): Promise<void> {
       savePref('notifications', checkbox.checked);
     });
     (document.getElementById('containerNamePrefix') as HTMLInputElement).addEventListener('change', e => {
-      savePref('container.namePrefix', (e.target as HTMLInputElement).value);
+      const newValue = (e.target as HTMLInputElement).value;
+      const currentNumberMode = (document.getElementById('containerNumberMode') as HTMLSelectElement).value;
+      // Validate: prevent empty prefix with hide mode
+      if (newValue.trim() === '' && currentNumberMode === 'hide') {
+        showError(browser.i18n.getMessage('errorEmptyPrefixWithHideMode'));
+        // Revert to previous value (or default)
+        (e.target as HTMLInputElement).value = preferences.container?.namePrefix || 'tmp';
+        return;
+      }
+      savePref('container.namePrefix', newValue);
     });
     (document.getElementById('containerColorRandom') as HTMLInputElement).addEventListener('change', e => {
       savePref('container.colorRandom', (e.target as HTMLInputElement).checked);
@@ -270,7 +279,16 @@ export async function initGeneralPage(): Promise<void> {
       savePref('container.iconRandomExcluded', selected);
     });
     (document.getElementById('containerNumberMode') as HTMLSelectElement).addEventListener('change', e => {
-      savePref('container.numberMode', (e.target as HTMLSelectElement).value);
+      const newValue = (e.target as HTMLSelectElement).value;
+      const currentNamePrefix = (document.getElementById('containerNamePrefix') as HTMLInputElement).value;
+      // Validate: prevent hide mode with empty prefix
+      if (newValue === 'hide' && currentNamePrefix.trim() === '') {
+        showError(browser.i18n.getMessage('errorEmptyPrefixWithHideMode'));
+        // Revert to previous value (or default)
+        (e.target as HTMLSelectElement).value = preferences.container?.numberMode || 'keep';
+        return;
+      }
+      savePref('container.numberMode', newValue);
     });
     (document.getElementById('containerRemoval') as HTMLSelectElement).addEventListener('change', e => {
       savePref('container.removal', (e.target as HTMLSelectElement).value);
