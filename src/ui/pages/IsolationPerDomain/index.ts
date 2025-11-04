@@ -259,6 +259,31 @@ export async function initIsolationPerDomainPage(): Promise<void> {
 
     if (preferences.isolation.domain.length > 0) {
       preferences.isolation.domain.forEach((domain, index) => {
+        // Handle old object format: convert to array if needed
+        if (domain.excluded && !Array.isArray(domain.excluded)) {
+          console.warn(
+            '[IsolationPerDomain] domain.excluded is not an array, converting from object format for pattern:',
+            domain.pattern,
+            domain.excluded
+          );
+          domain.excluded = Object.keys(domain.excluded);
+          savePreferences(preferences).catch(err => console.error('Failed to save converted domain excluded:', err));
+        } else if (!domain.excluded) {
+          domain.excluded = [];
+        }
+
+        if (domain.excludedContainers && !Array.isArray(domain.excludedContainers)) {
+          console.warn(
+            '[IsolationPerDomain] domain.excludedContainers is not an array, converting from object format for pattern:',
+            domain.pattern,
+            domain.excludedContainers
+          );
+          domain.excludedContainers = Object.keys(domain.excludedContainers);
+          savePreferences(preferences).catch(err => console.error('Failed to save converted domain excludedContainers:', err));
+        } else if (!domain.excludedContainers) {
+          domain.excludedContainers = [];
+        }
+
         const domainSection = document.createElement('div');
         domainSection.className = 'config-group';
         domainSection.innerHTML = `
@@ -462,6 +487,21 @@ function setupDomainRuleActions(content: HTMLElement, preferences: PreferencesSc
 function editDomainRule(index: number, preferences: PreferencesSchema): void {
   const domain = preferences.isolation.domain[index];
   if (domain) {
+    // Handle old object format: convert to array if needed before editing
+    if (domain.excluded && !Array.isArray(domain.excluded)) {
+      console.warn('[IsolationPerDomain] Converting domain.excluded from object to array for editing:', domain.pattern);
+      domain.excluded = Object.keys(domain.excluded);
+    } else if (!domain.excluded) {
+      domain.excluded = [];
+    }
+
+    if (domain.excludedContainers && !Array.isArray(domain.excludedContainers)) {
+      console.warn('[IsolationPerDomain] Converting domain.excludedContainers from object to array for editing:', domain.pattern);
+      domain.excludedContainers = Object.keys(domain.excludedContainers);
+    } else if (!domain.excludedContainers) {
+      domain.excludedContainers = [];
+    }
+
     editState.editing = true;
     editState.editIndex = index;
     editState.domain = JSON.parse(JSON.stringify(domain)); // Deep clone

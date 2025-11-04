@@ -156,7 +156,17 @@ export async function initIsolationGlobalPage(): Promise<void> {
     // Render initial tags
     function renderExcludedContainers() {
       excludedContainersDiv.innerHTML = '';
-      (preferences.isolation.global.excludedContainers || []).forEach((id: string) => {
+
+      // Handle old object format: convert to array if needed
+      let containersArray = preferences.isolation.global.excludedContainers;
+      if (!Array.isArray(containersArray)) {
+        console.warn('[IsolationGlobal] excludedContainers is not an array, converting from object format:', containersArray);
+        containersArray = containersArray ? Object.keys(containersArray) : [];
+        preferences.isolation.global.excludedContainers = containersArray;
+        savePreferences(preferences).catch(err => console.error('Failed to save converted excludedContainers:', err));
+      }
+
+      (containersArray || []).forEach((id: string) => {
         const tag = document.createElement('span');
         tag.className = 'tag';
         tag.textContent = permanentContainers.find(c => c.id === id)?.name || id;
@@ -194,8 +204,14 @@ export async function initIsolationGlobalPage(): Promise<void> {
 
     function renderExcludedDomains() {
       excludedDomainsDiv.innerHTML = '';
+
+      // Handle old object format: convert to array if needed
       if (!preferences.isolation.global.excluded) {
         preferences.isolation.global.excluded = [];
+      } else if (!Array.isArray(preferences.isolation.global.excluded)) {
+        console.warn('[IsolationGlobal] excluded is not an array, converting from object format:', preferences.isolation.global.excluded);
+        preferences.isolation.global.excluded = Object.keys(preferences.isolation.global.excluded);
+        savePreferences(preferences).catch(err => console.error('Failed to save converted excluded:', err));
       }
 
       preferences.isolation.global.excluded.forEach((domain: string) => {
