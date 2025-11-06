@@ -126,7 +126,7 @@ export async function initAdvancedMiscPage(): Promise<void> {
     // Set up event listeners
     setupEventListeners(content, preferences, permissions);
   } catch (error) {
-    console.error('Error initializing advanced misc page:', error);
+    console.error('[AdvancedMisc] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedMisc'));
   }
 }

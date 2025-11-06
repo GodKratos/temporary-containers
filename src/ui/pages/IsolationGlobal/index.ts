@@ -33,7 +33,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         <div class="field-description" data-i18n="optionsIsolationGlobalMouseDescription">Isolation rules for mouse click activities. When used with global or domain isolation enabled, any setting that enables isolation will be enforced.</div>
         <div class="field">
           <label for="isolationGlobalLeftClick" data-i18n="optionsIsolationGlobalLeftClick">Left Click</label>
-          <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick" data-setting="isolation.global.mouseClicks.left.action">
+          <select id="isolationGlobalLeftClick" name="isolationGlobalLeftClick" data-setting="isolation.global.mouseClick.left.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -42,7 +42,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         </div>
         <div class="field">
           <label for="isolationGlobalMiddleClick" data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</label>
-          <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick" data-setting="isolation.global.mouseClicks.middle.action">
+          <select id="isolationGlobalMiddleClick" name="isolationGlobalMiddleClick" data-setting="isolation.global.mouseClick.middle.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -51,7 +51,7 @@ export async function initIsolationGlobalPage(): Promise<void> {
         </div>
         <div class="field">
           <label for="isolationGlobalCtrlLeftClick" data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl/Cmd + Left Click</label>
-          <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick" data-setting="isolation.global.mouseClicks.ctrlleft.action">
+          <select id="isolationGlobalCtrlLeftClick" name="isolationGlobalCtrlLeftClick" data-setting="isolation.global.mouseClick.ctrlleft.action">
             <option value="never" data-i18n="optionsIsolationNever">Never Isolate</option>
             <option value="notsamedomainexact" data-i18n="optionsIsolationDomain">Isolate if target domain does not match exactly with current domain</option>
             <option value="notsamedomain" data-i18n="optionsIsolationSubdomain">Isolate if target domain does not match current domain or subdomains</option>
@@ -156,7 +156,17 @@ export async function initIsolationGlobalPage(): Promise<void> {
     // Render initial tags
     function renderExcludedContainers() {
       excludedContainersDiv.innerHTML = '';
-      (preferences.isolation.global.excludedContainers || []).forEach((id: string) => {
+
+      // Handle old object format: convert to array if needed
+      let containersArray = preferences.isolation.global.excludedContainers;
+      if (!Array.isArray(containersArray)) {
+        console.warn('[IsolationGlobal] excludedContainers is not an array, converting from object format:', containersArray);
+        containersArray = containersArray ? Object.keys(containersArray) : [];
+        preferences.isolation.global.excludedContainers = containersArray;
+        savePreferences(preferences).catch(err => console.error('Failed to save converted excludedContainers:', err));
+      }
+
+      (containersArray || []).forEach((id: string) => {
         const tag = document.createElement('span');
         tag.className = 'tag';
         tag.textContent = permanentContainers.find(c => c.id === id)?.name || id;
@@ -194,8 +204,14 @@ export async function initIsolationGlobalPage(): Promise<void> {
 
     function renderExcludedDomains() {
       excludedDomainsDiv.innerHTML = '';
+
+      // Handle old object format: convert to array if needed
       if (!preferences.isolation.global.excluded) {
         preferences.isolation.global.excluded = [];
+      } else if (!Array.isArray(preferences.isolation.global.excluded)) {
+        console.warn('[IsolationGlobal] excluded is not an array, converting from object format:', preferences.isolation.global.excluded);
+        preferences.isolation.global.excluded = Object.keys(preferences.isolation.global.excluded);
+        savePreferences(preferences).catch(err => console.error('Failed to save converted excluded:', err));
       }
 
       preferences.isolation.global.excluded.forEach((domain: string) => {
@@ -230,7 +246,8 @@ export async function initIsolationGlobalPage(): Promise<void> {
         showSuccess(browser.i18n.getMessage('savedMessage'));
       }
     });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[IsolationGlobal] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadIsolationGlobal'));
   }
 }

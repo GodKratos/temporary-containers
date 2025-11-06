@@ -266,7 +266,8 @@ export async function initAdvancedDeleteHistoryPage(): Promise<void> {
     document.getElementById('deletesHistoryLeftClick')?.addEventListener('change', e => {
       savePref('isolation.global.mouseClick.left.container', (e.target as HTMLSelectElement).value);
     });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[AdvancedDeleteHistory] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadAdvancedDeleteHistory'));
   }
 }

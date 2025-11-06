@@ -114,8 +114,8 @@ export async function initExportImportPage(): Promise<void> {
       }
     });
   } catch (error) {
-    console.error('Error initializing export/import page:', error);
-    showError(`Error initializing export/import page: ${error?.toString() ?? 'Unknown error'}`);
+    console.error('[ExportImport] Failed to load settings page:', error);
+    showError(browser.i18n.getMessage('errorFailedToLoadExportImport'));
   }
 }
 

@@ -135,7 +135,7 @@ export async function initStatisticsPage(): Promise<void> {
       });
     }
   } catch (error) {
-    console.error('Error initializing statistics page:', error);
+    console.error('[Statistics] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadStatistics'));
   }
 }

@@ -296,7 +296,8 @@ export async function initGeneralPage(): Promise<void> {
     (document.getElementById('iconColor') as HTMLSelectElement).addEventListener('change', e => {
       savePref('iconColor', (e.target as HTMLSelectElement).value);
     });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[General] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadGeneral'));
   }
 }

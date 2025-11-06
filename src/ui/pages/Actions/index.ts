@@ -103,7 +103,8 @@ export async function initActionsPage(): Promise<void> {
       });
       btnConvertTemporary.setAttribute('data-listener', 'true');
     }
-  } catch (_error) {
+  } catch (error) {
+    console.error('[Actions] Failed to load settings page:', error);
     showError(browser.i18n.getMessage('errorFailedToLoadActions'));
   }
 }

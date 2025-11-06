@@ -329,6 +329,9 @@
   "errorFailedToLoadAdvancedDeleteHistory": {
     "message": "Failed to load \"Deletes History Containers\" settings"
   },
+  "errorFailedToLoadExportImport": {
+    "message": "Failed to load \"Export/Import\" settings"
+  },
   "errorFailedToSave": {
     "message": "Failed to save"
   },
