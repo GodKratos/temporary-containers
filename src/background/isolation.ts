@@ -79,6 +79,17 @@ export class Isolation {
       return false;
     }
 
+    // If this request url was used recently to create the container that the
+    // current tab already lives in, don't attempt to isolate again
+    if (
+      tab &&
+      tab.cookieStoreId !== `${this.background.containerPrefix}-default` &&
+      this.container.urlCreatedContainer[request.url] === tab.cookieStoreId
+    ) {
+      this.debug('[maybeIsolate] request url already opened in this temporary container, not isolating', request, tab);
+      return false;
+    }
+
     const isolate = await this.shouldIsolate({
       tab,
       request,
