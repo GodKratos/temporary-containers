@@ -313,11 +313,58 @@ export class Isolation {
           break;
         }
 
+        // Check if this is an extension-originated request in a temporary container to prevent infinite reload
+        if (
+          navigationPreferences.action === 'always' &&
+          request.originUrl &&
+          request.originUrl.startsWith('moz-extension://') &&
+          tab &&
+          this.container.isTemporary(tab.cookieStoreId)
+        ) {
+          const requestHostname = parsedRequestURL.hostname;
+          const tabHostname =
+            tab.url && !tab.url.startsWith('about:') && !tab.url.startsWith('moz-extension:') ? new URL(tab.url).hostname : null;
+
+          if (tabHostname === requestHostname || tab.url === 'about:blank') {
+            this.debug(
+              '[shouldIsolateNavigation] not isolating because request originates from extension and tab is already in temporary container for domain pattern',
+              domainPattern,
+              tab.url,
+              request.url
+            );
+            return false;
+          }
+        }
+
         return await this.checkIsolationPreferenceAgainstUrl(navigationPreferences.action, parsedURL, parsedRequestURL.hostname);
       }
     }
 
-    if (await this.checkIsolationPreferenceAgainstUrl(this.pref.isolation.global.navigation.action, parsedURL, parsedRequestURL.hostname)) {
+    // Before applying global navigation isolation, check if we're already in a temporary container
+    // and this is an extension-originated request to prevent infinite reload loops
+    const globalAction = this.pref.isolation.global.navigation.action;
+    if (globalAction === 'always' && tab && this.container.isTemporary(tab.cookieStoreId)) {
+      // If the request originates from the extension (tab creation), check if we're navigating to same domain
+      if (request.originUrl && request.originUrl.startsWith('moz-extension://')) {
+        // Tab URL might still be about:blank or might already be the target URL
+        // Check if the request URL matches the same domain to avoid re-isolation
+        const requestHostname = parsedRequestURL.hostname;
+        const tabHostname =
+          tab.url && !tab.url.startsWith('about:') && !tab.url.startsWith('moz-extension:') ? new URL(tab.url).hostname : null;
+
+        if (tabHostname === requestHostname || tab.url === 'about:blank') {
+          this.debug(
+            '[shouldIsolateNavigation] not isolating because request originates from extension and tab is already in temporary container',
+            tab.url,
+            request.url,
+            request.originUrl
+          );
+          return false;
+        }
+      }
+    }
+
+    if (await this.checkIsolationPreferenceAgainstUrl(globalAction, parsedURL, parsedRequestURL.hostname)) {
       return true;
     }
 
@@ -374,7 +421,22 @@ export class Isolation {
         return false;
       }
 
-      if (!this.utils.matchDomainPattern(tab.url, domainPattern)) {
+      // Check if the current tab URL also matches the same pattern
+      // This prevents infinite reloads when navigating within the same domain that has "Always Isolate" enabled
+      const tabUrlMatchesPattern = this.utils.matchDomainPattern(tab.url, domainPattern);
+      const requestUrlMatchesPattern = this.utils.matchDomainPattern(request.url, domainPattern);
+
+      if (isTemporary && tabUrlMatchesPattern && requestUrlMatchesPattern) {
+        this.debug(
+          '[shouldIsolateAlways] not isolating because already in temporary container and both tab and request match the same always pattern',
+          tab.url,
+          request.url,
+          domainPattern
+        );
+        return false;
+      }
+
+      if (!tabUrlMatchesPattern) {
         let openerMatches = false;
         if (openerTab && openerTab.url.startsWith('http') && this.utils.matchDomainPattern(openerTab.url, domainPattern)) {
           openerMatches = true;
