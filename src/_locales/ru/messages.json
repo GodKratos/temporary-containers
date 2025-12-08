@@ -510,7 +510,7 @@
     "message": "Настройка cookies для установки на определённых доменах во Временных контейнерах"
   },
   "optionsAdvancedCookiesWarning": {
-    "message": "Установка cookies может сделать вас более узнаваемыми. Особенно если они содержат пользовательские/сессионные данные. Избегайте установки cookies, если возможно."
+    "message": "Установка cookie может облегчить вашу идентификацию. Особенно, если они содержат пользовательские данные или данные сеанса. По возможности избегайте установки cookie. Не используйте эти настройки, если не знаете, что делаете."
   },
   "optionsAdvancedCookiesInfoMessage": {
     "message": "Это будет вызывать API cookies и добавлять cookie в заголовок (если разрешено) во время обработки запроса, если запрос принадлежит временному контейнеру и домен соответствует заданному шаблону."
@@ -518,11 +518,17 @@
   "optionsAdvancedCookiesName": {
     "message": "Название cookie"
   },
+  "optionsAdvancedCookiesNameTitle": {
+    "message": "Имя cookie для установки (например, session_id, user_token)"
+  },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
     "message": "Значение cookie"
+  },
+  "optionsAdvancedCookiesValueTitle": {
+    "message": "Значение для этого cookie (например, токен или идентификатор сессии)"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
@@ -530,11 +536,17 @@
   "optionsAdvancedCookiesDomain": {
     "message": "Домены cookie"
   },
+  "optionsAdvancedCookiesDomainTitle": {
+    "message": "Домен, где действует cookie. Используйте .example.com для включения поддоменов. Оставьте пустым для использования домена из URL"
+  },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
     "message": "URL cookie"
+  },
+  "optionsAdvancedCookiesUrlTitle": {
+    "message": "URL, где должен быть установлен cookie. Должен соответствовать домену и пути cookie. Обязательное поле"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"
@@ -548,11 +560,17 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Дата истечения"
   },
+  "optionsAdvancedCookiesExpirationDateTitle": {
+    "message": "Временная метка Unix (секунды с начала эпохи), когда истекает срок действия cookie. Оставьте пустым для cookie сеанса"
+  },
   "optionsAdvancedCookiesExpirationDatePlaceholder": {
     "message": "1640995200"
   },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "Основной домен"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainTitle": {
+    "message": "Домен первой стороны для изоляции. Требуется только если в Firefox включена изоляция первой стороны"
   },
   "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
     "message": "example.com"
@@ -560,8 +578,14 @@
   "optionsAdvancedCookiesHttpOnly": {
     "message": "Только HTTP"
   },
+  "optionsAdvancedCookiesHttpOnlyTitle": {
+    "message": "Если true, cookie недоступен через JavaScript (более безопасно). Оставьте 'Не задано' для поведения по умолчанию"
+  },
   "optionsAdvancedCookiesPath": {
     "message": "Путь"
+  },
+  "optionsAdvancedCookiesPathTitle": {
+    "message": "Путь URL, где действует cookie (например, /api, /user). Оставьте пустым для использования / (весь домен)"
   },
   "optionsAdvancedCookiesPathPlaceholder": {
     "message": "/api"
@@ -569,8 +593,14 @@
   "optionsAdvancedCookiesSameSite": {
     "message": "Same Site"
   },
+  "optionsAdvancedCookiesSameSiteTitle": {
+    "message": "Контролирует поведение cookie между сайтами: no_restriction (отправляется везде), lax (большинство запросов), strict (только на том же сайте)"
+  },
   "optionsAdvancedCookiesSecure": {
     "message": "Безопасный"
+  },
+  "optionsAdvancedCookiesSecureTitle": {
+    "message": "Если true, cookie отправляется только через HTTPS соединения. Оставьте 'Не задано' для поведения по умолчанию"
   },
   "optionsAdvancedCookiesNotSet": {
     "message": "Не задано"
