@@ -111,6 +111,20 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
 
+      <!-- Container Prefix Override -->
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscContainerPrefix">Container Prefix</h3>
+        <div class="field">
+          <label for="containerPrefixOverride" data-i18n="optionsAdvancedMiscContainerPrefixOverride">Container Prefix Override</label>
+          <div class="field-description" data-i18n="optionsAdvancedMiscContainerPrefixOverrideDescription">Override the automatically detected container prefix. Leave empty to use auto-detection. Current prefix: <span id="currentContainerPrefix"></span></div>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <input type="text" id="containerPrefixOverride" data-setting="containerPrefixOverride" value="${preferences.containerPrefixOverride || ''}" placeholder="firefox" style="flex: 1;" />
+            <button type="button" id="saveContainerPrefix" data-i18n="save">Save</button>
+            <button type="button" id="resetContainerPrefix" data-i18n="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Reset Storage -->
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscResetStorage">Reset Storage</h3>
@@ -266,6 +280,47 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
       renderIgnoredDomains();
       showSuccess(browser.i18n.getMessage('savedMessage'));
     }
+  });
+
+  // Container prefix override
+  const containerPrefixOverrideInput = content.querySelector('#containerPrefixOverride') as HTMLInputElement;
+  const saveContainerPrefixButton = content.querySelector('#saveContainerPrefix') as HTMLButtonElement;
+  const resetContainerPrefixButton = content.querySelector('#resetContainerPrefix') as HTMLButtonElement;
+  const currentContainerPrefixSpan = content.querySelector('#currentContainerPrefix') as HTMLElement;
+
+  // Get and display current container prefix
+  browser.runtime.sendMessage({ method: 'getContainerPrefix' }).then((prefix: string) => {
+    if (currentContainerPrefixSpan) {
+      currentContainerPrefixSpan.textContent = prefix || 'not set';
+    }
+  });
+
+  saveContainerPrefixButton?.addEventListener('click', async () => {
+    const value = containerPrefixOverrideInput.value.trim();
+    preferences.containerPrefixOverride = value;
+    await savePreferences(preferences);
+    showSuccess(browser.i18n.getMessage('optionsAdvancedMiscContainerPrefixSaved'));
+    // Update displayed current prefix
+    setTimeout(async () => {
+      const prefix = await browser.runtime.sendMessage({ method: 'getContainerPrefix' });
+      if (currentContainerPrefixSpan) {
+        currentContainerPrefixSpan.textContent = prefix || 'not set';
+      }
+    }, 500);
+  });
+
+  resetContainerPrefixButton?.addEventListener('click', async () => {
+    containerPrefixOverrideInput.value = '';
+    preferences.containerPrefixOverride = '';
+    await savePreferences(preferences);
+    showSuccess(browser.i18n.getMessage('optionsAdvancedMiscContainerPrefixReset'));
+    // Update displayed current prefix
+    setTimeout(async () => {
+      const prefix = await browser.runtime.sendMessage({ method: 'getContainerPrefix' });
+      if (currentContainerPrefixSpan) {
+        currentContainerPrefixSpan.textContent = prefix || 'not set';
+      }
+    }, 500);
   });
 
   // Reset storage

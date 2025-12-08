@@ -434,6 +434,12 @@
   "add": {
     "message": "Добавить"
   },
+  "save": {
+    "message": "Сохранить"
+  },
+  "reset": {
+    "message": "Сбросить"
+  },
   "toggleIsolation": {
     "message": "Переключить изоляцию"
   },
@@ -504,7 +510,22 @@
     "message": "Настройки успешно сброшены. Страница будет перезагружена."
   },
   "optionsAdvancedMiscResetStorageFailed": {
-    "message": "Не удалось сбросить настройки. Попробуйте еще раз."
+    "message": "Не удалось сбросить настройки. Пожалуйста, попробуйте ещё раз."
+  },
+  "optionsAdvancedMiscContainerPrefix": {
+    "message": "Префикс контейнера"
+  },
+  "optionsAdvancedMiscContainerPrefixOverride": {
+    "message": "Переопределение префикса контейнера"
+  },
+  "optionsAdvancedMiscContainerPrefixOverrideDescription": {
+    "message": "Переопределить автоматически обнаруженный префикс контейнера. Эту настройку следует изменять только в определённых форках Firefox, если автоматический режим работает неправильно. Оставьте пустым для автоматического определения. Текущий префикс:"
+  },
+  "optionsAdvancedMiscContainerPrefixSaved": {
+    "message": "Переопределение префикса контейнера сохранено. Изменения вступят в силу после перезапуска браузера."
+  },
+  "optionsAdvancedMiscContainerPrefixReset": {
+    "message": "Переопределение префикса контейнера сброшено на автоматическое определение. Изменения вступят в силу после перезапуска браузера."
   },
   "optionsAdvancedCookiesTitle": {
     "message": "Настройка cookies для установки на определённых доменах во Временных контейнерах"

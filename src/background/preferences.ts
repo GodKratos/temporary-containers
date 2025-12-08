@@ -87,6 +87,7 @@ export class Preferences {
       expandPreferences: false,
       popupDefaultTab: 'isolation-global',
     },
+    containerPrefixOverride: '',
   };
 
   private background: TemporaryContainers;

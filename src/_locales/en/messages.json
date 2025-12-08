@@ -440,6 +440,12 @@
   "add": {
     "message": "Add"
   },
+  "save": {
+    "message": "Save"
+  },
+  "reset": {
+    "message": "Reset"
+  },
   "optionsAdvancedMiscAutomaticMode": {
     "message": "Automatic Mode"
   },
@@ -505,6 +511,21 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Failed to reset settings. Please try again."
+  },
+  "optionsAdvancedMiscContainerPrefix": {
+    "message": "Container Prefix"
+  },
+  "optionsAdvancedMiscContainerPrefixOverride": {
+    "message": "Container Prefix Override"
+  },
+  "optionsAdvancedMiscContainerPrefixOverrideDescription": {
+    "message": "Override the automatically detected container prefix. This setting should only be changed on certain Firefox forks if automatic mode is not working correctly. Leave empty to use auto-detection. Current prefix:"
+  },
+  "optionsAdvancedMiscContainerPrefixSaved": {
+    "message": "Container prefix override saved. Changes will take effect after browser restart."
+  },
+  "optionsAdvancedMiscContainerPrefixReset": {
+    "message": "Container prefix override reset to auto-detection. Changes will take effect after browser restart."
   },
   "optionsAdvancedCookiesTitle": {
     "message": "Configure cookies to be set on certain domains in Temporary Containers"

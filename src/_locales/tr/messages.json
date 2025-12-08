@@ -434,6 +434,12 @@
   "add": {
     "message": "Ekle"
   },
+  "save": {
+    "message": "Kaydet"
+  },
+  "reset": {
+    "message": "Sıfırla"
+  },
   "toggleIsolation": {
     "message": "İzolasyonu Değiştir"
   },
@@ -504,7 +510,22 @@
     "message": "Ayarlar başarıyla sıfırlandı. Sayfa yeniden yüklenecek."
   },
   "optionsAdvancedMiscResetStorageFailed": {
-    "message": "Ayarları sıfırlama başarısız. Lütfen tekrar deneyin."
+    "message": "Ayarlar sıfırlanamadı. Lütfen tekrar deneyin."
+  },
+  "optionsAdvancedMiscContainerPrefix": {
+    "message": "Konteyner Ön Eki"
+  },
+  "optionsAdvancedMiscContainerPrefixOverride": {
+    "message": "Konteyner Ön Eki Geçersiz Kılma"
+  },
+  "optionsAdvancedMiscContainerPrefixOverrideDescription": {
+    "message": "Otomatik olarak algılanan konteyner ön ekini geçersiz kılın. Bu ayar yalnızca otomatik mod düzgün çalışmıyorsa belirli Firefox çatallarında değiştirilmelidir. Otomatik algılama için boş bırakın. Mevcut ön ek:"
+  },
+  "optionsAdvancedMiscContainerPrefixSaved": {
+    "message": "Konteyner ön eki geçersiz kılma kaydedildi. Değişiklikler tarayıcı yeniden başlatıldıktan sonra geçerli olacaktır."
+  },
+  "optionsAdvancedMiscContainerPrefixReset": {
+    "message": "Konteyner ön eki geçersiz kılma otomatik algılamaya sıfırlandı. Değişiklikler tarayıcı yeniden başlatıldıktan sonra geçerli olacaktır."
   },
   "optionsAdvancedCookiesTitle": {
     "message": "Geçici Konteynerlerde belirli alan adları için çerez ayarlarını yapılandır"

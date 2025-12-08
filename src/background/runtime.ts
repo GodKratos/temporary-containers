@@ -211,6 +211,9 @@ export class Runtime {
         return permissions as any;
       }
 
+      case 'getContainerPrefix':
+        return this.background.containerPrefix as any;
+
       case 'getManagedStorageInfo':
         return this.storage.getManagedStorageInfo() as any;
 

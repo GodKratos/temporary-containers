@@ -204,6 +204,7 @@ export interface PreferencesSchema {
     expandPreferences: boolean;
     popupDefaultTab: 'isolation-global' | 'isolation-per-domain' | 'actions' | 'statistics';
   };
+  containerPrefixOverride: string;
 }
 
 export interface Tab extends browser.tabs.Tab {

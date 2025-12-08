@@ -89,6 +89,20 @@ export class TemporaryContainers {
     }) as unknown as PreferencesSchema;
 
     if (!this.storage.local.containerPrefix) {
+      // Check if user has set an override, otherwise detect from browser
+      if (this.pref.containerPrefixOverride) {
+        this.storage.local.containerPrefix = this.pref.containerPrefixOverride;
+      } else {
+        const browserInfo = await browser.runtime.getBrowserInfo();
+        this.storage.local.containerPrefix = browserInfo.name.toLowerCase();
+      }
+      await this.storage.persist();
+    } else if (this.pref.containerPrefixOverride && this.storage.local.containerPrefix !== this.pref.containerPrefixOverride) {
+      // User has changed the override, update containerPrefix
+      this.storage.local.containerPrefix = this.pref.containerPrefixOverride;
+      await this.storage.persist();
+    } else if (!this.pref.containerPrefixOverride && typeof this.storage.local.containerPrefix === 'string') {
+      // Override was cleared, reset to auto-detected value
       const browserInfo = await browser.runtime.getBrowserInfo();
       this.storage.local.containerPrefix = browserInfo.name.toLowerCase();
       await this.storage.persist();
