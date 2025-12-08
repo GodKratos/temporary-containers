@@ -8,7 +8,7 @@ This guide covers development setup, workflows, and contribution guidelines for 
 
 After cloning the repository:
 
-1. Install dependencies: `npm install --legacy-peer-deps`
+1. Install dependencies: `npm install`
 2. Install git hooks: `npm run prepare` (runs automatically after install)
 3. Build the project: `npm run build`
 4. Run in Firefox: `npm run dev:test`

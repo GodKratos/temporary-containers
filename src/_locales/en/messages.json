@@ -518,11 +518,17 @@
   "optionsAdvancedCookiesName": {
     "message": "Cookie Name"
   },
+  "optionsAdvancedCookiesNameTitle": {
+    "message": "The name of the cookie to set (e.g., session_id, user_token)"
+  },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
     "message": "Cookie Value"
+  },
+  "optionsAdvancedCookiesValueTitle": {
+    "message": "The value to set for this cookie (e.g., a token or session identifier)"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
@@ -530,11 +536,17 @@
   "optionsAdvancedCookiesDomain": {
     "message": "Cookie Domain"
   },
+  "optionsAdvancedCookiesDomainTitle": {
+    "message": "The domain where the cookie is valid. Use .example.com to include subdomains. Leave empty to use the domain from the URL"
+  },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
     "message": "Cookie URL"
+  },
+  "optionsAdvancedCookiesUrlTitle": {
+    "message": "The URL where the cookie should be set. Must match the cookie's domain and path. Required field"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"
@@ -548,11 +560,17 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Expiration Date"
   },
+  "optionsAdvancedCookiesExpirationDateTitle": {
+    "message": "Unix timestamp (seconds since epoch) when the cookie expires. Leave empty for session cookie"
+  },
   "optionsAdvancedCookiesExpirationDatePlaceholder": {
     "message": "1640995200"
   },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "First Party Domain"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainTitle": {
+    "message": "First-party domain for isolation. Only needed if First-Party Isolation is enabled in Firefox"
   },
   "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
     "message": "example.com"
@@ -560,8 +578,14 @@
   "optionsAdvancedCookiesHttpOnly": {
     "message": "HTTP Only"
   },
+  "optionsAdvancedCookiesHttpOnlyTitle": {
+    "message": "If true, the cookie is not accessible via JavaScript (more secure). Leave as 'Not set' for default behavior"
+  },
   "optionsAdvancedCookiesPath": {
     "message": "Path"
+  },
+  "optionsAdvancedCookiesPathTitle": {
+    "message": "URL path where the cookie is valid (e.g., /api, /user). Leave empty to use / (entire domain)"
   },
   "optionsAdvancedCookiesPathPlaceholder": {
     "message": "/api"
@@ -569,8 +593,14 @@
   "optionsAdvancedCookiesSameSite": {
     "message": "Same Site"
   },
+  "optionsAdvancedCookiesSameSiteTitle": {
+    "message": "Controls cross-site cookie behavior: no_restriction (sent everywhere), lax (most requests), strict (same-site only)"
+  },
   "optionsAdvancedCookiesSecure": {
     "message": "Secure"
+  },
+  "optionsAdvancedCookiesSecureTitle": {
+    "message": "If true, the cookie is only sent over HTTPS connections. Leave as 'Not set' for default behavior"
   },
   "optionsAdvancedCookiesNotSet": {
     "message": "Not set"

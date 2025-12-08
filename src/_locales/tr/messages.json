@@ -518,11 +518,17 @@
   "optionsAdvancedCookiesName": {
     "message": "Adı cookie"
   },
+  "optionsAdvancedCookiesNameTitle": {
+    "message": "Ayarlanacak cookie'nin adı (örn. session_id, user_token)"
+  },
   "optionsAdvancedCookiesNamePlaceholder": {
     "message": "session_id"
   },
   "optionsAdvancedCookiesValue": {
     "message": "Değeri cookie"
+  },
+  "optionsAdvancedCookiesValueTitle": {
+    "message": "Bu cookie için ayarlanacak değer (örn. bir token veya oturum tanımlayıcısı)"
   },
   "optionsAdvancedCookiesValuePlaceholder": {
     "message": "abc123xyz"
@@ -530,11 +536,17 @@
   "optionsAdvancedCookiesDomain": {
     "message": "Alan Adı cookie"
   },
+  "optionsAdvancedCookiesDomainTitle": {
+    "message": "Cookie'nin geçerli olduğu alan adı. Alt alan adlarını dahil etmek için .example.com kullanın. URL'den alan adını kullanmak için boş bırakın"
+  },
   "optionsAdvancedCookiesDomainPlaceholder": {
     "message": "example.com"
   },
   "optionsAdvancedCookiesUrl": {
     "message": "URL cookie"
+  },
+  "optionsAdvancedCookiesUrlTitle": {
+    "message": "Cookie'nin ayarlanması gereken URL. Cookie'nin alan adı ve yolu ile eşleşmelidir. Zorunlu alan"
   },
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"
@@ -548,11 +560,17 @@
   "optionsAdvancedCookiesExpirationDate": {
     "message": "Son Kullanma Tarihi"
   },
+  "optionsAdvancedCookiesExpirationDateTitle": {
+    "message": "Cookie'nin sona ereceği Unix zaman damgası (epoch'tan bu yana saniye). Oturum cookie'si için boş bırakın"
+  },
   "optionsAdvancedCookiesExpirationDatePlaceholder": {
     "message": "1640995200"
   },
   "optionsAdvancedCookiesFirstPartyDomain": {
     "message": "Birinci Taraf Alan Adı"
+  },
+  "optionsAdvancedCookiesFirstPartyDomainTitle": {
+    "message": "İzolasyon için birinci taraf alan adı. Yalnızca Firefox'ta Birinci Taraf İzolasyonu etkinse gereklidir"
   },
   "optionsAdvancedCookiesFirstPartyDomainPlaceholder": {
     "message": "example.com"
@@ -560,8 +578,14 @@
   "optionsAdvancedCookiesHttpOnly": {
     "message": "Yalnızca HTTP"
   },
+  "optionsAdvancedCookiesHttpOnlyTitle": {
+    "message": "True ise, cookie JavaScript aracılığıyla erişilemez (daha güvenli). Varsayılan davranış için 'Ayarlanmadı' olarak bırakın"
+  },
   "optionsAdvancedCookiesPath": {
     "message": "Yol"
+  },
+  "optionsAdvancedCookiesPathTitle": {
+    "message": "Cookie'nin geçerli olduğu URL yolu (örn. /api, /user). Tüm alan adı için / kullanmak üzere boş bırakın"
   },
   "optionsAdvancedCookiesPathPlaceholder": {
     "message": "/api"
@@ -569,8 +593,14 @@
   "optionsAdvancedCookiesSameSite": {
     "message": "Aynı Site"
   },
+  "optionsAdvancedCookiesSameSiteTitle": {
+    "message": "Siteler arası cookie davranışını kontrol eder: no_restriction (her yerde gönderilir), lax (çoğu istek), strict (yalnızca aynı site)"
+  },
   "optionsAdvancedCookiesSecure": {
     "message": "Güvenli"
+  },
+  "optionsAdvancedCookiesSecureTitle": {
+    "message": "True ise, cookie yalnızca HTTPS bağlantıları üzerinden gönderilir. Varsayılan davranış için 'Ayarlanmadı' olarak bırakın"
   },
   "optionsAdvancedCookiesNotSet": {
     "message": "Ayarlanmamış"
