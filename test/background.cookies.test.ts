@@ -20,6 +20,7 @@ preferencesTestSet.map(preferences => {
           secure: 'true',
           url: 'https://example.com',
           value: 'value',
+          description: '',
         };
         browser.cookies.get.resolves(cookie);
         background.storage.local.preferences.cookies.domain = {
@@ -88,6 +89,7 @@ preferencesTestSet.map(preferences => {
           value: 'value',
           firstPartyDomain: '',
           sameSite: '',
+          description: '',
         };
         browser.cookies.get.resolves(null);
         background.storage.local.preferences.cookies.domain = {
@@ -124,6 +126,7 @@ preferencesTestSet.map(preferences => {
           value: 'value',
           firstPartyDomain: '',
           sameSite: '',
+          description: '',
         };
 
         background.storage.local.preferences.cookies.domain = {

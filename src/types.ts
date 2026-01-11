@@ -87,6 +87,7 @@ export interface Cookie {
   secure: '' | 'true' | 'false';
   url: string;
   value: string;
+  description: string;
 }
 
 export interface Script {

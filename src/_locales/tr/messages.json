@@ -737,6 +737,15 @@
   "optionsDomainPatternDescription": {
     "message": "URL'leri eşleştirmek için tam alan adları (example.com), alt alan adları (sub.example.com) veya joker karakterler (*.example.com) kullanın"
   },
+  "optionsAdvancedCookiesDescription": {
+    "message": "Açıklama"
+  },
+  "optionsAdvancedCookiesDescriptionTitle": {
+    "message": "Bu çerezin amacını belirlemeye yardımcı olacak isteğe bağlı açıklama"
+  },
+  "optionsAdvancedCookiesDescriptionPlaceholder": {
+    "message": "örneğin, API erişimi için kimlik doğrulama çerezi"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Geçici konteynerlerde belirli alan adları için çalıştırılacak betikleri yapılandır"
   },

@@ -572,6 +572,15 @@
   "optionsAdvancedCookiesUrlPlaceholder": {
     "message": "https://example.com"
   },
+  "optionsAdvancedCookiesDescription": {
+    "message": "Описание"
+  },
+  "optionsAdvancedCookiesDescriptionTitle": {
+    "message": "Необязательное описание, которое поможет определить назначение этого cookie"
+  },
+  "optionsAdvancedCookiesDescriptionPlaceholder": {
+    "message": "например, Cookie аутентификации для доступа к API"
+  },
   "optionsAdvancedCookiesAdvancedOptions1": {
     "message": "▶ Расширенные опции"
   },

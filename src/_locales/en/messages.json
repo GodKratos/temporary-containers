@@ -737,6 +737,15 @@
   "optionsDomainPatternDescription": {
     "message": "Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs"
   },
+  "optionsAdvancedCookiesDescription": {
+    "message": "Description"
+  },
+  "optionsAdvancedCookiesDescriptionTitle": {
+    "message": "Optional description to help identify the purpose of this cookie"
+  },
+  "optionsAdvancedCookiesDescriptionPlaceholder": {
+    "message": "e.g., Authentication cookie for API access"
+  },
   "optionsAdvancedScriptsTitle": {
     "message": "Configure scripts to execute for certain domains in Temporary Containers"
   },

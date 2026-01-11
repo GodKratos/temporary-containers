@@ -13,6 +13,7 @@ interface CookieDefaults {
   secure: string;
   url: string;
   value: string;
+  description: string;
 }
 
 const cookieDefaults: CookieDefaults = {
@@ -26,6 +27,7 @@ const cookieDefaults: CookieDefaults = {
   secure: '',
   url: '',
   value: '',
+  description: '',
 };
 
 export async function initAdvancedCookiesPage(): Promise<void> {
@@ -58,6 +60,11 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           <div class="field">
             <label for="cookieDomainPattern" data-i18n="optionsDomainPattern">Domain Pattern</label>
             <input type="text" id="cookieDomainPattern" data-i18n-placeholder="optionsDomainPatternPlaceholder" placeholder="example.com or *.example.com" data-i18n-title="optionsDomainPatternDescription" title="Use exact domains (example.com), subdomains (sub.example.com) or wildcards (*.example.com) to match URLs" required />
+          </div>
+          
+          <div class="field">
+            <label for="cookieDescription" data-i18n="optionsAdvancedCookiesDescription">Description</label>
+            <input type="text" id="cookieDescription" data-i18n-placeholder="optionsAdvancedCookiesDescriptionPlaceholder" placeholder="e.g., Authentication cookie for API access" data-i18n-title="optionsAdvancedCookiesDescriptionTitle" title="Optional description to help identify the purpose of this cookie" />
           </div>
           
           <div class="field">
@@ -224,6 +231,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       // Reset form fields
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).value = '';
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).disabled = false;
+      (document.getElementById('cookieDescription') as HTMLInputElement).value = '';
       (document.getElementById('cookieName') as HTMLInputElement).value = '';
       (document.getElementById('cookieValue') as HTMLInputElement).value = '';
       (document.getElementById('cookieDomain') as HTMLInputElement).value = '';
@@ -253,6 +261,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
       // Fill form with cookie data
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).value = domainPattern;
       (document.getElementById('cookieDomainPattern') as HTMLInputElement).disabled = true;
+      (document.getElementById('cookieDescription') as HTMLInputElement).value = currentCookie.description;
       (document.getElementById('cookieName') as HTMLInputElement).value = currentCookie.name;
       (document.getElementById('cookieValue') as HTMLInputElement).value = currentCookie.value;
       (document.getElementById('cookieDomain') as HTMLInputElement).value = currentCookie.domain;
@@ -317,6 +326,7 @@ export async function initAdvancedCookiesPage(): Promise<void> {
         value,
         domain,
         url,
+        description: (document.getElementById('cookieDescription') as HTMLInputElement).value.trim(),
         expirationDate: (document.getElementById('cookieExpirationDate') as HTMLInputElement).value.trim(),
         firstPartyDomain: (document.getElementById('cookieFirstPartyDomain') as HTMLInputElement).value.trim(),
         httpOnly: (document.getElementById('cookieHttpOnly') as HTMLSelectElement).value as '' | 'true' | 'false',
