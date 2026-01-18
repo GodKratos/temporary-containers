@@ -539,6 +539,14 @@ export const addons: Map<
     },
   ],
   [
+    '{e70111b3-b362-47a7-bbdc-a6fb7249d47a}',
+    {
+      name: 'Container Redirect',
+      enabled: false,
+      version: false,
+    },
+  ],
+  [
     'block_outside_container@jspenguin.org',
     {
       name: 'Block sites outside container',
