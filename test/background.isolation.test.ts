@@ -1,5 +1,5 @@
 import { preferencesTestSet, loadBackground, Background } from './setup';
-import { Tab, IsolationDomain } from '~/types';
+import { Tab, IsolationDomain, WebRequestOnBeforeRequestDetails } from '~/types';
 
 preferencesTestSet.map(preferences => {
   describe(`preferences: ${JSON.stringify(preferences)}`, () => {
@@ -521,6 +521,63 @@ preferencesTestSet.map(preferences => {
               });
             });
           });
+        });
+      });
+
+      describe('Cloudflare challenge navigation', () => {
+        const buildCloudflareRequest = (currentTab: Tab): WebRequestOnBeforeRequestDetails => ({
+          requestId: `cloudflare-${Date.now()}`,
+          tabId: currentTab.id,
+          url: 'https://example.com/',
+          originUrl: currentTab.url,
+          method: 'POST',
+          type: 'main_frame',
+          timeStamp: Date.now(),
+          frameId: 0,
+          parentFrameId: -1,
+          cookieStoreId: currentTab.cookieStoreId,
+          thirdParty: false,
+        });
+
+        beforeEach(async () => {
+          bg = await loadBackground({ preferences });
+          tab = (await bg.tmp.container.createTabInTempContainer({
+            url: 'https://example.com/?__cf_chl_rt_tk=test',
+          })) as Tab;
+          tab.url = 'https://example.com/?__cf_chl_rt_tk=test';
+          bg.browser.tabs.create.resetHistory();
+          bg.tmp.storage.local.preferences.isolation.domain = [];
+          bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'global';
+        });
+
+        it('should not re-isolate same-domain POST when global navigation action is "always"', async () => {
+          bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'always';
+
+          const shouldIsolate = await bg.tmp.isolation.shouldIsolateNavigation({
+            tab,
+            request: buildCloudflareRequest(tab),
+          });
+
+          shouldIsolate.should.equal(false);
+        });
+
+        it('should not re-isolate same-domain POST when per-domain navigation action is "always"', async () => {
+          bg.tmp.storage.local.preferences.isolation.domain = [
+            {
+              ...defaultIsolationDomainPreferences,
+              pattern: 'example.com',
+              navigation: {
+                action: 'always',
+              },
+            },
+          ];
+
+          const shouldIsolate = await bg.tmp.isolation.shouldIsolateNavigation({
+            tab,
+            request: buildCloudflareRequest(tab),
+          });
+
+          shouldIsolate.should.equal(false);
         });
       });
     });
