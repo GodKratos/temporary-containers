@@ -10,7 +10,6 @@
   "default_locale": "en",
   "browser_action": {
     "browser_style": false,
-    "default_area": "tabstrip",
     "default_title": "__MSG_actionNewTemporaryContainerTab__",
     "default_icon": {
       "16": "icons/page-w-16.svg",

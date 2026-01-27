@@ -9,6 +9,8 @@ This is a continuation of the amazing addon [originally created and maintained b
 - **[Firefox Add-ons (AMO)](https://addons.mozilla.org/en-GB/firefox/addon/temporary-containers-plus/)** - Stable releases with automatic updates
 - **[GitHub Releases](https://github.com/GodKratos/temporary-containers/releases)** - Beta versions and pre-release testing
 
+After installation, Firefox may offer to pin the extension icon to the toolbar. If you skip that step, you can access it from the Extensions (puzzle piece) menu.
+
 ## Documentation
 
 - **[User Guide & Wiki](https://github.com/GodKratos/temporary-containers/wiki)** - Complete user documentation, installation guides, and feature explanations
