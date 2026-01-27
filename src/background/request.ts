@@ -344,6 +344,23 @@ export class Request {
       }
     }
 
+    if (this.management.addons.get('{e70111b3-b362-47a7-bbdc-a6fb7249d47a}')?.enabled) {
+      try {
+        const hostmap = await browser.runtime.sendMessage('{e70111b3-b362-47a7-bbdc-a6fb7249d47a}', {
+          method: 'getHostMap',
+          url: request.url,
+        });
+        if (typeof hostmap === 'object' && hostmap.cookieStoreId && hostmap.enabled) {
+          this.debug('[handleRequest] assigned with container-redirect we do nothing', hostmap);
+          return true;
+        } else {
+          this.debug('[handleRequest] not assigned with container-redirect', hostmap);
+        }
+      } catch (error) {
+        this.debug('[handleRequest] contacting container-redirect failed, probably old version', error);
+      }
+    }
+
     if (this.management.addons.get('block_outside_container@jspengun.org')?.enabled) {
       try {
         const response = await browser.runtime.sendMessage('block_outside_container@jspenguin.org', {
