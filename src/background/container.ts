@@ -25,6 +25,9 @@ export class Container {
   public urlCreatedContainer: {
     [key: string]: CookieStoreId;
   } = {};
+  public hostnameCreatedContainer: {
+    [key: string]: CookieStoreId;
+  } = {};
   public tabCreatedAsMacConfirmPage: {
     [key: number]: boolean;
   } = {};
@@ -100,6 +103,7 @@ export class Container {
       macConfirmPage,
       contextualIdentity,
       openerTab,
+      request,
     });
   }
 
@@ -154,6 +158,7 @@ export class Container {
     macConfirmPage,
     contextualIdentity,
     openerTab,
+    request = false,
   }: {
     url?: string;
     tab?: Tab;
@@ -162,6 +167,7 @@ export class Container {
     macConfirmPage?: boolean;
     contextualIdentity: browser.contextualIdentities.ContextualIdentity;
     openerTab?: Tab;
+    request?: false | WebRequestOnBeforeRequestDetails;
   }): Promise<Tab> {
     try {
       const newTabOptions: CreateTabOptions = {
@@ -228,6 +234,23 @@ export class Container {
           this.debug('[createTabInTempContainer] cleaning up urlCreatedContainer', url);
           delete this.urlCreatedContainer[url];
         });
+      }
+
+      if (request && request.url) {
+        try {
+          const hostname = new URL(request.url).hostname;
+          if (hostname) {
+            this.hostnameCreatedContainer[hostname] = contextualIdentity.cookieStoreId;
+            delay(1000).then(() => {
+              if (this.hostnameCreatedContainer[hostname] === contextualIdentity.cookieStoreId) {
+                this.debug('[createTabInTempContainer] cleaning up hostnameCreatedContainer', hostname);
+                delete this.hostnameCreatedContainer[hostname];
+              }
+            });
+          }
+        } catch (_error) {
+          /* ignore invalid url */
+        }
       }
       // Propagate about:* url from original tab if we didn't specify one for the new temp tab
       if (!newTab.url && tab && tab.url && tab.url.startsWith('about:')) {

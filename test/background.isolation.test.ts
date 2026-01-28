@@ -581,6 +581,65 @@ preferencesTestSet.map(preferences => {
         });
       });
 
+      describe('Same-domain navigation in temporary containers', () => {
+        const buildSameDomainRequest = (currentTab: Tab): WebRequestOnBeforeRequestDetails => ({
+          requestId: `same-domain-${Date.now()}`,
+          tabId: currentTab.id,
+          url: 'https://www.google.com/search?q=next',
+          originUrl: currentTab.url,
+          method: 'GET',
+          type: 'main_frame',
+          timeStamp: Date.now(),
+          frameId: 0,
+          parentFrameId: -1,
+          cookieStoreId: currentTab.cookieStoreId,
+          thirdParty: false,
+        });
+
+        beforeEach(async () => {
+          bg = await loadBackground({ preferences });
+          tab = (await bg.tmp.container.createTabInTempContainer({
+            url: 'https://www.google.com/search?q=test',
+          })) as Tab;
+          tab.url = 'https://www.google.com/search?q=test';
+          bg.browser.tabs.create.resetHistory();
+          bg.tmp.storage.local.preferences.isolation.domain = [];
+          bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'global';
+          const hostname = new URL(tab.url).hostname;
+          bg.tmp.container.hostnameCreatedContainer[hostname] = tab.cookieStoreId;
+        });
+
+        it('should not re-isolate same-domain navigation when global navigation action is "always"', async () => {
+          bg.tmp.storage.local.preferences.isolation.global.navigation.action = 'always';
+
+          const shouldIsolate = await bg.tmp.isolation.shouldIsolateNavigation({
+            tab,
+            request: buildSameDomainRequest(tab),
+          });
+
+          shouldIsolate.should.equal(false);
+        });
+
+        it('should not re-isolate same-domain navigation when per-domain navigation action is "always"', async () => {
+          bg.tmp.storage.local.preferences.isolation.domain = [
+            {
+              ...defaultIsolationDomainPreferences,
+              pattern: 'google.com',
+              navigation: {
+                action: 'always',
+              },
+            },
+          ];
+
+          const shouldIsolate = await bg.tmp.isolation.shouldIsolateNavigation({
+            tab,
+            request: buildSameDomainRequest(tab),
+          });
+
+          shouldIsolate.should.equal(false);
+        });
+      });
+
       describe('Mouse click opener fallback', () => {
         const targetUrl = 'https://en.wikipedia.org/wiki/Main_Page';
         const originUrl = 'https://www.wikipedia.org/';

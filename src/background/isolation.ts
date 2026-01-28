@@ -333,6 +333,15 @@ export class Isolation {
       return parsedRequestURL.hostname === tabHostname;
     };
 
+    const shouldSkipRecentlyCreatedSameDomainNavigation = (): boolean => {
+      if (!isTemporaryTab || !tabHostname) {
+        return false;
+      }
+
+      const recentlyCreatedForHostname = this.container.hostnameCreatedContainer[parsedRequestURL.hostname];
+      return recentlyCreatedForHostname === tab.cookieStoreId;
+    };
+
     for (const patternPreferences of this.pref.isolation.domain) {
       const domainPattern = patternPreferences.pattern;
 
@@ -374,6 +383,16 @@ export class Isolation {
             return false;
           }
 
+          if (shouldSkipRecentlyCreatedSameDomainNavigation()) {
+            this.debug(
+              '[shouldIsolateNavigation] not isolating recently created same-domain navigation in temporary container for domain pattern with "always" navigation',
+              domainPattern,
+              tab?.url,
+              request.url
+            );
+            return false;
+          }
+
           if (request.originUrl && request.originUrl.startsWith('moz-extension://') && isTemporaryTab) {
             const requestHostname = parsedRequestURL.hostname;
 
@@ -400,6 +419,15 @@ export class Isolation {
       if (shouldSkipSameDomainPostInTemporaryTab()) {
         this.debug(
           '[shouldIsolateNavigation] not isolating same-domain POST in temporary container while global "always" navigation is active',
+          tab?.url,
+          request.url
+        );
+        return false;
+      }
+
+      if (shouldSkipRecentlyCreatedSameDomainNavigation()) {
+        this.debug(
+          '[shouldIsolateNavigation] not isolating recently created same-domain navigation in temporary container while global "always" navigation is active',
           tab?.url,
           request.url
         );
