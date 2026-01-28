@@ -199,50 +199,90 @@ export class Isolation {
     if (!this.mouseclick.isolated[request.url]) {
       return false;
     }
+    const isolatedClick = this.mouseclick.isolated[request.url];
 
-    if (tab && ![tab.id, tab.openerTabId].includes(this.mouseclick.isolated[request.url].tab.id)) {
-      this.debug(
-        '[shouldIsolateMouseClick] not isolating mouse click because tab/openerTab id is different',
-        request,
-        tab,
-        openerTab,
-        this.mouseclick.isolated[request.url].tab
-      );
-      return false;
+    if (tab) {
+      const relatedTabIds: number[] = [tab.id];
+      if (typeof tab.openerTabId === 'number') {
+        relatedTabIds.push(tab.openerTabId);
+      }
+      if (openerTab) {
+        relatedTabIds.push(openerTab.id);
+      }
+
+      let matchesSourceTab = relatedTabIds.includes(isolatedClick.tab.id);
+      if (!matchesSourceTab && request.originUrl) {
+        if (this.urlsMatchIgnoringHash(request.originUrl, isolatedClick.tab.url)) {
+          matchesSourceTab = true;
+          this.debug(
+            '[shouldIsolateMouseClick] accepting originUrl match despite opener mismatch',
+            request.originUrl,
+            isolatedClick.tab.url
+          );
+        }
+      }
+
+      if (!matchesSourceTab) {
+        this.debug(
+          '[shouldIsolateMouseClick] not isolating mouse click because tab/openerTab id is different',
+          request,
+          tab,
+          openerTab,
+          isolatedClick.tab
+        );
+        return false;
+      }
     }
 
-    this.debug('[beforeHandleRequest] decreasing isolated mouseclick count', this.mouseclick.isolated[request.url]);
-    this.mouseclick.isolated[request.url].count--;
+    this.debug('[beforeHandleRequest] decreasing isolated mouseclick count', isolatedClick);
+    isolatedClick.count--;
 
-    if (this.mouseclick.isolated[request.url].count < 0) {
-      this.debug(
-        '[shouldIsolateMouseClick] not isolating and removing isolated mouseclick because its count is < 0',
-        this.mouseclick.isolated[request.url]
-      );
-      this.mouseclick.isolated[request.url].abortController.abort();
+    if (isolatedClick.count < 0) {
+      this.debug('[shouldIsolateMouseClick] not isolating and removing isolated mouseclick because its count is < 0', isolatedClick);
+      isolatedClick.abortController.abort();
       delete this.mouseclick.isolated[request.url];
       return false;
     }
 
     const isolate: { deletesHistory?: boolean; reload?: boolean } = {};
-    const clickType = this.mouseclick.isolated[request.url].clickType;
+    const clickType = isolatedClick.clickType;
     if (this.pref.isolation.global.mouseClick[clickType].container === 'deleteshistory') {
       isolate.deletesHistory = true;
     }
 
-    if (tab && clickType === 'left' && this.mouseclick.isolated[request.url].tab.id !== tab.id) {
+    if (tab && clickType === 'left' && isolatedClick.tab.id !== tab.id) {
       isolate.reload = true;
     }
 
-    if (!this.mouseclick.isolated[request.url].count) {
-      this.debug('[shouldIsolateMouseClick] removing isolated mouseclick because its count is 0', this.mouseclick.isolated[request.url]);
-      this.mouseclick.isolated[request.url].abortController.abort();
+    if (!isolatedClick.count) {
+      this.debug('[shouldIsolateMouseClick] removing isolated mouseclick because its count is 0', isolatedClick);
+      isolatedClick.abortController.abort();
       delete this.mouseclick.isolated[request.url];
     }
 
-    this.debug('[shouldIsolateMouseClick] decided to isolate mouseclick', this.mouseclick.isolated[request.url]);
+    this.debug('[shouldIsolateMouseClick] decided to isolate mouseclick', isolatedClick);
 
     return isolate;
+  }
+
+  private urlsMatchIgnoringHash(urlA?: string, urlB?: string): boolean {
+    if (!urlA || !urlB) {
+      return false;
+    }
+
+    if (urlA === urlB) {
+      return true;
+    }
+
+    try {
+      const parsedA = new URL(urlA);
+      const parsedB = new URL(urlB);
+      parsedA.hash = '';
+      parsedB.hash = '';
+      return parsedA.href === parsedB.href;
+    } catch (_error) {
+      return urlA === urlB;
+    }
   }
 
   async shouldIsolateNavigation({

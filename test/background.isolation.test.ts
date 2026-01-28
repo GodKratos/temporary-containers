@@ -1,4 +1,4 @@
-import { preferencesTestSet, loadBackground, Background } from './setup';
+import { preferencesTestSet, loadBackground, Background, expect } from './setup';
 import { Tab, IsolationDomain, WebRequestOnBeforeRequestDetails } from '~/types';
 
 preferencesTestSet.map(preferences => {
@@ -578,6 +578,87 @@ preferencesTestSet.map(preferences => {
           });
 
           shouldIsolate.should.equal(false);
+        });
+      });
+
+      describe('Mouse click opener fallback', () => {
+        const targetUrl = 'https://en.wikipedia.org/wiki/Main_Page';
+        const originUrl = 'https://www.wikipedia.org/';
+        let requestTab: Tab;
+        let storedTab: Tab;
+        let mouseClickRequest: WebRequestOnBeforeRequestDetails;
+
+        const seedMouseClickState = (): void => {
+          bg.tmp.mouseclick.isolated[targetUrl] = {
+            clickType: 'left',
+            tab: storedTab,
+            count: 1,
+            abortController: new AbortController(),
+          };
+        };
+
+        beforeEach(async () => {
+          bg = await loadBackground({ preferences });
+          bg.tmp.storage.local.preferences.isolation.global.mouseClick.left.action = 'always';
+
+          storedTab = bg.helper.fakeTab({
+            id: 10,
+            url: originUrl,
+            windowId: 3,
+            pinned: true,
+          });
+
+          requestTab = bg.helper.fakeTab({
+            id: 27,
+            openerTabId: 27,
+            windowId: 3,
+            url: targetUrl,
+          });
+
+          mouseClickRequest = {
+            requestId: `mouseclick-${Date.now()}`,
+            tabId: requestTab.id,
+            url: targetUrl,
+            originUrl,
+            method: 'GET',
+            type: 'main_frame',
+            timeStamp: Date.now(),
+            frameId: 0,
+            parentFrameId: -1,
+            cookieStoreId: requestTab.cookieStoreId,
+            thirdParty: false,
+            urlClassification: {
+              firstParty: [],
+              thirdParty: [],
+            },
+          } as WebRequestOnBeforeRequestDetails;
+        });
+
+        it('isolates when opener ids differ but originUrl matches the recorded tab url', () => {
+          seedMouseClickState();
+
+          const result = bg.tmp.isolation.shouldIsolateMouseClick({
+            request: mouseClickRequest,
+            tab: requestTab,
+            openerTab: requestTab,
+          });
+
+          expect(result).to.deep.equal({ reload: true });
+          expect(bg.tmp.mouseclick.isolated[targetUrl]).to.be.undefined;
+        });
+
+        it('skips isolation when opener ids differ and the originUrl does not match the recorded tab url', () => {
+          seedMouseClickState();
+          mouseClickRequest.originUrl = 'https://news.ycombinator.com/';
+
+          const result = bg.tmp.isolation.shouldIsolateMouseClick({
+            request: mouseClickRequest,
+            tab: requestTab,
+            openerTab: requestTab,
+          });
+
+          expect(result).to.equal(false);
+          expect(bg.tmp.mouseclick.isolated[targetUrl]).to.have.property('count', 1);
         });
       });
     });
