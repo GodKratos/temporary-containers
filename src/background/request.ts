@@ -230,6 +230,11 @@ export class Request {
       return this.mac.maybeReopenConfirmPage(macAssignment, request, tab);
     }
 
+    if (tab.splitViewId !== undefined && tab.splitViewId !== -1) {
+      this.debug('[handleRequest] tab is in split view, not reloading in temp container', tab, request);
+      return false;
+    }
+
     this.debug('[handleRequest] decided to reload in temp tab', tab, request);
     if (this.cancelRequest(request)) {
       return { cancel: true };

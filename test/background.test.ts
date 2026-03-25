@@ -147,6 +147,61 @@ preferencesTestSet.map(preferences => {
         await browser.tabs._create({ url: 'about:newtab' });
         browser.tabs.create.should.have.been.calledOnce;
       });
+
+      describe('split view tabs (Firefox 149+)', () => {
+        it('should not reopen about:newtab in a split view (splitViewId > 0)', async () => {
+          const { browser, tmp: background } = await loadBackground({ preferences });
+          const tab: Tab = {
+            id: 99,
+            url: 'about:newtab',
+            cookieStoreId: 'firefox-default',
+            windowId: 1,
+            index: 1,
+            highlighted: false,
+            active: true,
+            pinned: false,
+            incognito: false,
+            splitViewId: 42,
+          };
+          await background.tabs.onCreated(tab);
+          browser.tabs.create.should.not.have.been.called;
+        });
+
+        it('should reopen about:newtab when splitViewId is -1 (not in split view)', async () => {
+          const { browser, tmp: background } = await loadBackground({ preferences });
+          const tab: Tab = {
+            id: 98,
+            url: 'about:newtab',
+            cookieStoreId: 'firefox-default',
+            windowId: 1,
+            index: 1,
+            highlighted: false,
+            active: true,
+            pinned: false,
+            incognito: false,
+            splitViewId: -1,
+          };
+          await background.tabs.onCreated(tab);
+          browser.tabs.create.should.have.been.calledOnce;
+        });
+
+        it('should reopen about:newtab when splitViewId is undefined (older Firefox)', async () => {
+          const { browser, tmp: background } = await loadBackground({ preferences });
+          const tab: Tab = {
+            id: 97,
+            url: 'about:newtab',
+            cookieStoreId: 'firefox-default',
+            windowId: 1,
+            index: 1,
+            highlighted: false,
+            active: true,
+            pinned: false,
+            incognito: false,
+          };
+          await background.tabs.onCreated(tab);
+          browser.tabs.create.should.have.been.calledOnce;
+        });
+      });
     });
 
     describe('tabs loading URLs in default-container', () => {
@@ -162,6 +217,77 @@ preferencesTestSet.map(preferences => {
       it('should reopen the Tab in temporary container', async () => {
         bg.browser.contextualIdentities.create.should.have.been.calledOnce;
         bg.browser.tabs.create.should.have.been.calledOnce;
+      });
+
+      describe('split view navigation (Firefox 149+)', () => {
+        it('should not reload into temp container when tab is in split view', async () => {
+          const { browser, tmp: background } = await loadBackground({ preferences });
+          const splitTab: Tab = {
+            id: 55,
+            url: 'https://example.com',
+            cookieStoreId: 'firefox-default',
+            windowId: 1,
+            index: 1,
+            highlighted: false,
+            active: true,
+            pinned: false,
+            incognito: false,
+            splitViewId: 7,
+          };
+          browser.tabs.get.withArgs(55).resolves(splitTab);
+
+          const fakeRequest = {
+            requestId: 'split-req-1',
+            tabId: 55,
+            url: 'https://example.com',
+            method: 'GET',
+            type: 'main_frame' as browser.webRequest.ResourceType,
+            timeStamp: Date.now(),
+            frameId: 0,
+            parentFrameId: -1,
+            thirdParty: false,
+            cookieStoreId: 'firefox-default',
+            urlClassification: { firstParty: [], thirdParty: [] },
+          };
+          await background.request.handleRequest(fakeRequest as any);
+
+          browser.contextualIdentities.create.should.not.have.been.called;
+          browser.tabs.create.should.not.have.been.called;
+        });
+
+        it('should reload into temp container when splitViewId is -1', async () => {
+          const { browser, tmp: background } = await loadBackground({ preferences });
+          const tab: Tab = {
+            id: 56,
+            url: 'https://example.com',
+            cookieStoreId: 'firefox-default',
+            windowId: 1,
+            index: 1,
+            highlighted: false,
+            active: true,
+            pinned: false,
+            incognito: false,
+            splitViewId: -1,
+          };
+          browser.tabs.get.withArgs(56).resolves(tab);
+
+          const fakeRequest = {
+            requestId: 'split-req-2',
+            tabId: 56,
+            url: 'https://example.com',
+            method: 'GET',
+            type: 'main_frame' as browser.webRequest.ResourceType,
+            timeStamp: Date.now(),
+            frameId: 0,
+            parentFrameId: -1,
+            thirdParty: false,
+            cookieStoreId: 'firefox-default',
+            urlClassification: { firstParty: [], thirdParty: [] },
+          };
+          await background.request.handleRequest(fakeRequest as any);
+
+          browser.contextualIdentities.create.should.have.been.calledOnce;
+        });
       });
     });
 

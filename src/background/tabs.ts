@@ -137,6 +137,11 @@ export class Tabs {
       return;
     }
 
+    if (tab.splitViewId !== undefined && tab.splitViewId !== -1) {
+      this.debug('[maybeReopenInTmpContainer] tab is in split view, ignore', tab);
+      return;
+    }
+
     // Guard: sometimes test harness fires onCreated before a final url was set
     // (we stage about:blank). If url is still undefined we wait for a later onUpdated.
     if (!tab.url) {

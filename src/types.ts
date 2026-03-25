@@ -213,6 +213,8 @@ export interface Tab extends browser.tabs.Tab {
   url: string;
   windowId: number;
   cookieStoreId: string;
+  // Available in Firefox 149+. -1 (SPLIT_VIEW_ID_NONE) means not in a split view.
+  splitViewId?: number;
 }
 
 export interface Permissions {
