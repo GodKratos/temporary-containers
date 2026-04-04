@@ -55,6 +55,12 @@ export const IGNORED_DOMAINS_DEFAULT = ['getpocket.com', 'addons.mozilla.org'];
 
 export const REDIRECTOR_DOMAINS_DEFAULT = ['t.co', 'outgoing.prod.mozaws.net', 'slack-redir.net', 'away.vk.com'];
 
+// Marker name used by "Open external links in a container" and similar extensions.
+// When a container is created with this exact name, it is automatically converted
+// into a proper temporary container.
+// Usage: firefox "ext+container:name=%NEW_TEMP_CONTAINER%&url=https://example.com/"
+export const CONTAINER_MARK = '%NEW_TEMP_CONTAINER%';
+
 export const formatBytes = (bytes: number, decimals = 2): string => {
   // https://stackoverflow.com/a/18650828
   if (bytes == 0) {

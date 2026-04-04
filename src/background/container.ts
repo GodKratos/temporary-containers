@@ -2,7 +2,7 @@ import { TemporaryContainers } from './tmp';
 import { delay, psl } from './lib';
 import { Storage } from './storage';
 import { Tabs } from './tabs';
-import { CONTAINER_COLORS, CONTAINER_ICONS } from '~/shared';
+import { CONTAINER_COLORS, CONTAINER_ICONS, CONTAINER_MARK } from '~/shared';
 import {
   ContainerColor,
   ContainerIcon,
@@ -147,6 +147,34 @@ export class Container {
     } catch (error) {
       this.debug('[createTabInTempContainer] error while creating container', containerOptions.name, error);
       throw error;
+    }
+  }
+
+  async onCreated(changeInfo: { contextualIdentity: browser.contextualIdentities.ContextualIdentity }): Promise<void> {
+    const { contextualIdentity } = changeInfo;
+    if (contextualIdentity.name !== CONTAINER_MARK) {
+      return;
+    }
+
+    this.debug('[onCreated] detected %NEW_TEMP_CONTAINER% marker, converting to temp container');
+    const containerOptions = this.generateContainerNameIconColor();
+
+    if (containerOptions.number) {
+      this.storage.local.tempContainersNumbers.push(containerOptions.number);
+    }
+
+    try {
+      const updated = await browser.contextualIdentities.update(contextualIdentity.cookieStoreId, {
+        name: containerOptions.name,
+        icon: containerOptions.icon,
+        color: containerOptions.color,
+      });
+      this.debug('[onCreated] container converted', updated);
+
+      this.storage.local.tempContainers[contextualIdentity.cookieStoreId] = containerOptions;
+      await this.storage.persist();
+    } catch (error) {
+      this.debug('[onCreated] error converting marked container', error);
     }
   }
 

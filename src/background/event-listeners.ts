@@ -72,6 +72,9 @@ export class EventListeners {
       this.wrap(browser.runtime.onMessageExternal, this.background.runtime, 'onMessageExternal')
     );
     browser.runtime.onStartup.addListener(this.wrap(browser.runtime.onStartup, this.background.runtime, 'onStartup'));
+    browser.contextualIdentities.onCreated.addListener(
+      this.wrap(browser.contextualIdentities.onCreated, this.background.container, 'onCreated')
+    );
 
     this.registerPermissionedListener();
   }
