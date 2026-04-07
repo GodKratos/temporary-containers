@@ -82,9 +82,9 @@ export class Migration {
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.103')) {
-      this.debug('[migrate] updated from version <= 0.103, migrate popup default tab to isolation-per-domain');
+      this.debug('[migrate] updated from version <= 0.103, migrate popup default tab to isolation-domain');
       if (preferences.browserActionPopup || preferences.pageAction) {
-        preferences.ui.popupDefaultTab = 'isolation-per-domain';
+        preferences.ui.popupDefaultTab = 'isolation-domain';
       }
     }
 
@@ -198,6 +198,14 @@ export class Migration {
         } else if (!preferences.isolation.global.excludedContainers) {
           preferences.isolation.global.excludedContainers = [];
         }
+      }
+    }
+
+    if (this.updatedFromVersionEqualToOrLessThan('2.0.7')) {
+      this.debug('[migrate] updated from version <= 2.0.7, migrate ui.popupDefaultTab from isolation-per-domain to isolation-domain');
+
+      if (preferences.ui.popupDefaultTab === ('isolation-per-domain' as any)) {
+        preferences.ui.popupDefaultTab = 'isolation-domain';
       }
     }
 

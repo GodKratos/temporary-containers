@@ -98,8 +98,8 @@ export async function initAdvancedMiscPage(): Promise<void> {
             <option value="isolation-global" ${
               preferences.ui?.popupDefaultTab === 'isolation-global' ? 'selected' : ''
             } data-i18n="optionsIsolationTabGlobal">Isolation: Global</option>
-            <option value="isolation-per-domain" ${
-              preferences.ui?.popupDefaultTab === 'isolation-per-domain' ? 'selected' : ''
+            <option value="isolation-domain" ${
+              preferences.ui?.popupDefaultTab === 'isolation-domain' ? 'selected' : ''
             } data-i18n="optionsIsolationTabPerDomain">Isolation: Per Domain</option>
             <option value="actions" ${
               preferences.ui?.popupDefaultTab === 'actions' ? 'selected' : ''

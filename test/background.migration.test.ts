@@ -453,7 +453,7 @@ describe('Version-based migrations', () => {
   });
 
   describe('popup default tab migration (v0.103)', () => {
-    it('should set popupDefaultTab to isolation-per-domain when browserActionPopup is true', async () => {
+    it('should set popupDefaultTab to isolation-domain when browserActionPopup is true', async () => {
       const { tmp: background } = await loadBackground({
         beforeCtor: async browser => {
           browser.storage.local.get.resolves({
@@ -468,10 +468,10 @@ describe('Version-based migrations', () => {
         },
       });
 
-      expect(background.storage.local.preferences.ui.popupDefaultTab).to.equal('isolation-per-domain');
+      expect(background.storage.local.preferences.ui.popupDefaultTab).to.equal('isolation-domain');
     });
 
-    it('should set popupDefaultTab to isolation-per-domain when pageAction is true', async () => {
+    it('should set popupDefaultTab to isolation-domain when pageAction is true', async () => {
       const { tmp: background } = await loadBackground({
         beforeCtor: async browser => {
           browser.storage.local.get.resolves({
@@ -486,7 +486,7 @@ describe('Version-based migrations', () => {
         },
       });
 
-      expect(background.storage.local.preferences.ui.popupDefaultTab).to.equal('isolation-per-domain');
+      expect(background.storage.local.preferences.ui.popupDefaultTab).to.equal('isolation-domain');
     });
   });
 });
