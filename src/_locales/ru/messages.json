@@ -997,6 +997,9 @@
   "optionsProxiesImportFromFile": {
     "message": "Импортировать из файла"
   },
+  "optionsProxiesImportHelp": {
+    "message": "Поддерживаются файлы .txt и .csv. Обычный текст: по одному прокси на строке в формате host:port, protocol://host:port или protocol://user:pass@host:port. CSV: столбцы protocol, host, port, username, password, label (разделитель — запятая или точка с запятой, заголовок необязателен)."
+  },
   "optionsProxiesImportPaste": {
     "message": "Вставить прокси"
   },

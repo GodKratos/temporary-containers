@@ -99,7 +99,6 @@ export async function initProxiesPage(): Promise<void> {
 
     let editing = false;
     let editingId = '';
-    let showPasteArea = false;
 
     if (!preferences.proxies) {
       preferences.proxies = { active: false, assignmentMode: 'random', entries: [] };
@@ -187,30 +186,7 @@ export async function initProxiesPage(): Promise<void> {
               <button type="button" id="proxyImportPaste" class="button" data-i18n="optionsProxiesImportPaste">Paste Proxies</button>
             </div>
             <input type="file" id="proxyImportFileInput" accept=".csv,.txt" style="display: none;" />
-          </div>
-          <div id="proxyPasteArea" style="display: none;">
-            <div class="field">
-              <label for="proxyPasteText" data-i18n="optionsProxiesImportPasteLabel">Paste proxy list (one per line: host:port, protocol://host:port, or protocol://user:pass@host:port)</label>
-              <textarea id="proxyPasteText" rows="6" style="width: 100%;"></textarea>
-              <button type="button" id="proxyPasteSubmit" class="button-primary" data-i18n="optionsProxiesImportParsePaste">Parse &amp; Preview</button>
-            </div>
-          </div>
-          <div id="proxyImportPreview" style="display: none;">
-            <h4 data-i18n="optionsProxiesImportPreviewTitle">Import Preview</h4>
-            <div class="field">
-              <label for="proxyImportDefaultProtocol" data-i18n="optionsProxiesImportDefaultProtocol">Default Protocol (for entries without protocol)</label>
-              <select id="proxyImportDefaultProtocol">
-                <option value="http">HTTP</option>
-                <option value="https">HTTPS</option>
-                <option value="socks4">SOCKS4</option>
-                <option value="socks5">SOCKS5</option>
-              </select>
-            </div>
-            <div id="proxyImportTable"></div>
-            <div class="field">
-              <button type="button" id="proxyImportConfirm" class="button-primary" data-i18n="optionsProxiesImportConfirm">Add Proxies</button>
-              <button type="button" id="proxyImportCancel" class="button-secondary" data-i18n="optionsProxiesImportCancel">Cancel Import</button>
-            </div>
+            <p class="field-description" data-i18n="optionsProxiesImportHelp">Accepts .txt or .csv files. Plain text: one proxy per line as <code>host:port</code>, <code>protocol://host:port</code>, or <code>protocol://user:pass@host:port</code>. CSV: columns <code>protocol, host, port, username, password, label</code> (comma or semicolon separated, optional header row).</p>
           </div>
         </div>
       </div>
@@ -470,47 +446,157 @@ export async function initProxiesPage(): Promise<void> {
     // --- Import section ---
     let pendingImport: ParsedProxy[] = [];
 
-    function showImportPreview(parsed: ParsedProxy[]): void {
-      if (parsed.length === 0) {
-        showError(browser.i18n.getMessage('optionsProxiesImportParseError') || 'Could not parse any valid proxy entries.');
-        return;
+    function openImportModal(initialParsed?: ParsedProxy[]): void {
+      document.getElementById('proxyImportModal')?.remove();
+
+      const overlay = document.createElement('div');
+      overlay.id = 'proxyImportModal';
+      overlay.className = 'modal-overlay';
+
+      const box = document.createElement('div');
+      box.className = 'modal';
+
+      const modalHeader = document.createElement('div');
+      modalHeader.className = 'modal-header';
+
+      const titleEl = document.createElement('h3');
+      titleEl.setAttribute('data-i18n', 'optionsProxiesImportTitle');
+      titleEl.textContent = browser.i18n.getMessage('optionsProxiesImportTitle') || 'Import Proxies';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'modal-close';
+      closeBtn.setAttribute('aria-label', 'Close');
+      closeBtn.textContent = '\u00d7';
+
+      modalHeader.appendChild(titleEl);
+      modalHeader.appendChild(closeBtn);
+
+      const body = document.createElement('div');
+      body.className = 'modal-body';
+
+      box.appendChild(modalHeader);
+      box.appendChild(body);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+
+      function closeModal(): void {
+        pendingImport = [];
+        document.removeEventListener('keydown', escHandler);
+        overlay.remove();
       }
-      pendingImport = parsed;
-      const table = document.getElementById('proxyImportTable') as HTMLElement;
-      table.innerHTML = `
-        <table style="width:100%; border-collapse: collapse; margin-top: 8px;">
-          <thead>
-            <tr>
-              <th style="text-align:left; padding: 4px 8px;">Protocol</th>
-              <th style="text-align:left; padding: 4px 8px;">Host</th>
-              <th style="text-align:left; padding: 4px 8px;">Port</th>
-              <th style="text-align:left; padding: 4px 8px;">Username</th>
-              <th style="text-align:left; padding: 4px 8px;">Label</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${parsed
-              .map(
-                p => `
-              <tr>
-                <td style="padding: 4px 8px;">${p.protocol || '<em>default</em>'}</td>
-                <td style="padding: 4px 8px;">${p.host || ''}</td>
-                <td style="padding: 4px 8px;">${p.port || ''}</td>
-                <td style="padding: 4px 8px;">${p.username || ''}</td>
-                <td style="padding: 4px 8px;">${p.label || ''}</td>
-              </tr>
-            `
-              )
-              .join('')}
-          </tbody>
-        </table>
-      `;
 
-      const confirmBtn = document.getElementById('proxyImportConfirm') as HTMLButtonElement;
-      const countLabel = browser.i18n.getMessage('optionsProxiesImportConfirm') || 'Add Proxies';
-      confirmBtn.textContent = `${countLabel} (${parsed.length})`;
+      function escHandler(e: KeyboardEvent): void {
+        if (e.key === 'Escape') closeModal();
+      }
+      document.addEventListener('keydown', escHandler);
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) closeModal();
+      });
 
-      (document.getElementById('proxyImportPreview') as HTMLElement).style.display = '';
+      function showPreviewInModal(parsed: ParsedProxy[]): void {
+        if (parsed.length === 0) {
+          showError(browser.i18n.getMessage('optionsProxiesImportParseError') || 'Could not parse any valid proxy entries.');
+          closeModal();
+          return;
+        }
+        pendingImport = parsed;
+
+        const countLabel = browser.i18n.getMessage('optionsProxiesImportConfirm') || 'Add Proxies';
+        body.innerHTML = `
+          <div class="field">
+            <label for="proxyImportDefaultProtocol" data-i18n="optionsProxiesImportDefaultProtocol">Default Protocol (for entries without protocol)</label>
+            <select id="proxyImportDefaultProtocol">
+              <option value="http">HTTP</option>
+              <option value="https">HTTPS</option>
+              <option value="socks4">SOCKS4</option>
+              <option value="socks5">SOCKS5</option>
+            </select>
+          </div>
+          <div class="import-preview-scroll">
+            <table class="import-preview-table">
+              <thead>
+                <tr>
+                  <th data-i18n="optionsProxiesProtocol">Protocol</th>
+                  <th data-i18n="optionsProxiesHost">Host</th>
+                  <th data-i18n="optionsProxiesPort">Port</th>
+                  <th data-i18n="optionsProxiesUsername">Username</th>
+                  <th data-i18n="optionsProxiesLabel">Label</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${parsed
+                  .map(
+                    p => `
+                  <tr>
+                    <td>${p.protocol || '<em>default</em>'}</td>
+                    <td>${p.host || ''}</td>
+                    <td>${p.port || ''}</td>
+                    <td>${p.username || ''}</td>
+                    <td>${p.label || ''}</td>
+                  </tr>
+                `
+                  )
+                  .join('')}
+              </tbody>
+            </table>
+          </div>
+          <div class="field">
+            <button type="button" id="proxyImportConfirm" class="button-primary">${countLabel} (${parsed.length})</button>
+            <button type="button" id="proxyImportCancel" class="button-secondary" data-i18n="optionsProxiesImportCancel">Cancel Import</button>
+          </div>
+        `;
+
+        document.getElementById('proxyImportConfirm')?.addEventListener('click', async () => {
+          const defaultProtocol = (document.getElementById('proxyImportDefaultProtocol') as HTMLSelectElement).value as ProxyProtocol;
+          if (!preferences.proxies) preferences.proxies = { active: false, assignmentMode: 'random', entries: [] };
+
+          pendingImport.forEach(p => {
+            const newEntry: ProxyEntry = {
+              id: generateId(),
+              enabled: true,
+              protocol: p.protocol || defaultProtocol,
+              host: p.host!,
+              port: p.port || 8080,
+              username: p.username,
+              password: p.password,
+              label: p.label,
+            };
+            preferences.proxies!.entries.push(newEntry);
+          });
+
+          try {
+            await savePreferences(preferences);
+            updateProxyDisplay();
+            closeModal();
+            showSuccess(browser.i18n.getMessage('savedMessage'));
+          } catch (_error) {
+            showError(browser.i18n.getMessage('errorFailedToSave'));
+          }
+        });
+
+        document.getElementById('proxyImportCancel')?.addEventListener('click', closeModal);
+      }
+
+      if (initialParsed !== undefined) {
+        showPreviewInModal(initialParsed);
+      } else {
+        body.innerHTML = `
+          <div class="field">
+            <label for="proxyPasteText" data-i18n="optionsProxiesImportPasteLabel">Paste proxy list (one per line: host:port, protocol://host:port, or protocol://user:pass@host:port)</label>
+            <textarea id="proxyPasteText" rows="8" style="width: 100%;"></textarea>
+          </div>
+          <div class="field">
+            <button type="button" id="proxyPasteSubmit" class="button-primary" data-i18n="optionsProxiesImportParsePaste">Parse &amp; Preview</button>
+          </div>
+        `;
+
+        document.getElementById('proxyPasteSubmit')?.addEventListener('click', () => {
+          const text = (document.getElementById('proxyPasteText') as HTMLTextAreaElement).value;
+          showPreviewInModal(parseProxyText(text));
+        });
+      }
     }
 
     // Import from file
@@ -522,60 +608,14 @@ export async function initProxiesPage(): Promise<void> {
       const reader = new FileReader();
       reader.onload = ev => {
         const text = ev.target?.result as string;
-        showImportPreview(parseProxyText(text || ''));
+        openImportModal(parseProxyText(text || ''));
         fileInput.value = '';
       };
       reader.readAsText(file);
     });
 
-    // Paste proxies toggle
-    document.getElementById('proxyImportPaste')?.addEventListener('click', () => {
-      showPasteArea = !showPasteArea;
-      (document.getElementById('proxyPasteArea') as HTMLElement).style.display = showPasteArea ? '' : 'none';
-    });
-
-    document.getElementById('proxyPasteSubmit')?.addEventListener('click', () => {
-      const text = (document.getElementById('proxyPasteText') as HTMLTextAreaElement).value;
-      showImportPreview(parseProxyText(text));
-    });
-
-    // Confirm import
-    document.getElementById('proxyImportConfirm')?.addEventListener('click', async () => {
-      const defaultProtocol = (document.getElementById('proxyImportDefaultProtocol') as HTMLSelectElement).value as ProxyProtocol;
-      if (!preferences.proxies) preferences.proxies = { active: false, assignmentMode: 'random', entries: [] };
-
-      pendingImport.forEach(p => {
-        const newEntry: ProxyEntry = {
-          id: generateId(),
-          enabled: true,
-          protocol: p.protocol || defaultProtocol,
-          host: p.host!,
-          port: p.port || 8080,
-          username: p.username,
-          password: p.password,
-          label: p.label,
-        };
-        preferences.proxies!.entries.push(newEntry);
-      });
-
-      try {
-        await savePreferences(preferences);
-        updateProxyDisplay();
-        pendingImport = [];
-        (document.getElementById('proxyImportPreview') as HTMLElement).style.display = 'none';
-        (document.getElementById('proxyPasteArea') as HTMLElement).style.display = 'none';
-        (document.getElementById('proxyPasteText') as HTMLTextAreaElement).value = '';
-        showPasteArea = false;
-        showSuccess(browser.i18n.getMessage('savedMessage'));
-      } catch (_error) {
-        showError(browser.i18n.getMessage('errorFailedToSave'));
-      }
-    });
-
-    document.getElementById('proxyImportCancel')?.addEventListener('click', () => {
-      pendingImport = [];
-      (document.getElementById('proxyImportPreview') as HTMLElement).style.display = 'none';
-    });
+    // Paste proxies
+    document.getElementById('proxyImportPaste')?.addEventListener('click', () => openImportModal());
 
     // Initial list render
     updateProxyDisplay();

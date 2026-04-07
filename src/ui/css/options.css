@@ -597,3 +597,98 @@ button.danger:hover {
 .managed-setting-group .managed-group-header .icon {
   margin-right: 8px;
 }
+
+/* Section header (title + action button row) */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 4px;
+}
+
+.section-header h3 {
+  margin: 0;
+}
+
+/* Import preview modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal {
+  background-color: var(--glossary-background, var(--background-color));
+  border-radius: 4px;
+  width: 700px;
+  max-width: 95vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--text-color);
+  flex-shrink: 0;
+}
+
+.modal-close:hover {
+  background-color: var(--button-hover);
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.import-preview-scroll {
+  overflow-x: auto;
+  margin-bottom: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.import-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.import-preview-table th,
+.import-preview-table td {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.import-preview-table thead th {
+  font-weight: 600;
+  background-color: var(--sidebar-background);
+}

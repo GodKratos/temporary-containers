@@ -997,6 +997,9 @@
   "optionsProxiesImportFromFile": {
     "message": "Dosyadan İçe Aktar"
   },
+  "optionsProxiesImportHelp": {
+    "message": ".txt veya .csv dosyaları desteklenir. Düz metin: her satıra bir proxy olarak host:port, protocol://host:port veya protocol://user:pass@host:port biçiminde. CSV: sütunlar protocol, host, port, username, password, label (virgül veya noktalı virgül ile ayrılmış, isteğe bağlı başlık satırı)."
+  },
   "optionsProxiesImportPaste": {
     "message": "Proxy Yapıştır"
   },

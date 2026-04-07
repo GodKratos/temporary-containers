@@ -997,6 +997,9 @@
   "optionsProxiesImportFromFile": {
     "message": "Import from File"
   },
+  "optionsProxiesImportHelp": {
+    "message": "Accepts .txt or .csv files. Plain text: one proxy per line as host:port, protocol://host:port, or protocol://user:pass@host:port. CSV: columns protocol, host, port, username, password, label (comma or semicolon separated, optional header row)."
+  },
   "optionsProxiesImportPaste": {
     "message": "Paste Proxies"
   },
