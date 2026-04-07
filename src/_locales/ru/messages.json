@@ -1003,6 +1003,24 @@
   "optionsProxiesImportHelp": {
     "message": "Поддерживаются файлы .txt и .csv. Обычный текст: по одному прокси на строке в формате host:port, protocol://host:port или protocol://user:pass@host:port. CSV: столбцы protocol, host, port, username, password, label (разделитель — запятая или точка с запятой, заголовок необязателен)."
   },
+  "optionsProxiesProtocolHTTP": {
+    "message": "HTTP"
+  },
+  "optionsProxiesProtocolHTTPS": {
+    "message": "HTTPS"
+  },
+  "optionsProxiesProtocolSOCKS4": {
+    "message": "SOCKS4"
+  },
+  "optionsProxiesProtocolSOCKS5": {
+    "message": "SOCKS5"
+  },
+  "optionsProxiesBadgeAuth": {
+    "message": "авторизация"
+  },
+  "optionsProxiesImportDefaultValue": {
+    "message": "по умолчанию"
+  },
   "optionsProxiesImportPaste": {
     "message": "Вставить прокси"
   },
@@ -1014,9 +1032,6 @@
   },
   "optionsProxiesImportDefaultProtocol": {
     "message": "Протокол по умолчанию (для записей без протокола)"
-  },
-  "optionsProxiesImportPreviewTitle": {
-    "message": "Предварительный просмотр импорта"
   },
   "optionsProxiesImportConfirm": {
     "message": "Добавить прокси"

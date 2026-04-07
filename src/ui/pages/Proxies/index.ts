@@ -154,10 +154,10 @@ export async function initProxiesPage(): Promise<void> {
             <div class="field">
               <label for="proxyProtocol" data-i18n="optionsProxiesProtocol">Protocol</label>
               <select id="proxyProtocol">
-                <option value="http">HTTP</option>
-                <option value="https">HTTPS</option>
-                <option value="socks4">SOCKS4</option>
-                <option value="socks5">SOCKS5</option>
+                <option value="http" data-i18n="optionsProxiesProtocolHTTP">HTTP</option>
+                <option value="https" data-i18n="optionsProxiesProtocolHTTPS">HTTPS</option>
+                <option value="socks4" data-i18n="optionsProxiesProtocolSOCKS4">SOCKS4</option>
+                <option value="socks5" data-i18n="optionsProxiesProtocolSOCKS5">SOCKS5</option>
               </select>
             </div>
             <div class="field">
@@ -195,7 +195,7 @@ export async function initProxiesPage(): Promise<void> {
               <button type="button" id="proxyImportPaste" class="button" data-i18n="optionsProxiesImportPaste">Paste Proxies</button>
             </div>
             <input type="file" id="proxyImportFileInput" accept=".csv,.txt" style="display: none;" />
-            <p class="field-description" data-i18n="optionsProxiesImportHelp">Accepts .txt or .csv files. Plain text: one proxy per line as <code>host:port</code>, <code>protocol://host:port</code>, or <code>protocol://user:pass@host:port</code>. CSV: columns <code>protocol, host, port, username, password, label</code> (comma or semicolon separated, optional header row).</p>
+            <p class="field-description" data-i18n="optionsProxiesImportHelp">Accepts .txt or .csv files. Plain text: one proxy per line as host:port, protocol://host:port, or protocol://user:pass@host:port. CSV: columns protocol, host, port, username, password, label (comma or semicolon separated, optional header row).</p>
           </div>
         </div>
       </div>
@@ -294,7 +294,7 @@ export async function initProxiesPage(): Promise<void> {
         const displayName = entry.label || `${entry.host}:${entry.port}`;
         const protocolBadge = `<span class="badge">${entry.protocol.toUpperCase()}</span>`;
         const hostPort = entry.label ? `<span class="config-secondary">${entry.host}:${entry.port}</span>` : '';
-        const credentialsBadge = entry.username ? `<span class="badge">auth</span>` : '';
+        const credentialsBadge = entry.username ? `<span class="badge" data-i18n="optionsProxiesBadgeAuth">auth</span>` : '';
 
         item.innerHTML = `
           <div class="config-item-details">
@@ -529,10 +529,10 @@ export async function initProxiesPage(): Promise<void> {
           <div class="field">
             <label for="proxyImportDefaultProtocol" data-i18n="optionsProxiesImportDefaultProtocol">Default Protocol (for entries without protocol)</label>
             <select id="proxyImportDefaultProtocol">
-              <option value="http">HTTP</option>
-              <option value="https">HTTPS</option>
-              <option value="socks4">SOCKS4</option>
-              <option value="socks5">SOCKS5</option>
+              <option value="http" data-i18n="optionsProxiesProtocolHTTP">HTTP</option>
+              <option value="https" data-i18n="optionsProxiesProtocolHTTPS">HTTPS</option>
+              <option value="socks4" data-i18n="optionsProxiesProtocolSOCKS4">SOCKS4</option>
+              <option value="socks5" data-i18n="optionsProxiesProtocolSOCKS5">SOCKS5</option>
             </select>
           </div>
           <div class="import-preview-scroll">
@@ -551,7 +551,7 @@ export async function initProxiesPage(): Promise<void> {
                   .map(
                     p => `
                   <tr>
-                    <td>${p.protocol || '<em>default</em>'}</td>
+                    <td>${p.protocol || browser.i18n.getMessage('optionsProxiesImportDefaultValue') || 'default'}</td>
                     <td>${p.host || ''}</td>
                     <td>${p.port || ''}</td>
                     <td>${p.username || ''}</td>

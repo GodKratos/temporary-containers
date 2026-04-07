@@ -1003,6 +1003,24 @@
   "optionsProxiesImportHelp": {
     "message": "Accepts .txt or .csv files. Plain text: one proxy per line as host:port, protocol://host:port, or protocol://user:pass@host:port. CSV: columns protocol, host, port, username, password, label (comma or semicolon separated, optional header row)."
   },
+  "optionsProxiesProtocolHTTP": {
+    "message": "HTTP"
+  },
+  "optionsProxiesProtocolHTTPS": {
+    "message": "HTTPS"
+  },
+  "optionsProxiesProtocolSOCKS4": {
+    "message": "SOCKS4"
+  },
+  "optionsProxiesProtocolSOCKS5": {
+    "message": "SOCKS5"
+  },
+  "optionsProxiesBadgeAuth": {
+    "message": "auth"
+  },
+  "optionsProxiesImportDefaultValue": {
+    "message": "default"
+  },
   "optionsProxiesImportPaste": {
     "message": "Paste Proxies"
   },
@@ -1014,9 +1032,6 @@
   },
   "optionsProxiesImportDefaultProtocol": {
     "message": "Default Protocol (for entries without protocol)"
-  },
-  "optionsProxiesImportPreviewTitle": {
-    "message": "Import Preview"
   },
   "optionsProxiesImportConfirm": {
     "message": "Add Proxies"
