@@ -937,6 +937,9 @@
   "optionsProxiesWarningAccept": {
     "message": "I understand and want to enable proxy assignment (requires \"Access browser proxy settings\" permission)"
   },
+  "optionsProxiesStatusInfo": {
+    "message": "The active proxy for the current tab is shown as a tooltip on the toolbar icon. Enable the address bar icon below to also see it there."
+  },
   "optionsProxiesAssignmentMode": {
     "message": "Assignment Mode"
   },

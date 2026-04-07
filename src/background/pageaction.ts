@@ -1,6 +1,6 @@
 import { TemporaryContainers } from './tmp';
 import { Storage } from './storage';
-import { PreferencesSchema, Tab } from '~/types';
+import { PreferencesSchema, ProxyEntry, Tab } from '~/types';
 
 export class PageAction {
   private background: TemporaryContainers;
@@ -51,6 +51,19 @@ export class PageAction {
         },
         tabId: activatedTab.id,
       });
+
+      let pageTitle = '';
+      const containerOpts = this.storage.local.tempContainers[activatedTab.cookieStoreId];
+      if (containerOpts?.proxyId && this.background.permissions.proxy && this.pref.proxies?.active) {
+        const proxy = this.pref.proxies.entries.find((e: ProxyEntry) => e.id === containerOpts.proxyId && e.enabled);
+        if (proxy) {
+          const label = proxy.label || `${proxy.host}:${proxy.port}`;
+          pageTitle = `Proxy: ${label} (${proxy.protocol.toUpperCase()})`;
+        }
+      }
+      browser.pageAction.setTitle({ tabId: activatedTab.id, title: pageTitle });
+      browser.browserAction.setTitle({ tabId: activatedTab.id, title: pageTitle });
+
       if (!this.pref.pageAction) {
         browser.pageAction.hide(activatedTab.id);
       } else {

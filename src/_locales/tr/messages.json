@@ -937,6 +937,9 @@
   "optionsProxiesWarningAccept": {
     "message": "Anlıyorum ve proxy atamasını etkinleştirmek istiyorum (\"Tarayıcı proxy ayarlarına eriş\" izni gerektirir)"
   },
+  "optionsProxiesStatusInfo": {
+    "message": "Mevcut sekme için aktif proxy, araç çubuğu simgesinde araç ipucu olarak gösterilir. Aşağıdaki adres çubuğu simgesini etkinleştirerek orada da görebilirsiniz."
+  },
   "optionsProxiesAssignmentMode": {
     "message": "Atama Modu"
   },

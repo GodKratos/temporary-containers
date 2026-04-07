@@ -129,6 +129,15 @@ export async function initProxiesPage(): Promise<void> {
 
       <div id="proxiesSettingsSection" ${dimStyle}>
         <div class="section">
+          <div class="info-message">
+            <span data-i18n="optionsProxiesStatusInfo">The active proxy for the current tab is shown as a tooltip on the toolbar icon. Enable the address bar icon below to also see it there.</span>
+          </div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="proxiesPageAction" ${preferences.pageAction ? 'checked' : ''} />
+            <label for="proxiesPageAction" data-i18n="optionsAdvancedMiscPageAction">Show popup menu icon in the address bar</label>
+          </div>
+        </div>
+        <div class="section">
           <h3 data-i18n="optionsProxiesAssignmentMode">Assignment Mode</h3>
           <div class="field">
             <select id="proxiesAssignmentMode">
@@ -248,6 +257,18 @@ export async function initProxiesPage(): Promise<void> {
     assignmentModeSelect.addEventListener('change', async () => {
       if (!preferences.proxies) return;
       preferences.proxies.assignmentMode = assignmentModeSelect.value as 'random' | 'sequential';
+      try {
+        await savePreferences(preferences);
+        showSuccess(browser.i18n.getMessage('savedMessage'));
+      } catch (_error) {
+        showError(browser.i18n.getMessage('errorFailedToSave'));
+      }
+    });
+
+    // Page action toggle (convenience shortcut)
+    const proxiesPageActionCheckbox = document.getElementById('proxiesPageAction') as HTMLInputElement;
+    proxiesPageActionCheckbox.addEventListener('change', async () => {
+      preferences.pageAction = proxiesPageActionCheckbox.checked;
       try {
         await savePreferences(preferences);
         showSuccess(browser.i18n.getMessage('savedMessage'));
