@@ -946,6 +946,9 @@
   "optionsProxiesAssignmentModeSequential": {
     "message": "Последовательный (назначать прокси по порядку из списка)"
   },
+  "optionsProxiesAssignmentModeDisabled": {
+    "message": "Отключено (не назначать прокси новым контейнерам)"
+  },
   "optionsProxiesAddProxy": {
     "message": "Добавить прокси"
   },

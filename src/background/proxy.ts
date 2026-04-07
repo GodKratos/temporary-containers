@@ -86,6 +86,9 @@ export class Proxy {
     if (!this.background.permissions.proxy || !this.pref.proxies?.active) {
       return;
     }
+    if (this.pref.proxies.assignmentMode === 'disabled') {
+      return;
+    }
     const enabledEntries = this.pref.proxies.entries.filter((e: ProxyEntry) => e.enabled);
     if (enabledEntries.length === 0) {
       return;

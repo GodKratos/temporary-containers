@@ -946,6 +946,9 @@
   "optionsProxiesAssignmentModeSequential": {
     "message": "Sıralı (proxy'leri listeden sırayla ata)"
   },
+  "optionsProxiesAssignmentModeDisabled": {
+    "message": "Devre dışı (yeni konteynerlere proxy atama)"
+  },
   "optionsProxiesAddProxy": {
     "message": "Proxy Ekle"
   },

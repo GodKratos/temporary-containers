@@ -946,6 +946,9 @@
   "optionsProxiesAssignmentModeSequential": {
     "message": "Sequential (assign proxies in order from the list)"
   },
+  "optionsProxiesAssignmentModeDisabled": {
+    "message": "Disabled (do not assign proxies to new containers)"
+  },
   "optionsProxiesAddProxy": {
     "message": "Add Proxy"
   },

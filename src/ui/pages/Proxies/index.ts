@@ -133,6 +133,7 @@ export async function initProxiesPage(): Promise<void> {
           <h3 data-i18n="optionsProxiesAssignmentMode">Assignment Mode</h3>
           <div class="field">
             <select id="proxiesAssignmentMode">
+              <option value="disabled" data-i18n="optionsProxiesAssignmentModeDisabled">Disabled (do not assign proxies to new containers)</option>
               <option value="random" data-i18n="optionsProxiesAssignmentModeRandom">Random (assign a random proxy to each new container)</option>
               <option value="sequential" data-i18n="optionsProxiesAssignmentModeSequential">Sequential (assign proxies in order from the list)</option>
             </select>

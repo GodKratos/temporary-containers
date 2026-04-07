@@ -206,6 +206,7 @@ export class Runtime {
           downloads: await browser.permissions.contains({ permissions: ['downloads'] }),
           history: await browser.permissions.contains({ permissions: ['history'] }),
           notifications: await browser.permissions.contains({ permissions: ['notifications'] }),
+          proxy: await browser.permissions.contains({ permissions: ['proxy'] }),
           webNavigation: await browser.permissions.contains({ permissions: ['webNavigation'] }),
         };
         return permissions as any;

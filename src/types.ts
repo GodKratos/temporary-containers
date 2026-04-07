@@ -220,7 +220,7 @@ export interface PreferencesSchema {
   containerPrefixOverride: string;
   proxies: {
     active: boolean;
-    assignmentMode: 'random' | 'sequential';
+    assignmentMode: 'random' | 'sequential' | 'disabled';
     entries: ProxyEntry[];
   };
 }
