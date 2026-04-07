@@ -392,15 +392,6 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Yapılandırılmış Alan Adı Kuralları"
   },
-  "optionsIsolationPerDomainAlways": {
-    "message": "Her Zaman Aç:"
-  },
-  "optionsIsolationPerDomainNavigation": {
-    "message": "URL Gezinme:"
-  },
-  "optionsIsolationPerDomainExclude": {
-    "message": "Hariç Tutulan Alan Adları:"
-  },
   "optionsIsolationPerDomainEdit": {
     "message": "Düzenle"
   },
@@ -424,6 +415,15 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Bu alan adı deseni için bir kural zaten mevcut"
+  },
+  "optionsIsolationPerDomainColAlways": {
+    "message": "Her Zaman"
+  },
+  "optionsIsolationPerDomainColNavigation": {
+    "message": "Navigasyon"
+  },
+  "optionsIsolationPerDomainColExcluded": {
+    "message": "Hariç"
   },
   "optionsIsolationNoRulesConfigured": {
     "message": "Alan adı izolasyon kuralları yapılandırılmamış."
@@ -815,6 +815,12 @@
   },
   "optionsAdvancedScriptsNoScripts": {
     "message": "Betik yapılandırılmamış"
+  },
+  "optionsAdvancedScriptsColRunAt": {
+    "message": "Çalıştırmak"
+  },
+  "optionsAdvancedScriptsColCode": {
+    "message": "Kod"
   },
 
   "optionsAdvancedDeleteHistoryTitle": {

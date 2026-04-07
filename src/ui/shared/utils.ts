@@ -426,7 +426,7 @@ export function applyLocalization(root: HTMLElement = document.body): void {
     if (translation) element.setAttribute('placeholder', translation);
   });
   // Localize <title> if present in root
-  if (root instanceof Document || root === document.body) {
+  if ((typeof Document !== 'undefined' && root instanceof Document) || root === document.body) {
     const titleElement = document.querySelector('title[data-i18n]');
     if (titleElement) {
       const key = titleElement.getAttribute('data-i18n');

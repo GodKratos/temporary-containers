@@ -1,5 +1,5 @@
 // Advanced: Scripts page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, getPermissions, applyLocalization } from '../../shared/utils';
 import { Script } from '../../../types';
 
 interface ScriptDefaults {
@@ -137,41 +137,43 @@ export async function initAdvancedScriptsPage(): Promise<void> {
 
       if (Object.keys(scriptsDomain).length === 0) {
         scriptsDisplay.innerHTML = `<p data-i18n="optionsAdvancedScriptsNoScripts">No scripts configured</p>`;
+        applyLocalization(scriptsDisplay);
         return;
       }
 
-      scriptsDisplay.innerHTML = '';
-
+      const tbodyRows: string[] = [];
       for (const [domainPattern, scripts] of Object.entries(scriptsDomain)) {
-        const domainSection = document.createElement('div');
-        domainSection.className = 'config-group';
-        domainSection.innerHTML = `
-          <h4>${domainPattern}</h4>
-        `;
-
         scripts.forEach((script: Script, index: number) => {
-          const scriptItem = document.createElement('div');
-          scriptItem.className = 'config-item';
-
-          const codePreview = script.code.length > 100 ? script.code.substring(0, 100) + '...' : script.code;
-
-          scriptItem.innerHTML = `
-            <div class="config-item-details">
-              <div><strong data-i18n="optionsAdvancedScriptsRunAt">Execute At:</strong> ${script.runAt}</div>
-              <div><strong data-i18n="optionsAdvancedScriptsCode">JavaScript Code:</strong></div>
-              <pre class="script-code">${codePreview}</pre>
-            </div>
-            <div class="config-item-actions">
-              <button class="small script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">Edit Script</button>
-              <button class="small danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">Remove</button>
-            </div>
-          `;
-
-          domainSection.appendChild(scriptItem);
+          const codePreview = script.code.length > 60 ? script.code.substring(0, 60) + '...' : script.code;
+          tbodyRows.push(`
+            <tr data-domain="${domainPattern}" data-index="${index}">
+              <td>${domainPattern}</td>
+              <td>${script.runAt}</td>
+              <td class="col-code"><code>${codePreview}</code></td>
+              <td class="col-actions">
+                <button class="small script-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsEdit">Edit Script</button>
+                <button class="small danger script-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedScriptsRemove">Remove</button>
+              </td>
+            </tr>
+          `);
         });
-
-        scriptsDisplay.appendChild(domainSection);
       }
+
+      scriptsDisplay.innerHTML = `
+        <div class="settings-table-wrapper">
+          <table class="settings-table">
+            <thead>
+              <tr>
+                <th data-i18n="optionsDomainPattern">Domain Pattern</th>
+                <th data-i18n="optionsAdvancedScriptsColRunAt">Execute At</th>
+                <th data-i18n="optionsAdvancedScriptsColCode" class="col-code">Code</th>
+                <th class="col-actions" data-i18n="optionsProxiesColActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>${tbodyRows.join('')}</tbody>
+          </table>
+        </div>
+      `;
 
       // Attach event listeners to edit/remove buttons
       scriptsDisplay.querySelectorAll('.script-edit').forEach(button => {
@@ -191,6 +193,8 @@ export async function initAdvancedScriptsPage(): Promise<void> {
           removeScript(domain, index);
         });
       });
+
+      applyLocalization(scriptsDisplay);
     }
 
     function resetForm() {

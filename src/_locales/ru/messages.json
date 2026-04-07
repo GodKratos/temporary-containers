@@ -392,15 +392,6 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Настроенные правила доменов"
   },
-  "optionsIsolationPerDomainAlways": {
-    "message": "Всегда открывать:"
-  },
-  "optionsIsolationPerDomainNavigation": {
-    "message": "Навигация по URL:"
-  },
-  "optionsIsolationPerDomainExclude": {
-    "message": "Исключённые домены:"
-  },
   "optionsIsolationPerDomainEdit": {
     "message": "Изменить"
   },
@@ -424,6 +415,15 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Правило для этого шаблона домена уже существует"
+  },
+  "optionsIsolationPerDomainColAlways": {
+    "message": "Всегда"
+  },
+  "optionsIsolationPerDomainColNavigation": {
+    "message": "Навигация"
+  },
+  "optionsIsolationPerDomainColExcluded": {
+    "message": "Исключённые"
   },
   "optionsIsolationNoRulesConfigured": {
     "message": "Правила изоляции доменов не настроены."
@@ -815,6 +815,12 @@
   },
   "optionsAdvancedScriptsNoScripts": {
     "message": "Скрипты не настроены"
+  },
+  "optionsAdvancedScriptsColRunAt": {
+    "message": "Выполнять при"
+  },
+  "optionsAdvancedScriptsColCode": {
+    "message": "Код"
   },
 
   "optionsAdvancedDeleteHistoryTitle": {

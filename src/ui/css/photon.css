@@ -638,3 +638,9 @@ button {
 .settings-table .col-actions button + button {
   margin-left: var(--space-xs);
 }
+
+.settings-table .col-code {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,5 +1,5 @@
 // Shared IsolationPerDomain page logic for both options and popup menus
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, applyLocalization } from '../../shared/utils';
 import { PreferencesSchema, IsolationDomain } from '../../../types';
 
 interface DomainEditState {
@@ -255,9 +255,10 @@ export async function initIsolationPerDomainPage(): Promise<void> {
     // Populate domain rules list
     const domainsDisplay = document.getElementById('domainsDisplay') as HTMLElement;
 
-    domainsDisplay.innerHTML = '';
-
-    if (preferences.isolation.domain.length > 0) {
+    if (preferences.isolation.domain.length === 0) {
+      domainsDisplay.innerHTML = '<p data-i18n="optionsIsolationNoRulesConfigured">No domain isolation rules configured.</p>';
+    } else {
+      const tbodyRows: string[] = [];
       preferences.isolation.domain.forEach((domain, index) => {
         // Handle old object format: convert to array if needed
         if (domain.excluded && !Array.isArray(domain.excluded)) {
@@ -284,32 +285,45 @@ export async function initIsolationPerDomainPage(): Promise<void> {
           domain.excludedContainers = [];
         }
 
-        const domainSection = document.createElement('div');
-        domainSection.className = 'config-group';
-        domainSection.innerHTML = `
-          <h4>${domain.pattern}</h4>
-        `;
-
-        const domainItem = document.createElement('div');
-        domainItem.className = 'config-item';
-        domainItem.innerHTML = `
-          <div class="config-item-details">
-            <div><strong data-i18n="optionsIsolationPerDomainAlways">Always Open:</strong> ${domain.always.action}</div>
-            <div><strong data-i18n="optionsIsolationPerDomainNavigation">URL Navigation:</strong> ${domain.navigation.action}</div>
-            <div><strong data-i18n="optionsIsolationPerDomainExclude">Excluded Domains:</strong> ${domain.excluded.length} domains</div>
-          </div>
-          <div class="config-item-actions">
-            <button type="button" class="small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
-            <button type="button" class="small danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
-          </div>
-        `;
-
-        domainSection.appendChild(domainItem);
-        domainsDisplay.appendChild(domainSection);
+        tbodyRows.push(`
+          <tr data-index="${index}">
+            <td>${domain.pattern}</td>
+            <td>${domain.always.action}</td>
+            <td>${domain.navigation.action}</td>
+            <td>${domain.mouseClick.middle.action}</td>
+            <td>${domain.mouseClick.ctrlleft.action}</td>
+            <td>${domain.mouseClick.left.action}</td>
+            <td>${domain.excluded.length}</td>
+            <td class="col-actions">
+              <button type="button" class="small edit-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainEdit">Edit</button>
+              <button type="button" class="small danger remove-domain" data-index="${index}" data-i18n="optionsIsolationPerDomainRemove">Remove</button>
+            </td>
+          </tr>
+        `);
       });
-    } else {
-      domainsDisplay.innerHTML = '<p data-i18n="optionsIsolationNoRulesConfigured">No domain isolation rules configured.</p>';
+
+      domainsDisplay.innerHTML = `
+        <div class="settings-table-wrapper">
+          <table class="settings-table">
+            <thead>
+              <tr>
+                <th data-i18n="optionsDomainPattern">Domain Pattern</th>
+                <th data-i18n="optionsIsolationPerDomainColAlways">Always</th>
+                <th data-i18n="optionsIsolationPerDomainColNavigation">Navigation</th>
+                <th data-i18n="optionsIsolationGlobalMiddleClick">Middle Click</th>
+                <th data-i18n="optionsIsolationGlobalCtrlLeftClick">Ctrl+Left Click</th>
+                <th data-i18n="optionsIsolationGlobalLeftClick">Left Click</th>
+                <th data-i18n="optionsIsolationPerDomainColExcluded">Excluded</th>
+                <th class="col-actions" data-i18n="optionsProxiesColActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>${tbodyRows.join('')}</tbody>
+          </table>
+        </div>
+      `;
     }
+
+    applyLocalization(domainsDisplay);
 
     // Set up event listeners
     setupEventListeners(content, preferences);

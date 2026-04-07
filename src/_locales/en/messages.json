@@ -398,15 +398,6 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Configured Domain Rules"
   },
-  "optionsIsolationPerDomainAlways": {
-    "message": "Always Open:"
-  },
-  "optionsIsolationPerDomainNavigation": {
-    "message": "URL Navigation:"
-  },
-  "optionsIsolationPerDomainExclude": {
-    "message": "Excluded Domains:"
-  },
   "optionsIsolationPerDomainEdit": {
     "message": "Edit"
   },
@@ -430,6 +421,15 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "A rule for this domain pattern already exists"
+  },
+  "optionsIsolationPerDomainColAlways": {
+    "message": "Always"
+  },
+  "optionsIsolationPerDomainColNavigation": {
+    "message": "Navigation"
+  },
+  "optionsIsolationPerDomainColExcluded": {
+    "message": "Excluded"
   },
   "optionsIsolationNoRulesConfigured": {
     "message": "No domain isolation rules configured."
@@ -815,6 +815,12 @@
   },
   "optionsAdvancedScriptsNoScripts": {
     "message": "No scripts configured"
+  },
+  "optionsAdvancedScriptsColRunAt": {
+    "message": "Execute At"
+  },
+  "optionsAdvancedScriptsColCode": {
+    "message": "Code"
   },
 
   "optionsAdvancedDeleteHistoryTitle": {
