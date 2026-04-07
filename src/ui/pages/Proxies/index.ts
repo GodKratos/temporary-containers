@@ -1,5 +1,5 @@
 // Proxies settings page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess, getPermissions } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, getPermissions, applyLocalization } from '../../shared/utils';
 import { ProxyEntry } from '../../../types';
 
 type ProxyProtocol = 'http' | 'https' | 'socks4' | 'socks5';
@@ -284,34 +284,49 @@ export async function initProxiesPage(): Promise<void> {
 
       if (entries.length === 0) {
         proxiesDisplay.innerHTML = `<p data-i18n="optionsProxiesNoProxies">No proxies configured. Add a proxy above or import a list.</p>`;
+        applyLocalization(proxiesDisplay);
         return;
       }
 
-      proxiesDisplay.innerHTML = '';
-      entries.forEach((entry: ProxyEntry) => {
-        const item = document.createElement('div');
-        item.className = 'config-item';
-        const displayName = entry.label || `${entry.host}:${entry.port}`;
-        const protocolBadge = `<span class="badge">${entry.protocol.toUpperCase()}</span>`;
-        const hostPort = entry.label ? `<span class="config-secondary">${entry.host}:${entry.port}</span>` : '';
-        const credentialsBadge = entry.username ? `<span class="badge" data-i18n="optionsProxiesBadgeAuth">auth</span>` : '';
-
-        item.innerHTML = `
-          <div class="config-item-details">
-            <label class="checkbox-field">
+      const tbodyRows = entries
+        .map(
+          (entry: ProxyEntry) => `
+          <tr class="${entry.enabled ? '' : 'row-disabled'}" data-id="${entry.id}">
+            <td class="col-enabled">
               <input type="checkbox" class="proxy-enable-toggle" data-id="${entry.id}" ${entry.enabled ? 'checked' : ''} />
-              <span class="config-name">${displayName}</span>
-            </label>
-            ${hostPort}
-            ${protocolBadge}${credentialsBadge}
-          </div>
-          <div class="config-item-actions">
-            <button class="small proxy-edit" data-id="${entry.id}" data-i18n="optionsProxiesEdit">Edit</button>
-            <button class="small danger proxy-remove" data-id="${entry.id}" data-i18n="optionsProxiesRemove">Remove</button>
-          </div>
-        `;
-        proxiesDisplay.appendChild(item);
-      });
+            </td>
+            <td><span class="badge">${entry.protocol.toUpperCase()}</span></td>
+            <td>${entry.host}</td>
+            <td>${entry.port}</td>
+            <td>${entry.label || ''}</td>
+            <td>${entry.username ? '<span class="badge" data-i18n="optionsProxiesBadgeAuth">auth</span>' : ''}</td>
+            <td class="col-actions">
+              <button class="small proxy-edit" data-id="${entry.id}" data-i18n="optionsProxiesEdit">Edit</button>
+              <button class="small danger proxy-remove" data-id="${entry.id}" data-i18n="optionsProxiesRemove">Remove</button>
+            </td>
+          </tr>
+        `
+        )
+        .join('');
+
+      proxiesDisplay.innerHTML = `
+        <div class="settings-table-wrapper">
+        <table class="settings-table">
+          <thead>
+            <tr>
+              <th class="col-enabled" data-i18n="optionsProxiesColEnabled">Enabled</th>
+              <th data-i18n="optionsProxiesProtocol">Protocol</th>
+              <th data-i18n="optionsProxiesHost">Host</th>
+              <th data-i18n="optionsProxiesPort">Port</th>
+              <th data-i18n="optionsProxiesColLabel">Label</th>
+              <th data-i18n="optionsProxiesColAuth">Auth</th>
+              <th class="col-actions" data-i18n="optionsProxiesColActions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>${tbodyRows}</tbody>
+        </table>
+        </div>
+      `;
 
       // Enable/disable toggles
       proxiesDisplay.querySelectorAll('.proxy-enable-toggle').forEach(el => {
@@ -321,6 +336,8 @@ export async function initProxiesPage(): Promise<void> {
           const entry = preferences.proxies!.entries.find((x: ProxyEntry) => x.id === id);
           if (entry) {
             entry.enabled = checkbox.checked;
+            const row = proxiesDisplay.querySelector(`tr[data-id="${id}"]`) as HTMLElement;
+            if (row) row.className = entry.enabled ? '' : 'row-disabled';
             try {
               await savePreferences(preferences);
             } catch (_error) {
@@ -345,6 +362,8 @@ export async function initProxiesPage(): Promise<void> {
           await removeProxy(id);
         });
       });
+
+      applyLocalization(proxiesDisplay);
     }
 
     function resetForm(): void {

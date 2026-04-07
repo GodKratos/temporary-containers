@@ -1048,6 +1048,18 @@
   "optionsProxiesNoProxies": {
     "message": "No proxies configured. Add a proxy above or import a list."
   },
+  "optionsProxiesColEnabled": {
+    "message": "Enabled"
+  },
+  "optionsProxiesColLabel": {
+    "message": "Label"
+  },
+  "optionsProxiesColAuth": {
+    "message": "Auth"
+  },
+  "optionsProxiesColActions": {
+    "message": "Actions"
+  },
   "optionsProxiesEdit": {
     "message": "Edit"
   },

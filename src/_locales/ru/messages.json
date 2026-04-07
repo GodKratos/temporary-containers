@@ -1048,6 +1048,18 @@
   "optionsProxiesNoProxies": {
     "message": "Прокси не настроены. Добавьте прокси выше или импортируйте список."
   },
+  "optionsProxiesColEnabled": {
+    "message": "Включен"
+  },
+  "optionsProxiesColLabel": {
+    "message": "Метка"
+  },
+  "optionsProxiesColAuth": {
+    "message": "Авториз."
+  },
+  "optionsProxiesColActions": {
+    "message": "Действия"
+  },
   "optionsProxiesEdit": {
     "message": "Изменить"
   },

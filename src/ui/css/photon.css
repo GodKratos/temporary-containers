@@ -580,3 +580,61 @@ button {
 .excluded-domains-list p {
   margin: 0;
 }
+
+/* Settings table — used for proxy list, domain rules, and other config lists */
+.settings-table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 40rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.settings-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.settings-table th,
+.settings-table td {
+  text-align: left;
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.settings-table thead th {
+  font-weight: 600;
+  background-color: var(--sidebar-background);
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.settings-table tbody tr:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.settings-table tbody tr.row-disabled {
+  opacity: 0.45;
+}
+
+.settings-table .col-enabled {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.settings-table .col-actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.settings-table .col-actions button + button {
+  margin-left: var(--space-xs);
+}

@@ -1048,6 +1048,18 @@
   "optionsProxiesNoProxies": {
     "message": "Proxy yapılandırılmamış. Yukarıdan bir proxy ekleyin veya liste içe aktarın."
   },
+  "optionsProxiesColEnabled": {
+    "message": "Etkin"
+  },
+  "optionsProxiesColLabel": {
+    "message": "Etiket"
+  },
+  "optionsProxiesColAuth": {
+    "message": "Yetki"
+  },
+  "optionsProxiesColActions": {
+    "message": "İşlemler"
+  },
   "optionsProxiesEdit": {
     "message": "Düzenle"
   },
