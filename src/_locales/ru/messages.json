@@ -921,5 +921,116 @@
   },
   "errorEmptyPrefixWithHideMode": {
     "message": "Префикс имени контейнера не может быть пустым при включенном режиме \"Скрыть номер\". Пожалуйста, укажите префикс или выберите другой режим нумерации."
+  },
+  "optionsNavProxies": {
+    "message": "Прокси"
+  },
+  "optionsProxiesTitle": {
+    "message": "Настройка прокси"
+  },
+  "optionsProxiesWarningTitle": {
+    "message": "Разрешение и уведомление безопасности"
+  },
+  "optionsProxiesWarningText": {
+    "message": "Настройка прокси требует разрешения \"Доступ к настройкам прокси браузера\". Учётные данные прокси хранятся локально в открытом виде — настраивайте только доверенные прокси."
+  },
+  "optionsProxiesWarningAccept": {
+    "message": "Я понимаю и хочу включить назначение прокси (требуется разрешение \"Доступ к настройкам прокси браузера\")"
+  },
+  "optionsProxiesAssignmentMode": {
+    "message": "Режим назначения"
+  },
+  "optionsProxiesAssignmentModeRandom": {
+    "message": "Случайный (назначать случайный прокси каждому новому контейнеру)"
+  },
+  "optionsProxiesAssignmentModeSequential": {
+    "message": "Последовательный (назначать прокси по порядку из списка)"
+  },
+  "optionsProxiesAddProxy": {
+    "message": "Добавить прокси"
+  },
+  "optionsProxiesEditProxy": {
+    "message": "Изменить прокси"
+  },
+  "optionsProxiesProtocol": {
+    "message": "Протокол"
+  },
+  "optionsProxiesHost": {
+    "message": "Хост"
+  },
+  "optionsProxiesHostPlaceholder": {
+    "message": "proxy.example.com или 192.168.1.1"
+  },
+  "optionsProxiesPort": {
+    "message": "Порт"
+  },
+  "optionsProxiesUsername": {
+    "message": "Имя пользователя (необязательно)"
+  },
+  "optionsProxiesPassword": {
+    "message": "Пароль (необязательно)"
+  },
+  "optionsProxiesLabel": {
+    "message": "Метка (необязательно)"
+  },
+  "optionsProxiesLabelPlaceholder": {
+    "message": "например, US VPN или Рабочий прокси"
+  },
+  "optionsProxiesSave": {
+    "message": "Сохранить"
+  },
+  "optionsProxiesCancel": {
+    "message": "Отмена"
+  },
+  "optionsProxiesImportTitle": {
+    "message": "Импорт прокси"
+  },
+  "optionsProxiesImportFromFile": {
+    "message": "Импортировать из файла"
+  },
+  "optionsProxiesImportPaste": {
+    "message": "Вставить прокси"
+  },
+  "optionsProxiesImportPasteLabel": {
+    "message": "Вставьте список прокси (по одному на строку: host:port, protocol://host:port или protocol://user:pass@host:port)"
+  },
+  "optionsProxiesImportParsePaste": {
+    "message": "Разобрать и просмотреть"
+  },
+  "optionsProxiesImportDefaultProtocol": {
+    "message": "Протокол по умолчанию (для записей без протокола)"
+  },
+  "optionsProxiesImportPreviewTitle": {
+    "message": "Предварительный просмотр импорта"
+  },
+  "optionsProxiesImportConfirm": {
+    "message": "Добавить прокси"
+  },
+  "optionsProxiesImportCancel": {
+    "message": "Отменить импорт"
+  },
+  "optionsProxiesImportParseError": {
+    "message": "Не удалось разобрать ни одной допустимой записи прокси из ввода."
+  },
+  "optionsProxiesConfiguredProxies": {
+    "message": "Настроенные прокси"
+  },
+  "optionsProxiesNoProxies": {
+    "message": "Прокси не настроены. Добавьте прокси выше или импортируйте список."
+  },
+  "optionsProxiesEdit": {
+    "message": "Изменить"
+  },
+  "optionsProxiesRemove": {
+    "message": "Удалить"
+  },
+  "optionsProxiesRemoveConfirm": {
+    "message": "Удалить этот прокси?"
+  },
+  "optionsProxiesValidationErrorHost": {
+    "message": "Хост обязателен."
+  },
+  "optionsProxiesValidationErrorPort": {
+    "message": "Порт должен быть числом от 1 до 65535."
   }
 }

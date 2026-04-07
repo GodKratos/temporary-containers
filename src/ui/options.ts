@@ -8,6 +8,7 @@ import { initAdvancedScriptsPage } from './pages/AdvancedScripts';
 import { initAdvancedDeleteHistoryPage } from './pages/AdvancedDeleteHistory';
 import { initStatisticsPage } from './pages/Statistics';
 import { initExportImportPage } from './pages/ExportImport';
+import { initProxiesPage } from './pages/Proxies';
 import {
   createTabSystem,
   showInitializeLoader,
@@ -28,6 +29,7 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   'advanced-delete-history': withManagedStorage(initAdvancedDeleteHistoryPage),
   statistics: withManagedStorage(initStatisticsPage),
   'export-import': withManagedStorage(initExportImportPage),
+  proxies: withManagedStorage(initProxiesPage),
 };
 
 async function initializeOptionsUI() {

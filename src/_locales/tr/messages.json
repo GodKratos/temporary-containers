@@ -921,5 +921,116 @@
   },
   "errorEmptyPrefixWithHideMode": {
     "message": "\"Numarayı gizle\" modu etkinken Konteyner Adı Öneki boş olamaz. Lütfen bir önek girin veya farklı bir numara modu seçin."
+  },
+  "optionsNavProxies": {
+    "message": "Proxy'ler"
+  },
+  "optionsProxiesTitle": {
+    "message": "Proxy Yapılandırması"
+  },
+  "optionsProxiesWarningTitle": {
+    "message": "İzin ve Güvenlik Bildirimi"
+  },
+  "optionsProxiesWarningText": {
+    "message": "Proxy yapılandırması \"Tarayıcı proxy ayarlarına eriş\" iznini gerektirir. Proxy kimlik bilgileri yerel olarak düz metin olarak saklanır — yalnızca güvendiğiniz proxy'leri yapılandırın."
+  },
+  "optionsProxiesWarningAccept": {
+    "message": "Anlıyorum ve proxy atamasını etkinleştirmek istiyorum (\"Tarayıcı proxy ayarlarına eriş\" izni gerektirir)"
+  },
+  "optionsProxiesAssignmentMode": {
+    "message": "Atama Modu"
+  },
+  "optionsProxiesAssignmentModeRandom": {
+    "message": "Rastgele (her yeni konteynere rastgele bir proxy ata)"
+  },
+  "optionsProxiesAssignmentModeSequential": {
+    "message": "Sıralı (proxy'leri listeden sırayla ata)"
+  },
+  "optionsProxiesAddProxy": {
+    "message": "Proxy Ekle"
+  },
+  "optionsProxiesEditProxy": {
+    "message": "Proxy Düzenle"
+  },
+  "optionsProxiesProtocol": {
+    "message": "Protokol"
+  },
+  "optionsProxiesHost": {
+    "message": "Ana Bilgisayar"
+  },
+  "optionsProxiesHostPlaceholder": {
+    "message": "proxy.example.com veya 192.168.1.1"
+  },
+  "optionsProxiesPort": {
+    "message": "Port"
+  },
+  "optionsProxiesUsername": {
+    "message": "Kullanıcı Adı (isteğe bağlı)"
+  },
+  "optionsProxiesPassword": {
+    "message": "Parola (isteğe bağlı)"
+  },
+  "optionsProxiesLabel": {
+    "message": "Etiket (isteğe bağlı)"
+  },
+  "optionsProxiesLabelPlaceholder": {
+    "message": "örn. ABD VPN veya İş Proxy'si"
+  },
+  "optionsProxiesSave": {
+    "message": "Kaydet"
+  },
+  "optionsProxiesCancel": {
+    "message": "İptal"
+  },
+  "optionsProxiesImportTitle": {
+    "message": "Proxy İçe Aktar"
+  },
+  "optionsProxiesImportFromFile": {
+    "message": "Dosyadan İçe Aktar"
+  },
+  "optionsProxiesImportPaste": {
+    "message": "Proxy Yapıştır"
+  },
+  "optionsProxiesImportPasteLabel": {
+    "message": "Proxy listesini yapıştırın (her satıra bir tane: host:port, protocol://host:port veya protocol://user:pass@host:port)"
+  },
+  "optionsProxiesImportParsePaste": {
+    "message": "Ayrıştır ve Önizle"
+  },
+  "optionsProxiesImportDefaultProtocol": {
+    "message": "Varsayılan Protokol (protokolü olmayan girişler için)"
+  },
+  "optionsProxiesImportPreviewTitle": {
+    "message": "İçe Aktarma Önizlemesi"
+  },
+  "optionsProxiesImportConfirm": {
+    "message": "Proxy'leri Ekle"
+  },
+  "optionsProxiesImportCancel": {
+    "message": "İçe Aktarmayı İptal Et"
+  },
+  "optionsProxiesImportParseError": {
+    "message": "Girişten geçerli proxy girişi ayrıştırılamadı."
+  },
+  "optionsProxiesConfiguredProxies": {
+    "message": "Yapılandırılmış Proxy'ler"
+  },
+  "optionsProxiesNoProxies": {
+    "message": "Proxy yapılandırılmamış. Yukarıdan bir proxy ekleyin veya liste içe aktarın."
+  },
+  "optionsProxiesEdit": {
+    "message": "Düzenle"
+  },
+  "optionsProxiesRemove": {
+    "message": "Kaldır"
+  },
+  "optionsProxiesRemoveConfirm": {
+    "message": "Bu proxy kaldırılsın mı?"
+  },
+  "optionsProxiesValidationErrorHost": {
+    "message": "Ana bilgisayar gereklidir."
+  },
+  "optionsProxiesValidationErrorPort": {
+    "message": "Port 1 ile 65535 arasında bir sayı olmalıdır."
   }
 }

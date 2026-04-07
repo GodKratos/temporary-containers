@@ -309,6 +309,18 @@ export interface BrowserMock {
   _resetHistory: () => void;
   _restore: () => void;
   _create: sinon.SinonStub;
+  proxy: {
+    onRequest: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
+    onError: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
+  };
 }
 
 /**
@@ -667,6 +679,20 @@ export function createBrowserMock(): BrowserMock {
     _resetHistory: () => sandbox.resetHistory(),
     _restore: () => sandbox.restore(),
     _create: sandbox.stub(),
+
+    // Proxy API
+    proxy: {
+      onRequest: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
+      onError: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
+    },
   };
 
   return browserMock as BrowserMock;

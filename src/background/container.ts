@@ -131,6 +131,8 @@ export class Container {
     }
     containerOptions.deletesHistory = deletesHistory;
 
+    this.background.proxy.assignToContainer(containerOptions);
+
     try {
       this.debug('[createTabInTempContainer] creating new container', containerOptions);
       const contextualIdentity = await browser.contextualIdentities.create({

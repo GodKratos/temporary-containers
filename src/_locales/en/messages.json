@@ -921,5 +921,116 @@
   },
   "errorEmptyPrefixWithHideMode": {
     "message": "Container Name Prefix cannot be empty when \"Hide number\" mode is enabled. Please provide a prefix or choose a different number mode."
+  },
+  "optionsNavProxies": {
+    "message": "Proxies"
+  },
+  "optionsProxiesTitle": {
+    "message": "Proxy Configuration"
+  },
+  "optionsProxiesWarningTitle": {
+    "message": "Permission & Security Notice"
+  },
+  "optionsProxiesWarningText": {
+    "message": "Proxy configuration requires the \"Access browser proxy settings\" permission. Proxy credentials are stored locally in plain text — only configure proxies you trust."
+  },
+  "optionsProxiesWarningAccept": {
+    "message": "I understand and want to enable proxy assignment (requires \"Access browser proxy settings\" permission)"
+  },
+  "optionsProxiesAssignmentMode": {
+    "message": "Assignment Mode"
+  },
+  "optionsProxiesAssignmentModeRandom": {
+    "message": "Random (assign a random proxy to each new container)"
+  },
+  "optionsProxiesAssignmentModeSequential": {
+    "message": "Sequential (assign proxies in order from the list)"
+  },
+  "optionsProxiesAddProxy": {
+    "message": "Add Proxy"
+  },
+  "optionsProxiesEditProxy": {
+    "message": "Edit Proxy"
+  },
+  "optionsProxiesProtocol": {
+    "message": "Protocol"
+  },
+  "optionsProxiesHost": {
+    "message": "Host"
+  },
+  "optionsProxiesHostPlaceholder": {
+    "message": "proxy.example.com or 192.168.1.1"
+  },
+  "optionsProxiesPort": {
+    "message": "Port"
+  },
+  "optionsProxiesUsername": {
+    "message": "Username (optional)"
+  },
+  "optionsProxiesPassword": {
+    "message": "Password (optional)"
+  },
+  "optionsProxiesLabel": {
+    "message": "Label (optional)"
+  },
+  "optionsProxiesLabelPlaceholder": {
+    "message": "e.g. US VPN or Work Proxy"
+  },
+  "optionsProxiesSave": {
+    "message": "Save"
+  },
+  "optionsProxiesCancel": {
+    "message": "Cancel"
+  },
+  "optionsProxiesImportTitle": {
+    "message": "Import Proxies"
+  },
+  "optionsProxiesImportFromFile": {
+    "message": "Import from File"
+  },
+  "optionsProxiesImportPaste": {
+    "message": "Paste Proxies"
+  },
+  "optionsProxiesImportPasteLabel": {
+    "message": "Paste proxy list (one per line: host:port, protocol://host:port, or protocol://user:pass@host:port)"
+  },
+  "optionsProxiesImportParsePaste": {
+    "message": "Parse & Preview"
+  },
+  "optionsProxiesImportDefaultProtocol": {
+    "message": "Default Protocol (for entries without protocol)"
+  },
+  "optionsProxiesImportPreviewTitle": {
+    "message": "Import Preview"
+  },
+  "optionsProxiesImportConfirm": {
+    "message": "Add Proxies"
+  },
+  "optionsProxiesImportCancel": {
+    "message": "Cancel Import"
+  },
+  "optionsProxiesImportParseError": {
+    "message": "Could not parse any valid proxy entries from the input."
+  },
+  "optionsProxiesConfiguredProxies": {
+    "message": "Configured Proxies"
+  },
+  "optionsProxiesNoProxies": {
+    "message": "No proxies configured. Add a proxy above or import a list."
+  },
+  "optionsProxiesEdit": {
+    "message": "Edit"
+  },
+  "optionsProxiesRemove": {
+    "message": "Remove"
+  },
+  "optionsProxiesRemoveConfirm": {
+    "message": "Remove this proxy?"
+  },
+  "optionsProxiesValidationErrorHost": {
+    "message": "Host is required."
+  },
+  "optionsProxiesValidationErrorPort": {
+    "message": "Port must be a number between 1 and 65535."
   }
 }

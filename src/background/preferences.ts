@@ -88,6 +88,11 @@ export class Preferences {
       popupDefaultTab: 'isolation-global',
     },
     containerPrefixOverride: '',
+    proxies: {
+      active: false,
+      assignmentMode: 'random',
+      entries: [],
+    },
   };
 
   private background: TemporaryContainers;
@@ -141,6 +146,13 @@ export class Preferences {
     if (!this.permissions.webNavigation && newPreferences.scripts.active) {
       this.permissions.webNavigation = await browser.permissions.contains({ permissions: ['webNavigation'] });
       this.eventlisteners.registerPermissionedListener();
+    }
+
+    if (!this.permissions.proxy && newPreferences.proxies?.active) {
+      this.permissions.proxy = await browser.permissions.contains({ permissions: ['proxy'] });
+    }
+    if (newPreferences.proxies?.active !== oldPreferences.proxies?.active) {
+      this.background.proxy.handlePreferencesChange(oldPreferences, newPreferences);
     }
 
     if (

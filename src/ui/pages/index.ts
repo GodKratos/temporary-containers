@@ -9,3 +9,4 @@ export { initAdvancedDeleteHistoryPage } from './AdvancedDeleteHistory';
 export { initStatisticsPage } from './Statistics';
 export { initExportImportPage } from './ExportImport';
 export { initActionsPage } from './Actions';
+export { initProxiesPage } from './Proxies';
