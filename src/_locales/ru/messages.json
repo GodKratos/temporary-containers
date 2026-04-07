@@ -949,6 +949,12 @@
   "optionsProxiesAssignmentModeDisabled": {
     "message": "Отключено (не назначать прокси новым контейнерам)"
   },
+  "optionsProxiesRemoveAll": {
+    "message": "Удалить все"
+  },
+  "optionsProxiesRemoveAllConfirm": {
+    "message": "Удалить все прокси? Это действие нельзя отменить."
+  },
   "optionsProxiesAddProxy": {
     "message": "Добавить прокси"
   },

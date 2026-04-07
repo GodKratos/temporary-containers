@@ -949,6 +949,12 @@
   "optionsProxiesAssignmentModeDisabled": {
     "message": "Disabled (do not assign proxies to new containers)"
   },
+  "optionsProxiesRemoveAll": {
+    "message": "Remove All"
+  },
+  "optionsProxiesRemoveAllConfirm": {
+    "message": "Remove all proxies? This cannot be undone."
+  },
   "optionsProxiesAddProxy": {
     "message": "Add Proxy"
   },

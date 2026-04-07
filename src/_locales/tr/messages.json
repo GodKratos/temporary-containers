@@ -949,6 +949,12 @@
   "optionsProxiesAssignmentModeDisabled": {
     "message": "Devre dışı (yeni konteynerlere proxy atama)"
   },
+  "optionsProxiesRemoveAll": {
+    "message": "Tümünü Kaldır"
+  },
+  "optionsProxiesRemoveAllConfirm": {
+    "message": "Tüm proxy'ler kaldırılsın mı? Bu işlem geri alınamaz."
+  },
   "optionsProxiesAddProxy": {
     "message": "Proxy Ekle"
   },

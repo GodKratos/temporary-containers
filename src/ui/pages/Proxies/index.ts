@@ -217,7 +217,10 @@ export async function initProxiesPage(): Promise<void> {
 
       <div id="proxiesList" ${dimStyle}>
         <div class="section">
-          <h3 data-i18n="optionsProxiesConfiguredProxies">Configured Proxies</h3>
+          <div class="section-header">
+            <h3 data-i18n="optionsProxiesConfiguredProxies">Configured Proxies</h3>
+            <button type="button" id="proxiesRemoveAll" class="button-secondary small danger" data-i18n="optionsProxiesRemoveAll">Remove All</button>
+          </div>
           <div id="proxiesDisplay"></div>
         </div>
       </div>
@@ -402,6 +405,22 @@ export async function initProxiesPage(): Promise<void> {
         showError(browser.i18n.getMessage('errorFailedToSave'));
       }
     }
+
+    async function removeAllProxies(): Promise<void> {
+      if (!preferences.proxies || preferences.proxies.entries.length === 0) return;
+      if (!confirm(browser.i18n.getMessage('optionsProxiesRemoveAllConfirm') || 'Remove all proxies?')) return;
+      preferences.proxies.entries = [];
+      try {
+        await savePreferences(preferences);
+        updateProxyDisplay();
+        showSuccess(browser.i18n.getMessage('savedMessage'));
+      } catch (_error) {
+        showError(browser.i18n.getMessage('errorFailedToSave'));
+      }
+    }
+
+    // Remove all proxies
+    document.getElementById('proxiesRemoveAll')?.addEventListener('click', removeAllProxies);
 
     // Form submission
     const proxyForm = document.getElementById('proxyForm') as HTMLFormElement;
