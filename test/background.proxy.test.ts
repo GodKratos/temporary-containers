@@ -254,7 +254,35 @@ describe('Proxy', () => {
       };
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({ type: 'http', host: 'proxy.example.com', port: 8080, username: 'user', password: 'pass' });
+      // HTTP/HTTPS proxies use a pre-encoded Proxy-Authorization header; username/password are not passed directly
+      expect(result).to.deep.equal({ type: 'http', host: 'proxy.example.com', port: 8080, proxyAuthorizationHeader: 'Basic dXNlcjpwYXNz' });
+    });
+
+    it('should include credentials directly for socks5 proxies', async () => {
+      const entry = makeEntry({ id: 'e2', protocol: 'socks5', host: 'socks.example.com', port: 1080, username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      background.storage.local.tempContainers['firefox-container-1'] = {
+        name: 'tmp1',
+        color: 'toolbar',
+        icon: 'circle',
+        number: 1,
+        clean: true,
+        proxyId: 'e2',
+      };
+
+      const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
+      expect(result).to.deep.equal({
+        type: 'socks5',
+        host: 'socks.example.com',
+        port: 1080,
+        username: 'user',
+        password: 'pass',
+        proxyDNS: true,
+      });
     });
 
     it('should return empty object when proxy entry is disabled', async () => {

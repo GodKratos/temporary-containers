@@ -27,6 +27,7 @@ export default [
         confirm: 'readonly',
         crypto: 'readonly',
         FileReader: 'readonly',
+        btoa: 'readonly',
 
         // DOM types
         HTMLElement: 'readonly',

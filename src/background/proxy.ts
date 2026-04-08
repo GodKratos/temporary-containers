@@ -9,6 +9,7 @@ interface ProxyInfo {
   username?: string;
   password?: string;
   proxyDNS?: boolean;
+  proxyAuthorizationHeader?: string;
 }
 
 export class Proxy {
@@ -72,10 +73,16 @@ export class Proxy {
       host: entry.host,
       port: entry.port,
     };
-    if (entry.username) proxyInfo.username = entry.username;
-    if (entry.password) proxyInfo.password = entry.password;
-    if (entry.protocol === 'socks4' || entry.protocol === 'socks5') {
+    if (entry.protocol === 'socks5') {
+      // SOCKS5 accepts username/password directly in the ProxyInfo object
+      if (entry.username) proxyInfo.username = entry.username;
+      if (entry.password) proxyInfo.password = entry.password;
       proxyInfo.proxyDNS = true;
+    } else if (entry.protocol === 'socks4') {
+      proxyInfo.proxyDNS = true;
+    } else if ((entry.protocol === 'http' || entry.protocol === 'https') && entry.username) {
+      // HTTP/HTTPS proxies require a pre-encoded Proxy-Authorization header
+      proxyInfo.proxyAuthorizationHeader = 'Basic ' + btoa(`${entry.username}:${entry.password ?? ''}`);
     }
 
     this.debug('[proxy] routing request via proxy', entry.id, requestInfo.url);
