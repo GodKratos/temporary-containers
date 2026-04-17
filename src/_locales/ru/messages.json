@@ -512,6 +512,24 @@
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Не удалось сбросить настройки. Пожалуйста, попробуйте ещё раз."
   },
+  "optionsAdvancedMiscDebugLogging": {
+    "message": "Журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingDescription": {
+    "message": "Включите журналирование для просмотра подробной активности расширения в консоли браузера. Откройте консоль через about:debugging > This Firefox > Temporary Containers Plus > Проверить."
+  },
+  "optionsAdvancedMiscDebugLoggingEnable": {
+    "message": "Включить журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingDisable": {
+    "message": "Отключить журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingEnabled": {
+    "message": "Журналирование отладки включено. Откройте консоль инспектора расширения для просмотра журналов."
+  },
+  "optionsAdvancedMiscDebugLoggingDisabled": {
+    "message": "Журналирование отладки отключено."
+  },
   "optionsAdvancedMiscContainerPrefix": {
     "message": "Префикс контейнера"
   },

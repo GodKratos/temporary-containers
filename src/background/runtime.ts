@@ -155,6 +155,21 @@ export class Runtime {
         await this.storage.persist();
         return true;
 
+      case 'getDebugLogging':
+        return this.background.log.DEBUG as any;
+
+      case 'setDebugLogging': {
+        const enable = !!message.payload.enable;
+        this.background.log.DEBUG = enable;
+        if (enable) {
+          window.localStorage.setItem('debug', 'true');
+        } else {
+          window.localStorage.removeItem('debug');
+          window.localStorage.removeItem('debug-dev');
+        }
+        return true as any;
+      }
+
       case 'createTabInTempContainer':
         return this.container.createTabInTempContainer({
           url: message.payload ? message.payload.url : undefined,

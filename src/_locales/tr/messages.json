@@ -512,6 +512,24 @@
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Ayarlar sıfırlanamadı. Lütfen tekrar deneyin."
   },
+  "optionsAdvancedMiscDebugLogging": {
+    "message": "Hata Ayıklama Günlüğü"
+  },
+  "optionsAdvancedMiscDebugLoggingDescription": {
+    "message": "Tarayıcı konsolunda ayrıntılı eklenti etkinliğini görüntülemek için hata ayıklama günlüğünü etkinleştirin. Konsolu about:debugging > This Firefox > Temporary Containers Plus > İncele üzerinden açın."
+  },
+  "optionsAdvancedMiscDebugLoggingEnable": {
+    "message": "Hata Ayıklama Günlüğünü Etkinleştir"
+  },
+  "optionsAdvancedMiscDebugLoggingDisable": {
+    "message": "Hata Ayıklama Günlüğünü Devre Dışı Bırak"
+  },
+  "optionsAdvancedMiscDebugLoggingEnabled": {
+    "message": "Hata ayıklama günlüğü etkinleştirildi. Günlüleri görüntülemek için eklenti denetleyici konsolunu açın."
+  },
+  "optionsAdvancedMiscDebugLoggingDisabled": {
+    "message": "Hata ayıklama günlüğü devre dışı bırakıldı."
+  },
   "optionsAdvancedMiscContainerPrefix": {
     "message": "Konteyner Ön Eki"
   },
