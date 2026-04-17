@@ -20,6 +20,9 @@ export class Proxy {
   private sequentialIndex = 0;
   private listenerRegistered = false;
   private readonly boundHandleProxy = (requestInfo: browser.proxy._OnRequestDetails): ProxyInfo => this.handleProxy(requestInfo);
+  private readonly boundHandleError = (error: Error): void => {
+    console.error('[proxy] proxy error:', error.message, error);
+  };
 
   constructor(background: TemporaryContainers) {
     this.background = background;
@@ -37,6 +40,7 @@ export class Proxy {
   private registerListener(): void {
     if (this.listenerRegistered) return;
     browser.proxy.onRequest.addListener(this.boundHandleProxy as any, { urls: ['<all_urls>'] });
+    browser.proxy.onError.addListener(this.boundHandleError);
     this.listenerRegistered = true;
     this.debug('[proxy] listener registered');
   }
@@ -44,6 +48,7 @@ export class Proxy {
   private removeListener(): void {
     if (!this.listenerRegistered) return;
     browser.proxy.onRequest.removeListener(this.boundHandleProxy as any);
+    browser.proxy.onError.removeListener(this.boundHandleError);
     this.listenerRegistered = false;
     this.debug('[proxy] listener removed');
   }
