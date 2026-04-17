@@ -9,16 +9,77 @@ function flush(times = 8) {
   return p;
 }
 
+function createSyncStorageMock(initialStore: Record<string, unknown> = {}) {
+  const store = new Map<string, unknown>(Object.entries(initialStore));
+  const getUtf8Size = (value: string) => new Blob([value]).size;
+
+  const get = async (arg?: string | string[] | Record<string, unknown>) => {
+    if (typeof arg === 'string') {
+      return store.has(arg) ? { [arg]: store.get(arg) } : {};
+    }
+
+    if (Array.isArray(arg)) {
+      return arg.reduce<Record<string, unknown>>((accumulator, key) => {
+        if (store.has(key)) {
+          accumulator[key] = store.get(key);
+        }
+        return accumulator;
+      }, {});
+    }
+
+    if (arg && typeof arg === 'object') {
+      return Object.keys(arg).reduce<Record<string, unknown>>((accumulator, key) => {
+        accumulator[key] = store.has(key) ? store.get(key) : arg[key];
+        return accumulator;
+      }, {});
+    }
+
+    return Object.fromEntries(store.entries());
+  };
+
+  const set = async (items: Record<string, unknown>) => {
+    for (const [key, value] of Object.entries(items)) {
+      const bytes = getUtf8Size(`${key}${JSON.stringify(value)}`);
+      if (bytes > 8192) {
+        throw new Error('QuotaExceededError: storage.sync API call exceeded its quota limitations.');
+      }
+    }
+
+    for (const [key, value] of Object.entries(items)) {
+      store.set(key, value);
+    }
+  };
+
+  const remove = async (keys: string | string[]) => {
+    for (const key of Array.isArray(keys) ? keys : [keys]) {
+      store.delete(key);
+    }
+  };
+
+  const clear = async () => {
+    store.clear();
+  };
+
+  return {
+    store,
+    get,
+    set,
+    remove,
+    clear,
+  };
+}
+
 describe('UI ExportImport: core interactions', () => {
   let background: Awaited<ReturnType<typeof loadBackground>>;
+  let syncStorage: ReturnType<typeof createSyncStorageMock>;
 
   beforeEach(async () => {
     background = await loadBackground({ initialize: true });
-    // Provide default empty export object to avoid init errors
-    (browser.storage.sync.get as sinon.SinonStub).callsFake(async (key: any) => {
-      if (key === 'export') return {};
-      return {};
-    });
+    syncStorage = createSyncStorageMock();
+    (browser.storage.sync.get as sinon.SinonStub).callsFake(syncStorage.get);
+    (browser.storage.sync.set as sinon.SinonStub).callsFake(syncStorage.set);
+    (browser.storage.sync.remove as sinon.SinonStub).callsFake(syncStorage.remove);
+    (browser.storage.sync.clear as sinon.SinonStub).callsFake(syncStorage.clear);
   });
 
   async function setup() {
@@ -40,25 +101,24 @@ describe('UI ExportImport: core interactions', () => {
     expect((background.tmp.storage.local.preferences as any).scripts?.active || false).to.equal(false);
   });
 
-  it('exports to Firefox Sync successfully (no existing export)', async () => {
+  it('exports to Firefox Sync successfully across multiple sync items', async () => {
     await setup();
-    const setSpy = browser.storage.sync.set as sinon.SinonStub;
+    (background.tmp.storage.local.preferences as any).debugPayload = 'x'.repeat(12000);
     const btn = document.getElementById('exportToFirefoxSync') as HTMLButtonElement;
     btn.click();
     await flush(15);
-    expect(setSpy.called).to.equal(true);
-    const args = setSpy.getCalls().map(c => c.args[0]);
-    const exportArg = args.find(a => a && a.export);
-    expect(exportArg && exportArg.export && exportArg.export.preferences).to.be.ok;
+    expect(syncStorage.store.has('exportMeta')).to.equal(true);
+    expect(syncStorage.store.has('export')).to.equal(false);
+    const chunkKeys = [...syncStorage.store.keys()].filter(key => key.startsWith('exportChunk_'));
+    expect(chunkKeys.length).to.be.greaterThan(1);
+    const exportMeta = syncStorage.store.get('exportMeta') as { chunkCount: number };
+    expect(exportMeta.chunkCount).to.equal(chunkKeys.length);
   });
 
-  it('imports from Firefox Sync with confirmation accepted', async () => {
+  it('imports from legacy Firefox Sync export with confirmation accepted', async () => {
     await setup();
-    // place export in sync storage
     const now = Date.now();
-    (browser.storage.sync.get as sinon.SinonStub)
-      .withArgs('export')
-      .resolves({ export: { date: now, version: '1.0', preferences: background.tmp.storage.local.preferences } });
+    syncStorage.store.set('export', { date: now, version: '1.0', preferences: background.tmp.storage.local.preferences });
     try {
       Object.defineProperty(window, 'confirm', { value: () => true, configurable: true });
     } catch {
@@ -71,15 +131,24 @@ describe('UI ExportImport: core interactions', () => {
     expect(background.tmp.storage.local.preferences).to.be.ok;
   });
 
-  it('wipe Firefox Sync export hides info block', async () => {
+  it('wipe Firefox Sync export removes only export keys', async () => {
+    const chunkedExport = {
+      version: '1.2.3',
+      date: Date.now(),
+      preferences: { keep: true },
+    };
+    const serializedExport = JSON.stringify(chunkedExport);
+    syncStorage.store.set('exportMeta', { date: chunkedExport.date, version: chunkedExport.version, chunkCount: 2 });
+    syncStorage.store.set('exportChunk_0', serializedExport.slice(0, Math.ceil(serializedExport.length / 2)));
+    syncStorage.store.set('exportChunk_1', serializedExport.slice(Math.ceil(serializedExport.length / 2)));
+    syncStorage.store.set('otherKey', { preserved: true });
+
     await setup();
-    // seed export and re-init to show info
-    const exportObj = { export: { date: Date.now(), version: '1.2.3', preferences: {} } };
-    (browser.storage.sync.get as sinon.SinonStub).withArgs('export').resolves(exportObj);
     await initExportImportPage();
     await flush(6);
     const info = document.getElementById('lastSyncExportInfo') as HTMLElement;
     expect(info.style.display).to.equal('block');
+    const removeSpy = browser.storage.sync.remove as sinon.SinonStub;
     const clearSpy = browser.storage.sync.clear as sinon.SinonStub;
     try {
       Object.defineProperty(window, 'confirm', { value: () => true, configurable: true });
@@ -89,7 +158,12 @@ describe('UI ExportImport: core interactions', () => {
     const wipe = document.getElementById('wipeFirefoxSyncExport') as HTMLButtonElement;
     wipe?.click();
     await flush(10);
-    expect(clearSpy.called).to.equal(true);
+    expect(clearSpy.called).to.equal(false);
+    expect(removeSpy.called).to.equal(true);
+    expect(syncStorage.store.has('otherKey')).to.equal(true);
+    expect(syncStorage.store.has('exportMeta')).to.equal(false);
+    expect(syncStorage.store.has('exportChunk_0')).to.equal(false);
+    expect(syncStorage.store.has('exportChunk_1')).to.equal(false);
     // re-init should have been triggered inside logic; ensure hidden
     await initExportImportPage();
     await flush(6);

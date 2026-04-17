@@ -13,6 +13,15 @@ interface ExportedPreferences {
   preferences: PreferencesSchema;
 }
 
+interface ChunkedSyncExportInfo extends SyncExportInfo {
+  chunkCount: number;
+}
+
+const LEGACY_SYNC_EXPORT_KEY = 'export';
+const SYNC_EXPORT_META_KEY = 'exportMeta';
+const SYNC_EXPORT_CHUNK_PREFIX = 'exportChunk_';
+const SYNC_EXPORT_CHUNK_MAX_BYTES = 6000;
+
 let lastSyncExport: SyncExportInfo | null = null;
 
 function formatDate(date: Date): string {
@@ -100,17 +109,16 @@ export async function initExportImportPage(): Promise<void> {
     }
 
     // Listen for sync storage changes
-    browser.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName === 'sync' && changes.export) {
-        if (changes.export.newValue) {
-          lastSyncExport = {
-            date: changes.export.newValue.date,
-            version: changes.export.newValue.version,
-          };
-        } else {
-          lastSyncExport = null;
-        }
+    browser.storage.onChanged.addListener(async (changes, areaName) => {
+      if (areaName !== 'sync' || (!changes[SYNC_EXPORT_META_KEY] && !changes[LEGACY_SYNC_EXPORT_KEY])) {
+        return;
+      }
+
+      try {
+        lastSyncExport = await loadSyncExportInfo();
         updateSyncExportDisplay();
+      } catch (error) {
+        console.error('Error updating sync export info:', error);
       }
     });
   } catch (error) {
@@ -274,13 +282,7 @@ async function handleImportFromFile(): Promise<void> {
 
 async function initializeSyncExportInfo(): Promise<void> {
   try {
-    const result = await browser.storage.sync.get('export');
-    if (result.export) {
-      lastSyncExport = {
-        date: result.export.date,
-        version: result.export.version,
-      };
-    }
+    lastSyncExport = await loadSyncExportInfo();
   } catch (error) {
     console.error('Error initializing sync export info:', error);
   }
@@ -302,23 +304,15 @@ function updateSyncExportDisplay(): void {
   }
 }
 
-function getPreferencesForExport(): ExportedPreferences {
-  return {
-    version: browser.runtime.getManifest().version,
-    date: Date.now(),
-    preferences: {} as PreferencesSchema, // Will be populated by the caller
-  };
-}
-
 async function handleExportToFirefoxSync(): Promise<void> {
   try {
     // Check if there's already an export in Firefox Sync
-    const result = await browser.storage.sync.get('export');
-    if (result.export) {
+    const existingExport = await loadSyncExportInfo();
+    if (existingExport) {
       const confirmed = window.confirm(
         `${browser.i18n.getMessage('confirmSyncOverwrite')}\n\n` +
-          `${browser.i18n.getMessage('syncExportDate')}: ${new Date(result.export.date).toLocaleString()}\n` +
-          `${browser.i18n.getMessage('syncExportVersion')}: ${result.export.version}`
+          `${browser.i18n.getMessage('syncExportDate')}: ${new Date(existingExport.date).toLocaleString()}\n` +
+          `${browser.i18n.getMessage('syncExportVersion')}: ${existingExport.version}`
       );
       if (!confirmed) {
         return;
@@ -340,8 +334,7 @@ async function handleExportToFirefoxSync(): Promise<void> {
       preferences: exportPreferences,
     };
 
-    // Save to Firefox Sync
-    await browser.storage.sync.set({ export: exportData });
+    await saveSyncExport(exportData);
 
     // Update local state
     lastSyncExport = {
@@ -359,9 +352,9 @@ async function handleExportToFirefoxSync(): Promise<void> {
 
 async function handleImportFromFirefoxSync(): Promise<void> {
   try {
-    const result = await browser.storage.sync.get('export');
+    const storedExport = await loadSyncExport();
 
-    if (!result.export || !Object.keys(result.export).length) {
+    if (!storedExport || !Object.keys(storedExport).length) {
       showError(browser.i18n.getMessage('noSyncExportFound'));
       return;
     }
@@ -369,8 +362,8 @@ async function handleImportFromFirefoxSync(): Promise<void> {
     // Confirm import
     const confirmed = window.confirm(
       `${browser.i18n.getMessage('confirmSyncImport')}\n\n` +
-        `${browser.i18n.getMessage('syncExportDate')}: ${new Date(result.export.date).toLocaleString()}\n` +
-        `${browser.i18n.getMessage('syncExportVersion')}: ${result.export.version}\n\n` +
+        `${browser.i18n.getMessage('syncExportDate')}: ${new Date(storedExport.date).toLocaleString()}\n` +
+        `${browser.i18n.getMessage('syncExportVersion')}: ${storedExport.version}\n\n` +
         'All existing preferences will be overwritten.'
     );
 
@@ -379,7 +372,7 @@ async function handleImportFromFirefoxSync(): Promise<void> {
     }
 
     // Import the preferences
-    await saveImportedPreferences(result.export);
+    await saveImportedPreferences(storedExport);
     showSuccess(browser.i18n.getMessage('importFromFirefoxSyncSuccess'));
   } catch (error) {
     console.error('Error importing from Firefox Sync:', error);
@@ -395,7 +388,7 @@ async function handleWipeFirefoxSync(): Promise<void> {
       return;
     }
 
-    await browser.storage.sync.clear();
+    await clearSyncExport();
     lastSyncExport = null;
     updateSyncExportDisplay();
     showSuccess(browser.i18n.getMessage('wipeFirefoxSyncSuccess'));
@@ -428,4 +421,139 @@ async function saveImportedPreferences(importedPreferences: ExportedPreferences)
     // This might fail if the background script doesn't handle this method yet
     console.warn('Background script import handling not available:', error);
   }
+}
+
+function getSyncExportChunkKey(index: number): string {
+  return `${SYNC_EXPORT_CHUNK_PREFIX}${index}`;
+}
+
+function getUtf8Size(value: string): number {
+  return new Blob([value]).size;
+}
+
+function splitIntoSyncExportChunks(serializedExport: string): string[] {
+  const chunks: string[] = [];
+  let start = 0;
+
+  while (start < serializedExport.length) {
+    let low = start + 1;
+    let high = serializedExport.length;
+    let bestEnd = start;
+
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      const size = getUtf8Size(serializedExport.slice(start, mid));
+
+      if (size <= SYNC_EXPORT_CHUNK_MAX_BYTES) {
+        bestEnd = mid;
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
+    }
+
+    if (bestEnd === start) {
+      throw new Error('Could not split Firefox Sync export into quota-safe chunks.');
+    }
+
+    chunks.push(serializedExport.slice(start, bestEnd));
+    start = bestEnd;
+  }
+
+  return chunks;
+}
+
+async function loadSyncExportInfo(): Promise<SyncExportInfo | null> {
+  const result = (await browser.storage.sync.get([SYNC_EXPORT_META_KEY, LEGACY_SYNC_EXPORT_KEY])) as Record<string, any>;
+  const chunkedExport = result[SYNC_EXPORT_META_KEY] as ChunkedSyncExportInfo | undefined;
+
+  if (chunkedExport?.date && chunkedExport?.version) {
+    return {
+      date: chunkedExport.date,
+      version: chunkedExport.version,
+    };
+  }
+
+  const legacyExport = result[LEGACY_SYNC_EXPORT_KEY] as ExportedPreferences | undefined;
+  if (legacyExport?.date && legacyExport?.version) {
+    return {
+      date: legacyExport.date,
+      version: legacyExport.version,
+    };
+  }
+
+  return null;
+}
+
+async function loadSyncExport(): Promise<ExportedPreferences | null> {
+  const result = (await browser.storage.sync.get([SYNC_EXPORT_META_KEY, LEGACY_SYNC_EXPORT_KEY])) as Record<string, any>;
+  const chunkedExport = result[SYNC_EXPORT_META_KEY] as ChunkedSyncExportInfo | undefined;
+
+  if (chunkedExport?.chunkCount) {
+    const chunkKeys = Array.from({ length: chunkedExport.chunkCount }, (_, index) => getSyncExportChunkKey(index));
+    const chunkResult = (await browser.storage.sync.get(chunkKeys)) as Record<string, unknown>;
+    const serializedExport = chunkKeys
+      .map(key => {
+        const chunk = chunkResult[key];
+        if (typeof chunk !== 'string') {
+          throw new Error('Firefox Sync export is incomplete.');
+        }
+        return chunk;
+      })
+      .join('');
+
+    return JSON.parse(serializedExport) as ExportedPreferences;
+  }
+
+  const legacyExport = result[LEGACY_SYNC_EXPORT_KEY] as ExportedPreferences | undefined;
+  if (legacyExport && Object.keys(legacyExport).length) {
+    return legacyExport;
+  }
+
+  return null;
+}
+
+async function saveSyncExport(exportData: ExportedPreferences): Promise<void> {
+  const serializedExport = JSON.stringify(exportData);
+  const exportChunks = splitIntoSyncExportChunks(serializedExport);
+  const previousMetaResult = (await browser.storage.sync.get(SYNC_EXPORT_META_KEY)) as Record<string, any>;
+  const previousMeta = previousMetaResult[SYNC_EXPORT_META_KEY] as ChunkedSyncExportInfo | undefined;
+  const payload: Record<string, unknown> = {
+    [SYNC_EXPORT_META_KEY]: {
+      date: exportData.date,
+      version: exportData.version,
+      chunkCount: exportChunks.length,
+    },
+  };
+
+  exportChunks.forEach((chunk, index) => {
+    payload[getSyncExportChunkKey(index)] = chunk;
+  });
+
+  await browser.storage.sync.set(payload);
+
+  const keysToRemove = new Set<string>([LEGACY_SYNC_EXPORT_KEY]);
+  if (previousMeta?.chunkCount && previousMeta.chunkCount > exportChunks.length) {
+    for (let index = exportChunks.length; index < previousMeta.chunkCount; index++) {
+      keysToRemove.add(getSyncExportChunkKey(index));
+    }
+  }
+
+  if (keysToRemove.size > 0) {
+    await browser.storage.sync.remove([...keysToRemove]);
+  }
+}
+
+async function clearSyncExport(): Promise<void> {
+  const result = (await browser.storage.sync.get([SYNC_EXPORT_META_KEY, LEGACY_SYNC_EXPORT_KEY])) as Record<string, any>;
+  const chunkedExport = result[SYNC_EXPORT_META_KEY] as ChunkedSyncExportInfo | undefined;
+  const keysToRemove = new Set<string>([SYNC_EXPORT_META_KEY, LEGACY_SYNC_EXPORT_KEY]);
+
+  if (chunkedExport?.chunkCount) {
+    for (let index = 0; index < chunkedExport.chunkCount; index++) {
+      keysToRemove.add(getSyncExportChunkKey(index));
+    }
+  }
+
+  await browser.storage.sync.remove([...keysToRemove]);
 }
