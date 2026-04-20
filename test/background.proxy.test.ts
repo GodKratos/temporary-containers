@@ -117,7 +117,7 @@ describe('Proxy', () => {
   });
 
   describe('handleProxy', () => {
-    it('should return empty object for tabId -1 (no-tab requests)', async () => {
+    it('should return direct for tabId -1 (no-tab requests)', async () => {
       const { tmp: background } = await loadBackground({
         preferences: { proxies: { active: true, assignmentMode: 'random', entries: [makeEntry({ id: 'e1' })] } },
       });
@@ -125,10 +125,10 @@ describe('Proxy', () => {
       background.proxy.initialize();
 
       const result = background.proxy.handleProxy({ tabId: -1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({});
+      expect(result).to.deep.equal({ type: 'direct' });
     });
 
-    it('should return empty object when cookieStoreId is not a temp container', async () => {
+    it('should return direct when cookieStoreId is not a temp container', async () => {
       const { tmp: background } = await loadBackground({
         preferences: { proxies: { active: true, assignmentMode: 'random', entries: [makeEntry({ id: 'e1' })] } },
       });
@@ -136,10 +136,10 @@ describe('Proxy', () => {
       background.proxy.initialize();
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-default', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({});
+      expect(result).to.deep.equal({ type: 'direct' });
     });
 
-    it('should return empty object when container has no proxy assigned', async () => {
+    it('should return direct when container has no proxy assigned', async () => {
       const { tmp: background } = await loadBackground({
         preferences: { proxies: { active: true, assignmentMode: 'random', entries: [makeEntry({ id: 'e1' })] } },
       });
@@ -154,7 +154,7 @@ describe('Proxy', () => {
       };
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({});
+      expect(result).to.deep.equal({ type: 'direct' });
     });
 
     it('should return ProxyInfo for a container with an assigned http proxy', async () => {
@@ -285,7 +285,7 @@ describe('Proxy', () => {
       });
     });
 
-    it('should return empty object when proxy entry is disabled', async () => {
+    it('should return direct when proxy entry is disabled', async () => {
       const entry = makeEntry({ id: 'e1', enabled: false });
       const { tmp: background } = await loadBackground({
         preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
@@ -302,7 +302,7 @@ describe('Proxy', () => {
       };
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({});
+      expect(result).to.deep.equal({ type: 'direct' });
     });
   });
 

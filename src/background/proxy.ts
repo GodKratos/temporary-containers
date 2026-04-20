@@ -55,22 +55,22 @@ export class Proxy {
 
   handleProxy(requestInfo: browser.proxy._OnRequestDetails): ProxyInfo {
     if (requestInfo.tabId === -1) {
-      return {};
+      return { type: 'direct' };
     }
 
     const cookieStoreId = requestInfo.cookieStoreId;
     if (!cookieStoreId) {
-      return {};
+      return { type: 'direct' };
     }
 
     const containerOptions = this.storage.local.tempContainers[cookieStoreId];
     if (!containerOptions || !containerOptions.proxyId) {
-      return {};
+      return { type: 'direct' };
     }
 
     const entry = this.pref.proxies?.entries.find((e: ProxyEntry) => e.id === containerOptions.proxyId && e.enabled);
     if (!entry) {
-      return {};
+      return { type: 'direct' };
     }
 
     const proxyInfo: ProxyInfo = {
