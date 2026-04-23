@@ -23,6 +23,11 @@ export class Proxy {
   private readonly boundHandleError = (error: Error): void => {
     console.error('[proxy] proxy error:', error.message, error);
   };
+  private readonly boundHandleAuthRequired = (
+    details: browser.webRequest._OnAuthRequiredDetails
+  ): browser.webRequest.BlockingResponse | void => {
+    return this.handleAuthRequired(details);
+  };
 
   constructor(background: TemporaryContainers) {
     this.background = background;
@@ -41,6 +46,7 @@ export class Proxy {
     if (this.listenerRegistered) return;
     browser.proxy.onRequest.addListener(this.boundHandleProxy as any, { urls: ['<all_urls>'] });
     browser.proxy.onError.addListener(this.boundHandleError);
+    browser.webRequest.onAuthRequired.addListener(this.boundHandleAuthRequired, { urls: ['<all_urls>'] }, ['blocking']);
     this.listenerRegistered = true;
     this.debug('[proxy] listener registered');
   }
@@ -49,6 +55,7 @@ export class Proxy {
     if (!this.listenerRegistered) return;
     browser.proxy.onRequest.removeListener(this.boundHandleProxy as any);
     browser.proxy.onError.removeListener(this.boundHandleError);
+    browser.webRequest.onAuthRequired.removeListener(this.boundHandleAuthRequired);
     this.listenerRegistered = false;
     this.debug('[proxy] listener removed');
   }
@@ -92,6 +99,38 @@ export class Proxy {
 
     this.debug('[proxy] routing request via proxy', entry.id, requestInfo.url);
     return proxyInfo;
+  }
+
+  handleAuthRequired(details: browser.webRequest._OnAuthRequiredDetails): browser.webRequest.BlockingResponse | void {
+    if (!details.isProxy) {
+      return;
+    }
+
+    const cookieStoreId = details.cookieStoreId;
+    if (!cookieStoreId) {
+      return;
+    }
+
+    const containerOptions = this.storage.local.tempContainers[cookieStoreId];
+    if (!containerOptions?.proxyId) {
+      return;
+    }
+
+    const entry = this.pref.proxies?.entries.find((e: ProxyEntry) => e.id === containerOptions.proxyId && e.enabled);
+    if (!entry?.username) {
+      return;
+    }
+
+    // HTTP/HTTPS proxy credentials for 407 challenges; SOCKS auth is negotiated at the TCP level
+    if (entry.protocol === 'http' || entry.protocol === 'https') {
+      this.debug('[proxy] supplying auth credentials via onAuthRequired', entry.id, details.url);
+      return {
+        authCredentials: {
+          username: entry.username,
+          password: entry.password ?? '',
+        },
+      };
+    }
   }
 
   assignToContainer(containerOptions: ContainerOptions): void {

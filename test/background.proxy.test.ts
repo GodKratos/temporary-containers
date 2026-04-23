@@ -348,4 +348,139 @@ describe('Proxy', () => {
       expect((browser.proxy.onRequest.addListener as sinon.SinonStub).called).to.be.false;
     });
   });
+
+  describe('handleAuthRequired', () => {
+    it('should return undefined for non-proxy auth challenges', async () => {
+      const entry = makeEntry({ id: 'e1', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      const result = background.proxy.handleAuthRequired({
+        isProxy: false,
+        cookieStoreId: 'firefox-container-1',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.be.undefined;
+    });
+
+    it('should return undefined when cookieStoreId is missing', async () => {
+      const entry = makeEntry({ id: 'e1', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      const result = background.proxy.handleAuthRequired({ isProxy: true, url: 'https://example.com' } as any);
+      expect(result).to.be.undefined;
+    });
+
+    it('should return undefined for non-temp containers', async () => {
+      const entry = makeEntry({ id: 'e1', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      const result = background.proxy.handleAuthRequired({
+        isProxy: true,
+        cookieStoreId: 'firefox-default',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.be.undefined;
+    });
+
+    it('should return undefined when proxy entry has no username', async () => {
+      const entry = makeEntry({ id: 'e1' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      background.storage.local.tempContainers['firefox-container-1'] = {
+        name: 'tmp1',
+        color: 'toolbar',
+        icon: 'circle',
+        number: 1,
+        clean: true,
+        proxyId: 'e1',
+      };
+      const result = background.proxy.handleAuthRequired({
+        isProxy: true,
+        cookieStoreId: 'firefox-container-1',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.be.undefined;
+    });
+
+    it('should return authCredentials for an http proxy 407 challenge', async () => {
+      const entry = makeEntry({ id: 'e1', protocol: 'http', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      background.storage.local.tempContainers['firefox-container-1'] = {
+        name: 'tmp1',
+        color: 'toolbar',
+        icon: 'circle',
+        number: 1,
+        clean: true,
+        proxyId: 'e1',
+      };
+      const result = background.proxy.handleAuthRequired({
+        isProxy: true,
+        cookieStoreId: 'firefox-container-1',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.deep.equal({ authCredentials: { username: 'user', password: 'pass' } });
+    });
+
+    it('should return authCredentials for an https proxy 407 challenge', async () => {
+      const entry = makeEntry({ id: 'e1', protocol: 'https', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      background.storage.local.tempContainers['firefox-container-1'] = {
+        name: 'tmp1',
+        color: 'toolbar',
+        icon: 'circle',
+        number: 1,
+        clean: true,
+        proxyId: 'e1',
+      };
+      const result = background.proxy.handleAuthRequired({
+        isProxy: true,
+        cookieStoreId: 'firefox-container-1',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.deep.equal({ authCredentials: { username: 'user', password: 'pass' } });
+    });
+
+    it('should return undefined for socks5 proxy challenges (handled at TCP level)', async () => {
+      const entry = makeEntry({ id: 'e1', protocol: 'socks5', username: 'user', password: 'pass' });
+      const { tmp: background } = await loadBackground({
+        preferences: { proxies: { active: true, assignmentMode: 'random', entries: [entry] } },
+      });
+      background.permissions.proxy = true;
+      background.proxy.initialize();
+      background.storage.local.tempContainers['firefox-container-1'] = {
+        name: 'tmp1',
+        color: 'toolbar',
+        icon: 'circle',
+        number: 1,
+        clean: true,
+        proxyId: 'e1',
+      };
+      const result = background.proxy.handleAuthRequired({
+        isProxy: true,
+        cookieStoreId: 'firefox-container-1',
+        url: 'https://example.com',
+      } as any);
+      expect(result).to.be.undefined;
+    });
+  });
 });

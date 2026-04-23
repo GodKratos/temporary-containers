@@ -137,6 +137,11 @@ export interface BrowserMock {
       removeListener: sinon.SinonStub;
       hasListener: sinon.SinonStub;
     };
+    onAuthRequired: {
+      addListener: sinon.SinonStub;
+      removeListener: sinon.SinonStub;
+      hasListener: sinon.SinonStub;
+    };
   };
   permissions: {
     contains: sinon.SinonStub;
@@ -483,9 +488,12 @@ export function createBrowserMock(): BrowserMock {
         removeListener: sandbox.stub(),
         hasListener: sandbox.stub(),
       },
+      onAuthRequired: {
+        addListener: sandbox.stub(),
+        removeListener: sandbox.stub(),
+        hasListener: sandbox.stub(),
+      },
     },
-
-    // Permissions API
     permissions: {
       contains: sandbox.stub(),
       getAll: sandbox.stub(),
