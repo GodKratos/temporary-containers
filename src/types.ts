@@ -202,7 +202,6 @@ export interface PreferencesSchema {
   };
   statistics: boolean;
   ui: {
-    expandPreferences: boolean;
     popupDefaultTab: 'isolation-global' | 'isolation-domain' | 'actions' | 'statistics';
   };
   containerPrefixOverride: string;

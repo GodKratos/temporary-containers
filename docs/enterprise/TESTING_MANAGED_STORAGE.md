@@ -214,7 +214,6 @@ For comprehensive testing, here's a policy template that locks **all** extension
             },
             "statistics": false,
             "ui": {
-              "expandPreferences": false,
               "popupDefaultTab": "isolation-global"
             }
           },
@@ -265,7 +264,6 @@ For comprehensive testing, here's a policy template that locks **all** extension
             "deletesHistory.containerMouseClicks",
             "deletesHistory.statistics",
             "statistics",
-            "ui.expandPreferences",
             "ui.popupDefaultTab"
           ],
           "policy_name": "Enterprise Complete Lockdown Policy",

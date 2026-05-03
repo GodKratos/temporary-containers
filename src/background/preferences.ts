@@ -84,7 +84,6 @@ export class Preferences {
     },
     statistics: false,
     ui: {
-      expandPreferences: false,
       popupDefaultTab: 'isolation-global',
     },
     containerPrefixOverride: '',
