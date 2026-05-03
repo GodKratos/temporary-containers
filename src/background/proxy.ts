@@ -81,7 +81,7 @@ export class Proxy {
     }
 
     const proxyInfo: ProxyInfo = {
-      type: entry.protocol,
+      type: entry.protocol === 'socks5' ? 'socks' : entry.protocol,
       host: entry.host,
       port: entry.port,
     };

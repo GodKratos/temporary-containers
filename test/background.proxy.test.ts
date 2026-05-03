@@ -194,7 +194,7 @@ describe('Proxy', () => {
       };
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
-      expect(result).to.deep.equal({ type: 'socks5', host: 'socks.example.com', port: 1080, proxyDNS: true });
+      expect(result).to.deep.equal({ type: 'socks', host: 'socks.example.com', port: 1080, proxyDNS: true });
     });
 
     it('should set proxyDNS true for socks4 proxies', async () => {
@@ -276,7 +276,7 @@ describe('Proxy', () => {
 
       const result = background.proxy.handleProxy({ tabId: 1, cookieStoreId: 'firefox-container-1', url: 'https://example.com' } as any);
       expect(result).to.deep.equal({
-        type: 'socks5',
+        type: 'socks',
         host: 'socks.example.com',
         port: 1080,
         username: 'user',
