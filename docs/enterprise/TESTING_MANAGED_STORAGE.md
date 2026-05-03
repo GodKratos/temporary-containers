@@ -139,6 +139,7 @@ For comprehensive testing, here's a policy template that locks **all** extension
     "3rdparty": {
       "Extensions": {
         "{1ea2fa75-677e-4702-b06a-50fc7d06fe7e}": {
+          "suppress_first_run_page": true,
           "preferences": {
             "automaticMode": {
               "active": true,
@@ -283,6 +284,7 @@ For comprehensive testing, here's a policy template that locks **all** extension
 - Users will see padlock icons (🔒) next to every setting
 - All form fields will be disabled and grayed out
 - Tooltips will show "This setting is managed by policy"
+- The settings page will **not** open automatically on Firefox startup after addon deployment
 
 **⚙️ Enforced Configuration:**
 

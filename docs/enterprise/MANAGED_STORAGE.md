@@ -110,6 +110,7 @@ The managed storage configuration follows this structure:
   "version": "1.0.0",
   "policy_name": "Corporate Temporary Containers Policy",
   "policy_description": "Enterprise policy configuration for Temporary Containers extension",
+  "suppress_first_run_page": true,
   "locked_settings": ["automaticMode.active", "isolation.global.navigation.action", "deletesHistory.active"],
   "preferences": {
     // Extension preferences (see full schema below)
@@ -122,6 +123,7 @@ The managed storage configuration follows this structure:
 - **version**: Version identifier for the policy configuration
 - **policy_name**: Human-readable name for the policy
 - **policy_description**: Description of what the policy configures
+- **suppress_first_run_page**: When `true`, prevents the settings page from opening automatically on the first Firefox start after addon installation or redeployment. Recommended for managed deployments where the addon may be reinstalled on each boot.
 - **locked_settings**: Array of setting paths that users cannot modify
 - **preferences**: Extension preferences to be enforced
 

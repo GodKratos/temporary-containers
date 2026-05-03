@@ -131,12 +131,14 @@ export interface ManagedStorageState {
   lastChecked: number;
   overrides: Partial<PreferencesSchema>;
   lockedSettings: string[];
+  suppressFirstRunPage: boolean;
 }
 
 export interface ManagedStorageManifest {
   version?: string;
   preferences?: Partial<PreferencesSchema>;
   locked_settings?: string[];
+  suppress_first_run_page?: boolean;
   policy_name?: string;
   policy_description?: string;
 }

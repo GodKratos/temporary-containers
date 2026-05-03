@@ -61,6 +61,7 @@ describe('Managed Storage', () => {
       lastChecked: Date.now(),
       lockedSettings: ['automaticMode.active', 'container.namePrefix'],
       overrides: {},
+      suppressFirstRunPage: false,
     };
 
     // Test locked setting validation

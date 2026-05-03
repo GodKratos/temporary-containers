@@ -43,6 +43,7 @@ export class Storage {
         lastChecked: 0,
         overrides: {},
         lockedSettings: [],
+        suppressFirstRunPage: false,
       },
     };
 
@@ -51,6 +52,7 @@ export class Storage {
       lastChecked: 0,
       overrides: {},
       lockedSettings: [],
+      suppressFirstRunPage: false,
     };
   }
 
@@ -147,6 +149,7 @@ export class Storage {
         lastChecked: Date.now(),
         overrides: managed.preferences || {},
         lockedSettings: managed.locked_settings || [],
+        suppressFirstRunPage: managed.suppress_first_run_page ?? false,
       };
 
       // Apply managed preferences

@@ -4,7 +4,7 @@ window.tmp = new TemporaryContainers();
 window.tmp
   .initialize()
   .then(tmp => {
-    if (tmp.storage.installed) {
+    if (tmp.storage.installed && !tmp.storage.managedStorage.suppressFirstRunPage) {
       tmp.debug('[bg] fresh install, showing options');
       browser.tabs.create({
         url: browser.runtime.getURL('options.html?installed'),
