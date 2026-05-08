@@ -25,6 +25,9 @@ export default [
         URL: 'readonly',
         Blob: 'readonly',
         confirm: 'readonly',
+        crypto: 'readonly',
+        FileReader: 'readonly',
+        btoa: 'readonly',
 
         // DOM types
         HTMLElement: 'readonly',

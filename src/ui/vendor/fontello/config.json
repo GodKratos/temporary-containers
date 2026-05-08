@@ -149,6 +149,12 @@
       "css": "doc",
       "code": 59399,
       "src": "fontawesome"
+    },
+    {
+      "uid": "i6ej1r6t84xouh0dct7g9zyx3ya9s9eg",
+      "css": "globe",
+      "code": 59400,
+      "src": "modernpics"
     }
   ]
 }

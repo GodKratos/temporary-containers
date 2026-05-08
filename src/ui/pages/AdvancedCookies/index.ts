@@ -1,5 +1,5 @@
 // Advanced: Cookies page logic for options menu
-import { getPreferences, savePreferences, showError, showSuccess } from '../../shared/utils';
+import { getPreferences, savePreferences, showError, showSuccess, applyLocalization } from '../../shared/utils';
 import { Cookie } from '../../../types';
 
 interface CookieDefaults {
@@ -167,40 +167,44 @@ export async function initAdvancedCookiesPage(): Promise<void> {
 
       if (Object.keys(cookiesDomain).length === 0) {
         cookiesDisplay.innerHTML = `<p data-i18n="optionsAdvancedCookiesNoCookies">No cookies configured</p>`;
+        applyLocalization(cookiesDisplay);
         return;
       }
 
-      cookiesDisplay.innerHTML = '';
-
+      const tbodyRows: string[] = [];
       for (const [domainPattern, cookies] of Object.entries(cookiesDomain)) {
-        const domainSection = document.createElement('div');
-        domainSection.className = 'config-group';
-        domainSection.innerHTML = `
-          <h4>${domainPattern}</h4>
-        `;
-
         cookies.forEach((cookie: Cookie, index: number) => {
-          const cookieItem = document.createElement('div');
-          cookieItem.className = 'config-item';
-
-          const cookieDetails = Object.entries(cookie)
-            .filter(([_key, value]) => value !== '')
-            .map(([key, value]) => `<div><strong>${key}:</strong> ${value}</div>`)
-            .join('');
-
-          cookieItem.innerHTML = `
-            <div class="config-item-details">${cookieDetails}</div>
-            <div class="config-item-actions">
-              <button class="small cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">Edit</button>
-              <button class="small danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">Remove</button>
-            </div>
-          `;
-
-          domainSection.appendChild(cookieItem);
+          tbodyRows.push(`
+            <tr data-domain="${domainPattern}" data-index="${index}">
+              <td>${domainPattern}</td>
+              <td>${cookie.description}</td>
+              <td>${cookie.name}</td>
+              <td>${cookie.value}</td>
+              <td class="col-actions">
+                <button class="small cookie-edit" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesEdit">Edit</button>
+                <button class="small danger cookie-remove" data-domain="${domainPattern}" data-index="${index}" data-i18n="optionsAdvancedCookiesRemove">Remove</button>
+              </td>
+            </tr>
+          `);
         });
-
-        cookiesDisplay.appendChild(domainSection);
       }
+
+      cookiesDisplay.innerHTML = `
+        <div class="settings-table-wrapper">
+          <table class="settings-table">
+            <thead>
+              <tr>
+                <th data-i18n="optionsDomainPattern">Domain Pattern</th>
+                <th data-i18n="optionsAdvancedCookiesDescription">Description</th>
+                <th data-i18n="optionsAdvancedCookiesName">Cookie Name</th>
+                <th data-i18n="optionsAdvancedCookiesValue">Cookie Value</th>
+                <th class="col-actions" data-i18n="optionsProxiesColActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>${tbodyRows.join('')}</tbody>
+          </table>
+        </div>
+      `;
 
       // Attach event listeners to edit/remove buttons
       cookiesDisplay.querySelectorAll('.cookie-edit').forEach(button => {
@@ -220,6 +224,8 @@ export async function initAdvancedCookiesPage(): Promise<void> {
           removeCookie(domain, index);
         });
       });
+
+      applyLocalization(cookiesDisplay);
     }
 
     function resetForm() {

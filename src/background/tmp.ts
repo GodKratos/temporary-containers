@@ -23,6 +23,7 @@ import { Statistics } from './statistics';
 import { Storage } from './storage';
 import { Tabs } from './tabs';
 import { Utils } from './utils';
+import { Proxy as ProxyModule } from './proxy';
 import { PreferencesSchema, Permissions } from '~/types';
 
 export class TemporaryContainers {
@@ -53,6 +54,7 @@ export class TemporaryContainers {
   public migration = new Migration(this);
   public migrationLegacy = new MigrationLegacy(this);
   public eventlisteners = new EventListeners(this);
+  public proxy = new ProxyModule(this);
 
   public version!: string;
   public containerPrefix = 'firefox';
@@ -77,6 +79,7 @@ export class TemporaryContainers {
       notifications: permissions.includes('notifications'),
       downloads: permissions.includes('downloads'),
       webNavigation: permissions.includes('webNavigation'),
+      proxy: permissions.includes('proxy'),
     };
 
     this.preferences.initialize();
@@ -120,6 +123,7 @@ export class TemporaryContainers {
     this.contextmenu.initialize();
     this.cookies.initialize();
     this.scripts.initialize();
+    this.proxy.initialize();
     this.statistics.initialize();
     this.mac.initialize();
     this.history.initialize();

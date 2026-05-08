@@ -392,15 +392,6 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Настроенные правила доменов"
   },
-  "optionsIsolationPerDomainAlways": {
-    "message": "Всегда открывать:"
-  },
-  "optionsIsolationPerDomainNavigation": {
-    "message": "Навигация по URL:"
-  },
-  "optionsIsolationPerDomainExclude": {
-    "message": "Исключённые домены:"
-  },
   "optionsIsolationPerDomainEdit": {
     "message": "Изменить"
   },
@@ -424,6 +415,15 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Правило для этого шаблона домена уже существует"
+  },
+  "optionsIsolationPerDomainColAlways": {
+    "message": "Всегда"
+  },
+  "optionsIsolationPerDomainColNavigation": {
+    "message": "Навигация"
+  },
+  "optionsIsolationPerDomainColExcluded": {
+    "message": "Исключённые"
   },
   "optionsIsolationNoRulesConfigured": {
     "message": "Правила изоляции доменов не настроены."
@@ -511,6 +511,24 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Не удалось сбросить настройки. Пожалуйста, попробуйте ещё раз."
+  },
+  "optionsAdvancedMiscDebugLogging": {
+    "message": "Журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingDescription": {
+    "message": "Включите журналирование для просмотра подробной активности расширения в консоли браузера. Откройте консоль через about:debugging > This Firefox > Temporary Containers Plus > Проверить."
+  },
+  "optionsAdvancedMiscDebugLoggingEnable": {
+    "message": "Включить журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingDisable": {
+    "message": "Отключить журналирование отладки"
+  },
+  "optionsAdvancedMiscDebugLoggingEnabled": {
+    "message": "Журналирование отладки включено. Откройте консоль инспектора расширения для просмотра журналов."
+  },
+  "optionsAdvancedMiscDebugLoggingDisabled": {
+    "message": "Журналирование отладки отключено."
   },
   "optionsAdvancedMiscContainerPrefix": {
     "message": "Префикс контейнера"
@@ -816,6 +834,12 @@
   "optionsAdvancedScriptsNoScripts": {
     "message": "Скрипты не настроены"
   },
+  "optionsAdvancedScriptsColRunAt": {
+    "message": "Выполнять при"
+  },
+  "optionsAdvancedScriptsColCode": {
+    "message": "Код"
+  },
 
   "optionsAdvancedDeleteHistoryTitle": {
     "message": "Временные контейнеры с удалением истории"
@@ -921,5 +945,158 @@
   },
   "errorEmptyPrefixWithHideMode": {
     "message": "Префикс имени контейнера не может быть пустым при включенном режиме \"Скрыть номер\". Пожалуйста, укажите префикс или выберите другой режим нумерации."
+  },
+  "optionsNavProxies": {
+    "message": "Прокси"
+  },
+  "optionsProxiesTitle": {
+    "message": "Настройка прокси"
+  },
+  "optionsProxiesWarningTitle": {
+    "message": "Разрешение и уведомление безопасности"
+  },
+  "optionsProxiesWarningText": {
+    "message": "Настройка прокси требует разрешения \"Доступ к настройкам прокси браузера\". Учётные данные прокси хранятся локально в открытом виде — настраивайте только доверенные прокси."
+  },
+  "optionsProxiesWarningAccept": {
+    "message": "Я понимаю и хочу включить назначение прокси (требуется разрешение \"Доступ к настройкам прокси браузера\")"
+  },
+  "optionsProxiesStatusInfo": {
+    "message": "Активный прокси для текущей вкладки отображается в виде всплывающей подсказки на значке панели задач. Включите значок адресной строки ниже, чтобы видеть его и там."
+  },
+  "optionsProxiesAssignmentMode": {
+    "message": "Режим назначения"
+  },
+  "optionsProxiesAssignmentModeRandom": {
+    "message": "Случайный (назначать случайный прокси каждому новому контейнеру)"
+  },
+  "optionsProxiesAssignmentModeSequential": {
+    "message": "Последовательный (назначать прокси по порядку из списка)"
+  },
+  "optionsProxiesAssignmentModeDisabled": {
+    "message": "Отключено (не назначать прокси новым контейнерам)"
+  },
+  "optionsProxiesRemoveAll": {
+    "message": "Удалить все"
+  },
+  "optionsProxiesRemoveAllConfirm": {
+    "message": "Удалить все прокси? Это действие нельзя отменить."
+  },
+  "optionsProxiesAddProxy": {
+    "message": "Добавить прокси"
+  },
+  "optionsProxiesEditProxy": {
+    "message": "Изменить прокси"
+  },
+  "optionsProxiesProtocol": {
+    "message": "Протокол"
+  },
+  "optionsProxiesHost": {
+    "message": "Хост"
+  },
+  "optionsProxiesHostPlaceholder": {
+    "message": "proxy.example.com или 192.168.1.1"
+  },
+  "optionsProxiesPort": {
+    "message": "Порт"
+  },
+  "optionsProxiesUsername": {
+    "message": "Имя пользователя (необязательно)"
+  },
+  "optionsProxiesPassword": {
+    "message": "Пароль (необязательно)"
+  },
+  "optionsProxiesLabel": {
+    "message": "Метка (необязательно)"
+  },
+  "optionsProxiesLabelPlaceholder": {
+    "message": "например, US VPN или Рабочий прокси"
+  },
+  "optionsProxiesSave": {
+    "message": "Сохранить"
+  },
+  "optionsProxiesCancel": {
+    "message": "Отмена"
+  },
+  "optionsProxiesImportTitle": {
+    "message": "Импорт прокси"
+  },
+  "optionsProxiesImportFromFile": {
+    "message": "Импортировать из файла"
+  },
+  "optionsProxiesImportHelp": {
+    "message": "Поддерживаются файлы .txt и .csv. Обычный текст: по одному прокси на строке в формате host:port, protocol://host:port или protocol://user:pass@host:port. CSV: столбцы protocol, host, port, username, password, label (разделитель — запятая или точка с запятой, заголовок необязателен)."
+  },
+  "optionsProxiesProtocolHTTP": {
+    "message": "HTTP"
+  },
+  "optionsProxiesProtocolHTTPS": {
+    "message": "HTTPS"
+  },
+  "optionsProxiesProtocolSOCKS4": {
+    "message": "SOCKS4"
+  },
+  "optionsProxiesProtocolSOCKS5": {
+    "message": "SOCKS5"
+  },
+  "optionsProxiesBadgeAuth": {
+    "message": "авторизация"
+  },
+  "optionsProxiesImportDefaultValue": {
+    "message": "по умолчанию"
+  },
+  "optionsProxiesImportPaste": {
+    "message": "Вставить прокси"
+  },
+  "optionsProxiesImportPasteLabel": {
+    "message": "Вставьте список прокси (по одному на строку: host:port, protocol://host:port или protocol://user:pass@host:port)"
+  },
+  "optionsProxiesImportParsePaste": {
+    "message": "Разобрать и просмотреть"
+  },
+  "optionsProxiesImportDefaultProtocol": {
+    "message": "Протокол по умолчанию (для записей без протокола)"
+  },
+  "optionsProxiesImportConfirm": {
+    "message": "Добавить прокси"
+  },
+  "optionsProxiesImportCancel": {
+    "message": "Отменить импорт"
+  },
+  "optionsProxiesImportParseError": {
+    "message": "Не удалось разобрать ни одной допустимой записи прокси из ввода."
+  },
+  "optionsProxiesConfiguredProxies": {
+    "message": "Настроенные прокси"
+  },
+  "optionsProxiesNoProxies": {
+    "message": "Прокси не настроены. Добавьте прокси выше или импортируйте список."
+  },
+  "optionsProxiesColEnabled": {
+    "message": "Включен"
+  },
+  "optionsProxiesColLabel": {
+    "message": "Метка"
+  },
+  "optionsProxiesColAuth": {
+    "message": "Авториз."
+  },
+  "optionsProxiesColActions": {
+    "message": "Действия"
+  },
+  "optionsProxiesEdit": {
+    "message": "Изменить"
+  },
+  "optionsProxiesRemove": {
+    "message": "Удалить"
+  },
+  "optionsProxiesRemoveConfirm": {
+    "message": "Удалить этот прокси?"
+  },
+  "optionsProxiesValidationErrorHost": {
+    "message": "Хост обязателен."
+  },
+  "optionsProxiesValidationErrorPort": {
+    "message": "Порт должен быть числом от 1 до 65535."
   }
 }

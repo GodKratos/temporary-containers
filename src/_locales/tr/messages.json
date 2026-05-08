@@ -392,15 +392,6 @@
   "optionsIsolationPerDomainConfiguredRules": {
     "message": "Yapılandırılmış Alan Adı Kuralları"
   },
-  "optionsIsolationPerDomainAlways": {
-    "message": "Her Zaman Aç:"
-  },
-  "optionsIsolationPerDomainNavigation": {
-    "message": "URL Gezinme:"
-  },
-  "optionsIsolationPerDomainExclude": {
-    "message": "Hariç Tutulan Alan Adları:"
-  },
   "optionsIsolationPerDomainEdit": {
     "message": "Düzenle"
   },
@@ -424,6 +415,15 @@
   },
   "optionsIsolationPerDomainPatternExists": {
     "message": "Bu alan adı deseni için bir kural zaten mevcut"
+  },
+  "optionsIsolationPerDomainColAlways": {
+    "message": "Her Zaman"
+  },
+  "optionsIsolationPerDomainColNavigation": {
+    "message": "Navigasyon"
+  },
+  "optionsIsolationPerDomainColExcluded": {
+    "message": "Hariç"
   },
   "optionsIsolationNoRulesConfigured": {
     "message": "Alan adı izolasyon kuralları yapılandırılmamış."
@@ -511,6 +511,24 @@
   },
   "optionsAdvancedMiscResetStorageFailed": {
     "message": "Ayarlar sıfırlanamadı. Lütfen tekrar deneyin."
+  },
+  "optionsAdvancedMiscDebugLogging": {
+    "message": "Hata Ayıklama Günlüğü"
+  },
+  "optionsAdvancedMiscDebugLoggingDescription": {
+    "message": "Tarayıcı konsolunda ayrıntılı eklenti etkinliğini görüntülemek için hata ayıklama günlüğünü etkinleştirin. Konsolu about:debugging > This Firefox > Temporary Containers Plus > İncele üzerinden açın."
+  },
+  "optionsAdvancedMiscDebugLoggingEnable": {
+    "message": "Hata Ayıklama Günlüğünü Etkinleştir"
+  },
+  "optionsAdvancedMiscDebugLoggingDisable": {
+    "message": "Hata Ayıklama Günlüğünü Devre Dışı Bırak"
+  },
+  "optionsAdvancedMiscDebugLoggingEnabled": {
+    "message": "Hata ayıklama günlüğü etkinleştirildi. Günlüleri görüntülemek için eklenti denetleyici konsolunu açın."
+  },
+  "optionsAdvancedMiscDebugLoggingDisabled": {
+    "message": "Hata ayıklama günlüğü devre dışı bırakıldı."
   },
   "optionsAdvancedMiscContainerPrefix": {
     "message": "Konteyner Ön Eki"
@@ -816,6 +834,12 @@
   "optionsAdvancedScriptsNoScripts": {
     "message": "Betik yapılandırılmamış"
   },
+  "optionsAdvancedScriptsColRunAt": {
+    "message": "Çalıştırmak"
+  },
+  "optionsAdvancedScriptsColCode": {
+    "message": "Kod"
+  },
 
   "optionsAdvancedDeleteHistoryTitle": {
     "message": "Geçmişi Silen Geçici Konteynerler"
@@ -921,5 +945,158 @@
   },
   "errorEmptyPrefixWithHideMode": {
     "message": "\"Numarayı gizle\" modu etkinken Konteyner Adı Öneki boş olamaz. Lütfen bir önek girin veya farklı bir numara modu seçin."
+  },
+  "optionsNavProxies": {
+    "message": "Proxy'ler"
+  },
+  "optionsProxiesTitle": {
+    "message": "Proxy Yapılandırması"
+  },
+  "optionsProxiesWarningTitle": {
+    "message": "İzin ve Güvenlik Bildirimi"
+  },
+  "optionsProxiesWarningText": {
+    "message": "Proxy yapılandırması \"Tarayıcı proxy ayarlarına eriş\" iznini gerektirir. Proxy kimlik bilgileri yerel olarak düz metin olarak saklanır — yalnızca güvendiğiniz proxy'leri yapılandırın."
+  },
+  "optionsProxiesWarningAccept": {
+    "message": "Anlıyorum ve proxy atamasını etkinleştirmek istiyorum (\"Tarayıcı proxy ayarlarına eriş\" izni gerektirir)"
+  },
+  "optionsProxiesStatusInfo": {
+    "message": "Mevcut sekme için aktif proxy, araç çubuğu simgesinde araç ipucu olarak gösterilir. Aşağıdaki adres çubuğu simgesini etkinleştirerek orada da görebilirsiniz."
+  },
+  "optionsProxiesAssignmentMode": {
+    "message": "Atama Modu"
+  },
+  "optionsProxiesAssignmentModeRandom": {
+    "message": "Rastgele (her yeni konteynere rastgele bir proxy ata)"
+  },
+  "optionsProxiesAssignmentModeSequential": {
+    "message": "Sıralı (proxy'leri listeden sırayla ata)"
+  },
+  "optionsProxiesAssignmentModeDisabled": {
+    "message": "Devre dışı (yeni konteynerlere proxy atama)"
+  },
+  "optionsProxiesRemoveAll": {
+    "message": "Tümünü Kaldır"
+  },
+  "optionsProxiesRemoveAllConfirm": {
+    "message": "Tüm proxy'ler kaldırılsın mı? Bu işlem geri alınamaz."
+  },
+  "optionsProxiesAddProxy": {
+    "message": "Proxy Ekle"
+  },
+  "optionsProxiesEditProxy": {
+    "message": "Proxy Düzenle"
+  },
+  "optionsProxiesProtocol": {
+    "message": "Protokol"
+  },
+  "optionsProxiesHost": {
+    "message": "Ana Bilgisayar"
+  },
+  "optionsProxiesHostPlaceholder": {
+    "message": "proxy.example.com veya 192.168.1.1"
+  },
+  "optionsProxiesPort": {
+    "message": "Port"
+  },
+  "optionsProxiesUsername": {
+    "message": "Kullanıcı Adı (isteğe bağlı)"
+  },
+  "optionsProxiesPassword": {
+    "message": "Parola (isteğe bağlı)"
+  },
+  "optionsProxiesLabel": {
+    "message": "Etiket (isteğe bağlı)"
+  },
+  "optionsProxiesLabelPlaceholder": {
+    "message": "örn. ABD VPN veya İş Proxy'si"
+  },
+  "optionsProxiesSave": {
+    "message": "Kaydet"
+  },
+  "optionsProxiesCancel": {
+    "message": "İptal"
+  },
+  "optionsProxiesImportTitle": {
+    "message": "Proxy İçe Aktar"
+  },
+  "optionsProxiesImportFromFile": {
+    "message": "Dosyadan İçe Aktar"
+  },
+  "optionsProxiesImportHelp": {
+    "message": ".txt veya .csv dosyaları desteklenir. Düz metin: her satıra bir proxy olarak host:port, protocol://host:port veya protocol://user:pass@host:port biçiminde. CSV: sütunlar protocol, host, port, username, password, label (virgül veya noktalı virgül ile ayrılmış, isteğe bağlı başlık satırı)."
+  },
+  "optionsProxiesProtocolHTTP": {
+    "message": "HTTP"
+  },
+  "optionsProxiesProtocolHTTPS": {
+    "message": "HTTPS"
+  },
+  "optionsProxiesProtocolSOCKS4": {
+    "message": "SOCKS4"
+  },
+  "optionsProxiesProtocolSOCKS5": {
+    "message": "SOCKS5"
+  },
+  "optionsProxiesBadgeAuth": {
+    "message": "yetki"
+  },
+  "optionsProxiesImportDefaultValue": {
+    "message": "varsayılan"
+  },
+  "optionsProxiesImportPaste": {
+    "message": "Proxy Yapıştır"
+  },
+  "optionsProxiesImportPasteLabel": {
+    "message": "Proxy listesini yapıştırın (her satıra bir tane: host:port, protocol://host:port veya protocol://user:pass@host:port)"
+  },
+  "optionsProxiesImportParsePaste": {
+    "message": "Ayrıştır ve Önizle"
+  },
+  "optionsProxiesImportDefaultProtocol": {
+    "message": "Varsayılan Protokol (protokolü olmayan girişler için)"
+  },
+  "optionsProxiesImportConfirm": {
+    "message": "Proxy'leri Ekle"
+  },
+  "optionsProxiesImportCancel": {
+    "message": "İçe Aktarmayı İptal Et"
+  },
+  "optionsProxiesImportParseError": {
+    "message": "Girişten geçerli proxy girişi ayrıştırılamadı."
+  },
+  "optionsProxiesConfiguredProxies": {
+    "message": "Yapılandırılmış Proxy'ler"
+  },
+  "optionsProxiesNoProxies": {
+    "message": "Proxy yapılandırılmamış. Yukarıdan bir proxy ekleyin veya liste içe aktarın."
+  },
+  "optionsProxiesColEnabled": {
+    "message": "Etkin"
+  },
+  "optionsProxiesColLabel": {
+    "message": "Etiket"
+  },
+  "optionsProxiesColAuth": {
+    "message": "Yetki"
+  },
+  "optionsProxiesColActions": {
+    "message": "İşlemler"
+  },
+  "optionsProxiesEdit": {
+    "message": "Düzenle"
+  },
+  "optionsProxiesRemove": {
+    "message": "Kaldır"
+  },
+  "optionsProxiesRemoveConfirm": {
+    "message": "Bu proxy kaldırılsın mı?"
+  },
+  "optionsProxiesValidationErrorHost": {
+    "message": "Ana bilgisayar gereklidir."
+  },
+  "optionsProxiesValidationErrorPort": {
+    "message": "Port 1 ile 65535 arasında bir sayı olmalıdır."
   }
 }

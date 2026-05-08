@@ -125,6 +125,17 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
 
+      <!-- Debug Logging -->
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscDebugLogging">Debug Logging</h3>
+        <div class="field">
+          <div class="field-description" data-i18n="optionsAdvancedMiscDebugLoggingDescription">Enable debug logging to view detailed extension activity in the browser console. Open the console via about:debugging > This Firefox > Temporary Containers Plus > Inspect.</div>
+          <div style="margin-top: 10px;">
+            <button type="button" id="toggleDebugLogging" class="small">...</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Reset Storage -->
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscResetStorage">Reset Storage</h3>
@@ -322,6 +333,27 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
       }
     }, 500);
   });
+
+  // Debug logging toggle
+  const toggleDebugLoggingButton = content.querySelector('#toggleDebugLogging') as HTMLButtonElement;
+  if (toggleDebugLoggingButton) {
+    const updateDebugButton = (enabled: boolean) => {
+      toggleDebugLoggingButton.textContent = browser.i18n.getMessage(
+        enabled ? 'optionsAdvancedMiscDebugLoggingDisable' : 'optionsAdvancedMiscDebugLoggingEnable'
+      );
+      toggleDebugLoggingButton.className = enabled ? 'small danger' : 'small';
+    };
+    browser.runtime.sendMessage({ method: 'getDebugLogging' }).then((enabled: any) => {
+      updateDebugButton(!!enabled);
+    });
+    toggleDebugLoggingButton.addEventListener('click', async () => {
+      const current = await browser.runtime.sendMessage({ method: 'getDebugLogging' });
+      const next = !current;
+      await browser.runtime.sendMessage({ method: 'setDebugLogging', payload: { enable: next } });
+      updateDebugButton(next);
+      showSuccess(browser.i18n.getMessage(next ? 'optionsAdvancedMiscDebugLoggingEnabled' : 'optionsAdvancedMiscDebugLoggingDisabled'));
+    });
+  }
 
   // Reset storage
   const resetStorageButton = content.querySelector('#resetStorage') as HTMLButtonElement;

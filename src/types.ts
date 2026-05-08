@@ -16,6 +16,7 @@ export interface ContainerOptions {
   number: number;
   clean: boolean;
   deletesHistory?: boolean;
+  proxyId?: string;
   history?: {
     [key: string]: { tabId: TabId };
   };
@@ -93,6 +94,17 @@ export interface Cookie {
 export interface Script {
   code: string;
   runAt: 'document_start' | 'document_end' | 'document_idle';
+}
+
+export interface ProxyEntry {
+  id: string;
+  enabled: boolean;
+  label?: string;
+  protocol: 'http' | 'https' | 'socks4' | 'socks5';
+  host: string;
+  port: number;
+  username?: string;
+  password?: string;
 }
 
 export type ToolbarIconColor = 'default' | 'black-simple' | 'blue-simple' | 'red-simple' | 'white-simple';
@@ -207,6 +219,11 @@ export interface PreferencesSchema {
     popupDefaultTab: 'isolation-global' | 'isolation-domain' | 'actions' | 'statistics';
   };
   containerPrefixOverride: string;
+  proxies: {
+    active: boolean;
+    assignmentMode: 'random' | 'sequential' | 'disabled';
+    entries: ProxyEntry[];
+  };
 }
 
 export interface Tab extends browser.tabs.Tab {
@@ -224,6 +241,7 @@ export interface Permissions {
   history: boolean;
   notifications: boolean;
   webNavigation: boolean;
+  proxy: boolean;
 }
 
 export type ContainerColor = (typeof CONTAINER_COLORS)[number];

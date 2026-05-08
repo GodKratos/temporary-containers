@@ -11,6 +11,7 @@ export const getPermissions = async (): Promise<Permissions> => {
     history: permissions.includes('history'),
     notifications: permissions.includes('notifications'),
     webNavigation: permissions.includes('webNavigation'),
+    proxy: permissions.includes('proxy'),
   };
 };
 
