@@ -23,7 +23,7 @@ After installation, Firefox may offer to pin the extension icon to the toolbar. 
 - Automatic Mode: https://github.com/GodKratos/temporary-containers/wiki/General-Settings#automatic-mode
 - Global Isolation: https://github.com/GodKratos/temporary-containers/wiki/Global-Isolation
 - Per-Domain Rules: https://github.com/GodKratos/temporary-containers/wiki/Per-Domain-Rules
-- Advanced Features (Cookies, Scripts, History Deletion): https://github.com/GodKratos/temporary-containers/wiki/Advanced
+- Advanced Features (Proxy Servers, Cookies, Scripts, History Deletion): https://github.com/GodKratos/temporary-containers/wiki/Advanced
 - Export & Import: https://github.com/GodKratos/temporary-containers/wiki/Export-Import
 - Statistics: https://github.com/GodKratos/temporary-containers/wiki/Statistics
 
