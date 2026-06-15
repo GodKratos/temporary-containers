@@ -531,13 +531,13 @@
     "message": "Hata ayıklama günlüğü devre dışı bırakıldı."
   },
   "optionsAdvancedMiscContainerPrefix": {
-    "message": "Konteyner Ön Eki"
+    "message": "Varsayılan Konteyner Ön Eki"
   },
   "optionsAdvancedMiscContainerPrefixOverride": {
-    "message": "Konteyner Ön Eki Geçersiz Kılma"
+    "message": "Varsayılan Konteyner Ön Eki Geçersiz Kılma"
   },
   "optionsAdvancedMiscContainerPrefixOverrideDescription": {
-    "message": "Otomatik olarak algılanan konteyner ön ekini geçersiz kılın. Bu ayar yalnızca otomatik mod düzgün çalışmıyorsa belirli Firefox çatallarında değiştirilmelidir. Otomatik algılama için boş bırakın. Mevcut ön ek:"
+    "message": "Varsayılan konteyner için otomatik olarak algılanan konteyner ön ekini geçersiz kılın. Bu ayar yalnızca otomatik mod düzgün çalışmıyorsa belirli Firefox çatallarında değiştirilmelidir. Otomatik algılama için boş bırakın. Mevcut ön ek:"
   },
   "optionsAdvancedMiscContainerPrefixSaved": {
     "message": "Konteyner ön eki geçersiz kılma kaydedildi. Değişiklikler tarayıcı yeniden başlatıldıktan sonra geçerli olacaktır."

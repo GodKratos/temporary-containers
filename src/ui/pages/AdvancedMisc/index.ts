@@ -111,12 +111,12 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
 
-      <!-- Container Prefix Override -->
+      <!-- Default Container Prefix Override -->
       <div class="section">
-        <h3 data-i18n="optionsAdvancedMiscContainerPrefix">Container Prefix</h3>
+        <h3 data-i18n="optionsAdvancedMiscContainerPrefix">Default Container Prefix</h3>
         <div class="field">
-          <label for="containerPrefixOverride" data-i18n="optionsAdvancedMiscContainerPrefixOverride">Container Prefix Override</label>
-          <div class="field-description" data-i18n="optionsAdvancedMiscContainerPrefixOverrideDescription">Override the automatically detected container prefix. Leave empty to use auto-detection. Current prefix: <span id="currentContainerPrefix"></span></div>
+          <label for="containerPrefixOverride" data-i18n="optionsAdvancedMiscContainerPrefixOverride">Default Container Prefix Override</label>
+          <div class="field-description" data-i18n="optionsAdvancedMiscContainerPrefixOverrideDescription">Override the automatically detected container prefix for the default container. Leave empty to use auto-detection. Current prefix: <span id="currentContainerPrefix"></span></div>
           <div style="display: flex; gap: 10px; margin-top: 10px;">
             <input type="text" id="containerPrefixOverride" data-setting="containerPrefixOverride" value="${preferences.containerPrefixOverride || ''}" placeholder="firefox" style="flex: 1;" />
             <button type="button" id="saveContainerPrefix" data-i18n="save">Save</button>

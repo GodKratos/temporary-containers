@@ -531,13 +531,13 @@
     "message": "Debug logging disabled."
   },
   "optionsAdvancedMiscContainerPrefix": {
-    "message": "Container Prefix"
+    "message": "Default Container Prefix"
   },
   "optionsAdvancedMiscContainerPrefixOverride": {
-    "message": "Container Prefix Override"
+    "message": "Default Container Prefix Override"
   },
   "optionsAdvancedMiscContainerPrefixOverrideDescription": {
-    "message": "Override the automatically detected container prefix. This setting should only be changed on certain Firefox forks if automatic mode is not working correctly. Leave empty to use auto-detection. Current prefix:"
+    "message": "Override the automatically detected container prefix for the default container. This setting should only be changed on certain Firefox forks if automatic mode is not working correctly. Leave empty to use auto-detection. Current prefix:"
   },
   "optionsAdvancedMiscContainerPrefixSaved": {
     "message": "Container prefix override saved. Changes will take effect after browser restart."
