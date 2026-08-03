@@ -23,6 +23,9 @@ export class Preferences {
       iconRandomExcluded: [],
       numberMode: 'keep',
       removal: 900000, // ms
+      orphanSweep: {
+        active: true,
+      },
     },
     iconColor: 'default',
     isolation: {
