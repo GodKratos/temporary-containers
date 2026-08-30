@@ -157,12 +157,32 @@ export class Storage {
         this.applyManagedPreferences(managed.preferences);
       }
 
+      // Apply managed keyboard shortcut overrides
+      if (managed.commands) {
+        await this.applyManagedCommands(managed.commands);
+      }
+
       // Store managed state in local storage
       this.local.managedStorage = this.managedStorage;
       await this.persist();
     } catch (error) {
       this.debug('[checkManagedStorage] accessing managed storage failed:', (error as Error).toString());
       this.managedStorage.isManaged = false;
+    }
+  }
+
+  private async applyManagedCommands(commands: Record<string, string | null>): Promise<void> {
+    this.debug('[applyManagedCommands] applying managed commands', commands);
+    for (const [name, shortcut] of Object.entries(commands)) {
+      try {
+        if (shortcut === null || shortcut === '') {
+          await browser.commands.reset(name);
+        } else {
+          await browser.commands.update({ name, shortcut });
+        }
+      } catch (error) {
+        this.debug('[applyManagedCommands] failed to update command', name, error);
+      }
     }
   }
 

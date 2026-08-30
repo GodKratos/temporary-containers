@@ -151,6 +151,8 @@ export interface ManagedStorageManifest {
   preferences?: Partial<PreferencesSchema>;
   locked_settings?: string[];
   suppress_first_run_page?: boolean;
+  // null clears a shortcut; a string sets it (e.g. "Alt+Shift+C")
+  commands?: Record<string, string | null>;
   policy_name?: string;
   policy_description?: string;
 }
