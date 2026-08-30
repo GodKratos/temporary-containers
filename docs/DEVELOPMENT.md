@@ -178,12 +178,31 @@ If you need to release manually or the automated workflow fails:
 2. Package the extension: `npm run webext:build`
 3. Sign manually: `npm run beta` (for beta) or manual web-ext signing
 
+### Unsigned Test Build
+
+For quick testing without creating a formal release or requiring AMO credentials, you can trigger an unsigned build from the Actions tab on GitHub:
+
+1. Go to **Actions → Build Test Artifact → Run workflow**
+2. Select the branch to build from and click **Run workflow**
+3. Once complete, download the `.zip` artifact from the run summary (available for 14 days)
+4. In Firefox, open `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → select the downloaded ZIP
+
+The extension will remain installed until the browser is restarted. This workflow runs tests and builds the extension identically to the release workflow, but skips signing and does not create a GitHub release.
+
+#### Installing a Test Build (share this with testers)
+
+1. Download the [test version .zip file](insert_link).
+2. Open Firefox and go to `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on** and select the downloaded `.zip` file.
+4. The extension is now active temporarily until Firefox is restarted.
+
 ### Release Differences
 
-| Release Type   | AMO Channel | GitHub Release | Automatic Updates      | Tag Format      |
-| -------------- | ----------- | -------------- | ---------------------- | --------------- |
-| **Beta**       | Unlisted    | Pre-release    | ❌ Manual install only | `beta-X.Y.Z`    |
-| **Production** | Listed      | Latest         | ✅ Automatic updates   | `release-X.Y.Z` |
+| Release Type       | AMO Channel | GitHub Release | Automatic Updates      | Trigger              |
+| ------------------ | ----------- | -------------- | ---------------------- | -------------------- |
+| **Unsigned build** | —           | ❌ None        | ❌ Temporary install   | Manual (Actions tab) |
+| **Beta**           | Unlisted    | Pre-release    | ❌ Manual install only | Tag `beta-X.Y.Z`     |
+| **Production**     | Listed      | Latest         | ✅ Automatic updates   | Tag `release-X.Y.Z`  |
 
 ## Project Structure
 

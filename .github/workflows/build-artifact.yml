@@ -33,5 +33,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: temporary-containers-${{ github.sha }}
-          path: ./artifacts/*.zip
+          path: ./web-ext-artifacts/*.zip
           retention-days: 14
