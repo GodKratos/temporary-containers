@@ -3,6 +3,10 @@
   "policy_name": "Corporate Temporary Containers Policy",
   "policy_description": "Enterprise policy configuration for Temporary Containers extension",
   "locked_settings": ["automaticMode.active", "isolation.global.navigation.action", "deletesHistory.active", "statistics"],
+  "commands": {
+    "new_temporary_container_tab": "Alt+Shift+C",
+    "new_no_container_tab": ""
+  },
   "preferences": {
     "automaticMode": {
       "active": true,

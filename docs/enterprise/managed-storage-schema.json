@@ -24,11 +24,14 @@
       "type": "object",
       "additionalProperties": {
         "oneOf": [
-          { "type": "string", "description": "Shortcut key combination to assign (e.g. \"Alt+Shift+C\")" },
-          { "type": "null", "description": "Set to null to reset the shortcut to its default" }
+          {
+            "type": "string",
+            "description": "Shortcut key combination to assign (e.g. \"Alt+Shift+C\"), or an empty string to clear the shortcut"
+          },
+          { "type": "null", "description": "Set to null to reset the shortcut to its manifest default" }
         ]
       },
-      "description": "Override keyboard shortcuts for extension commands. Valid command names: new_temporary_container_tab, new_same_container_tab, new_no_container_tab, new_no_container_window_tab, new_temporary_container_tab_current_url, new_no_history_tab, toggle_isolation. Set a value to an empty string or null to reset a shortcut to its default."
+      "description": "Override keyboard shortcuts for extension commands. Valid command names: new_temporary_container_tab, new_same_container_tab, new_no_container_tab, new_no_container_window_tab, new_temporary_container_tab_current_url, new_no_history_tab, toggle_isolation. Set a value to a shortcut string to assign it, an empty string to clear it, or null to reset it to its manifest default."
     },
     "preferences": {
       "type": "object",

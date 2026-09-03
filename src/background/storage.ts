@@ -175,7 +175,7 @@ export class Storage {
     this.debug('[applyManagedCommands] applying managed commands', commands);
     for (const [name, shortcut] of Object.entries(commands)) {
       try {
-        if (shortcut === null || shortcut === '') {
+        if (shortcut === null) {
           await browser.commands.reset(name);
         } else {
           await browser.commands.update({ name, shortcut });

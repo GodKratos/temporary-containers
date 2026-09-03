@@ -189,9 +189,9 @@ For quick testing without creating a formal release or requiring AMO credentials
 
 The extension will remain installed until the browser is restarted. This workflow runs tests and builds the extension identically to the release workflow, but skips signing and does not create a GitHub release.
 
-#### Installing a Test Build (share this with testers)
+#### Installing a Test Build (download zip and share this with testers)
 
-1. Download the [test version .zip file](insert_link).
+1. Download the attached test version `.zip` file.
 2. Open Firefox and go to `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on** and select the downloaded `.zip` file.
 4. The extension is now active temporarily until Firefox is restarted.

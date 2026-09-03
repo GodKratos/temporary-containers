@@ -112,6 +112,9 @@ The managed storage configuration follows this structure:
   "policy_description": "Enterprise policy configuration for Temporary Containers extension",
   "suppress_first_run_page": true,
   "locked_settings": ["automaticMode.active", "isolation.global.navigation.action", "deletesHistory.active"],
+  "commands": {
+    // Keyboard shortcut overrides (see Commands section below)
+  },
   "preferences": {
     // Extension preferences (see full schema below)
   }
@@ -125,6 +128,7 @@ The managed storage configuration follows this structure:
 - **policy_description**: Description of what the policy configures
 - **suppress_first_run_page**: When `true`, prevents the settings page from opening automatically on the first Firefox start after addon installation or redeployment. Recommended for managed deployments where the addon may be reinstalled on each boot.
 - **locked_settings**: Array of setting paths that users cannot modify
+- **commands**: Keyboard shortcut overrides for extension commands
 - **preferences**: Extension preferences to be enforced
 
 #### Locked Settings
@@ -135,6 +139,26 @@ Settings can be locked to prevent user modification. Use dot notation to specify
 - `"container.namePrefix"` - Locks the container name prefix
 - `"isolation.global.navigation.action"` - Locks navigation isolation behavior
 - `"deletesHistory.active"` - Locks history deletion feature
+
+#### Commands
+
+The `commands` field overrides the extension's keyboard shortcuts, which otherwise can only be changed per-machine via Firefox's `about:addons` → "Manage Extension Shortcuts" page. Valid command names are: `new_temporary_container_tab`, `new_same_container_tab`, `new_no_container_tab`, `new_no_container_window_tab`, `new_temporary_container_tab_current_url`, `new_no_history_tab`, `toggle_isolation`.
+
+Each value can be:
+
+- A shortcut string (e.g. `"Alt+Shift+C"`) to assign that shortcut
+- An empty string `""` to clear the shortcut entirely
+- `null` to reset the shortcut to its manifest default
+
+```json
+{
+  "commands": {
+    "new_temporary_container_tab": "Alt+Shift+C",
+    "new_no_container_tab": "",
+    "new_same_container_tab": null
+  }
+}
+```
 
 ## Configuration Examples
 
