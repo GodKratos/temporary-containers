@@ -125,6 +125,18 @@ export async function initAdvancedMiscPage(): Promise<void> {
         </div>
       </div>
 
+      <!-- Container Cleanup -->
+      <div class="section">
+        <h3 data-i18n="optionsAdvancedMiscContainerCleanup">Container Cleanup</h3>
+        <div class="field checkbox-field">
+          <input type="checkbox" id="orphanSweepActive" data-setting="container.orphanSweep.active" ${
+            preferences.container?.orphanSweep?.active ? 'checked' : ''
+          } />
+          <label for="orphanSweepActive" data-i18n="optionsAdvancedMiscOrphanSweepActive">Automatically clean up orphaned temporary containers (e.g. created via Firefox Container Sync on another device)</label>
+        </div>
+        <div class="field-description" data-i18n="optionsAdvancedMiscOrphanSweepDescription">Runs automatically as part of the regular container cleanup (10 seconds after the browser starts, and periodically while it's running). Only containers matching your configured Container Name Prefix, that currently have no open tabs, are removed. Enabled by default.</div>
+      </div>
+
       <!-- Debug Logging -->
       <div class="section">
         <h3 data-i18n="optionsAdvancedMiscDebugLogging">Debug Logging</h3>
@@ -332,6 +344,18 @@ function setupEventListeners(content: HTMLElement, preferences: PreferencesSchem
         currentContainerPrefixSpan.textContent = prefix || 'not set';
       }
     }, 500);
+  });
+
+  // Container Cleanup: orphan sweep setting
+  const orphanSweepActiveCheckbox = content.querySelector('#orphanSweepActive') as HTMLInputElement;
+
+  orphanSweepActiveCheckbox?.addEventListener('change', async () => {
+    if (!preferences.container.orphanSweep) {
+      preferences.container.orphanSweep = { active: false };
+    }
+    preferences.container.orphanSweep.active = orphanSweepActiveCheckbox.checked;
+    await savePreferences(preferences);
+    showSuccess(browser.i18n.getMessage('savedMessage'));
   });
 
   // Debug logging toggle

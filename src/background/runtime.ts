@@ -149,6 +149,10 @@ export class Runtime {
         await browser.storage.local.clear();
         return this.storage.install();
 
+      case 'cleanupEmptyTemporaryContainers':
+        this.debug('[onMessage] cleaning up empty temporary containers');
+        return this.cleanup.cleanupNow() as any;
+
       case 'resetContainerNumber':
         this.debug('[onMessage] resetting container number', message, sender);
         this.storage.local.tempContainerCounter = 0;

@@ -1,5 +1,5 @@
 // Actions page logic for popup menu
-import { getStorage, showError } from '../../shared/utils';
+import { getStorage, showError, showSuccess } from '../../shared/utils';
 
 export async function initActionsPage(): Promise<void> {
   try {
@@ -47,10 +47,13 @@ export async function initActionsPage(): Promise<void> {
         }>
           Convert Temporary Container to Permanent
         </button>
-        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;"${
+        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;margin-bottom:12px;"${
           !isPermanent ? ' disabled' : ''
         }>
           Convert Permanent Container to Temporary
+        </button>
+        <button id="action-cleanup-orphans" class="action-card" data-i18n="optionsActionsCleanupOrphans" style="width:100%;">
+          Clean up empty temporary containers
         </button>
       </div>
     `;
@@ -102,6 +105,32 @@ export async function initActionsPage(): Promise<void> {
         window.close();
       });
       btnConvertTemporary.setAttribute('data-listener', 'true');
+    }
+    // Button 4: Clean up empty temporary containers (including ones synced in
+    // from another device via Firefox Container Sync that this profile never tracked)
+    const btnCleanupOrphans = document.getElementById('action-cleanup-orphans');
+    if (btnCleanupOrphans && !btnCleanupOrphans.hasAttribute('data-listener')) {
+      btnCleanupOrphans.addEventListener('click', async () => {
+        if (!window.confirm(browser.i18n.getMessage('optionsActionsCleanupOrphansConfirm'))) {
+          return;
+        }
+        try {
+          const result = (await browser.runtime.sendMessage({
+            method: 'cleanupEmptyTemporaryContainers',
+          })) as { removedTracked: number; removedOrphans: number; skippedHasTabs: number };
+          showSuccess(
+            browser.i18n.getMessage('optionsActionsCleanupOrphansSuccess', [
+              String(result?.removedTracked || 0),
+              String(result?.removedOrphans || 0),
+              String(result?.skippedHasTabs || 0),
+            ])
+          );
+        } catch (error) {
+          console.error('Error cleaning up empty temporary containers:', error);
+          showError(browser.i18n.getMessage('optionsActionsCleanupOrphansError'));
+        }
+      });
+      btnCleanupOrphans.setAttribute('data-listener', 'true');
     }
   } catch (error) {
     console.error('[Actions] Failed to load settings page:', error);

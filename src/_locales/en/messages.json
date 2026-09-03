@@ -125,6 +125,18 @@
   "optionsActionsNotAvailable": {
     "message": "Actions are not available in this tab"
   },
+  "optionsActionsCleanupOrphans": {
+    "message": "Clean up empty temporary containers"
+  },
+  "optionsActionsCleanupOrphansConfirm": {
+    "message": "This will immediately queue all empty Temporary Containers for removal, bypassing their normal removal delay, and - if orphan cleanup is enabled in Advanced Settings - also remove orphaned containers not created on this device (for example ones synced in via Firefox's container sync). Containers are removed gradually in the background, a few seconds apart, so it may take a while for a large number of them to disappear. This cannot be undone. Continue?"
+  },
+  "optionsActionsCleanupOrphansSuccess": {
+    "message": "Queued $1 temporary container(s) and $2 orphaned container(s) for removal ($3 skipped because they still have open tabs). They are removed gradually in the background, so it may take a moment before they disappear from about:preferences#containers."
+  },
+  "optionsActionsCleanupOrphansError": {
+    "message": "Failed to clean up temporary containers"
+  },
   "optionsAdvancedMisc": {
     "message": "Advanced Settings"
   },
@@ -544,6 +556,15 @@
   },
   "optionsAdvancedMiscContainerPrefixReset": {
     "message": "Container prefix override reset to auto-detection. Changes will take effect after browser restart."
+  },
+  "optionsAdvancedMiscContainerCleanup": {
+    "message": "Container Cleanup"
+  },
+  "optionsAdvancedMiscOrphanSweepActive": {
+    "message": "Automatically clean up orphaned temporary containers (e.g. created via Firefox Container Sync on another device)"
+  },
+  "optionsAdvancedMiscOrphanSweepDescription": {
+    "message": "Runs automatically as part of the regular container cleanup (10 seconds after the browser starts, and periodically while it's running). Only containers matching your configured Container Name Prefix, that currently have no open tabs, are removed. Enabled by default."
   },
   "optionsAdvancedCookiesTitle": {
     "message": "Configure cookies to be set on certain domains in Temporary Containers"

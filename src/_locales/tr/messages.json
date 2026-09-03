@@ -170,6 +170,18 @@
   "optionsActionsNotAvailable": {
     "message": "Bu sekmede eylemler mevcut değil"
   },
+  "optionsActionsCleanupOrphans": {
+    "message": "Boş geçici konteynerleri temizle"
+  },
+  "optionsActionsCleanupOrphansConfirm": {
+    "message": "Bu işlem, normal kaldırma gecikmesini atlayarak tüm boş Geçici Konteynerleri hemen kaldırma sırasına alacak ve - Gelişmiş Ayarlar'da yetim konteyner temizliği etkinse - bu cihazda oluşturulmamış konteynerleri de (örneğin Firefox'un konteyner senkronizasyonuyla senkronize edilenler) kaldıracaktır. Konteynerler arka planda birkaç saniye arayla kademeli olarak kaldırılır, bu nedenle çok sayıda konteynerin kaybolması biraz zaman alabilir. Bu işlem geri alınamaz. Devam edilsin mi?"
+  },
+  "optionsActionsCleanupOrphansSuccess": {
+    "message": "$1 geçici ve $2 yetim konteyner kaldırma sırasına alındı ($3 tanesi hâlâ açık sekmeleri olduğu için atlandı). Bunlar arka planda kademeli olarak kaldırılır, bu yüzden about:preferences#containers sayfasından kaybolmaları biraz zaman alabilir."
+  },
+  "optionsActionsCleanupOrphansError": {
+    "message": "Geçici konteynerler temizlenemedi"
+  },
   "optionsAdvancedMisc": {
     "message": "Gelişmiş Ayarlar"
   },
@@ -544,6 +556,15 @@
   },
   "optionsAdvancedMiscContainerPrefixReset": {
     "message": "Konteyner ön eki geçersiz kılma otomatik algılamaya sıfırlandı. Değişiklikler tarayıcı yeniden başlatıldıktan sonra geçerli olacaktır."
+  },
+  "optionsAdvancedMiscContainerCleanup": {
+    "message": "Konteyner Temizliği"
+  },
+  "optionsAdvancedMiscOrphanSweepActive": {
+    "message": "Yetim geçici konteynerleri otomatik olarak temizle (örn. başka bir cihazda Firefox Konteyner Senkronizasyonu ile oluşturulanlar)"
+  },
+  "optionsAdvancedMiscOrphanSweepDescription": {
+    "message": "Normal konteyner temizliğinin bir parçası olarak otomatik çalışır (tarayıcı başladıktan 10 saniye sonra ve çalışırken periyodik olarak). Yalnızca yapılandırılmış Konteyner Adı Ön Ekinizle eşleşen ve şu anda açık sekmesi olmayan konteynerler kaldırılır. Varsayılan olarak etkindir."
   },
   "optionsAdvancedCookiesTitle": {
     "message": "Geçici Konteynerlerde belirli alan adları için çerez ayarlarını yapılandır"

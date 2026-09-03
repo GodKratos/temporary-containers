@@ -22,6 +22,12 @@ export interface ContainerOptions {
   };
 }
 
+export interface OrphanSweepResult {
+  removedTracked: number;
+  removedOrphans: number;
+  skippedHasTabs: number;
+}
+
 export interface CreateTabOptions {
   cookieStoreId: CookieStoreId;
   url?: string;
@@ -172,6 +178,9 @@ export interface PreferencesSchema {
     iconRandomExcluded: ContainerIcon[];
     numberMode: 'keep' | 'keepuntilrestart' | 'reuse' | 'hide';
     removal: Milliseconds;
+    orphanSweep: {
+      active: boolean;
+    };
   };
   iconColor: ToolbarIconColor;
   isolation: {
