@@ -161,8 +161,14 @@
   "optionsActionsConvertPermanent": {
     "message": "Geçici konteyneri kalıcıya dönüştür"
   },
+  "optionsActionsConvertRegular": {
+    "message": "\"Geçmişi Silen Geçici Konteyner\"i Normal Geçici Konteynere dönüştür"
+  },
   "optionsActionsConvertTemporary": {
     "message": "Kalıcı konteyneri geçiciye dönüştür"
+  },
+  "optionsActionsNewDeletesHistoryContainer": {
+    "message": "Sekmeyi yeni bir \"Geçmişi Silen Geçici Konteyner\"de yeniden aç"
   },
   "optionsActionsNewTemporaryContainer": {
     "message": "Sekmeyi yeni geçici konteynerde yeniden aç"

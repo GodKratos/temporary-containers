@@ -116,8 +116,14 @@
   "optionsActionsConvertPermanent": {
     "message": "Convert Temporary Container to Permanent"
   },
+  "optionsActionsConvertRegular": {
+    "message": "Convert 'Deletes History Temporary Container' to Regular Temporary Container"
+  },
   "optionsActionsConvertTemporary": {
     "message": "Convert Permanent Container to Temporary"
+  },
+  "optionsActionsNewDeletesHistoryContainer": {
+    "message": "Reopen Tab in a new 'Deletes History Temporary Container'"
   },
   "optionsActionsNewTemporaryContainer": {
     "message": "Reopen Tab in a new Temporary Container"

@@ -56,13 +56,14 @@ export async function bootstrapOptionsUI(providedBackground?: Awaited<ReturnType
         return background.tmp.storage.local;
       }
       if (msg && msg.method === 'getPermissions') {
-        // Return mock permissions for testing
+        // Return mock permissions for testing, overridable per-test via background._mockPermissions
         return {
           bookmarks: false,
           downloads: false,
           history: false,
           notifications: false,
           webNavigation: false,
+          ...(background as any)._mockPermissions,
         };
       }
       return originalSend(msg);

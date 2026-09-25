@@ -161,8 +161,14 @@
   "optionsActionsConvertPermanent": {
     "message": "Преобразовать временный контейнер в постоянный"
   },
+  "optionsActionsConvertRegular": {
+    "message": "Преобразовать \"Временный контейнер с удалением истории\" в обычный временный контейнер"
+  },
   "optionsActionsConvertTemporary": {
     "message": "Преобразовать постоянный контейнер во временный"
+  },
+  "optionsActionsNewDeletesHistoryContainer": {
+    "message": "Переoткрыть вкладку в новом \"Временном контейнере с удалением истории\""
   },
   "optionsActionsNewTemporaryContainer": {
     "message": "Переopen вкладку в новом временном контейнере"
