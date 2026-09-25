@@ -158,6 +158,9 @@
   "openPreferences": {
     "message": "Открыть настройки"
   },
+  "optionsActionsConvertDeletesHistory": {
+    "message": "Преобразовать временный контейнер в \"Временный контейнер с удалением истории\""
+  },
   "optionsActionsConvertPermanent": {
     "message": "Преобразовать временный контейнер в постоянный"
   },

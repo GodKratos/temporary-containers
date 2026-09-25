@@ -158,6 +158,9 @@
   "openPreferences": {
     "message": "Tercihleri/Seçenekleri Aç"
   },
+  "optionsActionsConvertDeletesHistory": {
+    "message": "Geçici konteyneri \"Geçmişi Silen Geçici Konteyner\"e dönüştür"
+  },
   "optionsActionsConvertPermanent": {
     "message": "Geçici konteyneri kalıcıya dönüştür"
   },

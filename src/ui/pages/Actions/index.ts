@@ -1,6 +1,33 @@
 // Actions page logic for popup menu
 import { getStorage, getPermissions, showError } from '../../shared/utils';
 
+interface ActionButton {
+  id: string;
+  method: string;
+  payload: Record<string, unknown>;
+}
+
+// Literal data-i18n keys per button id, kept as static strings so the localization validator can find them.
+function renderButtonHtml(id: string, marginBottom: boolean): string {
+  const style = `width:100%;${marginBottom ? 'margin-bottom:12px;' : ''}`;
+  switch (id) {
+    case 'action-reopen-tmp':
+      return `<button id="action-reopen-tmp" class="action-card" data-i18n="optionsActionsNewTemporaryContainer" style="${style}">Reopen Tab in a new Temporary Container</button>`;
+    case 'action-reopen-deleteshistory-tmp':
+      return `<button id="action-reopen-deleteshistory-tmp" class="action-card" data-i18n="optionsActionsNewDeletesHistoryContainer" style="${style}">Reopen Tab in a new "Deletes History Temporary Container"</button>`;
+    case 'action-convert-permanent':
+      return `<button id="action-convert-permanent" class="action-card" data-i18n="optionsActionsConvertPermanent" style="${style}">Convert Temporary Container to Permanent</button>`;
+    case 'action-convert-deleteshistory':
+      return `<button id="action-convert-deleteshistory" class="action-card" data-i18n="optionsActionsConvertDeletesHistory" style="${style}">Convert Temporary Container to a "Deletes History Temporary Container"</button>`;
+    case 'action-convert-regular':
+      return `<button id="action-convert-regular" class="action-card" data-i18n="optionsActionsConvertRegular" style="${style}">Convert "Deletes History Temporary Container" to Regular Temporary Container</button>`;
+    case 'action-convert-temporary':
+      return `<button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="${style}">Convert Permanent Container to Temporary</button>`;
+    default:
+      return '';
+  }
+}
+
 export async function initActionsPage(): Promise<void> {
   try {
     const storage = await getStorage();
@@ -19,7 +46,7 @@ export async function initActionsPage(): Promise<void> {
       }
     }
 
-    // Compute disables
+    // Determine the current tab/container type
     const isHttpTab = !!(activeTab && typeof activeTab.url === 'string' && activeTab.url.startsWith('http'));
     const tempContainers = storage.tempContainers || {};
     const activeContainer = tempContainers[activeTab && activeTab.cookieStoreId ? activeTab.cookieStoreId : ''];
@@ -27,69 +54,24 @@ export async function initActionsPage(): Promise<void> {
     const isPermanent = isHttpTab && activeTab && activeTab.cookieStoreId !== 'firefox-default' && !activeContainer;
     const isDeletesHistory = isTemp && !!activeContainer.deletesHistory;
 
-    const content = document.createElement('div');
-    content.className = 'form';
-    content.innerHTML = `
-      <div class="actions-grid">
-        ${
-          !isHttpTab
-            ? '<div class="action-label message error" data-i18n="optionsActionsNotAvailable" style="margin-bottom:12px;">Actions are not available in this tab</div>'
-            : ''
-        }
-        <button id="action-reopen-tmp" class="action-card" data-i18n="optionsActionsNewTemporaryContainer" style="width:100%;margin-bottom:12px;"${
-          !isHttpTab ? ' disabled' : ''
-        }>
-          Reopen Tab in a new Temporary Container
-        </button>
-        <button id="action-convert-permanent" class="action-card" data-i18n="optionsActionsConvertPermanent" style="width:100%;margin-bottom:12px;"${
-          !isTemp ? ' disabled' : ''
-        }>
-          Convert Temporary Container to Permanent
-        </button>
-        <button id="action-convert-temporary" class="action-card" data-i18n="optionsActionsConvertTemporary" style="width:100%;${
-          permissions.history ? 'margin-bottom:12px;' : ''
-        }"${!isPermanent ? ' disabled' : ''}>
-          Convert Permanent Container to Temporary
-        </button>
-        ${
-          permissions.history
-            ? `
-        <button id="action-reopen-deleteshistory-tmp" class="action-card" data-i18n="optionsActionsNewDeletesHistoryContainer" style="width:100%;margin-bottom:12px;"${
-          !isHttpTab ? ' disabled' : ''
-        }>
-          Reopen Tab in a new "Deletes History Temporary Container"
-        </button>
-        <button id="action-convert-regular" class="action-card" data-i18n="optionsActionsConvertRegular" style="width:100%;"${
-          !isDeletesHistory ? ' disabled' : ''
-        }>
-          Convert "Deletes History Temporary Container" to Regular Temporary Container
-        </button>
-        `
-            : ''
-        }
-      </div>
-    `;
-    if (!section.firstChild) section.appendChild(content);
-
-    // Button 1: Reopen Tab in new Temporary Container
-    const btnReopenTmp = document.getElementById('action-reopen-tmp');
-    if (btnReopenTmp && !btnReopenTmp.hasAttribute('data-listener')) {
-      btnReopenTmp.addEventListener('click', () => {
-        browser.runtime.sendMessage({
-          method: 'createTabInTempContainer',
-          payload: {
-            url: activeTab.url,
-          },
-        });
-        window.close();
+    // Only include the buttons that are relevant for the active tab/container
+    const buttons: ActionButton[] = [];
+    if (isHttpTab) {
+      buttons.push({
+        id: 'action-reopen-tmp',
+        method: 'createTabInTempContainer',
+        payload: { url: activeTab.url },
       });
-      btnReopenTmp.setAttribute('data-listener', 'true');
-    }
-    // Button 2: Convert Temporary Container to Permanent
-    const btnConvertPermanent = document.getElementById('action-convert-permanent');
-    if (btnConvertPermanent && !btnConvertPermanent.hasAttribute('data-listener')) {
-      btnConvertPermanent.addEventListener('click', () => {
-        browser.runtime.sendMessage({
+      if (permissions.history) {
+        buttons.push({
+          id: 'action-reopen-deleteshistory-tmp',
+          method: 'createTabInTempContainer',
+          payload: { url: activeTab.url, deletesHistory: true },
+        });
+      }
+      if (isTemp) {
+        buttons.push({
+          id: 'action-convert-permanent',
           method: 'convertTempContainerToPermanent',
           payload: {
             cookieStoreId: activeTab.cookieStoreId,
@@ -98,56 +80,51 @@ export async function initActionsPage(): Promise<void> {
             url: activeTab.url,
           },
         });
-        window.close();
-      });
-      btnConvertPermanent.setAttribute('data-listener', 'true');
-    }
-    // Button 3: Convert Permanent Container to Temporary
-    const btnConvertTemporary = document.getElementById('action-convert-temporary');
-    if (btnConvertTemporary && !btnConvertTemporary.hasAttribute('data-listener')) {
-      btnConvertTemporary.addEventListener('click', () => {
-        browser.runtime.sendMessage({
+        if (permissions.history && !isDeletesHistory) {
+          buttons.push({
+            id: 'action-convert-deleteshistory',
+            method: 'convertTempContainerToDeletesHistory',
+            payload: { cookieStoreId: activeTab.cookieStoreId, tabId: activeTab.id, url: activeTab.url },
+          });
+        }
+        if (permissions.history && isDeletesHistory) {
+          buttons.push({
+            id: 'action-convert-regular',
+            method: 'convertDeletesHistoryToTempContainer',
+            payload: { cookieStoreId: activeTab.cookieStoreId, tabId: activeTab.id, url: activeTab.url },
+          });
+        }
+      } else if (isPermanent) {
+        buttons.push({
+          id: 'action-convert-temporary',
           method: 'convertPermanentToTempContainer',
-          payload: {
-            cookieStoreId: activeTab.cookieStoreId,
-            tabId: activeTab.id,
-            url: activeTab.url,
-          },
+          payload: { cookieStoreId: activeTab.cookieStoreId, tabId: activeTab.id, url: activeTab.url },
         });
-        window.close();
-      });
-      btnConvertTemporary.setAttribute('data-listener', 'true');
+      }
     }
-    // Button 4: Reopen Tab in new "Deletes History Temporary Container"
-    const btnReopenDeletesHistoryTmp = document.getElementById('action-reopen-deleteshistory-tmp');
-    if (btnReopenDeletesHistoryTmp && !btnReopenDeletesHistoryTmp.hasAttribute('data-listener')) {
-      btnReopenDeletesHistoryTmp.addEventListener('click', () => {
-        browser.runtime.sendMessage({
-          method: 'createTabInTempContainer',
-          payload: {
-            url: activeTab.url,
-            deletesHistory: true,
-          },
+
+    const content = document.createElement('div');
+    content.className = 'form';
+    content.innerHTML = `
+      <div class="actions-grid">
+        ${
+          buttons.length === 0
+            ? '<div class="action-label message error" data-i18n="optionsActionsNotAvailable">Actions are not available in this tab</div>'
+            : buttons.map((button, index) => renderButtonHtml(button.id, index < buttons.length - 1)).join('')
+        }
+      </div>
+    `;
+    if (!section.firstChild) section.appendChild(content);
+
+    for (const button of buttons) {
+      const el = document.getElementById(button.id);
+      if (el && !el.hasAttribute('data-listener')) {
+        el.addEventListener('click', () => {
+          browser.runtime.sendMessage({ method: button.method, payload: button.payload });
+          window.close();
         });
-        window.close();
-      });
-      btnReopenDeletesHistoryTmp.setAttribute('data-listener', 'true');
-    }
-    // Button 5: Convert "Deletes History Temporary Container" to Regular Temporary Container
-    const btnConvertRegular = document.getElementById('action-convert-regular');
-    if (btnConvertRegular && !btnConvertRegular.hasAttribute('data-listener')) {
-      btnConvertRegular.addEventListener('click', () => {
-        browser.runtime.sendMessage({
-          method: 'convertTempContainerToRegular',
-          payload: {
-            cookieStoreId: activeTab.cookieStoreId,
-            tabId: activeTab.id,
-            url: activeTab.url,
-          },
-        });
-        window.close();
-      });
-      btnConvertRegular.setAttribute('data-listener', 'true');
+        el.setAttribute('data-listener', 'true');
+      }
     }
   } catch (error) {
     console.error('[Actions] Failed to load settings page:', error);

@@ -35,11 +35,29 @@ export class Convert {
     await browser.tabs.reload(tabId);
   }
 
-  async convertTempContainerToRegular({ cookieStoreId, tabId }: { cookieStoreId: CookieStoreId; tabId: TabId }): Promise<void> {
+  async convertDeletesHistoryToTempContainer({ cookieStoreId, tabId }: { cookieStoreId: CookieStoreId; tabId: TabId }): Promise<void> {
     this.storage.local.tempContainers[cookieStoreId].deletesHistory = false;
     delete this.storage.local.tempContainers[cookieStoreId].history;
-    await this.storage.persist();
     const name = this.storage.local.tempContainers[cookieStoreId].name.replace('-deletes-history', '');
+    this.storage.local.tempContainers[cookieStoreId].name = name;
+    await this.storage.persist();
+    await browser.contextualIdentities.update(cookieStoreId, { name });
+    await browser.tabs.reload(tabId);
+  }
+
+  async convertTempContainerToDeletesHistory({ cookieStoreId, tabId }: { cookieStoreId: CookieStoreId; tabId: TabId }): Promise<void> {
+    // requires the history permission, mirrors the check done when creating a new "Deletes History" container
+    if (!this.background.permissions.history) {
+      return;
+    }
+    const tempContainer = this.storage.local.tempContainers[cookieStoreId];
+    if (!tempContainer || tempContainer.deletesHistory) {
+      return;
+    }
+    const name = tempContainer.name.endsWith('-deletes-history') ? tempContainer.name : `${tempContainer.name}-deletes-history`;
+    tempContainer.name = name;
+    tempContainer.deletesHistory = true;
+    await this.storage.persist();
     await browser.contextualIdentities.update(cookieStoreId, { name });
     await browser.tabs.reload(tabId);
   }

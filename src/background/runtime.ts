@@ -183,8 +183,14 @@ export class Runtime {
           name: message.payload.name,
         });
 
-      case 'convertTempContainerToRegular':
-        return this.convert.convertTempContainerToRegular({
+      case 'convertDeletesHistoryToTempContainer':
+        return this.convert.convertDeletesHistoryToTempContainer({
+          cookieStoreId: message.payload.cookieStoreId,
+          tabId: message.payload.tabId,
+        });
+
+      case 'convertTempContainerToDeletesHistory':
+        return this.convert.convertTempContainerToDeletesHistory({
           cookieStoreId: message.payload.cookieStoreId,
           tabId: message.payload.tabId,
         });

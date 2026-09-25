@@ -113,6 +113,9 @@
   "importSettings": {
     "message": "Import from File"
   },
+  "optionsActionsConvertDeletesHistory": {
+    "message": "Convert Temporary Container to a 'Deletes History Temporary Container'"
+  },
   "optionsActionsConvertPermanent": {
     "message": "Convert Temporary Container to Permanent"
   },

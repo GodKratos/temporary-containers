@@ -40,9 +40,10 @@ describe('UI Actions: buttons state & messaging', () => {
     return ui;
   }
 
-  it('disables all buttons on non-http tab', async () => {
+  it('shows only the not-available message on non-http tab', async () => {
     await setupWithActiveTab({ url: 'about:addons' });
-    expect((document.getElementById('action-reopen-tmp') as HTMLButtonElement).disabled).to.equal(true);
+    expect(document.getElementById('action-reopen-tmp')).to.equal(null);
+    expect(document.querySelector('[data-i18n="optionsActionsNotAvailable"]')).to.not.equal(null);
   });
 
   it('enables reopen button on normal http tab', async () => {
@@ -50,14 +51,20 @@ describe('UI Actions: buttons state & messaging', () => {
     expect((document.getElementById('action-reopen-tmp') as HTMLButtonElement).disabled).to.equal(false);
   });
 
-  it('convert permanent/temporary buttons state reflect temp & permanent', async () => {
+  it('shows convert-permanent for a temp container and convert-temporary for a permanent container', async () => {
     // Simulate a temp container cookieStoreId existing in storage
     background.tmp.storage.local.tempContainers = {
       'firefox-container-123': { id: 'firefox-container-123' },
     } as any;
     await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
-    expect((document.getElementById('action-convert-permanent') as HTMLButtonElement).disabled).to.equal(false);
-    expect((document.getElementById('action-convert-temporary') as HTMLButtonElement).disabled).to.equal(true);
+    expect(document.getElementById('action-convert-permanent')).to.not.equal(null);
+    expect(document.getElementById('action-convert-temporary')).to.equal(null);
+  });
+
+  it('shows convert-temporary for a permanent (non-default) container and not convert-permanent', async () => {
+    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-456' });
+    expect(document.getElementById('action-convert-temporary')).to.not.equal(null);
+    expect(document.getElementById('action-convert-permanent')).to.equal(null);
   });
 
   it('clicking reopen sends createTabInTempContainer message', async () => {
@@ -75,35 +82,71 @@ describe('UI Actions: buttons state & messaging', () => {
   });
 
   it('hides deletes-history buttons when history permission is not granted', async () => {
-    await setupWithActiveTab({ url: 'https://example.com' });
+    background.tmp.storage.local.tempContainers = {
+      'firefox-container-123': { id: 'firefox-container-123' },
+    } as any;
+    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
     expect(document.getElementById('action-reopen-deleteshistory-tmp')).to.equal(null);
+    expect(document.getElementById('action-convert-deleteshistory')).to.equal(null);
     expect(document.getElementById('action-convert-regular')).to.equal(null);
   });
 
-  it('shows deletes-history buttons when history permission is granted', async () => {
+  it('shows reopen-deleteshistory and convert-to-deleteshistory for a regular temp container when history permission is granted', async () => {
     (background as any)._mockPermissions = { history: true };
-    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-default' });
-    expect((document.getElementById('action-reopen-deleteshistory-tmp') as HTMLButtonElement).disabled).to.equal(false);
-    expect((document.getElementById('action-convert-regular') as HTMLButtonElement).disabled).to.equal(true);
+    background.tmp.storage.local.tempContainers = {
+      'firefox-container-123': { id: 'firefox-container-123' },
+    } as any;
+    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
+    expect(document.getElementById('action-reopen-deleteshistory-tmp')).to.not.equal(null);
+    expect(document.getElementById('action-convert-deleteshistory')).to.not.equal(null);
+    expect(document.getElementById('action-convert-regular')).to.equal(null);
   });
 
-  it('enables convert-regular button only for a deletes-history temp container and sends convertTempContainerToRegular', async () => {
+  it('shows convert-regular but not convert-to-deleteshistory for a deletes-history temp container', async () => {
+    (background as any)._mockPermissions = { history: true };
+    background.tmp.storage.local.tempContainers = {
+      'firefox-container-123': { id: 'firefox-container-123', deletesHistory: true },
+    } as any;
+    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
+    expect(document.getElementById('action-convert-regular')).to.not.equal(null);
+    expect(document.getElementById('action-convert-deleteshistory')).to.equal(null);
+  });
+
+  it('clicking convert-regular sends convertDeletesHistoryToTempContainer message', async () => {
     (background as any)._mockPermissions = { history: true };
     background.tmp.storage.local.tempContainers = {
       'firefox-container-123': { id: 'firefox-container-123', deletesHistory: true },
     } as any;
     await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
     const btn = document.getElementById('action-convert-regular') as HTMLButtonElement;
-    expect(btn.disabled).to.equal(false);
 
     const spy = sinon.spy(browser.runtime, 'sendMessage');
     btn.click();
     await flush(3);
     const called = spy.getCalls().some(c => {
       const arg = c.args[0];
-      return arg && typeof arg === 'object' && 'method' in arg && (arg as any).method === 'convertTempContainerToRegular';
+      return arg && typeof arg === 'object' && 'method' in arg && (arg as any).method === 'convertDeletesHistoryToTempContainer';
     });
-    expect(called, 'Expected convertTempContainerToRegular message').to.equal(true);
+    expect(called, 'Expected convertDeletesHistoryToTempContainer message').to.equal(true);
+    spy.restore();
+  });
+
+  it('clicking convert-to-deleteshistory sends convertTempContainerToDeletesHistory message', async () => {
+    (background as any)._mockPermissions = { history: true };
+    background.tmp.storage.local.tempContainers = {
+      'firefox-container-123': { id: 'firefox-container-123', name: 'tmp-container-123' },
+    } as any;
+    await setupWithActiveTab({ url: 'https://example.com', cookieStoreId: 'firefox-container-123' });
+    const btn = document.getElementById('action-convert-deleteshistory') as HTMLButtonElement;
+
+    const spy = sinon.spy(browser.runtime, 'sendMessage');
+    btn.click();
+    await flush(3);
+    const called = spy.getCalls().some(c => {
+      const arg = c.args[0];
+      return arg && typeof arg === 'object' && 'method' in arg && (arg as any).method === 'convertTempContainerToDeletesHistory';
+    });
+    expect(called, 'Expected convertTempContainerToDeletesHistory message').to.equal(true);
     spy.restore();
   });
 });
