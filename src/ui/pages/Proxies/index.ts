@@ -565,28 +565,37 @@ export async function initProxiesPage(): Promise<void> {
                   <th data-i18n="optionsProxiesLabel">Label</th>
                 </tr>
               </thead>
-              <tbody>
-                ${parsed
-                  .map(
-                    p => `
-                  <tr>
-                    <td>${p.protocol || browser.i18n.getMessage('optionsProxiesImportDefaultValue') || 'default'}</td>
-                    <td>${p.host || ''}</td>
-                    <td>${p.port || ''}</td>
-                    <td>${p.username || ''}</td>
-                    <td>${p.label || ''}</td>
-                  </tr>
-                `
-                  )
-                  .join('')}
-              </tbody>
+              <tbody id="proxyImportRows"></tbody>
             </table>
           </div>
           <div class="field">
-            <button type="button" id="proxyImportConfirm" class="button-primary">${countLabel} (${parsed.length})</button>
+            <button type="button" id="proxyImportConfirm" class="button-primary"></button>
             <button type="button" id="proxyImportCancel" class="button-secondary" data-i18n="optionsProxiesImportCancel">Cancel Import</button>
           </div>
         `;
+
+        const confirmBtn = document.getElementById('proxyImportConfirm');
+        if (confirmBtn) confirmBtn.textContent = `${countLabel} (${parsed.length})`;
+
+        // Populate rows via DOM APIs (not innerHTML) since entries originate from imported, untrusted text
+        const rowsBody = document.getElementById('proxyImportRows');
+        if (rowsBody) {
+          parsed.forEach(p => {
+            const tr = document.createElement('tr');
+            const protocolCell = document.createElement('td');
+            protocolCell.textContent = p.protocol || browser.i18n.getMessage('optionsProxiesImportDefaultValue') || 'default';
+            const hostCell = document.createElement('td');
+            hostCell.textContent = p.host || '';
+            const portCell = document.createElement('td');
+            portCell.textContent = p.port ? String(p.port) : '';
+            const usernameCell = document.createElement('td');
+            usernameCell.textContent = p.username || '';
+            const labelCell = document.createElement('td');
+            labelCell.textContent = p.label || '';
+            tr.append(protocolCell, hostCell, portCell, usernameCell, labelCell);
+            rowsBody.appendChild(tr);
+          });
+        }
 
         document.getElementById('proxyImportConfirm')?.addEventListener('click', async () => {
           const defaultProtocol = (document.getElementById('proxyImportDefaultProtocol') as HTMLSelectElement).value as ProxyProtocol;

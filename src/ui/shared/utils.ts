@@ -1,5 +1,8 @@
 import { PreferencesSchema, StorageLocal, Permissions } from '../../types';
 
+/** A glossary content block, rendered without innerHTML */
+export type GlossaryBlock = { tag: 'p'; messageKey: string } | { tag: 'ul'; messageKeys: string[] };
+
 /**
  * Send a message to the background script
  * @param method - The method to call
@@ -329,10 +332,36 @@ export function createTabSystem(tabsSelector: string, panelsSelector: string, on
 }
 
 /**
- * Create a glossary system
- * @param glossaryData - The glossary data
+ * Render the blocks for a glossary term into a container without using innerHTML
+ * @param container - The element to render the blocks into
+ * @param blocks - The glossary blocks to render
  */
-export function createGlossarySystem(glossaryData: Record<string, string>): void {
+function renderGlossaryBlocks(container: HTMLElement, blocks: GlossaryBlock[]): void {
+  container.textContent = '';
+  blocks.forEach(block => {
+    if (block.tag === 'p') {
+      const p = document.createElement('p');
+      p.setAttribute('data-i18n', block.messageKey);
+      p.textContent = t(block.messageKey) || '';
+      container.appendChild(p);
+    } else {
+      const ul = document.createElement('ul');
+      block.messageKeys.forEach(messageKey => {
+        const li = document.createElement('li');
+        li.setAttribute('data-i18n', messageKey);
+        li.textContent = t(messageKey) || '';
+        ul.appendChild(li);
+      });
+      container.appendChild(ul);
+    }
+  });
+}
+
+/**
+ * Create a glossary system
+ * @param glossaryData - The glossary data, keyed by term
+ */
+export function createGlossarySystem(glossaryData: Record<string, GlossaryBlock[]>): void {
   const glossaryElement = document.getElementById('glossary');
   const glossaryTitleElement = document.getElementById('glossary-title');
   const glossaryBodyElement = document.getElementById('glossary-body');
@@ -346,7 +375,7 @@ export function createGlossarySystem(glossaryData: Record<string, string>): void
       const label = element.dataset.glossaryLabel || term;
       if (term && glossaryData[term]) {
         glossaryTitleElement.textContent = label || '';
-        glossaryBodyElement.innerHTML = glossaryData[term];
+        renderGlossaryBlocks(glossaryBodyElement, glossaryData[term]);
         glossaryElement.classList.remove('hidden');
       }
     });

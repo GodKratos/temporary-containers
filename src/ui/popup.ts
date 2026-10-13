@@ -9,6 +9,7 @@ import {
   createGlossarySystem,
   applyLocalization,
   withManagedStorage,
+  GlossaryBlock,
 } from './shared/utils';
 import { initIsolationGlobalPage } from './pages/IsolationGlobal';
 import { initIsolationPerDomainPage } from './pages/IsolationPerDomain';
@@ -56,16 +57,13 @@ const pageInitializers: Record<string, () => Promise<void>> = {
   }),
 };
 
-function getGlossaryData() {
+function getGlossaryData(): Record<string, GlossaryBlock[]> {
   return {
-    Isolation: `
-      <p data-i18n="glossaryIsolationDescription">${browser.i18n.getMessage('glossaryIsolationDescription')}</p>
-      <p data-i18n="glossaryIsolationWhenEnabled">${browser.i18n.getMessage('glossaryIsolationWhenEnabled')}</p>
-      <ul>
-        <li data-i18n="glossaryIsolationFeature1">${browser.i18n.getMessage('glossaryIsolationFeature1')}</li>
-        <li data-i18n="glossaryIsolationFeature2">${browser.i18n.getMessage('glossaryIsolationFeature2')}</li>
-      </ul>
-    `,
+    Isolation: [
+      { tag: 'p', messageKey: 'glossaryIsolationDescription' },
+      { tag: 'p', messageKey: 'glossaryIsolationWhenEnabled' },
+      { tag: 'ul', messageKeys: ['glossaryIsolationFeature1', 'glossaryIsolationFeature2'] },
+    ],
   };
 }
 

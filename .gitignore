@@ -2,6 +2,7 @@
 /web-ext-artifacts
 /.windsurf
 /.cursor
+/.vscode
 /.nyc_output
 /coverage
 /semantic
