@@ -554,6 +554,15 @@
   "optionsAdvancedMiscContainerPrefixReset": {
     "message": "Container prefix override reset to auto-detection. Changes will take effect after browser restart."
   },
+  "optionsAdvancedMiscContainerCleanup": {
+    "message": "Container Cleanup"
+  },
+  "optionsAdvancedMiscOrphanSweepActive": {
+    "message": "Automatically clean up orphaned temporary containers (e.g. created via Firefox Container Sync on another device)"
+  },
+  "optionsAdvancedMiscOrphanSweepDescription": {
+    "message": "Runs automatically as part of the regular container cleanup (10 seconds after the browser starts, and periodically while it's running). Only containers matching your configured Container Name Prefix, that currently have no open tabs, are removed. Enabled by default."
+  },
   "optionsAdvancedCookiesTitle": {
     "message": "Configure cookies to be set on certain domains in Temporary Containers"
   },

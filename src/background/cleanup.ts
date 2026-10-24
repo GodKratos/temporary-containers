@@ -41,14 +41,14 @@ export class Cleanup {
     this.tabs = this.background.tabs;
   }
 
-  async addToRemoveQueue(cookieStoreId: CookieStoreId, skipDelay = false): Promise<void> {
+  async addToRemoveQueue(cookieStoreId: CookieStoreId, skipDelay = false, tracked = true): Promise<void> {
     if (this.queued.has(cookieStoreId)) {
       this.debug('[addToRemoveQueue] container already in queue', cookieStoreId);
       return;
     }
     this.queued.add(cookieStoreId);
 
-    const containerRemovalDelay = this.container.getRemovalDelay(cookieStoreId);
+    const containerRemovalDelay = tracked ? this.container.getRemovalDelay(cookieStoreId) : 0;
     if (containerRemovalDelay && !skipDelay) {
       this.debug('[addToRemoveQueue] waiting before adding container removal to queue', containerRemovalDelay, cookieStoreId);
       await delay(containerRemovalDelay);
@@ -58,7 +58,7 @@ export class Cleanup {
 
     await this.queue
       .add(async () => {
-        const containerRemoved = await this.tryToRemove(cookieStoreId);
+        const containerRemoved = await this.tryToRemove(cookieStoreId, tracked);
         if (containerRemoved) {
           this.debug('[addToRemoveQueue] container removed, waiting 2s', cookieStoreId);
           await delay(2500);
@@ -77,24 +77,28 @@ export class Cleanup {
       });
   }
 
-  async tryToRemove(cookieStoreId: CookieStoreId): Promise<boolean> {
+  async tryToRemove(cookieStoreId: CookieStoreId, tracked = true): Promise<boolean> {
     const containerTabs = this.tabs.containerTabs.get(cookieStoreId);
     if (containerTabs?.size) {
       this.debug('[tryToRemove] not removing container because it still has tabs', cookieStoreId, containerTabs.size);
       return false;
     }
 
-    const historyClearedCount = this.history.maybeClearHistory(cookieStoreId);
+    const historyClearedCount = tracked ? this.history.maybeClearHistory(cookieStoreId) : 0;
     this.statistics.update(historyClearedCount, cookieStoreId);
-    this.container.cleanupNumber(cookieStoreId);
+    if (tracked) {
+      this.container.cleanupNumber(cookieStoreId);
+    }
 
-    if (!(await this.removeContainer(cookieStoreId))) {
-      await this.storage.persist();
+    if (!(await this.removeContainer(cookieStoreId, tracked))) {
+      if (tracked) {
+        await this.storage.persist();
+      }
     }
     return true;
   }
 
-  async removeContainer(cookieStoreId: CookieStoreId): Promise<boolean> {
+  async removeContainer(cookieStoreId: CookieStoreId, updateStorage = true): Promise<boolean> {
     try {
       const contextualIdentity = await browser.contextualIdentities.remove(cookieStoreId);
       if (!contextualIdentity) {
@@ -102,7 +106,9 @@ export class Cleanup {
       } else {
         this.debug('[removeContainer] container removed', cookieStoreId);
       }
-      await this.container.removeFromStorage(cookieStoreId);
+      if (updateStorage) {
+        await this.container.removeFromStorage(cookieStoreId);
+      }
       return true;
     } catch (error) {
       this.debug('[removeContainer] error while removing container', cookieStoreId, error);
@@ -111,17 +117,77 @@ export class Cleanup {
   }
 
   async cleanup(startup = false): Promise<void> {
-    const containers = this.container.getAllIds();
-    if (!containers.length) {
-      this.debug('[cleanup] canceling, no tmpcontainers at all');
-      return;
-    }
     if (startup && (await browser.tabs.query({ url: 'about:sessionrestore' })).length) {
       this.debug("[cleanup] canceling because there's a about:sessionrestore tab");
       return;
     }
 
-    containers.map(cookieStoreId => this.addToRemoveQueue(cookieStoreId, startup));
+    this.container.getAllIds().map(cookieStoreId => this.addToRemoveQueue(cookieStoreId, startup));
+
+    // Orphans are containers synced in from another profile via Firefox
+    // Container Sync, which never made it into storage.local.tempContainers.
+    // They're swept independently of whether any tracked containers exist.
+    if (this.pref.container.orphanSweep.active) {
+      const orphanIds = await this.findOrphanContainers();
+      this.debug('[cleanup] queuing orphaned containers for removal', orphanIds);
+      orphanIds.forEach(cookieStoreId =>
+        this.addToRemoveQueue(cookieStoreId, true, false).catch(error =>
+          this.debug('[cleanup] error while queuing orphan container removal', cookieStoreId, error)
+        )
+      );
+    }
+  }
+
+  private async findOrphanContainers(): Promise<CookieStoreId[]> {
+    const matcher = this.container.buildOrphanNameMatcher();
+    if (!matcher) {
+      return [];
+    }
+
+    let allContainers: any[];
+    try {
+      // @ts-ignore
+      allContainers = await browser.contextualIdentities.query({});
+    } catch (error) {
+      this.debug('[findOrphanContainers] failed to query contextualIdentities', error);
+      return [];
+    }
+    if (!Array.isArray(allContainers)) {
+      return [];
+    }
+
+    const candidates: CookieStoreId[] = [];
+    for (const identity of allContainers) {
+      const cookieStoreId = identity.cookieStoreId;
+      if (cookieStoreId === `${this.background.containerPrefix}-default`) {
+        continue;
+      }
+      if (this.container.isTemporary(cookieStoreId)) {
+        continue;
+      }
+      if (!matcher.test(identity.name)) {
+        continue;
+      }
+      let tabsInContainer;
+      try {
+        tabsInContainer = await browser.tabs.query({ cookieStoreId });
+      } catch (error) {
+        this.debug('[findOrphanContainers] failed tabs query', cookieStoreId, error);
+        continue;
+      }
+      if (tabsInContainer.length) {
+        this.debug(
+          '[findOrphanContainers] skipping orphan candidate, browser reports open tabs',
+          cookieStoreId,
+          identity.name,
+          tabsInContainer.map(tab => ({ id: tab.id, windowId: tab.windowId, discarded: tab.discarded, url: tab.url }))
+        );
+        continue;
+      }
+      this.debug('[findOrphanContainers] found orphan candidate with no open tabs', cookieStoreId, identity.name);
+      candidates.push(cookieStoreId);
+    }
+    return candidates;
   }
 
   maybeShowNotification(message: string): void {

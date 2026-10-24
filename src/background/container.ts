@@ -376,6 +376,30 @@ export class Container {
     };
   }
 
+  buildOrphanNameMatcher(): RegExp | null {
+    const namePrefix = this.pref.container.namePrefix;
+
+    // Names built from %domain%/%fulldomain% tokens depend on the URL that
+    // created the container and can't be reconstructed from the bare name,
+    // so untracked containers can't be safely matched against this pattern.
+    if (namePrefix.includes('%domain%') || namePrefix.includes('%fulldomain%')) {
+      return null;
+    }
+
+    let effectivePrefix = namePrefix;
+    if (namePrefix.trim() === '') {
+      if (this.pref.container.numberMode === 'hide') {
+        effectivePrefix = 'tmp';
+      } else {
+        // prefix-less names are just digits, too ambiguous to treat as ours
+        return null;
+      }
+    }
+
+    const escaped = effectivePrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`^${escaped}(?:\\d+)?(?:-deletes-history)?$`);
+  }
+
   isPermanent(cookieStoreId: CookieStoreId): boolean {
     if (cookieStoreId !== `${this.background.containerPrefix}-default` && !this.storage.local.tempContainers[cookieStoreId]) {
       return true;

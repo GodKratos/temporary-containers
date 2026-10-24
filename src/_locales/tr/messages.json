@@ -554,6 +554,15 @@
   "optionsAdvancedMiscContainerPrefixReset": {
     "message": "Konteyner ön eki geçersiz kılma otomatik algılamaya sıfırlandı. Değişiklikler tarayıcı yeniden başlatıldıktan sonra geçerli olacaktır."
   },
+  "optionsAdvancedMiscContainerCleanup": {
+    "message": "Konteyner Temizliği"
+  },
+  "optionsAdvancedMiscOrphanSweepActive": {
+    "message": "Yetim geçici konteynerleri otomatik olarak temizle (örn. başka bir cihazda Firefox Konteyner Senkronizasyonu ile oluşturulanlar)"
+  },
+  "optionsAdvancedMiscOrphanSweepDescription": {
+    "message": "Normal konteyner temizliğinin bir parçası olarak otomatik çalışır (tarayıcı başladıktan 10 saniye sonra ve çalışırken periyodik olarak). Yalnızca yapılandırılmış Konteyner Adı Ön Ekinizle eşleşen ve şu anda açık sekmesi olmayan konteynerler kaldırılır. Varsayılan olarak etkindir."
+  },
   "optionsAdvancedCookiesTitle": {
     "message": "Geçici Konteynerlerde belirli alan adları için çerez ayarlarını yapılandır"
   },

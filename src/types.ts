@@ -172,6 +172,9 @@ export interface PreferencesSchema {
     iconRandomExcluded: ContainerIcon[];
     numberMode: 'keep' | 'keepuntilrestart' | 'reuse' | 'hide';
     removal: Milliseconds;
+    orphanSweep: {
+      active: boolean;
+    };
   };
   iconColor: ToolbarIconColor;
   isolation: {
