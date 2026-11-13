@@ -67,6 +67,9 @@ export class EventListeners {
     browser.tabs.onCreated.addListener(this.wrap(browser.tabs.onCreated, this.background.tabs, 'onCreated'));
     browser.tabs.onUpdated.addListener(this.wrap(browser.tabs.onUpdated, this.background.tabs, 'onUpdated'));
     browser.tabs.onRemoved.addListener(this.wrap(browser.tabs.onRemoved, this.background.tabs, 'onRemoved'));
+    browser.contextualIdentities.onRemoved.addListener(
+      this.wrap(browser.contextualIdentities.onRemoved, this.background.container, 'onRemoved')
+    );
     browser.runtime.onMessage.addListener(this.wrap(browser.runtime.onMessage, this.background.runtime, 'onMessage'));
     browser.runtime.onMessageExternal.addListener(
       this.wrap(browser.runtime.onMessageExternal, this.background.runtime, 'onMessageExternal')

@@ -532,6 +532,36 @@ preferencesTestSet.map(preferences => {
         const sixth = await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId);
         sixth!.name.should.equal('tmp6');
       });
+
+      it('should reuse the number of a container deleted outside of TC (issue #80)', async () => {
+        const { tmp: background, browser } = await loadBackground({ preferences });
+        background.storage.local.preferences.container.numberMode = 'reuse';
+
+        await Promise.all(Array.from({ length: 3 }).map(() => browser.tabs._create({ url: 'about:newtab' })));
+
+        const { waitForTempContainers } = await import('./wait');
+        await waitForTempContainers(background, 3);
+
+        const tabs = await browser.tabs.query({});
+        const tempTabs = tabs.filter((tab: Tab) => tab.cookieStoreId !== 'firefox-default');
+        const tmp2Tab = tempTabs.find((t: Tab) => /firefox-container-2$/.test(t.cookieStoreId)) || tempTabs[1];
+
+        // Simulate the user deleting tmp2 directly through Firefox's container
+        // settings (i.e. without going through TC's own tab/container removal flow).
+        await browser.contextualIdentities.remove(tmp2Tab.cookieStoreId);
+        browser.contextualIdentities.onRemoved.addListener.yield({
+          contextualIdentity: { cookieStoreId: tmp2Tab.cookieStoreId },
+        });
+        await nextTick();
+
+        background.storage.local.tempContainers.should.not.have.property(tmp2Tab.cookieStoreId);
+        background.storage.local.tempContainersNumbers.should.not.include(2);
+
+        await browser.tabs._create({ url: 'about:newtab' });
+        await waitForTempContainers(background, 3);
+        const created = await browser.contextualIdentities.get((await browser.tabs.create.lastCall.returnValue).cookieStoreId);
+        created!.name.should.equal('tmp2');
+      });
     });
   });
 });

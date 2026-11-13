@@ -455,11 +455,25 @@ export class Container {
   }
 
   removeFromStorage(cookieStoreId: CookieStoreId): Promise<boolean> {
-    this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-      containerNumber => this.storage.local.tempContainers[cookieStoreId].number !== containerNumber
-    );
-    delete this.storage.local.tempContainers[cookieStoreId];
+    const tempContainer = this.storage.local.tempContainers[cookieStoreId];
+    if (tempContainer) {
+      this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
+        containerNumber => tempContainer.number !== containerNumber
+      );
+      delete this.storage.local.tempContainers[cookieStoreId];
+    }
     return this.storage.persist();
+  }
+
+  // handles containers deleted outside of TC's control (e.g. Firefox's own container settings)
+  async onRemoved({ contextualIdentity }: { contextualIdentity: { cookieStoreId: CookieStoreId } }): Promise<void> {
+    const cookieStoreId = contextualIdentity.cookieStoreId;
+    if (!this.isTemporary(cookieStoreId)) {
+      return;
+    }
+    this.debug('[onRemoved] temp container was removed externally, cleaning up storage', cookieStoreId);
+    this.cleanupNumber(cookieStoreId);
+    await this.removeFromStorage(cookieStoreId);
   }
 
   getType(cookieStoreId: CookieStoreId): string {
@@ -475,8 +489,12 @@ export class Container {
   }
 
   cleanupNumber(cookieStoreId: CookieStoreId): void {
+    const tempContainer = this.storage.local.tempContainers[cookieStoreId];
+    if (!tempContainer) {
+      return;
+    }
     this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-      containerNumber => this.storage.local.tempContainers[cookieStoreId].number !== containerNumber
+      containerNumber => tempContainer.number !== containerNumber
     );
   }
 
