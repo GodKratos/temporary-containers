@@ -40,6 +40,8 @@ export class Container {
   private requestCreatedTab: {
     [key: string]: boolean;
   } = {};
+  // numbers reserved for containers that are still being created (not yet in tempContainers)
+  private pendingNumbers: number[] = [];
 
   private background: TemporaryContainers;
   private debug: Debug;
@@ -119,7 +121,10 @@ export class Container {
     const containerOptions = this.generateContainerNameIconColor((request && request.url) || url);
 
     if (containerOptions.number) {
-      this.storage.local.tempContainersNumbers.push(containerOptions.number);
+      if (!this.storage.local.tempContainersNumbers.includes(containerOptions.number)) {
+        this.storage.local.tempContainersNumbers.push(containerOptions.number);
+      }
+      this.pendingNumbers.push(containerOptions.number);
     }
 
     if (deletesHistory) {
@@ -149,6 +154,13 @@ export class Container {
     } catch (error) {
       this.debug('[createTabInTempContainer] error while creating container', containerOptions.name, error);
       throw error;
+    } finally {
+      if (containerOptions.number) {
+        const pendingIndex = this.pendingNumbers.indexOf(containerOptions.number);
+        if (pendingIndex > -1) {
+          this.pendingNumbers.splice(pendingIndex, 1);
+        }
+      }
     }
   }
 
@@ -400,7 +412,7 @@ export class Container {
   }
 
   getReusedContainerNumber(): number {
-    const tempContainersNumbers = this.storage.local.tempContainersNumbers.sort();
+    const tempContainersNumbers = this.storage.local.tempContainersNumbers;
     if (!tempContainersNumbers.length) {
       return 1;
     } else {
@@ -457,12 +469,25 @@ export class Container {
   removeFromStorage(cookieStoreId: CookieStoreId): Promise<boolean> {
     const tempContainer = this.storage.local.tempContainers[cookieStoreId];
     if (tempContainer) {
-      this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-        containerNumber => tempContainer.number !== containerNumber
-      );
       delete this.storage.local.tempContainers[cookieStoreId];
+      this.maybeFreeNumber(tempContainer.number);
     }
     return this.storage.persist();
+  }
+
+  // drops a number from the distinct tempContainersNumbers list, but only once no other
+  // container (tracked or still being created) is using it anymore
+  private maybeFreeNumber(number: number): void {
+    const stillInUse =
+      this.pendingNumbers.includes(number) ||
+      Object.values(this.storage.local.tempContainers).some(container => container.number === number);
+    if (stillInUse) {
+      return;
+    }
+    const numberIndex = this.storage.local.tempContainersNumbers.indexOf(number);
+    if (numberIndex > -1) {
+      this.storage.local.tempContainersNumbers.splice(numberIndex, 1);
+    }
   }
 
   // handles containers deleted outside of TC's control (e.g. Firefox's own container settings)
@@ -472,7 +497,6 @@ export class Container {
       return;
     }
     this.debug('[onRemoved] temp container was removed externally, cleaning up storage', cookieStoreId);
-    this.cleanupNumber(cookieStoreId);
     await this.removeFromStorage(cookieStoreId);
   }
 
@@ -485,17 +509,10 @@ export class Container {
   }
 
   cleanupNumbers(): void {
-    this.storage.local.tempContainersNumbers = Object.values(this.storage.local.tempContainers).map(container => container.number);
-  }
-
-  cleanupNumber(cookieStoreId: CookieStoreId): void {
-    const tempContainer = this.storage.local.tempContainers[cookieStoreId];
-    if (!tempContainer) {
-      return;
-    }
-    this.storage.local.tempContainersNumbers = this.storage.local.tempContainersNumbers.filter(
-      containerNumber => tempContainer.number !== containerNumber
-    );
+    // rebuild as a distinct list of numbers still in use, including ones reserved for
+    // containers still being created that aren't in tempContainers yet
+    const assignedNumbers = Object.values(this.storage.local.tempContainers).map(container => container.number);
+    this.storage.local.tempContainersNumbers = [...new Set([...assignedNumbers, ...this.pendingNumbers])];
   }
 
   getAllIds(): CookieStoreId[] {

@@ -86,12 +86,15 @@ export class Cleanup {
 
     const historyClearedCount = this.history.maybeClearHistory(cookieStoreId);
     this.statistics.update(historyClearedCount, cookieStoreId);
-    this.container.cleanupNumber(cookieStoreId);
 
-    if (!(await this.removeContainer(cookieStoreId))) {
+    // only free the container's number once removal actually succeeds, otherwise it
+    // could be reused while the original (still tracked) container still exists
+    const removed = await this.removeContainer(cookieStoreId);
+    if (!removed) {
+      this.debug('[tryToRemove] failed to remove container, keeping it in storage for a later retry', cookieStoreId);
       await this.storage.persist();
     }
-    return true;
+    return removed;
   }
 
   async removeContainer(cookieStoreId: CookieStoreId): Promise<boolean> {

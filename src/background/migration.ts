@@ -38,9 +38,11 @@ export class Migration {
 
     if (this.updatedFromVersionEqualToOrLessThan('0.91')) {
       this.debug('updated from version <= 0.91, migrate container numbers into dedicated array');
+      const numbers = new Set(this.storage.local.tempContainersNumbers);
       Object.values(this.storage.local.tempContainers).map(container => {
-        this.storage.local.tempContainersNumbers.push(container.number);
+        numbers.add(container.number);
       });
+      this.storage.local.tempContainersNumbers = [...numbers];
     }
 
     if (this.updatedFromVersionEqualToOrLessThan('0.103', '1.0.1')) {
