@@ -21,7 +21,7 @@ export class Preferences {
       icon: 'circle',
       iconRandom: false,
       iconRandomExcluded: [],
-      numberMode: 'keep',
+      numberMode: 'reuse',
       removal: 900000, // ms
     },
     iconColor: 'default',

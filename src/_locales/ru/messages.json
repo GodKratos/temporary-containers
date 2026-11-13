@@ -228,13 +228,13 @@
     "message": "Скрыть номер"
   },
   "optionsGeneralContainerNumberKeepCounting": {
-    "message": "Непрерывная нумерация (по умолчанию)"
+    "message": "Непрерывная нумерация"
   },
   "optionsGeneralContainerNumberKeepCountingUntilRestart": {
     "message": "Непрерывная нумерация до перезапуска браузера"
   },
   "optionsGeneralContainerNumberReuseNumbers": {
-    "message": "Повторное использование свободных номеров"
+    "message": "Повторное использование свободных номеров (по умолчанию)"
   },
   "optionsGeneralContainerRandomColor": {
     "message": "Случайный цвет контейнера"

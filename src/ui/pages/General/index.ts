@@ -71,9 +71,9 @@ export async function initGeneralPage(): Promise<void> {
         <div class="field">
           <label for="containerNumberMode" data-i18n="optionsGeneralContainerNumber">Container Number Mode</label>
           <select id="containerNumberMode" name="containerNumberMode" data-setting="container.numberMode">
-            <option value="keep" data-i18n="optionsGeneralContainerNumberKeepCounting">Keep counting (default)</option>
+            <option value="keep" data-i18n="optionsGeneralContainerNumberKeepCounting">Keep counting</option>
             <option value="keepuntilrestart" data-i18n="optionsGeneralContainerNumberKeepCountingUntilRestart">Keep counting until browser restart</option>
-            <option value="reuse" data-i18n="optionsGeneralContainerNumberReuseNumbers">Reuse available numbers</option>
+            <option value="reuse" data-i18n="optionsGeneralContainerNumberReuseNumbers">Reuse available numbers (default)</option>
             <option value="hide" data-i18n="optionsGeneralContainerNumberHide">Hide number</option>
           </select>
         </div>
@@ -96,7 +96,7 @@ export async function initGeneralPage(): Promise<void> {
     (document.getElementById('containerNamePrefix') as HTMLInputElement).value = preferences.container?.namePrefix || 'tmp';
     (document.getElementById('containerColorRandom') as HTMLInputElement).checked = preferences.container?.colorRandom || false;
     (document.getElementById('containerIconRandom') as HTMLInputElement).checked = preferences.container?.iconRandom || false;
-    (document.getElementById('containerNumberMode') as HTMLSelectElement).value = preferences.container?.numberMode || 'keep';
+    (document.getElementById('containerNumberMode') as HTMLSelectElement).value = preferences.container?.numberMode || 'reuse';
 
     // Populate container colors
     const colorSelect = document.getElementById('containerColor') as HTMLSelectElement;
@@ -285,7 +285,7 @@ export async function initGeneralPage(): Promise<void> {
       if (newValue === 'hide' && currentNamePrefix.trim() === '') {
         showError(browser.i18n.getMessage('errorEmptyPrefixWithHideMode'));
         // Revert to previous value (or default)
-        (e.target as HTMLSelectElement).value = preferences.container?.numberMode || 'keep';
+        (e.target as HTMLSelectElement).value = preferences.container?.numberMode || 'reuse';
         return;
       }
       savePref('container.numberMode', newValue);

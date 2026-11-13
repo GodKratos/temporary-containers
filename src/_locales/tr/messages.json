@@ -228,13 +228,13 @@
     "message": "Numarayı gizle"
   },
   "optionsGeneralContainerNumberKeepCounting": {
-    "message": "Saymaya devam et (öntanımlı)"
+    "message": "Saymaya devam et"
   },
   "optionsGeneralContainerNumberKeepCountingUntilRestart": {
     "message": "Tarayıcı yeniden başlatılıncaya kadar saymaya devam et"
   },
   "optionsGeneralContainerNumberReuseNumbers": {
-    "message": "Kullanılabilir numaraları yeniden kullan"
+    "message": "Kullanılabilir numaraları yeniden kullan (öntanımlı)"
   },
   "optionsGeneralContainerRandomColor": {
     "message": "Rastgele Konteyner Rengi"

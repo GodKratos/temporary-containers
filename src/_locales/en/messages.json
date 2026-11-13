@@ -183,13 +183,13 @@
     "message": "Hide number"
   },
   "optionsGeneralContainerNumberKeepCounting": {
-    "message": "Keep counting (default)"
+    "message": "Keep counting"
   },
   "optionsGeneralContainerNumberKeepCountingUntilRestart": {
     "message": "Keep counting until browser restart"
   },
   "optionsGeneralContainerNumberReuseNumbers": {
-    "message": "Reuse available numbers"
+    "message": "Reuse available numbers (default)"
   },
   "optionsGeneralContainerRandomColor": {
     "message": "Random Container Color"
