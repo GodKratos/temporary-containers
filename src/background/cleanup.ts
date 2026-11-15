@@ -119,6 +119,11 @@ export class Cleanup {
       this.debug('[cleanup] canceling, no tmpcontainers at all');
       return;
     }
+
+    // resync tempContainersNumbers against currently tracked containers right away:
+    // this is a safe, non-destructive read, so it shouldn't wait on the removal sweep
+    this.container.cleanupNumbers();
+
     if (startup && (await browser.tabs.query({ url: 'about:sessionrestore' })).length) {
       this.debug("[cleanup] canceling because there's a about:sessionrestore tab");
       return;

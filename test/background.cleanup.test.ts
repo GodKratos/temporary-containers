@@ -147,6 +147,22 @@ preferencesTestSet.map(preferences => {
 
           bg.browser.contextualIdentities.remove.should.not.have.been.calledOnceWith(tab.cookieStoreId);
         });
+
+        it('should still resync tempContainersNumbers if about:sessionrestore tab is open', async () => {
+          const bg = await loadBackground({ preferences });
+
+          await bg.browser.tabs._create({});
+          await bg.tmp.container.createTabInTempContainer({});
+
+          // simulate a stale/leaked number with no backing container
+          bg.tmp.storage.local.tempContainersNumbers.push(999);
+
+          bg.browser.tabs.query.withArgs({ url: 'about:sessionrestore' }).resolves([{ id: 2, url: 'about:sessionrestore' }]);
+
+          await bg.tmp.cleanup.cleanup(true);
+
+          bg.tmp.storage.local.tempContainersNumbers.should.not.include(999);
+        });
       });
     });
   });
