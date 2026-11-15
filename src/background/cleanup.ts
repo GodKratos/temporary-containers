@@ -108,7 +108,24 @@ export class Cleanup {
       await this.container.removeFromStorage(cookieStoreId);
       return true;
     } catch (error) {
+      // contextualIdentities.remove() rejects (instead of resolving falsy) when the
+      // container no longer exists, so a thrown error doesn't necessarily mean we
+      // should keep retrying - confirm via get() before giving up on cleanup
+      if (!(await this.containerStillExists(cookieStoreId))) {
+        this.debug('[removeContainer] container no longer exists, cleaning up storage', cookieStoreId, error);
+        await this.container.removeFromStorage(cookieStoreId);
+        return true;
+      }
       this.debug('[removeContainer] error while removing container', cookieStoreId, error);
+      return false;
+    }
+  }
+
+  async containerStillExists(cookieStoreId: CookieStoreId): Promise<boolean> {
+    try {
+      const contextualIdentity = await browser.contextualIdentities.get(cookieStoreId);
+      return !!contextualIdentity;
+    } catch {
       return false;
     }
   }
@@ -123,6 +140,7 @@ export class Cleanup {
     // resync tempContainersNumbers against currently tracked containers right away:
     // this is a safe, non-destructive read, so it shouldn't wait on the removal sweep
     this.container.cleanupNumbers();
+    await this.storage.persist();
 
     if (startup && (await browser.tabs.query({ url: 'about:sessionrestore' })).length) {
       this.debug("[cleanup] canceling because there's a about:sessionrestore tab");

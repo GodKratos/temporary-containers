@@ -164,6 +164,28 @@ preferencesTestSet.map(preferences => {
           bg.tmp.storage.local.tempContainersNumbers.should.not.include(999);
         });
       });
+
+      describe('when a tracked container no longer exists in the browser', () => {
+        it('should clean it up instead of retrying forever (stoically#191/#273/#507)', async () => {
+          const bg = await loadBackground({ preferences });
+          bg.tmp.storage.local.preferences.container.removal = 0;
+
+          await bg.browser.tabs._create({});
+          const tab = (await bg.tmp.container.createTabInTempContainer({})) as Tab;
+
+          // contextualIdentities.remove() rejects (instead of resolving falsy) when the
+          // container no longer exists in Firefox, e.g. deleted while the add-on wasn't running
+          bg.browser.contextualIdentities.remove.withArgs(tab.cookieStoreId).rejects(new Error('Invalid contextual identity'));
+          bg.browser.contextualIdentities.get.withArgs(tab.cookieStoreId).rejects(new Error('Invalid contextual identity'));
+
+          await bg.tmp.tabs.remove(tab);
+          bg.browser.tabs.onRemoved.addListener.yield(tab.id);
+          await nextTick();
+
+          bg.tmp.storage.local.tempContainers.should.not.have.property(tab.cookieStoreId);
+          bg.tmp.storage.local.tempContainersNumbers.should.not.include(bg.tmp.storage.local.tempContainers[tab.cookieStoreId]?.number);
+        });
+      });
     });
   });
 });
