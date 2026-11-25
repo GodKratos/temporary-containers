@@ -282,7 +282,7 @@
         <div id="D" class="variant">
           <div class="pagehead"><div><h1>Isolation rules</h1><p>One ordered list. Every condition must match. The first matching rule decides.</p></div><span class="tag">Variant D / proposal</span></div>
           <section class="section">
-            <div class="section-head"><h2>New tabs</h2></div>
+            <div class="section-head"><h2>Automatic behavior</h2></div>
             <div class="panel new-tab-settings">
               <div class="setting">
                 <div class="setting-text"><label for="d-new-tab">Open new tabs in</label><small id="d-new-tab-help">Choose the starting context for new tabs and URLs opened from outside Firefox</small></div>
@@ -291,6 +291,10 @@
               <div class="setting">
                 <div class="setting-text"><label for="d-avoid-default">Avoid Default Context</label><small id="d-avoid-help">Reopen anything that would use Default Context in a new Temporary Container</small></div>
                 <input id="d-avoid-default" type="checkbox" aria-describedby="d-avoid-help">
+              </div>
+              <div class="setting">
+                <div class="setting-text"><label for="d-isolate-unassigned">Isolate unassigned domains from permanent containers</label><small id="d-isolate-unassigned-help">When in a permanent container, open links to domains without a Multi-Account Containers assignment in a new Temporary Container</small></div>
+                <input id="d-isolate-unassigned" type="checkbox" aria-describedby="d-isolate-unassigned-help">
               </div>
             </div>
             <p id="d-avoid-error" role="alert" style="color:#a12e31"></p>
@@ -616,11 +620,12 @@
       const avoidedDefault = d('avoid-default').checked && (result === 'default' || (result === 'same' && situation.receivingContext === 'default'));
       const outcome = avoidedDefault ? resultNames.tc : withoutSource ? resultNames[result] : openingLabel(rules[index]);
       const reason = withoutSource ? 'No Source Domain: use the new-tab setting; navigation rules are not evaluated.' : rules[index].isDefault ? 'Default rule. No earlier active rule matched.' : 'Rule ' + (index + 1) + ': ' + rules[index].name + '. All conditions match; later rules are not used.';
-      d('outcome').textContent = outcome + ' - ' + reason + (avoidedDefault ? ' Avoid Default Context reopens this in a new Temporary Container.' : '');
+      const previewScope = d('isolate-unassigned').checked ? 'Rules-only preview: MAC assignment checks are not simulated. ' : '';
+      d('outcome').textContent = previewScope + outcome + ' - ' + reason + (avoidedDefault ? ' Avoid Default Context reopens this in a new Temporary Container.' : '');
       d('rules').querySelectorAll('.ordered-rule').forEach((row, rowIndex) => row.classList.toggle('matched', index === rowIndex));
-      d('state').textContent = JSON.stringify({newTabs:d('new-tab').value, avoidDefaultContext:d('avoid-default').checked, rules:rules.map(rule => ({...rule, disabledByAvoidance:ruleUnavailable(rule)})), situation, usedNewTabSetting:withoutSource, winningRule:index < 0 ? null : index + 1, avoidedDefault, outcome}, null, 2);
+      d('state').textContent = JSON.stringify({newTabs:d('new-tab').value, avoidDefaultContext:d('avoid-default').checked, isolateUnassignedDomains:d('isolate-unassigned').checked, macPolicySimulated:false, rules:rules.map(rule => ({...rule, disabledByAvoidance:ruleUnavailable(rule)})), situation, usedNewTabSetting:withoutSource, winningRule:index < 0 ? null : index + 1, avoidedDefault, outcome}, null, 2);
     }
-    for (const id of ['new-tab', 'test-event', 'test-source', 'test-source-domain', 'test-target-domain', 'test-action']) d(id).addEventListener('input', evaluate);
+    for (const id of ['new-tab', 'isolate-unassigned', 'test-event', 'test-source', 'test-source-domain', 'test-target-domain', 'test-action']) d(id).addEventListener('input', evaluate);
     refreshEditorChoices('any', 'same');
     renderRules();
   </script>
