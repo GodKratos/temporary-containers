@@ -75,39 +75,42 @@
     .matrix select { width:175px; }
     .variant { display:none; }
     .variant.active { display:block; }
-    #D .draft-note { margin:16px 0; color:var(--muted); line-height:1.55; }
-    #D .rule-list { list-style:none; margin:0; padding:0; }
-    #D .ordered-rule { display:flex; gap:12px; padding:14px; border-bottom:1px solid var(--line); }
-    #D .ordered-rule:last-child { border-bottom:0; }
-    #D .ordered-rule.matched { background:#f0faf4; box-shadow:inset 4px 0 var(--green); }
-    #D .ordered-rule.unavailable { background:#faf6ee; }
-    #D .unavailable-note { color:#865511; }
-    #D .priority { font-weight:750; color:var(--accent); min-width:20px; }
-    #D .rule-summary { flex:1; min-width:0; }
-    #D .rule-summary p { margin:6px 0; color:var(--muted); line-height:1.5; }
-    #D .rule-tools { display:flex; gap:5px; align-items:flex-start; flex-wrap:wrap; }
-    #D button { cursor:pointer; }
-    #D button:disabled { opacity:.4; cursor:default; }
-    #D .editor-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    #D .editor-grid input:not([type=checkbox]), #D .editor-grid select { width:100%; }
-    #D .check { display:flex; gap:8px; align-items:center; color:var(--ink); margin:9px 0 0; font-size:13px; }
-    #D .check input { height:auto; width:auto; margin:0; }
-    #D .new-tab-settings .setting { align-items:center; flex-wrap:nowrap; }
-    #D .new-tab-settings .setting-text { min-width:0; }
-    #D .new-tab-settings label { margin:0 0 4px; color:var(--ink); font-size:14px; font-weight:650; }
-    #D .new-tab-settings select { width:220px; max-width:44%; flex-shrink:0; }
-    #D .new-tab-settings input[type=checkbox] { width:18px; height:18px; max-width:none; flex-shrink:0; margin:0 0 0 auto; accent-color:var(--accent); }
-    #d-avoid-error:empty { display:none; }
-    #D fieldset { border:1px solid var(--line); border-radius:7px; padding:10px; margin:10px 0 0; }
-    #D legend { font-size:12px; color:var(--muted); }
-    #D .editor-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
-    #D .primary { background:var(--accent); color:white; border-color:var(--accent); }
-    #D .tester-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    #D .tester-grid input, #D .tester-grid select { width:100%; }
-    #D .state { margin-top:16px; }
-    #D .state pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; background:var(--soft); padding:12px; }
-    #D [hidden] { display:none !important; }
-    body[data-variant=D] .nav-item.sub { display:none; }
+    .ordered-demo .draft-note { margin:16px 0; color:var(--muted); line-height:1.55; }
+    .ordered-demo .rule-list { list-style:none; margin:0; padding:0; }
+    .ordered-demo .ordered-rule { display:flex; gap:12px; padding:14px; border-bottom:1px solid var(--line); }
+    .ordered-demo .ordered-rule:last-child { border-bottom:0; }
+    .ordered-demo .ordered-rule.matched { background:#f0faf4; box-shadow:inset 4px 0 var(--green); }
+    .ordered-demo .ordered-rule.unavailable { background:#e8e1d6; }
+    .ordered-demo .unavailable .priority, .ordered-demo .unavailable .rule-summary > strong,
+    .ordered-demo .unavailable .rule-summary > p:not(.unavailable-note),
+    .ordered-demo .unavailable .rule-summary > .tag { color:#686878; font-style:italic; }
+    .ordered-demo .rule-summary p.unavailable-note { color:#944900; font-weight:700; font-style:normal; }
+    .ordered-demo .priority { font-weight:750; color:var(--accent); min-width:20px; }
+    .ordered-demo .rule-summary { flex:1; min-width:0; }
+    .ordered-demo .rule-summary p { margin:6px 0; color:var(--muted); line-height:1.5; }
+    .ordered-demo .rule-tools { display:flex; gap:5px; align-items:flex-start; flex-wrap:wrap; }
+    .ordered-demo button { cursor:pointer; }
+    .ordered-demo button:disabled { opacity:.4; cursor:default; }
+    .ordered-demo .editor-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .ordered-demo .editor-grid input:not([type=checkbox]), .ordered-demo .editor-grid select { width:100%; }
+    .ordered-demo .check { display:flex; gap:8px; align-items:center; color:var(--ink); margin:9px 0 0; font-size:13px; }
+    .ordered-demo .check input { height:auto; width:auto; margin:0; }
+    .ordered-demo .new-tab-settings .setting { align-items:center; flex-wrap:nowrap; }
+    .ordered-demo .new-tab-settings .setting-text { min-width:0; }
+    .ordered-demo .new-tab-settings label { margin:0 0 4px; color:var(--ink); font-size:14px; font-weight:650; }
+    .ordered-demo .new-tab-settings select { width:220px; max-width:44%; flex-shrink:0; }
+    .ordered-demo .new-tab-settings input[type=checkbox] { width:18px; height:18px; max-width:none; flex-shrink:0; margin:0 0 0 auto; accent-color:var(--accent); }
+    .ordered-demo [role=alert]:empty { display:none; }
+    .ordered-demo fieldset { border:1px solid var(--line); border-radius:7px; padding:10px; margin:10px 0 0; }
+    .ordered-demo legend { font-size:12px; color:var(--muted); }
+    .ordered-demo .editor-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+    .ordered-demo .primary { background:var(--accent); color:white; border-color:var(--accent); }
+    .ordered-demo .tester-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .ordered-demo .tester-grid input, .ordered-demo .tester-grid select { width:100%; }
+    .ordered-demo .state { margin-top:16px; }
+    .ordered-demo .state pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; background:var(--soft); padding:12px; }
+    .ordered-demo [hidden] { display:none !important; }
+    body:is([data-variant=D],[data-variant=E]) .nav-item.sub { display:none; }
     .switcher { position:fixed; z-index:10; left:50%; bottom:18px; transform:translateX(-50%); height:48px; display:flex; align-items:center; gap:12px; padding:6px 8px; border-radius:24px; background:#172033; color:white; box-shadow:0 8px 30px #17203355; }
     .switcher button { width:34px; height:34px; border:0; border-radius:50%; background:#313b52; color:white; cursor:pointer; font-size:17px; }
     .switcher b { min-width:240px; text-align:center; }
@@ -127,8 +130,8 @@
       .cards, .matrix { grid-template-columns:1fr; }
       .table { min-width:700px; }
       .table-wrap { overflow:auto; }
-      #D .editor-grid, #D .tester-grid { grid-template-columns:1fr; }
-      #D .ordered-rule { flex-wrap:wrap; }
+      .ordered-demo .editor-grid, .ordered-demo .tester-grid { grid-template-columns:1fr; }
+      .ordered-demo .ordered-rule { flex-wrap:wrap; }
     }
   </style>
 </head>
@@ -279,8 +282,8 @@
             </div>
           </div>
         </div>
-        <div id="D" class="variant">
-          <div class="pagehead"><div><h1>Isolation rules</h1><p>One ordered list. Every condition must match. The first matching rule decides.</p></div><span class="tag">Variant D / proposal</span></div>
+        <div id="D" class="variant ordered-demo">
+          <div class="pagehead"><div><h1>Isolation rules</h1><p>One ordered list. Every condition must match. The first matching rule decides.</p></div><span class="tag">Chosen / variant D</span></div>
           <section class="section">
             <div class="section-head"><h2>Automatic behavior</h2></div>
             <div class="panel new-tab-settings">
@@ -302,7 +305,6 @@
           <section class="section">
             <div class="section-head"><h2>Rules</h2><small>Top to bottom / first match wins</small><button class="button primary" id="d-add">+ Add rule</button></div>
             <div class="panel"><ol class="rule-list" id="d-rules"></ol></div>
-            <div class="explain"><strong>Default rule:</strong> Always last and matches any Source Container, Source Domain, Target Domain, and Action. Only its Opening Result can be changed. It cannot be moved or deleted; new rules are added above it.</div>
           </section>
           <section class="section panel" id="d-editor" hidden style="padding:18px">
             <div class="section-head"><h2 id="d-editor-title">Add rule</h2><small>All conditions are combined with AND</small></div>
@@ -325,8 +327,8 @@
                 <div><label for="d-source-domain-mode">Source Domain</label><select id="d-source-domain-mode"><option value="any">Any</option><option value="specific">Specific domain</option></select>
                   <div id="d-source-domain-fields" hidden style="margin-top:8px"><label for="d-source-domain">Source hostname</label><input id="d-source-domain" placeholder="example.com"><label class="check"><input id="d-source-subdomains" type="checkbox">Include subdomains</label></div>
                 </div>
-                <div><label for="d-target-domain-mode">Target Domain</label><select id="d-target-domain-mode" aria-describedby="d-target-domain-help"><option value="any">Any</option><option value="different-host">Different from Source Domain</option><option value="different-site">Different from Source Domain and Subdomains</option><option value="specific">Specific Domain</option></select>
-                  <p id="d-target-domain-help" class="hint">Any destination matches.</p>
+                <div><label for="d-target-domain-mode">Target Domain</label><select id="d-target-domain-mode" aria-describedby="d-target-domain-help"><option value="any">Any</option><option value="different-host">Different from exact Source Domain</option><option value="different-site">Different from Source Domain or Subdomains</option><option value="specific">Specific Domain</option></select>
+                  <p id="d-target-domain-help" class="hint">Any destination triggers rule.</p>
                   <div id="d-target-domain-fields" hidden style="margin-top:8px"><label for="d-target-domain">Target hostname</label><input id="d-target-domain" placeholder="example.com"><label class="check"><input id="d-target-subdomains" type="checkbox">Include subdomains</label></div>
                 </div>
                 <div><label for="d-action">Action (Opening Method)</label><select id="d-action"><option value="any">Any action</option><option value="navigate">Click / navigate</option><option value="middle">Middle-click</option><option value="shift">Shift-click</option><option value="ctrl">Ctrl-click</option></select></div>
@@ -360,16 +362,45 @@
   </main>
   <div class="switcher" aria-label="Prototype variants">
     <button id="prev" title="Previous variant" aria-label="Previous variant">←</button>
-    <b id="label">A - Full settings page</b>
+    <b id="label">D - Ordered rules engine</b>
     <button id="next" title="Next variant" aria-label="Next variant">→</button>
   </div>
   <!-- Pinned offline tldts browser bundle (MIT); license is in vendor/tldts-LICENSE. -->
   <script src="vendor/tldts-7.0.19.min.js"></script>
   <script>
-    const names = {A:'A - Full settings page', B:'B - Guided settings flow', C:'C - Isolation control center', D:'D - Ordered rules engine'};
-    const keys = ['A','B','C','D'];
+    // Variant E explores the decisions in issue 21, using D's layout and independent in-memory state.
+    const variantE = document.getElementById('D').cloneNode(true);
+    variantE.id = 'E';
+    variantE.querySelectorAll('[id]').forEach(element => { element.id = element.id.replace(/^d-/, 'e-'); });
+    variantE.querySelectorAll('[for], [aria-describedby]').forEach(element => {
+      for (const attribute of ['for', 'aria-describedby']) {
+        if (element.hasAttribute(attribute)) element.setAttribute(attribute, element.getAttribute(attribute).replace(/\bd-/g, 'e-'));
+      }
+    });
+    variantE.querySelector('.pagehead .tag').textContent = 'Variant E / Rules Engine v2';
+    variantE.querySelectorAll('.draft-note').forEach(element => element.remove());
+    variantE.querySelector('#e-isolate-unassigned').closest('.setting').remove();
+    variantE.querySelector('#e-avoid-default').checked = true;
+    variantE.querySelector('#e-avoid-help').textContent = 'Route automatic results that would use Default Context to a new Temporary Container.';
+    variantE.querySelector('.state').insertAdjacentHTML('beforebegin', `
+      <section class="section">
+        <div class="section-head"><h2>Simulation Behavior toggles</h2></div>
+        <div class="panel new-tab-settings">
+          <div class="setting"><div class="setting-text"><label for="e-paused">Pause</label><small>Simulate Pause button behavior in popup menu</small></div><input id="e-paused" type="checkbox"></div>
+          <div class="setting"><div class="setting-text"><label for="e-mac">Multi-Account Containers available</label><small>Simulate whether the MAC extension is installed</small></div><input id="e-mac" type="checkbox" checked></div>
+          <div class="setting"><div class="setting-text"><label for="e-advanced">Advanced: Deletes History Containers enabled</label><small>Simulate whether a user has enabled the use of Deletes History Containers in advanced options</small></div><input id="e-advanced" type="checkbox"></div>
+        </div>
+      </section>`);
+    variantE.querySelector('#e-test-action').closest('div').insertAdjacentHTML('afterend', `
+      <div><label for="e-test-assignment">MAC target assignment (simulated)</label><select id="e-test-assignment"><option value="unassigned">Unassigned</option><option value="Work">Work</option><option value="Personal">Personal</option><option value="Banking">Banking</option></select></div>
+      <div><label for="e-test-mac-mode">MAC assignment behavior</label><select id="e-test-mac-mode"><option value="never">Never ask (remembered)</option><option value="confirm">Ask on conflicting route</option></select></div>`);
+    variantE.querySelector('#e-outcome').insertAdjacentHTML('afterend', '<p class="hint">The preview assumes the Receiving Context is the Source Container, or Default Context when there is no source. MAC answers and permission are simulated. Redirect chains and Firefox reopening are not simulated: on a host-changing redirect, re-evaluate using the initiating source and action, and do not reroute a host already processed in that chain.</p>');
+    document.getElementById('D').parentElement.appendChild(variantE);
+
+    const names = {A:'A - Full settings page', B:'B - Guided settings flow', C:'C - Isolation control center', D:'D - Ordered rules engine', E:'E - Rules Engine v2'};
+    const keys = ['A','B','C','D','E'];
     function show(key) {
-      const selected = keys.includes(key) ? key : 'A';
+      const selected = keys.includes(key) ? key : 'D';
       document.querySelectorAll('.variant').forEach(section => section.classList.toggle('active', section.id === selected));
       document.getElementById('label').textContent = names[selected];
       document.body.dataset.variant = selected;
@@ -388,12 +419,21 @@
     });
     show(new URLSearchParams(location.search).get('variant'));
 
-    const d = id => document.getElementById('d-' + id);
+    function setupOrderedDemo(prefix) {
+    const isE = prefix === 'e';
+    const root = document.getElementById(prefix.toUpperCase());
+    const d = id => document.getElementById(prefix + '-' + id);
     const resultNames = {same:'No Change (same container)', tc:'New Temporary Container', dh:'New Deletes History Container', default:'Default Context (No Container)', permanent:'Permanent Container'};
     const sourceNames = {any:'Any', tc:'Temporary Container (including Deletes History)', default:'Default Context (No Container)', permanent:'Permanent Container...'};
     const actionNames = {any:'Any action', navigate:'Click / navigate', middle:'Middle-click', shift:'Shift-click', ctrl:'Ctrl-click'};
-    const targetModeNames = {any:'Any domain', 'different-host':'Different from Source Domain', 'different-site':'Different from Source Domain and Subdomains'};
-    const rules = [
+    const targetModeNames = {any:'Any domain', 'different-host':'Different from exact Source Domain', 'different-site':'Different from Source Domain or Subdomains', unassigned:'Unassigned MAC Site'};
+    const rules = isE ? [
+      {name:'Override Ctrl-Click', source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'any', targetDomain:'', targetSubdomains:false, action:'ctrl', result:'same', destination:'Work'},
+      {name:'Assign News to Personal', source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'specific', targetDomain:'news.example', targetSubdomains:true, action:'navigate', result:'permanent', destination:'Personal'},
+      {name:'Isolate unassigned MAC sites', source:'permanent', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'unassigned', targetDomain:'', targetSubdomains:false, action:'navigate', result:'tc', destination:'Work'},
+      {name:'Isolate different domains', source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'different-site', targetDomain:'', targetSubdomains:false, action:'navigate', result:'tc', destination:'Work'},
+      {name:'Default rule', isDefault:true, source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'any', targetDomain:'', targetSubdomains:false, action:'any', result:'same', destination:'Work'}
+    ] : [
       {name:'Keep work browsing together', source:'permanent', containers:['Work'], sourceDomain:'', sourceSubdomains:false, targetMode:'any', targetDomain:'', targetSubdomains:false, action:'any', result:'same', destination:'Work'},
       {name:'Read the news without a container', source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'specific', targetDomain:'news.example', targetSubdomains:true, action:'any', result:'default', destination:'Work'},
       {name:'Middle-click into a fresh container', source:'any', containers:null, sourceDomain:'', sourceSubdomains:false, targetMode:'any', targetDomain:'', targetSubdomains:false, action:'middle', result:'tc', destination:'Work'},
@@ -419,8 +459,18 @@
       parent.appendChild(element);
       return element;
     }
+    function unavailableReasons(rule) {
+      const reasons = [];
+      if (!isE && d('avoid-default').checked && (rule.source === 'default' || rule.result === 'default')) reasons.push('uses Default Context as Source Container or Opening Result while Avoid Default Context is on');
+      if (isE && rule.targetMode === 'unassigned' && !d('mac').checked) reasons.push('Multi-Account Containers is unavailable');
+      if (isE && rule.result === 'dh' && !historyAvailable()) reasons.push('Deletes History requires Advanced opt-in and history permission');
+      return reasons;
+    }
+    function historyAvailable() {
+      return d('advanced').checked;
+    }
     function ruleUnavailable(rule) {
-      return d('avoid-default').checked && (rule.source === 'default' || rule.result === 'default');
+      return unavailableReasons(rule).length > 0;
     }
     function setRuleOptions(select, choices, selected) {
       select.replaceChildren();
@@ -428,18 +478,19 @@
       placeholder.value = '';
       placeholder.disabled = true;
       for (const [value, name] of Object.entries(choices)) {
-        if (d('avoid-default').checked && value === 'default') continue;
+        if (!isE && d('avoid-default').checked && value === 'default') continue;
+        if (isE && value === 'dh' && !historyAvailable()) continue;
         const option = addText(select, 'option', name);
         option.value = value;
       }
-      select.value = d('avoid-default').checked && selected === 'default' ? '' : selected;
+      select.value = (!isE && d('avoid-default').checked && selected === 'default') || (isE && selected === 'dh' && !historyAvailable()) ? '' : selected;
     }
     function refreshEditorChoices(source, result) {
       setRuleOptions(d('source'), sourceNames, source);
       setRuleOptions(d('result'), resultNames, result);
       d('form-error').textContent = '';
       if (!d('source').value || !d('result').value) {
-        d('form-error').textContent = d('avoid-default').checked ? 'Default Context is unavailable while avoidance is enabled. Choose a replacement before saving.' : 'Choose a Source Container and Opening Result before saving.';
+        d('form-error').textContent = isE ? 'Choose an available Source Container and Opening Result before saving.' : d('avoid-default').checked ? 'Default Context is unavailable while avoidance is enabled. Choose a replacement before saving.' : 'Choose a Source Container and Opening Result before saving.';
       }
     }
     function renderRules() {
@@ -455,22 +506,22 @@
         if (rule.isDefault) {
           addText(row, 'span', 'Always last', 'tag');
           const resultLabel = addText(summary, 'label', 'Opening Result');
-          resultLabel.htmlFor = 'd-default-result';
+          resultLabel.htmlFor = prefix + '-default-result';
           const result = addText(summary, 'select', '');
-          result.id = 'd-default-result';
+          result.id = prefix + '-default-result';
           setRuleOptions(result, resultNames, rule.result);
           const destinationLabel = addText(summary, 'label', 'Destination permanent container');
-          destinationLabel.htmlFor = 'd-default-destination';
+          destinationLabel.htmlFor = prefix + '-default-destination';
           const destination = addText(summary, 'select', '');
-          destination.id = 'd-default-destination';
+          destination.id = prefix + '-default-destination';
           for (const name of ['Work', 'Personal', 'Banking']) addText(destination, 'option', name);
           destination.value = rule.destination;
           destinationLabel.hidden = destination.hidden = rule.result !== 'permanent';
+          if (ruleUnavailable(rule)) addText(summary, 'p', 'Inactive: ' + unavailableReasons(rule).join('; ') + '.', 'unavailable-note');
           result.onchange = () => {
             rule.result = result.value;
             d('avoid-error').textContent = '';
-            destinationLabel.hidden = destination.hidden = rule.result !== 'permanent';
-            evaluate();
+            renderRules();
           };
           destination.onchange = () => {
             rule.destination = destination.value;
@@ -480,7 +531,7 @@
         }
         addText(summary, 'span', openingLabel(rule), 'tag');
         if (ruleUnavailable(rule)) {
-          addText(summary, 'p', 'Inactive: uses Default Context as Source Container or Opening Result. Edit this rule or turn off Avoid Default Context.', 'unavailable-note');
+          addText(summary, 'p', 'Inactive: ' + unavailableReasons(rule).join('; ') + '.', 'unavailable-note');
         }
         const tools = addText(row, 'div', '', 'rule-tools');
         for (const [label, action, disabled] of [
@@ -507,16 +558,33 @@
     function syncEditor() {
       d('permanent-sources').hidden = d('source').value !== 'permanent';
       d('permanent-choices').hidden = d('all-permanent').checked;
+      if (isE) {
+        const selected = d('target-domain-mode').value;
+        const existing = d('target-domain-mode').querySelector('[value=unassigned]');
+        if (d('source').value === 'permanent' && (d('mac').checked || selected === 'unassigned')) {
+          if (!existing) {
+            const option = addText(d('target-domain-mode'), 'option', 'Unassigned MAC Site');
+            option.value = 'unassigned';
+            d('target-domain-mode').insertBefore(option, d('target-domain-mode').querySelector('[value=specific]'));
+          }
+          const option = d('target-domain-mode').querySelector('[value=unassigned]');
+          option.textContent = d('mac').checked ? 'Unassigned MAC Site' : 'Unassigned MAC Site (MAC unavailable)';
+        } else if (existing) {
+          existing.remove();
+          if (selected === 'unassigned') d('target-domain-mode').value = 'any';
+        }
+      }
       for (const side of ['source', 'target']) {
         const specific = d(side + '-domain-mode').value === 'specific';
         d(side + '-domain-fields').hidden = !specific;
         d(side + '-domain').required = specific;
       }
       const targetHelp = {
-        any:'Any destination matches.',
-        'different-host':'Compares exact hostnames: app.example.com to login.example.com matches.',
-        'different-site':'Compares base domains: app.example.com to login.example.com does not match; another-site.com does.',
-        specific:'Match the specified hostname, optionally including its subdomains.'
+        any:'Any destination triggers rule.',
+        'different-host':'Compares exact full hostnames: app.example.com to another-site.com triggers rule; app.example.com to login.example.com also triggers rule.',
+        'different-site':'Compares base domains only: app.example.com to another-site.com triggers rule; app.example.com to login.example.com does not trigger rule.',
+        specific:'The specified hostname triggers rule, optionally including its subdomains.',
+        unassigned:'Triggers rule when the target domain is not assigned to a MAC managed site list for any permanent container'
       };
       d('target-domain-help').textContent = targetHelp[d('target-domain-mode').value];
       d('result-picker').hidden = d('result').value !== 'permanent';
@@ -530,7 +598,7 @@
       const rule = index === null ? {name:'', source:'any', containers:null, sourceDomain:'', targetMode:'any', targetDomain:'', action:'any', result:'same', destination:'Work'} : rules[index];
       d('form').reset();
       d('form-error').textContent = '';
-      d('editor-title').textContent = index === null ? 'Add rule - inserted above the default rule' : 'Edit rule ' + (index + 1);
+      d('editor-title').textContent = index === null ? 'Add rule - first priority' : 'Edit rule ' + (index + 1);
       for (const key of ['name', 'action', 'destination']) d(key).value = rule[key];
       refreshEditorChoices(rule.source, rule.result);
       for (const side of ['source', 'target']) {
@@ -538,10 +606,17 @@
         d(side + '-domain').value = rule[side + 'Domain'];
         d(side + '-subdomains').checked = Boolean(rule[side + 'Subdomains']);
       }
-      d('target-domain-mode').value = rule.targetMode;
       d('all-permanent').checked = rule.containers === null;
       d('permanent-choices').querySelectorAll('input').forEach(input => { input.checked = rule.containers?.includes(input.value) ?? false; });
       syncEditor();
+      if (isE && rule.targetMode === 'unassigned' && !d('target-domain-mode').querySelector('[value=unassigned]')) {
+        const option = addText(d('target-domain-mode'), 'option', 'Unassigned MAC Site (MAC unavailable)');
+        option.value = 'unassigned';
+        d('target-domain-mode').insertBefore(option, d('target-domain-mode').querySelector('[value=specific]'));
+      }
+      d('target-domain-mode').value = rule.targetMode;
+      d('target-domain-help').textContent = rule.targetMode === 'unassigned' && !d('mac').checked ? 'MAC is unavailable. This saved condition cannot be edited until MAC is available; choose another condition or cancel.' : d('target-domain-help').textContent;
+      if (rule.targetMode !== 'unassigned' || d('mac')?.checked) syncEditor();
       d('editor').hidden = false;
       d('name').focus();
     }
@@ -549,7 +624,7 @@
     d('cancel').onclick = closeEditor;
     d('form').onchange = syncEditor;
     d('avoid-default').onchange = () => {
-      if (d('avoid-default').checked && rules.find(rule => rule.isDefault).result === 'default') {
+      if (!isE && d('avoid-default').checked && rules.find(rule => rule.isDefault).result === 'default') {
         d('avoid-default').checked = false;
         d('avoid-error').textContent = 'Change the locked default rule to another Opening Result before enabling Avoid Default Context.';
         d('default-result').focus();
@@ -567,6 +642,7 @@
       const errors = [];
       if (!rule.name) errors.push('Enter a rule name.');
       if (rule.source === 'permanent' && containers?.length === 0) errors.push('Choose at least one permanent container, or select all.');
+      if (isE && rule.targetMode === 'unassigned' && (rule.source !== 'permanent' || !d('mac').checked)) errors.push('Unassigned MAC Site requires an available MAC integration and a Permanent Container source.');
       for (const side of ['source', 'target']) {
         const domain = d(side + '-domain-mode').value === 'specific' ? d(side + '-domain').value.trim().toLowerCase() : '';
         if (d(side + '-domain-mode').value === 'specific' && !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*$/.test(domain)) errors.push('Enter a ' + side + ' hostname such as example.com, without a URL path or wildcard.');
@@ -575,7 +651,7 @@
       }
       d('form-error').textContent = errors.join(' ');
       if (errors.length) return;
-      if (editingIndex === null) rules.splice(rules.length - 1, 0, rule);
+      if (editingIndex === null) rules.unshift(rule);
       else rules[editingIndex] = rule;
       closeEditor();
       renderRules();
@@ -587,6 +663,7 @@
     function targetMatches(situation, rule) {
       if (rule.targetMode === 'any') return true;
       if (rule.targetMode === 'specific') return domainMatches(situation.targetDomain, rule.targetDomain, rule.targetSubdomains);
+      if (rule.targetMode === 'unassigned') return isE && d('mac').checked && situation.assignment === 'unassigned' && Boolean(situation.targetDomain);
       const source = tldts.getHostname(situation.sourceDomain);
       const target = tldts.getHostname(situation.targetDomain);
       if (!source || !target) return false;
@@ -605,29 +682,55 @@
       const event = d('test-event').value;
       const sourceDomain = event === 'navigation' ? d('test-source-domain').value.trim().toLowerCase() : '';
       const withoutSource = !sourceDomain;
-      const situation = {event, source:withoutSource ? null : d('test-source').value, sourceDomain, targetDomain:event === 'new' ? '' : d('test-target-domain').value.trim().toLowerCase(), action:withoutSource ? null : d('test-action').value, receivingContext:withoutSource ? null : d('test-source').value};
-      document.querySelectorAll('#D [data-source]').forEach(element => { element.hidden = event !== 'navigation'; });
-      document.querySelectorAll('#D [data-target]').forEach(element => { element.hidden = event === 'new'; });
+      const situation = {event, source:withoutSource ? null : d('test-source').value, sourceDomain, targetDomain:event === 'new' ? '' : d('test-target-domain').value.trim().toLowerCase(), action:withoutSource ? null : d('test-action').value, receivingContext:withoutSource ? (isE ? 'default' : null) : d('test-source').value, assignment:isE && d('mac').checked ? d('test-assignment').value : 'unknown'};
+      root.querySelectorAll('[data-source]').forEach(element => { element.hidden = event !== 'navigation'; });
+      root.querySelectorAll('[data-target]').forEach(element => { element.hidden = event === 'new'; });
       const permanent = ['Work', 'Personal', 'Banking'].includes(situation.source);
-      const index = withoutSource ? -1 : rules.findIndex(rule =>
+      const paused = isE && d('paused').checked;
+      const index = withoutSource || paused ? -1 : rules.findIndex(rule =>
         !ruleUnavailable(rule) &&
         (rule.source === 'any' || (rule.source === 'tc' && ['tc', 'dh'].includes(situation.source)) || (rule.source === 'default' && situation.source === 'default') || (rule.source === 'permanent' && permanent && (rule.containers === null || rule.containers.includes(situation.source)))) &&
         domainMatches(situation.sourceDomain, rule.sourceDomain, rule.sourceSubdomains) &&
         targetMatches(situation, rule) &&
         (rule.action === 'any' || rule.action === situation.action)
       );
-      const result = withoutSource ? d('new-tab').value : rules[index].result;
-      const avoidedDefault = d('avoid-default').checked && (result === 'default' || (result === 'same' && situation.receivingContext === 'default'));
-      const outcome = avoidedDefault ? resultNames.tc : withoutSource ? resultNames[result] : openingLabel(rules[index]);
-      const reason = withoutSource ? 'No Source Domain: use the new-tab setting; navigation rules are not evaluated.' : rules[index].isDefault ? 'Default rule. No earlier active rule matched.' : 'Rule ' + (index + 1) + ': ' + rules[index].name + '. All conditions match; later rules are not used.';
-      const previewScope = d('isolate-unassigned').checked ? 'Rules-only preview: MAC assignment checks are not simulated. ' : '';
+      const result = paused ? 'same' : withoutSource ? d('new-tab').value : index < 0 ? null : rules[index].result;
+      const avoidedDefault = !paused && d('avoid-default').checked && (result === 'default' || (result === 'same' && situation.receivingContext === 'default'));
+      let destination = avoidedDefault || result === 'tc' ? 'tc' : result === 'same' ? situation.receivingContext : result === 'permanent' ? rules[index].destination : result;
+      let outcome = avoidedDefault ? resultNames.tc : result === null ? 'No available result' : withoutSource || paused ? resultNames[result] : openingLabel(rules[index]);
+      let reason = paused ? 'Paused: Firefox follows its normal behavior; MAC remains independent.' : withoutSource ? 'No Source Domain: use the new-tab setting; navigation rules are not evaluated.' : index < 0 ? 'The Default Rule is unavailable; enable its required permission or choose another result.' : rules[index].isDefault ? 'Default rule. No earlier active rule matched.' : 'Rule ' + (index + 1) + ': ' + rules[index].name + '. All conditions match; later rules are not used.';
+      if (isE && !paused && situation.targetDomain && d('mac').checked && ['Work', 'Personal', 'Banking'].includes(situation.assignment)) {
+        if (d('test-mac-mode').value === 'never' && destination !== situation.assignment) {
+          destination = situation.assignment;
+          outcome = 'Permanent Container: ' + destination;
+          reason += ' MAC remembered assignment takes precedence.';
+        } else if (d('test-mac-mode').value === 'confirm' && destination !== situation.assignment) {
+          outcome = 'MAC confirmation / reopen flow';
+          reason += ' MAC asks about the conflicting route; the final context depends on that choice.';
+        }
+      }
+      const previewScope = !isE && d('isolate-unassigned').checked ? 'Rules-only preview: MAC assignment checks are not simulated. ' : '';
       d('outcome').textContent = previewScope + outcome + ' - ' + reason + (avoidedDefault ? ' Avoid Default Context reopens this in a new Temporary Container.' : '');
       d('rules').querySelectorAll('.ordered-rule').forEach((row, rowIndex) => row.classList.toggle('matched', index === rowIndex));
-      d('state').textContent = JSON.stringify({newTabs:d('new-tab').value, avoidDefaultContext:d('avoid-default').checked, isolateUnassignedDomains:d('isolate-unassigned').checked, macPolicySimulated:false, rules:rules.map(rule => ({...rule, disabledByAvoidance:ruleUnavailable(rule)})), situation, usedNewTabSetting:withoutSource, winningRule:index < 0 ? null : index + 1, avoidedDefault, outcome}, null, 2);
+      d('state').textContent = JSON.stringify({newTabs:d('new-tab').value, avoidDefaultContext:d('avoid-default').checked, ...(isE ? {paused, macAvailable:d('mac').checked, macMode:d('test-mac-mode').value, advancedOptIn:d('advanced').checked, historyPermission:d('advanced').checked} : {isolateUnassignedDomains:d('isolate-unassigned').checked, macPolicySimulated:false}), rules:rules.map(rule => ({...rule, inactiveReasons:unavailableReasons(rule)})), situation, usedNewTabSetting:withoutSource && !paused, winningRule:index < 0 ? null : index + 1, avoidedDefault, outcome}, null, 2);
     }
-    for (const id of ['new-tab', 'isolate-unassigned', 'test-event', 'test-source', 'test-source-domain', 'test-target-domain', 'test-action']) d(id).addEventListener('input', evaluate);
+    for (const id of ['new-tab', 'test-event', 'test-source', 'test-source-domain', 'test-target-domain', 'test-action', ...(isE ? ['paused', 'test-assignment', 'test-mac-mode'] : ['isolate-unassigned'])]) d(id).addEventListener('input', evaluate);
+    if (isE) {
+      for (const id of ['mac', 'advanced']) d(id).addEventListener('change', () => {
+        const historyOption = d('new-tab').querySelector('[value=dh]');
+        historyOption.disabled = !historyAvailable();
+        if (historyOption.disabled && d('new-tab').value === 'dh') d('new-tab').value = 'tc';
+        refreshEditorChoices(d('source').value, d('result').value);
+        syncEditor();
+        renderRules();
+      });
+      d('new-tab').querySelector('[value=dh]').disabled = true;
+    }
     refreshEditorChoices('any', 'same');
     renderRules();
+    }
+    setupOrderedDemo('d');
+    setupOrderedDemo('e');
   </script>
 </body>
 </html>
